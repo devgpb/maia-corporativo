@@ -1,7 +1,8 @@
 export interface IPedido{
+  [key: string]: any;
   idPedido?: string | number;
   nomeCompleto: string;
-  consumoDeEnergiaMensal: string;
+  consumoDeEnergiaMensal: number;
   celular : string;
   cep : string;
   rua : string;

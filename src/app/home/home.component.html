@@ -1,4 +1,54 @@
 <div class="container mt-5 bg-light p-4 rounded">
+
+  <app-modal #modal class="info">
+    <h2>Detalhes</h2>
+    <div class="details">
+      <!-- <div *ngFor="let key of objectKeys(detalhe)" class="detail">
+        <span class="label">{{ formatLabel(key) }}:</span>
+        <span class="content">{{ detalhe[key] }}</span>
+      </div> -->
+      <h3 class="w-100">Pessoal:</h3>
+      <div class="detail">
+        <span class="label">Nome:</span>
+        <span class="content">{{ detalhes.nomeCompleto }}</span>
+      </div>
+
+      <div class="detail">
+        <span class="label">Celular:</span>
+        <span class="content">{{ detalhes.celular }}</span>
+      </div>
+
+      <div class="detail">
+        <span class="label">Email:</span>
+        <span class="content">{{ detalhes.email }}</span>
+      </div>
+
+      <div class="detail">
+        <span class="label">Endereço:</span>
+        <span class="content">{{ detalhes.cidade }} - {{ detalhes.rua }} - {{ detalhes.cep }}</span>
+      </div>
+
+      <span class="separator"></span>
+
+      <h3 class="w-100">Gerencial:</h3>
+      <div class="detail">
+        <span class="label">Consumo:</span>
+        <span class="content">{{ detalhes.consumoDeEnergiaMensal }}</span>
+      </div>
+
+      <div class="detail">
+        <span class="label">Data Do Pedido:</span>
+        <span class="content">{{ detalhes.dataPedido }}</span>
+      </div>
+
+      <div class="detail">
+        <span class="label">Referencia:</span>
+        <span class="content">{{ detalhes.ref }}</span>
+      </div>
+    </div>
+  </app-modal>
+
+
   <table class="table table-bordered">
     <thead class="thead-dark">
       <tr>
@@ -17,12 +67,12 @@
         <td scope="row">{{ pedido.celular }}</td>
         <td scope="row">{{ formatarData(pedido.dataPedido) }}</td>
         <td scope="row">
-          <div class="align">
+          <div class="align-icon" (click)="abrirDetalhes(pedido)">
             <i class="fa solid fa-eye icon bg-primary text-white"></i>
           </div>
         </td>
         <th scope="col">
-          <div class="align">
+          <div class="align-icon" >
             <i class="icon bg-primary text-white">Pegar</i>
           </div>
         </th>

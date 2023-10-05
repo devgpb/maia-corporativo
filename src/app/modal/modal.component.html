@@ -1,0 +1,9 @@
+<ng-container *ngIf="mostrar">
+  <div>
+    <div (click)="toggle()" class="overlay"></div>
+
+    <div class="modalt">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</ng-container>
