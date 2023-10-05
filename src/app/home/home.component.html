@@ -2,30 +2,32 @@
   <table class="table table-bordered">
     <thead class="thead-dark">
       <tr>
-        <th scope="col">ID Pedido</th>
-        <th scope="col">Nome Completo</th>
-        <th scope="col">Consumo de Energia Mensal</th>
+        <th scope="col">ID</th>
+        <th scope="col">Nome</th>
         <th scope="col">Celular</th>
-        <th scope="col">Cidade</th>
-        <th scope="col">CEP</th>
-        <th scope="col">Rua</th>
-        <th scope="col">Email</th>
-        <th scope="col">Referência</th>
         <th scope="col">Data do Pedido</th>
+        <th scope="col">Detalhes</th>
+        <th scope="col">Ações</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let pedido of list">
         <td scope="row">{{ pedido.idPedido }}</td>
         <td scope="row">{{ pedido.nomeCompleto }}</td>
-        <td scope="row">{{ pedido.consumoDeEnergiaMensal }}</td>
         <td scope="row">{{ pedido.celular }}</td>
-        <td scope="row">{{ pedido.cidade }}</td>
-        <td scope="row">{{ pedido.cep }}</td>
-        <td scope="row">{{ pedido.rua }}</td>
-        <td scope="row">{{ pedido.email }}</td>
-        <td scope="row">{{ pedido.referencia }}</td>
         <td scope="row">{{ formatarData(pedido.dataPedido) }}</td>
+        <td scope="row">
+          <div class="align">
+            <i class="fa solid fa-eye icon bg-primary text-white"></i>
+          </div>
+        </td>
+        <th scope="col">
+          <div class="align">
+            <i class="icon bg-primary text-white">Pegar</i>
+          </div>
+        </th>
+
+
       </tr>
     </tbody>
   </table>

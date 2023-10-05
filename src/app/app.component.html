@@ -1,1 +1,9 @@
-<router-outlet></router-outlet>
+<div class="everything">
+  <app-header></app-header>
+
+  <app-menu ></app-menu>
+
+  <div class="app-content" [class.menu-collapsed]="menuCollapsed" [class.is-login]="isLogin">
+    <router-outlet></router-outlet>
+  </div>
+</div>
