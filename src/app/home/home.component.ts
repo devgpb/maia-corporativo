@@ -23,21 +23,11 @@ export class HomeComponent  implements OnInit {
     private webSocketService:WebSocketService,
     private modalService: ModalService,
     private viewContainerRef: ViewContainerRef
-  ) { }
-
-  detalhes: IPedido = {
-    celular: "(11) 98765-4321",
-    cep: "01000-000",
-    cidade: "São Paulo",
-    consumoDeEnergiaMensal: 100.5,
-    dataPedido: "2023-10-04T17:22:18.844Z",
-    email: "demo@example.com",
-    horario: "tarde",
-    idPedido: 1,
-    nomeCompleto: "Demo Userx",
-    ref: "teste",
-    rua: "Rua Exemplo"
+  ) {
+    this.detalhes = {}
   }
+
+  detalhes: IPedido | any;
 
   ngOnInit(): void {
 

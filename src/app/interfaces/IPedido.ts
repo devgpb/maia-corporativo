@@ -11,5 +11,7 @@ export interface IPedido{
   horario: string;
   ref: string;
   dataPedido: string;
+  status: string;
+  responsavel: string;
 }
 

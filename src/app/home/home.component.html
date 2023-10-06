@@ -32,6 +32,10 @@
 
       <h3 class="w-100">Gerencial:</h3>
       <div class="detail">
+        <span class="label">Status:</span>
+        <span class="content">{{ detalhes.status }}</span>
+      </div>
+      <div class="detail">
         <span class="label">Consumo:</span>
         <span class="content">{{ detalhes.consumoDeEnergiaMensal }}</span>
       </div>
@@ -44,6 +48,11 @@
       <div class="detail">
         <span class="label">Referencia:</span>
         <span class="content">{{ detalhes.ref }}</span>
+      </div>
+
+      <div class="detail">
+        <span class="label">Responsável:</span>
+        <span class="content">{{ detalhes.responsavel ? detalhes.responsavel : "Sem"}}</span>
       </div>
     </div>
   </app-modal>
