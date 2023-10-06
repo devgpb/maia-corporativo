@@ -5,6 +5,7 @@ import { WebSocketService } from '../services/WebSocket/web-socket.service';
 import { ModalService } from '../services/modal/modal.service';
 
 import { IPedido } from '../interfaces/IPedido';
+import Swal from 'sweetalert2';
 
 
 
@@ -62,6 +63,40 @@ export class HomeComponent  implements OnInit {
     this.openModal()
     this.detalhes = pedido;
   }
+
+  deletarPedido(pedido: IPedido){
+
+    Swal.fire({
+      title: 'Deseja mesmo apagar o pedido?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Não',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.pedidosService.deletePedidos(pedido.idPedido as string).subscribe(apagado =>{
+          if(apagado){
+            Swal.fire({
+              icon: "success",
+              title: "Pedido Apagado!",
+              confirmButtonColor: "#3C58BF"
+            });
+            const index = this.list.indexOf(pedido);
+            this.list.splice(index,1)
+          }else{
+            Swal.fire({
+              icon: "error",
+              title: "Pedido Não Apagado!",
+            });
+          }
+        })
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire('Pedido não foi apagado.', '', 'info');
+      }
+    });
+
+  }
+
   openModal() {
     this.modalService.show();
   }

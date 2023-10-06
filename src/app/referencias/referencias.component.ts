@@ -46,13 +46,34 @@ export class ReferenciasComponent implements OnInit {
   }
 
   apagar(ref:IReferencia){
-    console.log(ref)
-    this.refService.apagarReferencia(ref.referencia).subscribe(deleted =>{
-      if(deleted){
-        const index = this.list.indexOf(ref);
-        this.list.splice(index,1)
+    Swal.fire({
+      title: 'Deseja mesmo apagar a referência?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Não',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.refService.apagarReferencia(ref.referencia).subscribe(apagado =>{
+          if(apagado){
+            Swal.fire({
+              icon: "success",
+              title: "Referência Apagado!",
+              confirmButtonColor: "#3C58BF"
+            });
+            const index = this.list.indexOf(ref);
+            this.list.splice(index,1)
+          }else{
+            Swal.fire({
+              icon: "error",
+              title: "Referência Não Apagado!",
+            });
+          }
+        })
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire('Referência não foi apagado.', '', 'info');
       }
-    })
+    });
   }
 
 

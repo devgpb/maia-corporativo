@@ -75,12 +75,14 @@
         <td scope="row">{{ formatarData(pedido.dataPedido) }}</td>
         <td scope="row">
           <div class="align-icon" (click)="abrirDetalhes(pedido)">
-            <i class="fa solid fa-eye icon bg-primary text-white"></i>
+            <i class="fa solid fa-eye icon bg-info text-white"></i>
           </div>
         </td>
         <th scope="col">
           <div class="align-icon" >
             <i class="icon bg-primary text-white">Pegar</i>
+            <i class="icon bg-danger text-white separar"
+            (click)="deletarPedido(pedido)">Deletar</i>
           </div>
         </th>
 

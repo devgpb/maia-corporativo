@@ -23,8 +23,6 @@ export class ReferenciasService {
 	}
 
   public apagarReferencia(ref:string) : Observable<boolean>{
-    const params = new HttpParams().append("referencia", ref);
-
 		return this.http.delete<boolean>(`${environment.apiURL}/referencias/${ref}`)
   }
 }

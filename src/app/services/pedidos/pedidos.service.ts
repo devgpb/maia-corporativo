@@ -14,6 +14,9 @@ export class PedidosService {
   public getPedidos (): Observable<IPedido[]>{
 
 		return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos`)
-    // return true
+	}
+
+  public deletePedidos (idPedido:string): Observable<boolean>{
+    return this.http.delete<boolean>(`${environment.apiURL}/pedidos/${idPedido}`)
 	}
 }
