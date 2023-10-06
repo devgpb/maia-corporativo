@@ -32,7 +32,6 @@ export class HomeComponent  implements OnInit {
   ngOnInit(): void {
 
     this.pedidosService.getPedidos().subscribe(pedidos =>{
-      console.log("z",pedidos[0])
       this.list = pedidos
     })
 

@@ -1,0 +1,55 @@
+<div class="container mt-5 bg-light p-4 rounded">
+
+<h1>Referências</h1>
+
+<div class="ref">
+  <div class="w-50">
+    <h2>Todas As Referências</h2>
+
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Link</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ref of list">
+          <td scope="row" (click)="copiarLink(ref.referencia)">{{ ref.referencia }}</td>
+          <td scope="row">{{ ref.nome }}</td>
+          <td scope="row" >
+            <i
+            class="fa-solid fa-trash-can icon bg-danger text-white"
+            (click)="apagar(ref)"></i>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="w-50">
+
+    <h2>Nova Referência</h2>
+
+    <form [formGroup]="form" (ngSubmit)="salvar()" class="d-flex justify-content-center flex-column">
+      <div class="w-100 d-flex justify-content-center">
+
+        <label for="referencia">Nome Referência:</label>
+        <input class="mb-3" id="referencia" type="text" formControlName="referencia">
+
+        <!-- Mensagem de erro se o campo for obrigatório -->
+
+      </div>
+      <div
+        *ngIf="form.controls['referencia'].invalid && form.controls['referencia'].touched"
+        class="error-message w-100 d-flex justify-content-center mb-3">
+          O nome é obrigatório.
+        </div>
+      <div class="w-100 d-flex justify-content-center">
+        <button type="submit">Enviar</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
