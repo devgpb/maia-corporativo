@@ -57,7 +57,7 @@ export class ReferenciasComponent implements OnInit {
 
 
   copiarLink(codigo:string) {
-    const link = `www.engemaia.com&ref=${codigo}`;
+    const link = `www.engemaia.com?ref=${codigo}`;
 
     // Usar a API do Clipboard para copiar o link
     navigator.clipboard.writeText(link).then(() => {

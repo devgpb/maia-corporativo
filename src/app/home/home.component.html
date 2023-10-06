@@ -1,12 +1,10 @@
 <div class="container mt-5 bg-light p-4 rounded">
 
   <app-modal #modal class="info">
-    <h2>Detalhes</h2>
+    <h2>Detalhes
+    </h2>
+      <h4 class="ref-header  text-danger">Referencia: {{ detalhes.ref }}</h4>
     <div class="details">
-      <!-- <div *ngFor="let key of objectKeys(detalhe)" class="detail">
-        <span class="label">{{ formatLabel(key) }}:</span>
-        <span class="content">{{ detalhe[key] }}</span>
-      </div> -->
       <h3 class="w-100">Pessoal:</h3>
       <div class="detail">
         <span class="label">Nome:</span>
