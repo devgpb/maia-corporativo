@@ -2,6 +2,12 @@ header {
 	box-shadow: 0px 3px 6px 0 rgba(0, 0, 0, 0.5);
 }
 
+.logout{
+  text-decoration: none;
+
+}
+
+
 nav {
 	background-color: #65946e;
 	line-height: 50px;
@@ -25,7 +31,7 @@ img {
 
 #user-info {
 	font-size: 16px;
-	margin: 0;
+	margin: auto 12px;
 	padding-right: 7px;
 	position: relative;
 	z-index: 2;

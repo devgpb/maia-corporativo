@@ -1,0 +1,27 @@
+.login-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centraliza verticalmente */
+  align-items: center; /* Centraliza horizontalmente */
+  height: calc(100vh - 60px); /* Altura da viewport */
+  max-width: 60%;
+  width: 100%;
+  margin: 0 auto;
+}
+
+form{
+  margin-top: 20px;
+}
+
+.login-area{
+  max-width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centraliza verticalmente */
+  align-items: center; /* Centraliza horizontalmente */
+}
+img{
+  max-width: 80%;
+  margin: 0 auto;
+}
+

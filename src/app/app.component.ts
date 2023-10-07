@@ -12,9 +12,9 @@ export class AppComponent {
 	public isLogin: boolean = false;
 
 	constructor (private router: Router) {
-		// this.router.events.subscribe(_ => {
-		// 	this.isLogin = this.router.url.substr(1).indexOf("login") === 0;
-		// });
+		this.router.events.subscribe(_ => {
+			this.isLogin = this.router.url.substr(1).indexOf("login") === 0;
+		});
 	}
 
 	// public collapseChange (event: Event) {

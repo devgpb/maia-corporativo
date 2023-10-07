@@ -3,6 +3,8 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { PedidosService } from '../services/pedidos/pedidos.service';
 import { WebSocketService } from '../services/WebSocket/web-socket.service';
 import { ModalService } from '../services/modal/modal.service';
+import { AuthService } from '../services/auth/auth.service';
+
 
 import { IPedido } from '../interfaces/IPedido';
 import Swal from 'sweetalert2';
@@ -23,7 +25,7 @@ export class HomeComponent  implements OnInit {
     private pedidosService:PedidosService,
     private webSocketService:WebSocketService,
     private modalService: ModalService,
-    private viewContainerRef: ViewContainerRef
+    private authService: AuthService
   ) {
     this.detalhes = {}
   }
@@ -39,6 +41,7 @@ export class HomeComponent  implements OnInit {
     this.webSocketService.getNovoPedido().subscribe((novoPedido: IPedido) => {
       this.list.push(novoPedido);
     });
+    console.log(this.authService.getUser())
   }
 
   formatarData(dataString: string): string {

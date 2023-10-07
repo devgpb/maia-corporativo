@@ -5,14 +5,13 @@
 		<img class="pull-left" src="../../assets/Logo Branca.png"/>
 
 		<ul id="user-info" class="pull-right">
-			<!-- <li *ngIf="(user$ | async) as user; else login">
-				<a [routerLink]="['perfil']" title="Meu Perfil">{{ userName(user) }}<i class="fa fa-user-circle"></i></a>
-				<a (click)="logout()" title="Logout"><i class="fa fa-sign-out-alt"></i></a>
-			</li> -->
+				<!-- <a [routerLink]="['perfil']" title="Meu Perfil">{{ userName(user) }}<i class="fa fa-user-circle"></i></a>
+				<a (click)="logout()" title="Logout"><i class="fa fa-sign-out-alt"></i></a> -->
+        <a href="" (click)="logout()" class="logout">Logout <i class="fa fa-sign-out-alt"></i></a>
 
-			<ng-template #login>
+			<!-- <ng-template #login>
 				<li><a [routerLink]="['login']">Fazer Login</a></li>
-			</ng-template>
+			</ng-template> -->
 		</ul>
 	</nav>
 </header>
