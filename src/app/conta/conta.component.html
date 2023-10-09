@@ -1,0 +1,40 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="container mt-5 form-case">
+
+  <div class="form">
+    <div class="form-group ">
+      <label for="nomeCompleto">Nome Completo</label>
+      <input type="text" class="form-control" id="nomeCompleto" formControlName="nomeCompleto">
+    </div>
+
+    <!-- <div class="form-group ">
+      <label for="idUsuario">ID do Usuário</label>
+      <input type="text" class="form-control" id="idUsuario" formControlName="idUsuario">
+    </div> -->
+
+
+    <div class="form-group">
+      <label for="dataNascimento">Data de Nascimento</label>
+      <input type="date" class="form-control" id="dataNascimento" formControlName="dataNascimento">
+    </div>
+
+    <div class="form-group">
+      <label for="idSetor">Setor</label>
+      <input type="text" class="form-control" id="idSetor" formControlName="setor">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" formControlName="email">
+    </div>
+
+    <div class="form-group">
+      <label for="cargo">Cargo</label>
+      <input type="text" class="form-control" id="cargo" formControlName="cargo" >
+    </div>
+
+    <div class="w-100 d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid || !nothingChanged()">Atualizar</button>
+    </div>
+  </div>
+
+</form>

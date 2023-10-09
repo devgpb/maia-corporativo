@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 
@@ -8,14 +8,14 @@ import { AuthService } from '../services/auth/auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   public currentPage: string = 'home';
+
+  public userName: string = ''
 
 	constructor (
 		private router: Router,
     private authService: AuthService
-		// private userService: UserService,
-		// private utils: UtilsService
 	) {
 		// this.user$ = userService.getUser();
 
@@ -27,6 +27,10 @@ export class HeaderComponent {
 		// 	}
 		// );
 	}
+
+  ngOnInit(): void {
+      this.userName = this.authService.getUser().nomeCompleto.split(' ')[0];
+  }
 
 	// public userName (user: IUser): string {
 	// 	if (user.nome.indexOf(" ") != -1)

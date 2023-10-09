@@ -1,22 +1,19 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { PedidosService } from '../services/pedidos/pedidos.service';
 import { WebSocketService } from '../services/WebSocket/web-socket.service';
 import { ModalService } from '../services/modal/modal.service';
 import { AuthService } from '../services/auth/auth.service';
 
-
 import { IPedido } from '../interfaces/IPedido';
 import Swal from 'sweetalert2';
 
 
-
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-finalizados',
+  templateUrl: './finalizados.component.html',
+  styleUrls: ['./finalizados.component.scss']
 })
-export class HomeComponent  implements OnInit {
+export class FinalizadosComponent  implements OnInit{
 
 
   list: IPedido[] = [];
@@ -34,13 +31,13 @@ export class HomeComponent  implements OnInit {
 
   ngOnInit(): void {
 
-    this.pedidosService.getPedidos().subscribe(pedidos =>{
+    this.pedidosService.getInstalar().subscribe(pedidos =>{
       this.list = pedidos
     })
 
-    this.webSocketService.getNovoPedido().subscribe((novoPedido: IPedido) => {
-      this.list.push(novoPedido);
-    });
+    // this.webSocketService.getNovoPedido().subscribe((novoPedido: IPedido) => {
+    //   this.list.push(novoPedido);
+    // });
   }
 
   formatarData(dataString: string): string {
@@ -84,6 +81,36 @@ export class HomeComponent  implements OnInit {
       }
     })
   }
+  retrocederPedido(pedido: IPedido){
+      Swal.fire({
+        title: 'Deseja mesmo retroceder o pedido?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sim',
+        cancelButtonText: 'Não',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.pedidosService.retrocederPedido(pedido.idPedido).subscribe(avancado =>{
+            if(avancado){
+              Swal.fire({
+                icon: "success",
+                title: "Pedido Retrocedido!",
+                confirmButtonColor: "#3C58BF"
+              });
+              const index = this.list.indexOf(pedido);
+              this.list.splice(index,1)
+            }else{
+              Swal.fire({
+                icon: "error",
+                title: "Pedido Não Retrocedido!",
+              });
+            }
+          })
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire('Pedido não foi apagado.', '', 'info');
+        }
+      });
+    }
 
   deletarPedido(pedido: IPedido){
 
@@ -125,5 +152,5 @@ export class HomeComponent  implements OnInit {
   closeModal() {
     this.modalService.hide();
   }
-
 }
+

@@ -1,0 +1,52 @@
+.icon{
+  padding: 9px;
+  border-radius: 6px;
+}
+
+.separar{
+  margin-left: 5px;
+}
+
+.align-icon{
+  display: flex ;
+  justify-content: center ;
+  cursor: pointer;
+}
+
+.ref-header{
+  text-align: right;
+}
+
+.info{
+
+  h2{
+    text-align: center;
+  }
+
+  .details{
+
+    display: flex;
+    flex-wrap: wrap;
+
+    .separator{
+      width: 100%;
+      height: 0px;
+      margin: 15px 10px;
+      border: 1px solid black;
+    }
+
+    .detail{
+      margin: 2px 5px;
+      background-color: #81C784;
+      padding: 10px 15px;
+
+
+      .label{
+        color: white;
+      }
+      .content{
+        margin-left: 12px;
+      }
+    }
+  }
+}

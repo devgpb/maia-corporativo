@@ -12,29 +12,30 @@ import { IUser } from 'src/app/interfaces/IUser';
   providedIn: 'root'
 })
 export class AuthService {
-  public usuario: IUser = {
-    idUsuario: "",
-    dataNascimento: new Date(),
-    idSetor: 0,
-    email: "",
-    cargo: "COLABORADOR"
-  };
 
-  constructor(private http: HttpClient, private router: Router,) {
-  }
+  constructor(private http: HttpClient, private router: Router,) {}
 
   login(username: string, password: string ): Observable<any> {
-    let credentials = {email: username,senha: password}
+    let credentials = {email: username, senha: password}
     return this.http.post<any>(`${environment.apiURL}/login`, credentials).pipe(
       tap(response => {
-        this.usuario = response.userData
+        localStorage.setItem('usuario', JSON.stringify(response.userData));
         this.setCookie('token', response.token, 7);
       })
     );
   }
 
-  getUser():IUser{
-    return this.usuario
+  getUser(): IUser {
+    const usuario = localStorage.getItem('usuario');
+    return usuario ? JSON.parse(usuario) : null;
+  }
+
+  updateUserData(updates: Partial<IUser>): void {
+    const currentUser = this.getUser();
+    if (currentUser) {
+      const updatedUser = {...currentUser, ...updates};
+      localStorage.setItem('usuario', JSON.stringify(updatedUser));
+    }
   }
 
   private setCookie(name: string, value: string, days: number) {
@@ -42,7 +43,6 @@ export class AuthService {
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
     const expires = `expires=${date.toUTCString()}`;
     document.cookie = `${name}=${value}; ${expires}; path=/`;
-    console.log(document.cookie)
   }
 
   getAuthToken(): string | null {
@@ -64,11 +64,11 @@ export class AuthService {
   logout() {
     // Remova o token do cookie ao fazer logout
     this.setCookie('token', '', -1);
-		this.router.navigate(["login"]);
+    localStorage.removeItem('usuario'); // Remove o usuário do localStorage
+    this.router.navigate(["login"]);
   }
 
   isLoggedIn(): boolean {
     return !!this.getAuthToken();
   }
-
 }

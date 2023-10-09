@@ -29,7 +29,6 @@ export class LoginComponent {
 
 
       this.authService.login(email, password).subscribe(res => {
-        console.log(res)
         this.router.navigate(['/home']);
       });
     }

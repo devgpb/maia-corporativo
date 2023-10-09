@@ -19,7 +19,7 @@ export class AuthInterceptor implements HttpInterceptor {
     request = request.clone({
       withCredentials: true
     })
-    
+
     if (jwtToken) {
       // Clone a requisição e substitua o header original por um que inclui o JWT
       request = request.clone({
@@ -28,8 +28,6 @@ export class AuthInterceptor implements HttpInterceptor {
         },
         withCredentials: true
       });
-      console.log(request)
-
     }
 
     // Continue com a requisição modificada ou original

@@ -1,6 +1,6 @@
 import { Injectable, ApplicationRef, Injector, EmbeddedViewRef, ComponentRef, ViewContainerRef } from '@angular/core';
 import { ModalComponent } from '../../modal/modal.component';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class ModalService {
   ) {
   }
 
-  private modalVisibility = new BehaviorSubject<boolean>(false);
+  private modalVisibility = new Subject<boolean>();
   modalVisibility$ = this.modalVisibility.asObservable();
 
   show() {

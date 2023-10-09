@@ -14,6 +14,10 @@ import { MenuComponent } from './menu/menu.component';
 import { ModalComponent } from './modal/modal.component';
 import { ReferenciasComponent } from './referencias/referencias.component';
 import { LoginComponent } from './login/login.component';
+import { ProcessoComponent } from './processo/processo.component';
+import { InstalarComponent } from './instalar/instalar.component';
+import { FinalizadosComponent } from './finalizados/finalizados.component';
+import { ContaComponent } from './conta/conta.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,11 @@ import { LoginComponent } from './login/login.component';
     MenuComponent,
     ModalComponent,
     ReferenciasComponent,
-    LoginComponent
+    LoginComponent,
+    ProcessoComponent,
+    InstalarComponent,
+    FinalizadosComponent,
+    ContaComponent
   ],
   imports: [
     BrowserModule,
