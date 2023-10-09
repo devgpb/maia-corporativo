@@ -21,6 +21,7 @@ import { FinalizadosComponent } from './finalizados/finalizados.component';
 import { ContaComponent } from './conta/conta.component';
 import { SetoresComponent } from './setores/setores.component';
 import { NovoUserComponent } from './novo-user/novo-user.component';
+import { CriarPedidoComponent } from './criar-pedido/criar-pedido.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { NovoUserComponent } from './novo-user/novo-user.component';
     FinalizadosComponent,
     ContaComponent,
     SetoresComponent,
-    NovoUserComponent
+    NovoUserComponent,
+    CriarPedidoComponent
   ],
   imports: [
     BrowserModule,

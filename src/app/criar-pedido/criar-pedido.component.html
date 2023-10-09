@@ -1,0 +1,85 @@
+<div class="form-case">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-row d-flex justify-content-center align-items-center">
+      <div class="form-group ">
+        <label for="nome">Nome Completo</label>
+        <input
+        type="text"
+        class="form-control"
+        id="nome"
+        (input)="applyNomeMask($event)"
+        placeholder="Informe o nome"
+        formControlName="nome">
+      </div>
+
+      <div class="form-group ">
+        <label for="consumo">Consumo de Energia Mensal (kWh)</label>
+        <input type="text" class="form-control" id="consumo" placeholder="Informe o consumo"
+        formControlName="consumo">
+      </div>
+    </div>
+
+    <div class="form-row d-flex justify-content-center align-items-center">
+      <div class="form-group ">
+        <label for="celular">Celular</label>
+        <input type="text" formControlName="celular" class="form-control" id="celular" placeholder="(00)-0000-0000" (input)="applyCelularMask($event)">
+      </div>
+      <div class="form-group ">
+        <label for="cep">CEP</label>
+        <input type="text" formControlName="cep" class="form-control" id="cep" placeholder="00000-000" (input)="applyCepMask($event); onCepChange()" >
+      </div>
+
+    </div>
+
+    <div class="form-row d-flex justify-content-center align-items-center ">
+
+      <div class="form-group ">
+        <label for="cidade">Cidade</label>
+        <input type="text" class="form-control" id="cidade" placeholder="Informe a cidade"
+        formControlName="cidade">
+      </div>
+      <div class="form-group ">
+        <label for="rua">Rua</label>
+        <input type="text" class="form-control" id="rua" placeholder="Informe a rua"  formControlName="rua">
+      </div>
+    </div>
+
+    <div class="form-row d-flex justify-content-center align-items-center">
+
+      <div class="form-group ">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" id="email" placeholder="Informe o email"
+        formControlName="email">
+      </div>
+
+      <div class="form-group ">
+        <label for="numero">Melhor Horário Para Contato</label>
+
+        <select formControlName="horario" class="form-select form-control" aria-label=".form-select-lg">
+          <option value="" disabled selected>Escolha o horário</option>
+          <option *ngFor="let option of options" [value]="option.horario">
+              {{ option.label }}
+          </option>
+      </select>
+      </div>
+    </div>
+    <div class="form-row d-flex justify-content-center align-items-center">
+      <div class="form-group ">
+        <label for="email">Referencia</label>
+        <select formControlName="ref" class="form-select form-control" aria-label=".form-select-lg">
+          <option value="" selected>Sem Referencia</option>
+          <option *ngFor="let option of referencias" [value]="option.referencia">
+              {{ option.nome }}
+          </option>
+      </select>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center">
+      <button type="submit" class="btn btn-light mt-3">Enviar</button>
+    </div>
+    <div *ngIf="formInvalid" class="alert alert-warning form-invalid" role="alert">
+      Formulário Invélido, forneça todas as informações
+    </div>
+  </form>
+</div>

@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { IPedido } from 'src/app/interfaces/IPedido';
+import { INovoPedido } from 'src/app/interfaces/INovoPedido';
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +38,9 @@ export class PedidosService {
 
   public deletePedidos (idPedido:string): Observable<boolean>{
     return this.http.delete<boolean>(`${environment.apiURL}/pedidos/${idPedido}`)
+	}
+
+  public setPedido (pedido: INovoPedido): Observable<INovoPedido>{
+		return this.http.post<INovoPedido>(`${environment.apiURL}/pedidos`,  pedido )
 	}
 }
