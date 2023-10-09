@@ -31,7 +31,7 @@ export class FinalizadosComponent  implements OnInit{
 
   ngOnInit(): void {
 
-    this.pedidosService.getInstalar().subscribe(pedidos =>{
+    this.pedidosService.getFinalizado().subscribe(pedidos =>{
       this.list = pedidos
     })
 
