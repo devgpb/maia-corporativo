@@ -1,0 +1,41 @@
+<form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="container mt-5 form-case">
+  <div class="form">
+    <div class="form-group">
+      <label for="nomeCompleto">Nome Completo</label>
+      <input type="text" class="form-control" id="nomeCompleto" formControlName="nomeCompleto">
+    </div>
+
+    <div class="form-group">
+      <label for="dataNascimento">Data de Nascimento</label>
+      <input type="date" class="form-control" id="dataNascimento" formControlName="dataNascimento">
+    </div>
+
+    <div class="form-group min">
+      <label for="setor">Setor</label>
+      <select class="form-control" id="setor" formControlName="idSetor">
+        <option *ngFor="let setor of list" [value]="setor.idSetor">{{setor.nome}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" formControlName="email">
+    </div>
+
+    <div class="form-group">
+      <label for="senha">Senha</label>
+      <input type="password" class="form-control" id="senha" formControlName="senha">
+    </div>
+
+    <div class="form-group">
+      <label for="cargo">Cargo</label>
+      <select class="form-control" id="cargo" formControlName="cargo">
+        <option *ngFor="let cargo of listCargos" [value]="cargo">{{cargo}}</option>
+      </select>
+    </div>
+
+    <div class="w-100 d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Cadastrar</button>
+    </div>
+  </div>
+</form>

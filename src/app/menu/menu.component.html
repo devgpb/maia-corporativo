@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
+<nav class="navbar menu navbar-expand-lg navbar-light bg-light justify-content-center">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -10,36 +10,54 @@
         [routerLinkActiveOptions]="{exact: true}"
         [attr.disabled]="isActive('/ref') ? true : null">Referências</a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" routerLink="/home"
+
+      <li class="nav-item active" *ngIf="userCargo=='ADMINISTRADOR'">
+        <a class="nav-link" routerLink="/setores"
         [routerLinkActive]="['active-link']"
         [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('/ref') ? true : null">Recebidos</a>
+        [attr.disabled]="isActive('/setores') ? true : null">Setores</a>
       </li>
+
       <li class="nav-item">
-        <a class="nav-link" routerLink="/processo"
+        <a class="nav-link" (click)="toggleSubmenu()" role="button">Pedidos</a>
+      </li>
+
+      <li class="nav-item active" *ngIf="userCargo=='ADMINISTRADOR'">
+        <a class="nav-link" routerLink="usuarios/novo"
         [routerLinkActive]="['active-link']"
         [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('/ref') ? true : null">Em Processo</a>
+        [attr.disabled]="isActive('usuarios/novo') ? true : null">Novo Usuario</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/instalar"
-        [routerLinkActive]="['active-link']"
-        [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('/ref') ? true : null">A Instalar</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/finalizados"
-        [routerLinkActive]="['active-link']"
-        [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('/ref') ? true : null">Finalizados</a>
-      </li>
+
       <li class="nav-item">
         <a class="nav-link" routerLink="/conta"
         [routerLinkActive]="['active-link']"
         [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('/ref') ? true : null">Minha Conta</a>
+        [attr.disabled]="isActive('/conta') ? true : null">Minha Conta</a>
       </li>
     </ul>
   </div>
+
+  <div class="submenu" [@slideToggle]="isOpen ? 'open' : 'closed'">
+    <a routerLink="/home"
+    [routerLinkActive]="['active-link']"
+    [routerLinkActiveOptions]="{exact: true}"
+    [attr.disabled]="isActive('/home') ? true : null">Recebidos</a>
+
+    <a routerLink="/processo"
+    [routerLinkActive]="['active-link']"
+    [routerLinkActiveOptions]="{exact: true}"
+    [attr.disabled]="isActive('/processo') ? true : null">Em Processo</a>
+
+    <a routerLink="/instalar"
+    [routerLinkActive]="['active-link']"
+    [routerLinkActiveOptions]="{exact: true}"
+    [attr.disabled]="isActive('/instalar') ? true : null">A Instalar</a>
+
+    <a routerLink="/finalizados"
+    [routerLinkActive]="['active-link']"
+    [routerLinkActiveOptions]="{exact: true}"
+    [attr.disabled]="isActive('/finalizados') ? true : null">Finalizados</a>
+  </div>
 </nav>
+

@@ -5,6 +5,7 @@ import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './services/auth/auth.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +19,8 @@ import { ProcessoComponent } from './processo/processo.component';
 import { InstalarComponent } from './instalar/instalar.component';
 import { FinalizadosComponent } from './finalizados/finalizados.component';
 import { ContaComponent } from './conta/conta.component';
+import { SetoresComponent } from './setores/setores.component';
+import { NovoUserComponent } from './novo-user/novo-user.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,9 @@ import { ContaComponent } from './conta/conta.component';
     ProcessoComponent,
     InstalarComponent,
     FinalizadosComponent,
-    ContaComponent
+    ContaComponent,
+    SetoresComponent,
+    NovoUserComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +44,8 @@ import { ContaComponent } from './conta/conta.component';
     BlockUIModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [
     {

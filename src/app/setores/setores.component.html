@@ -1,0 +1,55 @@
+<div class="container mt-5 bg-light p-4 rounded">
+
+  <h1>Referências</h1>
+
+  <div class="ref">
+    <div class="w-50">
+      <h2>Todas As Referências</h2>
+
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let setor of list">
+            <td scope="row">{{ setor.idSetor }}</td>
+            <td scope="row">{{ setor.nome }}</td>
+            <td scope="row" >
+              <i
+              class="fa-solid fa-trash-can icon bg-danger text-white"
+              (click)="apagar(setor)"></i>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="w-50">
+
+      <h2>Nova Referência</h2>
+
+      <form [formGroup]="form" (ngSubmit)="salvar()" class="d-flex justify-content-center flex-column">
+        <div class="w-100 d-flex justify-content-center">
+
+          <label for="setor">Nome Setor:</label>
+          <input class="mb-3" id="setor" type="text" formControlName="setor">
+
+          <!-- Mensagem de erro se o campo for obrigatório -->
+
+        </div>
+        <div
+          *ngIf="form.controls['setor'].invalid && form.controls['setor'].touched"
+          class="error-message w-100 d-flex justify-content-center mb-3">
+            O nome é obrigatório.
+          </div>
+        <div class="w-100 d-flex justify-content-center">
+          <button type="submit">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>

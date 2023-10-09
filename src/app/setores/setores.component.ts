@@ -3,41 +3,41 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import Swal, { SweetAlertResult } from "sweetalert2";
 
 
-import { ReferenciasService } from '../services/referenciasService/referencias.service';
-import { IReferencia } from '../interfaces/IReferencia';
+import { SetoresService } from '../services/setores/setores.service';
+import { ISetor } from '../interfaces/ISetor';
+
 @Component({
-  selector: 'app-referencias',
-  templateUrl: './referencias.component.html',
-  styleUrls: ['./referencias.component.scss']
+  selector: 'app-setores',
+  templateUrl: './setores.component.html',
+  styleUrls: ['./setores.component.scss']
 })
-export class ReferenciasComponent implements OnInit {
+export class SetoresComponent implements OnInit {
 
   form: FormGroup;
-  list: IReferencia[] | any[];
+  list: ISetor[] | any[];
 
   constructor(
     private fb: FormBuilder,
-    private refService:ReferenciasService
+    private setoresService:SetoresService
   ){
     this.list = []
     this.form = this.fb.group({
-      referencia: ['', Validators.required]
+      setor: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    this.refService.getReferencias().subscribe(ref => {
+    this.setoresService.getSetores().subscribe(ref => {
       this.list = ref
     })
   }
 
-
   salvar() {
     if (this.form.valid) {
       console.log("Formulário enviado!", this.form.value);
-      this.refService.salvarReferencia(this.form.get('referencia')?.value).subscribe(res =>{
-        if(res.referencia){
-          this.form.get('referencia')?.setValue('')
+      this.setoresService.salvarSetor(this.form.get('setor')?.value).subscribe(res =>{
+        if(res.nome){
+          this.form.get('setor')?.setValue('')
           this.list.push(res)
         }
       })
@@ -46,33 +46,33 @@ export class ReferenciasComponent implements OnInit {
     }
   }
 
-  apagar(ref:IReferencia){
+  apagar(setor:ISetor){
     Swal.fire({
-      title: 'Deseja mesmo apagar a referência?',
+      title: 'Deseja mesmo apagar o setor?',
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Sim',
       cancelButtonText: 'Não',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.refService.apagarReferencia(ref.referencia).subscribe(apagado =>{
+        this.setoresService.apagarSetor(setor.idSetor).subscribe(apagado =>{
           if(apagado){
             Swal.fire({
               icon: "success",
-              title: "Referência Apagado!",
+              title: "Setor Apagado!",
               confirmButtonColor: "#3C58BF"
             });
-            const index = this.list.indexOf(ref);
+            const index = this.list.indexOf(setor);
             this.list.splice(index,1)
           }else{
             Swal.fire({
               icon: "error",
-              title: "Referência Não Apagado!",
+              title: "Setor Não Apagado!",
             });
           }
         })
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Referência não foi apagado.', '', 'info');
+        Swal.fire('Setor não foi apagado.', '', 'info');
       }
     });
   }
@@ -85,7 +85,7 @@ export class ReferenciasComponent implements OnInit {
     navigator.clipboard.writeText(link).then(() => {
       Swal.fire({
         icon: "success",
-        title: "Referencia Copiada!",
+        title: "setor Copiada!",
         text: "Ref: "+link,
         confirmButtonColor: "#3C58BF"
       });
@@ -93,7 +93,7 @@ export class ReferenciasComponent implements OnInit {
       console.error('Falha ao copiar: ', err);
       Swal.fire({
         icon:"error",
-        title: "Referencia Não Copiada!",
+        title: "setor Não Copiada!",
         text: "Mas seu link é: "+link,
       });
     });

@@ -12,3 +12,44 @@
   // ou qualquer outro estilo que você deseja aplicar
   pointer-events: none; // para desativar o link
 }
+.navbar{
+  width: 100%;
+}
+.submenu {
+  overflow: hidden;
+  // ... outros estilos
+}
+
+.menu{
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+// .dropdown-menu {
+//   display: none;
+//   transition: max-height 0.3s ease-out;
+//   max-height: 0;
+//   overflow: hidden;
+// }
+
+// .dropdown.show .dropdown-menu {
+//   display: block;
+//   max-height: 300px; // altere para se adaptar ao tamanho que você deseja
+// }
+
+.submenu {
+  background-color: #f8f9fa; // Isso é apenas o mesmo bg-light do Bootstrap. Ajuste conforme necessário.
+
+  display: flex;
+  justify-content: center;
+  transition: max-height 0.3s ease-out;
+  overflow: hidden;
+
+  a {
+      margin: 10px 15px;
+      color: rgba(0,0,0, 0.65); // Cor padrão do link do Bootstrap.
+      &:hover {
+          text-decoration: none;
+      }
+  }
+}

@@ -10,7 +10,8 @@ import { InstalarComponent } from './instalar/instalar.component';
 import { FinalizadosComponent } from './finalizados/finalizados.component';
 import { ContaComponent } from './conta/conta.component';
 import { LoginComponent } from './login/login.component';
-
+import { SetoresComponent } from './setores/setores.component';
+import { NovoUserComponent } from './novo-user/novo-user.component';
 
 import { AuthGuard } from './services/guard/auth.guard';
 
@@ -22,6 +23,8 @@ const routes: Routes = [
   { path: "instalar", component: InstalarComponent, canActivate: [AuthGuard] },
   { path: "finalizados", component: FinalizadosComponent, canActivate: [AuthGuard] },
   { path: "conta", component: ContaComponent, canActivate: [AuthGuard] },
+  { path: "usuarios/novo", component: NovoUserComponent, canActivate: [AuthGuard] },
+  { path: "setores", component: SetoresComponent, canActivate: [AuthGuard] },
   { path: "ref", component: ReferenciasComponent, canActivate: [AuthGuard]  },
   { path: '**', redirectTo: 'home', pathMatch: 'full'  }
 ];

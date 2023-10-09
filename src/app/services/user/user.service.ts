@@ -14,4 +14,12 @@ export class UserService {
   public atualizarUser(dados: any, idUser: string): Observable<boolean>{
 		return this.http.put<boolean>(`${environment.apiURL}/usuarios/${idUser}`,dados)
 	}
+
+  public cadastrarUser(dados: any): Observable<boolean>{
+		return this.http.post<boolean>(`${environment.apiURL}/usuarios`,dados)
+	}
+
+  public getCargos (): Observable<any[]>{
+		return this.http.get<any[]>(`${environment.apiURL}/usuarios/cargos`)
+	}
 }

@@ -1,0 +1,42 @@
+h1,h2{
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.icon{
+  padding: 9px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.ref{
+  display: flex;
+  width: 100%;
+  min-height: 200px;
+
+  td{
+    text-align: center;
+  }
+}
+
+#referencia{
+  margin-left: 15px;
+}
+
+/* Estilo para a mensagem de erro */
+div.error-message {
+  color: red;
+  margin-top: 5px;
+}
+
+/* Estilo para input inválido */
+input.ng-touched.ng-invalid {
+  border: 1px solid red;
+  box-shadow: 0 0 5px red;
+}
+
+/* Estilo para input válido */
+input.ng-touched.ng-valid {
+  border: 1px solid green;
+  box-shadow: 0 0 5px green;
+}
