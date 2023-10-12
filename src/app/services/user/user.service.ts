@@ -19,6 +19,10 @@ export class UserService {
 		return this.http.post<boolean>(`${environment.apiURL}/usuarios`,dados)
 	}
 
+  public getColaboradores (): Observable<any[]>{
+		return this.http.get<any[]>(`${environment.apiURL}/usuarios/colaboradores`)
+	}
+
   public getCargos (): Observable<any[]>{
 		return this.http.get<any[]>(`${environment.apiURL}/usuarios/cargos`)
 	}

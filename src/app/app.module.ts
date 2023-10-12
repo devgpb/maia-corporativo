@@ -47,7 +47,7 @@ import { CriarPedidoComponent } from './criar-pedido/criar-pedido.component';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [
     {

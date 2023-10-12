@@ -26,6 +26,9 @@ export class NovoUserComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    this.authService.cargosPermitidos([Cargos.ADMINISTRADOR,Cargos.GESTOR])
+
     this.registerForm = this.fb.group({
       nomeCompleto: ['', Validators.required],
       dataNascimento: ['', Validators.required],

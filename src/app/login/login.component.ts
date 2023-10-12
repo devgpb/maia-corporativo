@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Importe FormBuilder, FormGroup e Validators
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Importe 
 })
 export class LoginComponent {
   public loginForm: FormGroup; // Crie um FormGroup
+  public invalidCred: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -30,6 +32,8 @@ export class LoginComponent {
 
       this.authService.login(email, password).subscribe(res => {
         this.router.navigate(['/home']);
+      },(error)=>{
+        this.invalidCred = true
       });
     }
   }

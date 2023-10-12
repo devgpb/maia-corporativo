@@ -1,57 +1,133 @@
 <div class="container mt-5 bg-light p-4 rounded">
 
   <app-modal #modal class="info">
-    <h2>Detalhes
-    </h2>
-      <h4 class="ref-header  text-danger">Referencia: {{ detalhes.ref }}</h4>
-    <div class="details">
-      <h3 class="w-100">Pessoal:</h3>
-      <div class="detail">
-        <span class="label">Nome:</span>
-        <span class="content">{{ detalhes.nomeCompleto }}</span>
-      </div>
+    <div class="w-100"  *ngIf="showDetails">
+      <h2>Detalhes
+      </h2>
+        <h4 class="ref-header  text-danger">Referencia: {{ detalhes.ref }}</h4>
+      <div class="details">
+        <h3 class="w-100">Pessoal:</h3>
+        <div class="detail">
+          <span class="label">Nome:</span>
+          <span class="content">{{ detalhes.nomeCompleto }}</span>
+        </div>
 
-      <div class="detail">
-        <span class="label">Celular:</span>
-        <span class="content">{{ detalhes.celular }}</span>
-      </div>
+        <div class="detail">
+          <span class="label">Celular:</span>
+          <span class="content">{{ detalhes.celular }}</span>
+        </div>
 
-      <div class="detail">
-        <span class="label">Email:</span>
-        <span class="content">{{ detalhes.email }}</span>
-      </div>
+        <div class="detail">
+          <span class="label">Email:</span>
+          <span class="content">{{ detalhes.email }}</span>
+        </div>
 
-      <div class="detail">
-        <span class="label">Endereço:</span>
-        <span class="content">{{ detalhes.cidade }} - {{ detalhes.rua }} - {{ detalhes.cep }}</span>
-      </div>
+        <div class="detail">
+          <span class="label">Endereço:</span>
+          <span class="content">{{ detalhes.cidade }} - {{ detalhes.rua }} - {{ detalhes.cep }}</span>
+        </div>
 
-      <span class="separator"></span>
+        <span class="separator"></span>
 
-      <h3 class="w-100">Gerencial:</h3>
-      <div class="detail">
-        <span class="label">Status:</span>
-        <span class="content">{{ detalhes.status }}</span>
-      </div>
-      <div class="detail">
-        <span class="label">Consumo:</span>
-        <span class="content">{{ detalhes.consumoDeEnergiaMensal }}</span>
-      </div>
+        <h3 class="w-100">Gerencial:</h3>
+        <div class="detail">
+          <span class="label">Status:</span>
+          <span class="content">{{ detalhes.status }}</span>
+        </div>
+        <div class="detail">
+          <span class="label">Consumo:</span>
+          <span class="content">{{ detalhes.consumoDeEnergiaMensal }}</span>
+        </div>
 
-      <div class="detail">
-        <span class="label">Data Do Pedido:</span>
-        <span class="content">{{ detalhes.dataPedido }}</span>
-      </div>
+        <div class="detail">
+          <span class="label">Data Do Pedido:</span>
+          <span class="content">{{ detalhes.dataPedido }}</span>
+        </div>
 
-      <div class="detail">
-        <span class="label">Referencia:</span>
-        <span class="content">{{ detalhes.ref }}</span>
-      </div>
+        <div class="detail">
+          <span class="label">Referencia:</span>
+          <span class="content">{{ detalhes.ref }}</span>
+        </div>
 
-      <div class="detail">
-        <span class="label">Responsável:</span>
-        <span class="content">{{ detalhes.responsavel ? detalhes.responsavel : "Sem"}}</span>
+        <div class="detail">
+          <span class="label">Responsável:</span>
+          <span class="content">{{ detalhes.responsavel ? detalhes.responsavel : "Sem"}}</span>
+        </div>
       </div>
+    </div>
+
+    <div class="w-100"  *ngIf="showEdit">
+      <h2>Editar Detalhes</h2>
+
+      <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="edit-form">
+
+        <!-- Pessoal -->
+        <h3 class="w-100">Pessoal:</h3>
+
+        <div class="form-group">
+          <label for="nomeCompleto">Nome:</label>
+          <input type="text" class="form-control" id="nomeCompleto" formControlName="nomeCompleto">
+        </div>
+
+        <div class="form-group">
+          <label for="celular">Celular:</label>
+          <input type="tel" class="form-control" id="celular" formControlName="celular">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" class="form-control" id="email" formControlName="email">
+        </div>
+
+        <div class="form-group">
+          <label for="cidade">Cidade:</label>
+          <input type="text" class="form-control" id="cidade" formControlName="cidade">
+        </div>
+
+        <div class="form-group">
+          <label for="rua">Rua:</label>
+          <input type="text" class="form-control" id="rua" formControlName="rua">
+        </div>
+
+        <div class="form-group">
+          <label for="cep">CEP:</label>
+          <input type="text" class="form-control" id="cep" formControlName="cep" maxlength="10" placeholder="00000-000">
+        </div>
+
+        <!-- Gerencial -->
+        <h3 class="w-100">Gerencial:</h3>
+
+        <div class="form-group">
+          <label for="status">Status:</label>
+          <input type="text" class="form-control" id="status" formControlName="status">
+        </div>
+
+        <div class="form-group">
+          <label for="consumoDeEnergiaMensal">Consumo Mensal de Energia:</label>
+          <input type="number" class="form-control" id="consumoDeEnergiaMensal" formControlName="consumoDeEnergiaMensal">
+        </div>
+
+        <div class="form-group">
+          <label for="dataPedido">Data do Pedido:</label>
+          <input type="date" class="form-control" id="dataPedido" formControlName="dataPedido">
+        </div>
+
+        <div class="form-group">
+          <label for="ref">Referência:</label>
+          <input type="text" class="form-control" id="ref" formControlName="ref">
+        </div>
+
+        <div class="form-group">
+          <label for="responsavel">Responsável:</label>
+          <input type="text" class="form-control" id="responsavel" formControlName="responsavel">
+        </div>
+
+        <div class="form-group w-100 btn-area ">
+          <button [disabled]="nothingChanged()" type="submit" class="btn btn-primary">Salvar</button>
+          <!-- <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button> -->
+        </div>
+
+      </form>
     </div>
   </app-modal>
 
@@ -74,8 +150,12 @@
         <td scope="row">{{ pedido.celular }}</td>
         <td scope="row">{{ formatarData(pedido.dataPedido) }}</td>
         <td scope="row">
-          <div class="align-icon" (click)="abrirDetalhes(pedido)">
-            <i class="fa solid fa-eye icon bg-info text-white"></i>
+          <div class="align-icon" >
+            <i class="fa solid fa-eye icon bg-info text-white"
+            (click)="abrirDetalhes(pedido)"></i>
+            <i class="fa solid fa-pen icon bg-warning text-white"
+            (click)="abrirEdicao(pedido)"></i>
+
           </div>
         </td>
         <th scope="col">

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import Swal, { SweetAlertResult } from "sweetalert2";
 
+import { AuthService } from '../services/auth/auth.service';
+import { Cargos } from '../interfaces/IUser';
 
 import { SetoresService } from '../services/setores/setores.service';
 import { ISetor } from '../interfaces/ISetor';
@@ -18,7 +20,8 @@ export class SetoresComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private setoresService:SetoresService
+    private setoresService:SetoresService,
+    private authService: AuthService
   ){
     this.list = []
     this.form = this.fb.group({
@@ -27,6 +30,8 @@ export class SetoresComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authService.cargosPermitidos([Cargos.ADMINISTRADOR,Cargos.GESTOR])
+
     this.setoresService.getSetores().subscribe(ref => {
       this.list = ref
     })

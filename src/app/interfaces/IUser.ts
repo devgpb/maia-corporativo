@@ -9,7 +9,7 @@ export interface IUser{
 }
 
 export enum Cargos{
-  "GESTOR",
-  "ADMINISTRADOR",
-  "COLABORADOR"
+  GESTOR = "GESTOR",
+  ADMINISTRADOR = "ADMINISTRADOR",
+  COLABORADOR = "COLABORADOR"
 }

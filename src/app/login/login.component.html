@@ -7,11 +7,11 @@
         <input type="email" id="email" name="email" formControlName="email" required
                class="form-control" placeholder="Seu email">
         <div *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched"
-             class="invalid-feedback">
+             class="error">
           Email é obrigatório.
         </div>
         <div *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched"
-             class="invalid-feedback">
+             class="error">
           Email inválido.
         </div>
       </div>
@@ -20,10 +20,15 @@
         <input type="password" id="password" name="password" formControlName="password" required
                class="form-control" placeholder="Sua senha">
         <div *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"
-             class="invalid-feedback">
+             class="error">
           Senha é obrigatória.
         </div>
       </div>
+
+      <div *ngIf="invalidCred" class="error">
+        Login ou Senha Inválidos.
+      </div>
+
       <div class="w-100 d-flex justify-content-center mt-3">
         <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary">Entrar</button>
       </div>

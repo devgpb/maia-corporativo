@@ -30,6 +30,19 @@ export class AuthService {
     return usuario ? JSON.parse(usuario) : null;
   }
 
+  getCargo(): string {
+    const cargo = localStorage.getItem('usuario');
+    return cargo ? JSON.parse(cargo).cargo : null;
+  }
+
+  cargosPermitidos(allowedRoles: string[]): boolean {
+    const isAllowed = allowedRoles.includes(this.getCargo());
+    if (!isAllowed) {
+      this.router.navigate(['/home']);  // Redireciona para home se não estiver permitido.
+    }
+    return isAllowed;
+  }
+
   updateUserData(updates: Partial<IUser>): void {
     const currentUser = this.getUser();
     if (currentUser) {

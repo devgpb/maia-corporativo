@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import Swal, { SweetAlertResult } from "sweetalert2";
 
 
+import { AuthService } from '../services/auth/auth.service';
+import { Cargos } from '../interfaces/IUser';
 import { ReferenciasService } from '../services/referenciasService/referencias.service';
 import { IReferencia } from '../interfaces/IReferencia';
 @Component({
@@ -17,7 +19,9 @@ export class ReferenciasComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private refService:ReferenciasService
+    private refService:ReferenciasService,
+    private authService: AuthService
+
   ){
     this.list = []
     this.form = this.fb.group({
@@ -26,6 +30,7 @@ export class ReferenciasComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authService.cargosPermitidos([Cargos.ADMINISTRADOR,Cargos.GESTOR])
     this.refService.getReferencias().subscribe(ref => {
       this.list = ref
     })
@@ -46,36 +51,36 @@ export class ReferenciasComponent implements OnInit {
     }
   }
 
-  apagar(ref:IReferencia){
-    Swal.fire({
-      title: 'Deseja mesmo apagar a referência?',
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonText: 'Sim',
-      cancelButtonText: 'Não',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.refService.apagarReferencia(ref.referencia).subscribe(apagado =>{
-          if(apagado){
-            Swal.fire({
-              icon: "success",
-              title: "Referência Apagado!",
-              confirmButtonColor: "#3C58BF"
-            });
-            const index = this.list.indexOf(ref);
-            this.list.splice(index,1)
-          }else{
-            Swal.fire({
-              icon: "error",
-              title: "Referência Não Apagado!",
-            });
-          }
-        })
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Referência não foi apagado.', '', 'info');
-      }
-    });
-  }
+  // apagar(ref:IReferencia){
+  //   Swal.fire({
+  //     title: 'Deseja mesmo apagar a referência?',
+  //     icon: 'question',
+  //     showCancelButton: true,
+  //     confirmButtonText: 'Sim',
+  //     cancelButtonText: 'Não',
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       this.refService.apagarReferencia(ref.referencia).subscribe(apagado =>{
+  //         if(apagado){
+  //           Swal.fire({
+  //             icon: "success",
+  //             title: "Referência Apagado!",
+  //             confirmButtonColor: "#3C58BF"
+  //           });
+  //           const index = this.list.indexOf(ref);
+  //           this.list.splice(index,1)
+  //         }else{
+  //           Swal.fire({
+  //             icon: "error",
+  //             title: "Referência Não Apagado!",
+  //           });
+  //         }
+  //       })
+  //     } else if (result.dismiss === Swal.DismissReason.cancel) {
+  //       Swal.fire('Referência não foi apagado.', '', 'info');
+  //     }
+  //   });
+  // }
 
 
   copiarLink(codigo:string) {

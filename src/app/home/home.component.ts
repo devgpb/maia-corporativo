@@ -4,6 +4,7 @@ import { PedidosService } from '../services/pedidos/pedidos.service';
 import { WebSocketService } from '../services/WebSocket/web-socket.service';
 import { ModalService } from '../services/modal/modal.service';
 import { AuthService } from '../services/auth/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 import { IPedido } from '../interfaces/IPedido';
@@ -18,29 +19,61 @@ import Swal from 'sweetalert2';
 })
 export class HomeComponent  implements OnInit {
 
-
+  public showDetails = true;
+  public showEdit = false;
+  // public idPedido: any = ''
+  public pedidoEmEdicao: any;
   list: IPedido[] = [];
+  public editForm: FormGroup;
+
 
   constructor(
     private pedidosService:PedidosService,
     private webSocketService:WebSocketService,
     private modalService: ModalService,
-    private authService: AuthService
+    private authService: AuthService,
+    private fb: FormBuilder
   ) {
     this.detalhes = {}
+    this.editForm = this.initializeForm();
+    this.editForm.get('ref')?.disable();
+    this.editForm.get('status')?.disable();
+
   }
 
   detalhes: IPedido | any;
 
+
+  initializeForm() {
+    // Inicialização do formulário
+    return this.fb.group({
+      nomeCompleto: ['', Validators.required],
+      celular: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      cidade: ['', Validators.required],
+      rua: ['', Validators.required],
+      cep: ['', Validators.required],
+      status: ['', Validators.required],
+      consumoDeEnergiaMensal: ['', Validators.required],
+      dataPedido: ['', Validators.required],
+      ref: [''],
+      responsavel: ['']
+    });
+  }
+
   ngOnInit(): void {
 
-    this.pedidosService.getPedidos().subscribe(pedidos =>{
-      this.list = pedidos
-    })
+    this.atualizarPedidos()
 
     this.webSocketService.getNovoPedido().subscribe((novoPedido: IPedido) => {
       this.list.push(novoPedido);
     });
+  }
+
+  atualizarPedidos(){
+    this.pedidosService.getPedidos().subscribe(pedidos =>{
+      this.list = pedidos
+    })
   }
 
   formatarData(dataString: string): string {
@@ -62,8 +95,49 @@ export class HomeComponent  implements OnInit {
   }
 
   abrirDetalhes(pedido: IPedido){
-    this.openModal()
+    this.showEdit = false
+    this.showDetails = true
     this.detalhes = pedido;
+    this.openModal()
+    console.log('foi')
+  }
+
+  abrirEdicao(pedido: IPedido){
+    this.showDetails = false
+    this.showEdit = true
+    const data = new Date(pedido.dataPedido).toISOString().split('T')[0]
+
+    this.editForm.patchValue({
+      nomeCompleto: pedido.nomeCompleto,
+      celular: pedido.celular,
+      email: pedido.email,
+      cidade: pedido.cidade,
+      rua: pedido.rua,
+      cep: pedido.cep,
+      status: pedido.status,
+      consumoDeEnergiaMensal: pedido.consumoDeEnergiaMensal,
+      dataPedido: data,
+      ref: pedido.ref,
+      responsavel: pedido.responsavel
+    });
+    this.pedidoEmEdicao = pedido
+    this.detalhes = pedido;
+    this.openModal()
+  }
+
+
+  nothingChanged(): boolean {
+    const formValues = this.editForm.value;
+
+    return formValues.nomeCompleto === this.pedidoEmEdicao.nomeCompleto &&
+           formValues.celular === this.pedidoEmEdicao.celular &&
+           formValues.email === this.pedidoEmEdicao.email &&
+           formValues.cidade === this.pedidoEmEdicao.cidade &&
+           formValues.rua === this.pedidoEmEdicao.rua &&
+           formValues.cep === this.pedidoEmEdicao.cep &&
+           formValues.consumoDeEnergiaMensal === this.pedidoEmEdicao.consumoDeEnergiaMensal &&
+           formValues.dataPedido === new Date(this.pedidoEmEdicao.dataPedido).toISOString().split('T')[0] &&
+           formValues.responsavel === this.pedidoEmEdicao.responsavel;
   }
 
   avancarPedido(pedido: IPedido){
@@ -124,6 +198,18 @@ export class HomeComponent  implements OnInit {
 
   closeModal() {
     this.modalService.hide();
+  }
+
+  onSubmit() {
+    if (this.editForm.valid) {
+
+      this.pedidosService.updatePedido(this.pedidoEmEdicao.idPedido,this.editForm.value).subscribe(resp =>{
+        this.atualizarPedidos()
+      })
+      this.closeModal()
+    } else {
+      console.log('cep é inválido devido a:', this.editForm.get('cep')?.errors);
+    }
   }
 
 }

@@ -5,6 +5,10 @@ import { INovoPedido } from '../interfaces/INovoPedido';
 import { EnderecoService } from '../services/enderecoService/endereco.service';
 import { ReferenciasService } from '../services/referenciasService/referencias.service';
 import { PedidosService } from '../services/pedidos/pedidos.service';
+import { UserService } from '../services/user/user.service';
+import { AuthService } from '../services/auth/auth.service';
+import { IUser } from '../interfaces/IUser';
+
 @Component({
   selector: 'app-criar-pedido',
   templateUrl: './criar-pedido.component.html',
@@ -16,7 +20,7 @@ export class CriarPedidoComponent {
   public horarioSelecionado: string = "";
   public formInvalid: boolean = false;
   public ref = ''
-
+  public user: IUser
   public referencias: any;
 
   public options = [
@@ -76,12 +80,14 @@ export class CriarPedidoComponent {
     private fb: FormBuilder,
     private enderecoService: EnderecoService,
     private referenciasService: ReferenciasService,
-    private pedidosService: PedidosService
+    private pedidosService: PedidosService,
+    private authService: AuthService
   ){
     this.form = this.initializeForm();
     this.referenciasService.getReferencias().subscribe(ref => {
       this.referencias = ref
     })
+    this.user = this.authService.getUser()
   }
 
   private initializeForm(): FormGroup {
@@ -114,7 +120,7 @@ export class CriarPedidoComponent {
 
     if (this.form.valid) {
 
-      const ref = this.form.get("ref")?.value;
+      const ref = this.user.idUsuario;
 
       const formContato: INovoPedido = {
         nomeCompleto: this.form.get("nome")?.value,
@@ -125,15 +131,14 @@ export class CriarPedidoComponent {
         cidade:this.form.get("cidade")?.value,
         email: this.form.get("email")?.value,
         horario: this.form.get("horario")?.value,
-        referencia: ref != '' ? ref  : null,
-        // referencia: this.ref != '' ? this.ref : null
+        referencia: ref,
       }
       this.formInvalid = false
 
       this.pedidosService.setPedido(formContato).subscribe(_ =>{
         console.log(_)
       })
-      
+
       Swal.fire({
         icon: "success",
         title: "Seu Pedido foi efetuado!",

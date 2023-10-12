@@ -18,8 +18,12 @@
         [attr.disabled]="isActive('/setores') ? true : null">Setores</a>
       </li>
 
+      <li class="nav-item" *ngIf="userCargo=='ADMINISTRADOR'">
+        <a class="nav-link" (click)="toggleSubmenu('relatorios')" role="button">Relatórios</a>
+      </li>
+
       <li class="nav-item">
-        <a class="nav-link" (click)="toggleSubmenu()" role="button">Pedidos</a>
+        <a class="nav-link" (click)="toggleSubmenu('pedidos')" role="button">Pedidos</a>
       </li>
 
       <li class="nav-item active" *ngIf="userCargo=='ADMINISTRADOR'">
@@ -39,30 +43,39 @@
   </div>
 
   <div class="submenu" [@slideToggle]="isOpen ? 'open' : 'closed'">
-    <a routerLink="/home"
-    [routerLinkActive]="['active-link']"
-    [routerLinkActiveOptions]="{exact: true}"
-    [attr.disabled]="isActive('/home') ? true : null">Recebidos</a>
+    <div class="w-100" *ngIf="menuSelected == 'pedidos'">
+      <a routerLink="/home"
+      [routerLinkActive]="['active-link']"
+      [routerLinkActiveOptions]="{exact: true}"
+      [attr.disabled]="isActive('/home') ? true : null">Recebidos</a>
 
-    <a routerLink="/processo"
-    [routerLinkActive]="['active-link']"
-    [routerLinkActiveOptions]="{exact: true}"
-    [attr.disabled]="isActive('/processo') ? true : null">Em Processo</a>
+      <a routerLink="/processo"
+      [routerLinkActive]="['active-link']"
+      [routerLinkActiveOptions]="{exact: true}"
+      [attr.disabled]="isActive('/processo') ? true : null">Em Processo</a>
 
-    <a routerLink="/instalar"
-    [routerLinkActive]="['active-link']"
-    [routerLinkActiveOptions]="{exact: true}"
-    [attr.disabled]="isActive('/instalar') ? true : null">A Instalar</a>
+      <a routerLink="/instalar"
+      [routerLinkActive]="['active-link']"
+      [routerLinkActiveOptions]="{exact: true}"
+      [attr.disabled]="isActive('/instalar') ? true : null">A Instalar</a>
 
-    <a routerLink="/finalizados"
-    [routerLinkActive]="['active-link']"
-    [routerLinkActiveOptions]="{exact: true}"
-    [attr.disabled]="isActive('/finalizados') ? true : null">Finalizados</a>
+      <a routerLink="/finalizados"
+      [routerLinkActive]="['active-link']"
+      [routerLinkActiveOptions]="{exact: true}"
+      [attr.disabled]="isActive('/finalizados') ? true : null">Finalizados</a>
 
-    <a class="nav-link" routerLink="pedidos/criar" *ngIf="userCargo=='ADMINISTRADOR'"
-    [routerLinkActive]="['active-link']"
-    [routerLinkActiveOptions]="{exact: true}"
-    [attr.disabled]="isActive('pedidos/criar') ? true : null">Novo Pedido</a>
+      <a  routerLink="pedidos/criar" *ngIf="userCargo=='ADMINISTRADOR'"
+      [routerLinkActive]="['active-link']"
+      [routerLinkActiveOptions]="{exact: true}"
+      [attr.disabled]="isActive('pedidos/criar') ? true : null">Novo Pedido</a>
+    </div>
+
+    <div class="w-100" *ngIf="menuSelected == 'relatorios'">
+      <a routerLink="/home"
+      [routerLinkActive]="['active-link']"
+      [routerLinkActiveOptions]="{exact: true}"
+      [attr.disabled]="isActive('/home') ? true : null">Colaboradores</a>
+    </div>
   </div>
 </nav>
 

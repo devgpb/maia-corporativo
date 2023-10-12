@@ -32,6 +32,7 @@ export class MenuComponent implements OnInit {
 
     public userCargo = ""
     public isOpen = false; // para controlar a visibilidade do submenu
+    public menuSelected = ""
 
     constructor(
       private authService:AuthService,
@@ -46,8 +47,10 @@ export class MenuComponent implements OnInit {
       // this.checkAccount();
     }
 
-    toggleSubmenu(): void {
-      this.isOpen = !this.isOpen;
+    toggleSubmenu(selected: string): void {
+      if(selected == this.menuSelected || !this.isOpen == true)
+        this.isOpen = !this.isOpen;
+      this.menuSelected = selected
     }
 
     isActive(route: string): boolean {

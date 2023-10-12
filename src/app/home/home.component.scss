@@ -11,6 +11,24 @@
   display: flex ;
   justify-content: center ;
   cursor: pointer;
+
+  i{
+    margin-left: 2px;
+  }
+}
+
+.edit-form{
+  display: flex;
+  flex-wrap: wrap;
+  div{
+    width: 50%;
+    padding-left: 5px;
+  }
+
+  .btn-area {
+    display: flex;
+    justify-content: right;
+  }
 }
 
 .ref-header{

@@ -39,15 +39,17 @@
 
 .submenu {
   background-color: #f8f9fa; // Isso é apenas o mesmo bg-light do Bootstrap. Ajuste conforme necessário.
-
+  min-height: 35px;
   display: flex;
   justify-content: center;
+  align-items: center;
   transition: max-height 0.3s ease-out;
   overflow: hidden;
 
   a {
       margin: 10px 15px;
       color: rgba(0,0,0, 0.65); // Cor padrão do link do Bootstrap.
+      padding: 10px 0;
       &:hover {
           text-decoration: none;
       }

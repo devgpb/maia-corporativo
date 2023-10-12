@@ -32,6 +32,10 @@ export class PedidosService {
 		return this.http.post<IPedido[]>(`${environment.apiURL}/pedidos/avancar/${idPedido}`,{})
 	}
 
+  public updatePedido(idPedido: any,pedido: IPedido): Observable<IPedido[]>{
+		return this.http.put<IPedido[]>(`${environment.apiURL}/pedidos/${idPedido}`, pedido)
+	}
+
   public retrocederPedido(idPedido: any): Observable<IPedido[]>{
 		return this.http.post<IPedido[]>(`${environment.apiURL}/pedidos/retroceder/${idPedido}`,{})
 	}

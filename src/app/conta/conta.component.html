@@ -22,6 +22,24 @@
       <input type="text" class="form-control" id="idSetor" formControlName="setor">
     </div>
 
+    <div  class="form-group">
+      <label>Senha atual:</label>
+      <input class="form-control" type="password" formControlName="senhaAtual">
+      <div *ngIf="userForm.get('senhaAtual')?.invalid && userForm.get('senhaAtual')?.touched">
+        Senha atual é obrigatória.
+      </div>
+    </div>
+
+    <div  class="form-group">
+      <label>Nova senha:</label>
+      <input class="form-control" type="password" formControlName="novaSenha">
+      <div *ngIf="userForm.get('novaSenha')?.invalid && userForm.get('novaSenha')?.touched">
+        <div *ngIf="userForm.get('novaSenha')?.errors?.['minlength']">
+          A senha deve ter pelo menos 8 caracteres.
+        </div>
+      </div>
+    </div>
+
     <div class="form-group">
       <label for="email">Email</label>
       <input type="email" class="form-control" id="email" formControlName="email">
