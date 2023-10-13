@@ -6,7 +6,6 @@ import { ModalService } from '../services/modal/modal.service';
 import { AuthService } from '../services/auth/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-
 import { IPedido } from '../interfaces/IPedido';
 import Swal from 'sweetalert2';
 
@@ -39,7 +38,7 @@ export class HomeComponent  implements OnInit {
     this.editForm = this.initializeForm();
     this.editForm.get('ref')?.disable();
     this.editForm.get('status')?.disable();
-    this.audio.src = 'assets/pedido.mp3';
+    this.audio.src = '../../assets/audio/tem_um_novo_pedido.mp3';
     this.audio.load();
   }
 
@@ -69,6 +68,9 @@ export class HomeComponent  implements OnInit {
 
     this.webSocketService.getNovoPedido().subscribe((novoPedido: IPedido) => {
       this.list.push(novoPedido);
+      this.audio.play().catch(error => {
+        console.error("Erro ao reproduzir áudio:", error);
+      });
     });
   }
 
@@ -109,12 +111,7 @@ export class HomeComponent  implements OnInit {
     this.showEdit = true
     const data = new Date(pedido.dataPedido).toISOString().split('T')[0]
 
-    this.audio.muted = true;
-    this.audio.play().then(() => {
-      this.audio.muted = false;
-    }).catch(error => {
-      console.error("Erro ao reproduzir áudio:", error);
-    });
+
 
     this.editForm.patchValue({
       nomeCompleto: pedido.nomeCompleto,
