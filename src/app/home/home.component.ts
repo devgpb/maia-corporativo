@@ -25,6 +25,7 @@ export class HomeComponent  implements OnInit {
   public pedidoEmEdicao: any;
   list: IPedido[] = [];
   public editForm: FormGroup;
+  audio = new Audio();
 
 
   constructor(
@@ -38,7 +39,8 @@ export class HomeComponent  implements OnInit {
     this.editForm = this.initializeForm();
     this.editForm.get('ref')?.disable();
     this.editForm.get('status')?.disable();
-
+    this.audio.src = 'assets/pedido.mp3';
+    this.audio.load();
   }
 
   detalhes: IPedido | any;
@@ -106,6 +108,13 @@ export class HomeComponent  implements OnInit {
     this.showDetails = false
     this.showEdit = true
     const data = new Date(pedido.dataPedido).toISOString().split('T')[0]
+
+    this.audio.muted = true;
+    this.audio.play().then(() => {
+      this.audio.muted = false;
+    }).catch(error => {
+      console.error("Erro ao reproduzir áudio:", error);
+    });
 
     this.editForm.patchValue({
       nomeCompleto: pedido.nomeCompleto,
