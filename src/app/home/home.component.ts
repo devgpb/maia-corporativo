@@ -4,6 +4,7 @@ import { PedidosService } from '../services/pedidos/pedidos.service';
 import { WebSocketService } from '../services/WebSocket/web-socket.service';
 import { ModalService } from '../services/modal/modal.service';
 import { AuthService } from '../services/auth/auth.service';
+import { Cargos } from '../interfaces/IUser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { IPedido } from '../interfaces/IPedido';
@@ -17,7 +18,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent  implements OnInit {
-
+  public isAdm = false
   public showDetails = true;
   public showEdit = false;
   // public idPedido: any = ''
@@ -63,6 +64,7 @@ export class HomeComponent  implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isAdm = this.authService.getCargo() == Cargos.ADMINISTRADOR
 
     this.atualizarPedidos()
 

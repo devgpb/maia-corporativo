@@ -136,16 +136,23 @@ export class CriarPedidoComponent {
       this.formInvalid = false
 
       this.pedidosService.setPedido(formContato).subscribe(_ =>{
-        console.log(_)
+        Swal.fire({
+          icon: "success",
+          title: "Seu Pedido foi efetuado!",
+          text: "Entraremos em Contato em Breve!",
+          confirmButtonColor: "#3C58BF"
+        });
+        this.limparForm()
+      }, (error:any)=> {
+        Swal.fire({
+          icon: "error",
+          title: "Seu Pedido não efetuado!",
+          text: "Por favor, entre em contato com o suporte!",
+          confirmButtonColor: "#3C58BF"
+        });
       })
 
-      Swal.fire({
-        icon: "success",
-        title: "Seu Pedido foi efetuado!",
-        text: "Entraremos em Contato em Breve!",
-        confirmButtonColor: "#3C58BF"
-      });
-      this.limparForm()
+
     } else {
       console.warn('Formulário inválido');
       Swal.fire({

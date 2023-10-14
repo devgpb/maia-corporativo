@@ -64,7 +64,7 @@
       [routerLinkActiveOptions]="{exact: true}"
       [attr.disabled]="isActive('/finalizados') ? true : null">Finalizados</a>
 
-      <a  routerLink="pedidos/criar" *ngIf="userCargo=='ADMINISTRADOR'"
+      <a  routerLink="pedidos/criar"
       [routerLinkActive]="['active-link']"
       [routerLinkActiveOptions]="{exact: true}"
       [attr.disabled]="isActive('pedidos/criar') ? true : null">Novo Pedido</a>

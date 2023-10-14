@@ -154,7 +154,7 @@
             <i class="fa solid fa-eye icon bg-info text-white"
             (click)="abrirDetalhes(pedido)"></i>
             <i class="fa solid fa-pen icon bg-warning text-white"
-            (click)="abrirEdicao(pedido)"></i>
+            (click)="abrirEdicao(pedido)" *ngIf="isAdm"></i>
 
           </div>
         </td>

@@ -57,7 +57,14 @@ export class NovoUserComponent implements OnInit {
             title: "Usuário Cadastrado!",
             confirmButtonColor: "#3C58BF"
           });
+          this.registerForm.reset()
         }
+      },(error:any) => {
+        Swal.fire({
+          icon: "error",
+          title: "Error: "+error.error.error,
+          confirmButtonColor: "#3C58BF"
+        });
       })
     }
   }
