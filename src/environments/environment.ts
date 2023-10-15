@@ -9,7 +9,7 @@ export const environment = {
 };
 
 /*
-  CELULAR:
+  CELULAR:192.168.100.170
   PC:http://localhost:3000
 
  * For easier debugging in development mode, you can import the following file
