@@ -6,6 +6,7 @@ import { ModalService } from '../services/modal/modal.service';
 import { AuthService } from '../services/auth/auth.service';
 import { Cargos } from '../interfaces/IUser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IUser } from '../interfaces/IUser';
 
 import { IPedido } from '../interfaces/IPedido';
 import Swal from 'sweetalert2';
@@ -18,7 +19,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent  implements OnInit {
-  public isAdm = false
+  public isAdm = false;
+  public user: IUser;
   public showDetails = true;
   public showEdit = false;
   // public idPedido: any = ''
@@ -35,6 +37,7 @@ export class HomeComponent  implements OnInit {
     private authService: AuthService,
     private fb: FormBuilder
   ) {
+    this.user = authService.getUser()
     this.detalhes = {}
     this.editForm = this.initializeForm();
     this.editForm.get('ref')?.disable();
@@ -64,20 +67,22 @@ export class HomeComponent  implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isAdm = this.authService.getCargo() == Cargos.ADMINISTRADOR
+    this.isAdm = this.user.cargo == Cargos.ADMINISTRADOR
 
     this.atualizarPedidos()
 
-    this.webSocketService.getNovoPedido().subscribe((novoPedido: IPedido) => {
-      this.list.push(novoPedido);
-      this.audio.play().catch(error => {
-        console.error("Erro ao reproduzir áudio:", error);
+    if(this.isAdm){
+      this.webSocketService.getNovoPedido().subscribe((novoPedido: IPedido) => {
+        this.list.push(novoPedido);
+        this.audio.play().catch(error => {
+          console.error("Erro ao reproduzir áudio:", error);
+        });
       });
-    });
+    }
   }
 
   atualizarPedidos(){
-    this.pedidosService.getPedidos().subscribe(pedidos =>{
+    this.pedidosService.getPedidos(this.isAdm ? undefined : this.user.idUsuario ).subscribe(pedidos =>{
       this.list = pedidos
     })
   }
@@ -105,7 +110,6 @@ export class HomeComponent  implements OnInit {
     this.showDetails = true
     this.detalhes = pedido;
     this.openModal()
-    console.log('foi')
   }
 
   abrirEdicao(pedido: IPedido){

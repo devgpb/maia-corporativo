@@ -22,6 +22,7 @@ import { ContaComponent } from './conta/conta.component';
 import { SetoresComponent } from './setores/setores.component';
 import { NovoUserComponent } from './novo-user/novo-user.component';
 import { CriarPedidoComponent } from './criar-pedido/criar-pedido.component';
+import { MeusRelatoriosComponent } from './meus-relatorios/meus-relatorios.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { CriarPedidoComponent } from './criar-pedido/criar-pedido.component';
     ContaComponent,
     SetoresComponent,
     NovoUserComponent,
-    CriarPedidoComponent
+    CriarPedidoComponent,
+    MeusRelatoriosComponent
   ],
   imports: [
     BrowserModule,

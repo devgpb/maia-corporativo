@@ -6,6 +6,7 @@ import { AuthService } from '../services/auth/auth.service';
 
 import { IPedido } from '../interfaces/IPedido';
 import Swal from 'sweetalert2';
+import { Cargos, IUser } from '../interfaces/IUser';
 
 
 @Component({
@@ -17,6 +18,8 @@ export class FinalizadosComponent  implements OnInit{
 
 
   list: IPedido[] = [];
+  user: IUser;
+  isAdm: boolean = false;
 
   constructor(
     private pedidosService:PedidosService,
@@ -25,13 +28,16 @@ export class FinalizadosComponent  implements OnInit{
     private authService: AuthService
   ) {
     this.detalhes = {}
+
+    this.user = this.authService.getUser()
   }
 
   detalhes: IPedido | any;
 
   ngOnInit(): void {
+    this.isAdm = this.user.cargo == Cargos.ADMINISTRADOR
 
-    this.pedidosService.getFinalizado().subscribe(pedidos =>{
+    this.pedidosService.getFinalizado(this.isAdm ? undefined : this.user.idUsuario).subscribe(pedidos =>{
       this.list = pedidos
     })
 

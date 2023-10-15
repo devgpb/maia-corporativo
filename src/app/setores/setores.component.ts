@@ -39,7 +39,6 @@ export class SetoresComponent implements OnInit {
 
   salvar() {
     if (this.form.valid) {
-      console.log("Formulário enviado!", this.form.value);
       this.setoresService.salvarSetor(this.form.get('setor')?.value).subscribe(res =>{
         if(res.nome){
           this.form.get('setor')?.setValue('')

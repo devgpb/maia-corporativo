@@ -24,8 +24,23 @@ form{
   justify-content: center; /* Centraliza verticalmente */
   align-items: center; /* Centraliza horizontalmente */
 }
+
 img{
   max-width: 80%;
   margin: 0 auto;
 }
 
+@media (max-width: 768px) {
+  .login-container{
+    max-width: 80%;
+    height: calc(80vh - 60px); /* Altura da viewport */
+  }
+
+  .login-area{
+    max-width: 100%;
+  }
+
+  img{
+    max-width: 100%;
+  }
+}

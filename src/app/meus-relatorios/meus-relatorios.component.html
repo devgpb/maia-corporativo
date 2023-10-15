@@ -1,0 +1,24 @@
+<div class="centerer">
+
+  <div class="meta">
+    <p>Meta de Pedidos</p>
+    <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+      <!-- Círculo externo -->
+      <circle cx="100" cy="100" r="90" fill="transparent" stroke="#ccc" stroke-width="10"/>
+
+      <!-- Círculo de preenchimento de progresso -->
+      <circle cx="100" cy="100" r="90" fill="transparent" [attr.stroke]="determinarCor()" stroke-width="10"
+              stroke-dasharray="565" [style.strokeDashoffset]="calcularDashOffset()"/>
+
+      <!-- Texto da porcentagem -->
+      <text x="50%" y="50%" text-anchor="middle" dy="10" font-size="24" [attr.fill]="determinarCor()">
+        {{ calcularPorcentagem() }}%
+      </text>
+    </svg>
+
+    <span>{{valorAtual}}/{{meta}}</span>
+  </div>
+
+
+</div>
+

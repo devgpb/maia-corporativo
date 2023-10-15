@@ -32,7 +32,6 @@ export class ContaComponent  implements OnInit {
 
   ngOnInit(): void {
     const nascmentoUser = new Date(this.userInfo.dataNascimento).toISOString().split('T')[0]
-    console.log(this.userInfo.dataNascimento)
 
     this.userForm = this.fb.group({
       nomeCompleto: [this.userInfo.nomeCompleto, Validators.required],

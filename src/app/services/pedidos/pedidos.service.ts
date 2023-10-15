@@ -12,20 +12,36 @@ export class PedidosService {
 
   constructor(private http: HttpClient) { }
 
-  public getPedidos (): Observable<IPedido[]>{
-		return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos`)
+  public getPedidos (id: string | undefined = undefined): Observable<IPedido[]>{
+    let getuser = ''
+    if(id){
+      getuser = "/"+id
+    }
+		return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos${getuser}`)
 	}
 
-  public getProcessando (): Observable<IPedido[]>{
-		return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos/processando`)
+  public getProcessando (id: string | undefined = undefined): Observable<IPedido[]>{
+    let getuser = ''
+    if(id){
+      getuser = "/"+id
+    }
+		return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos/processando${getuser}`)
 	}
 
-  public getInstalar (): Observable<IPedido[]>{
-		return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos/instalar`)
+  public getInstalar (id: string | undefined = undefined): Observable<IPedido[]>{
+    let getuser = ''
+    if(id){
+      getuser = "/"+id
+    }
+		return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos/instalar${getuser}`)
 	}
 
-  public getFinalizado(): Observable<IPedido[]>{
-		return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos/finalizado`)
+  public getFinalizado (id: string | undefined = undefined): Observable<IPedido[]>{
+    let getuser = ''
+    if(id){
+      getuser = "/"+id
+    }
+		return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos/finalizado${getuser}`)
 	}
 
   public avancarPedido(idPedido: any): Observable<IPedido[]>{

@@ -39,7 +39,6 @@ export class ReferenciasComponent implements OnInit {
 
   salvar() {
     if (this.form.valid) {
-      console.log("Formulário enviado!", this.form.value);
       this.refService.salvarReferencia(this.form.get('referencia')?.value).subscribe(res =>{
         if(res.referencia){
           this.form.get('referencia')?.setValue('')
