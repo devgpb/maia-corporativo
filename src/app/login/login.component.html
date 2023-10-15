@@ -27,8 +27,9 @@
 
       <div *ngIf="invalidCred" class="error">
         Login ou Senha Inválidos.
-      </div>
+        <!-- <span>{{error}}</span> -->
 
+      </div>
       <div class="w-100 d-flex justify-content-center mt-3">
         <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary">Entrar</button>
       </div>

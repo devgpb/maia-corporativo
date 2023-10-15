@@ -12,6 +12,7 @@ import { faL } from '@fortawesome/free-solid-svg-icons';
 export class LoginComponent {
   public loginForm: FormGroup; // Crie um FormGroup
   public invalidCred: boolean = false;
+  public error:any;
 
   constructor(
     private authService: AuthService,
@@ -34,6 +35,8 @@ export class LoginComponent {
         this.router.navigate(['/home']);
       },(error)=>{
         this.invalidCred = true
+        // this.error = JSON.stringify(error)
+        // console.log(error)
       });
     }
   }
