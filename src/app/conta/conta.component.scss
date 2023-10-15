@@ -5,9 +5,23 @@
   margin: 0 auto;
 }
 
+.form-case{
+   margin-top: 15px;
+}
+
 .form-group{
   margin: 10px 40px;
   display: flex;
   flex-direction: column;
 }
 
+@media (max-width: 768px) {
+  .form-case{
+
+  }
+
+  .form-group{
+    margin: 5px 15px;
+    width: 90%;
+  }
+}

@@ -68,3 +68,11 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .tabela{
+    max-width: 100%;
+    overflow-x: scroll;
+    padding: 0px 0px !important;
+  }
+}

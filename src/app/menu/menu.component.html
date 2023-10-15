@@ -1,6 +1,6 @@
-<nav class="navbar menu navbar-expand-lg navbar-light bg-light justify-content-center">
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
+<nav class="navbar menu  navbar-light bg-light justify-content-center">
+  <div class="nav-cont collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav nav-principal">
       <li class="nav-item active" *ngIf="userCargo=='ADMINISTRADOR'">
         <a class="nav-link" routerLink="/ref"
         [routerLinkActive]="['active-link']"
@@ -46,7 +46,7 @@
     </ul>
   </div>
 
-  <div class="submenu" [@slideToggle]="isOpen ? 'open' : 'closed'">
+  <div class="submenu"  *ngIf="isOpen">
     <div class="w-100" *ngIf="menuSelected == 'pedidos'">
       <a routerLink="/home"
       [routerLinkActive]="['active-link']"
@@ -67,7 +67,6 @@
       [routerLinkActive]="['active-link']"
       [routerLinkActiveOptions]="{exact: true}"
       [attr.disabled]="isActive('/finalizados') ? true : null">Finalizados</a>
-
       <a  routerLink="pedidos/criar"
       [routerLinkActive]="['active-link']"
       [routerLinkActiveOptions]="{exact: true}"

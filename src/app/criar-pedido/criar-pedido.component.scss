@@ -2,3 +2,10 @@
   margin: 5px 15px;
   width: 25%;
 }
+
+@media (max-width: 768px) {
+  .form-group{
+    margin: 5px 15px;
+    width: 90%;
+  }
+}

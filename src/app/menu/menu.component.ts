@@ -7,25 +7,6 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
-  animations: [
-    trigger('slideToggle', [
-      state('closed', style({
-        height: '0px',
-        opacity: '0',
-        overflow: 'hidden'
-      })),
-      state('open', style({
-        height: '*',
-        opacity: '1'
-      })),
-      transition('closed => open', [
-        animate('0.3s ease-in')
-      ]),
-      transition('open => closed', [
-        animate('0.3s ease-out')
-      ]),
-    ]),
-  ]
 })
 
 export class MenuComponent implements OnInit {
