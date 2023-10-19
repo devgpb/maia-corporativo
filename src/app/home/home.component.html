@@ -53,6 +53,13 @@
           <span class="label">Responsável:</span>
           <span class="content">{{ detalhes.responsavel ? detalhes.responsavel : "Sem"}}</span>
         </div>
+
+        <span class="separator"></span>
+
+        <h2>Observação:</h2>
+        <div class="d-flex align-items-center  ml-3">
+          <span class="obs text-danger">{{ detalhes.observacao ? detalhes.observacao : "Sem Obs"}}</span>
+        </div>
       </div>
     </div>
 
@@ -120,6 +127,11 @@
         <div class="form-group">
           <label for="responsavel">Responsável:</label>
           <input type="text" class="form-control" id="responsavel" formControlName="responsavel">
+        </div>
+
+        <div class="form-group">
+          <label for="cidade">Observação:</label>
+          <input type="text" class="form-control" id="observacao" formControlName="observacao">
         </div>
 
         <div class="form-group w-100 btn-area ">

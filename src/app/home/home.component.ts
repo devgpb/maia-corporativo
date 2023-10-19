@@ -61,6 +61,7 @@ export class HomeComponent  implements OnInit {
       status: ['', Validators.required],
       consumoDeEnergiaMensal: ['', Validators.required],
       dataPedido: ['', Validators.required],
+      observacao: [''],
       ref: [''],
       responsavel: ['']
     });
@@ -130,7 +131,8 @@ export class HomeComponent  implements OnInit {
       consumoDeEnergiaMensal: pedido.consumoDeEnergiaMensal,
       dataPedido: data,
       ref: pedido.ref,
-      responsavel: pedido.responsavel
+      responsavel: pedido.responsavel,
+      observacao:pedido.observacao
     });
     this.pedidoEmEdicao = pedido
     this.detalhes = pedido;
@@ -149,7 +151,9 @@ export class HomeComponent  implements OnInit {
            formValues.cep === this.pedidoEmEdicao.cep &&
            formValues.consumoDeEnergiaMensal === this.pedidoEmEdicao.consumoDeEnergiaMensal &&
            formValues.dataPedido === new Date(this.pedidoEmEdicao.dataPedido).toISOString().split('T')[0] &&
-           formValues.responsavel === this.pedidoEmEdicao.responsavel;
+           formValues.responsavel === this.pedidoEmEdicao.responsavel &&
+           formValues.observacao === this.pedidoEmEdicao.observacao;
+
   }
 
   avancarPedido(pedido: IPedido){

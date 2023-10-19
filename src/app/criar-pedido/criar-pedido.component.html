@@ -64,17 +64,13 @@
       </div>
     </div>
 
-    <!-- <div class="form-row d-flex justify-content-center align-items-center">
+    <div class="form-row d-flex justify-content-center align-items-center">
       <div class="form-group ">
-        <label for="email">Referencia</label>
-        <select formControlName="ref" class="form-select form-control" aria-label=".form-select-lg">
-          <option value="" selected>Sem Referencia</option>
-          <option *ngFor="let option of referencias" [value]="option.referencia">
-              {{ option.nome }}
-          </option>
-      </select>
+          <label for="observacao">Observação</label>
+          <input type="text" class="form-control" id="observacao" placeholder="Informe a Observação"
+          formControlName="observacao">
       </div>
-    </div> -->
+    </div>
 
     <div class="d-flex justify-content-center align-items-center">
       <button type="submit" class="btn btn-light mt-3">Enviar</button>

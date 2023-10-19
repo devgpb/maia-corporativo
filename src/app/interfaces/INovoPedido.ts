@@ -10,6 +10,7 @@ export interface INovoPedido{
   email : string;
   horario: string;
   referencia: string;
+  observacao?: string;
   dataPedido?: string;
   status?: string;
   responsavel?: string;

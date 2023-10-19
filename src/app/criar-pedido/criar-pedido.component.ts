@@ -74,6 +74,9 @@ export class CriarPedidoComponent {
       placeholder: 'Informe o email',
       formControlName: 'email'
     },
+    {
+      formControlName: 'observacao'
+    },
     ]
 
   constructor(
@@ -112,6 +115,7 @@ export class CriarPedidoComponent {
     this.form.get("cidade")?.setValue('')
     this.form.get("email")?.setValue('')
     this.form.get("horario")?.setValue('')
+    this.form.get("observacao")?.setValue('')
     this.form.get("ref")?.setValue('')
 
   }
@@ -131,8 +135,10 @@ export class CriarPedidoComponent {
         cidade:this.form.get("cidade")?.value,
         email: this.form.get("email")?.value,
         horario: this.form.get("horario")?.value,
+        observacao: this.form.get("observacao")?.value,
         referencia: ref,
       }
+
       this.formInvalid = false
       this.pedidosService.setPedido(formContato).subscribe(_ =>{
         Swal.fire({
