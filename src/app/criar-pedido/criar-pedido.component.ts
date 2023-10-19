@@ -134,7 +134,6 @@ export class CriarPedidoComponent {
         referencia: ref,
       }
       this.formInvalid = false
-
       this.pedidosService.setPedido(formContato).subscribe(_ =>{
         Swal.fire({
           icon: "success",
