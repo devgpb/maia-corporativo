@@ -36,7 +36,6 @@ export class LoginComponent {
       },(error)=>{
         this.invalidCred = true
         // this.error = JSON.stringify(error)
-        // console.log(error)
       });
     }
   }

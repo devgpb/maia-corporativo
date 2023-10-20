@@ -5,6 +5,7 @@ export interface IUser{
   idSetor: number;
   setor: string;
   email: string;
+  celular?: string;
   cargo: string;
 }
 

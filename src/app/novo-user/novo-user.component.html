@@ -22,6 +22,11 @@
       <input type="email" class="form-control" id="email" formControlName="email">
     </div>
 
+    <div class="form-group ">
+      <label for="celular">Celular</label>
+      <input type="text" formControlName="celular" class="form-control" id="celular" placeholder="(00)-0000-0000" (input)="applyCelularMask($event)">
+    </div>
+    
     <div class="form-group">
       <label for="senha">Senha</label>
       <input type="password" class="form-control" id="senha" formControlName="senha">

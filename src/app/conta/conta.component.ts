@@ -32,11 +32,11 @@ export class ContaComponent  implements OnInit {
 
   ngOnInit(): void {
     const nascmentoUser = new Date(this.userInfo.dataNascimento).toISOString().split('T')[0]
-
     this.userForm = this.fb.group({
       nomeCompleto: [this.userInfo.nomeCompleto, Validators.required],
       dataNascimento: [nascmentoUser, Validators.required],
       senhaAtual: [''],
+      celular: [this.userInfo.celular],
       novaSenha: ['', [ Validators.minLength(8)]],
       setor: [this.userInfo.setor, Validators.required],
       email: [this.userInfo.email, [Validators.required, Validators.email]],
@@ -81,6 +81,18 @@ export class ContaComponent  implements OnInit {
         }
       })
     }
+  }
+
+  applyCelularMask(event: any): void {
+    let value = event.target.value;
+    value = value.replace(/\D/g, ''); // Remove tudo o que não for dígito
+
+    // Limita a 11 dígitos para o celular
+    value = value.substring(0, 11);
+
+    value = value.replace(/^(\d{2})(\d)/g, '($1) $2'); // Coloca parênteses em volta dos dois primeiros dígitos
+    value = value.replace(/(\d)(\d{4})$/, '$1-$2'); // Coloca hífen entre o quarto e o quinto dígitos
+    event.target.value = value;
   }
 }
 

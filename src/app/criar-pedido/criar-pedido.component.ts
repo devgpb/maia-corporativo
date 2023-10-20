@@ -74,9 +74,6 @@ export class CriarPedidoComponent {
       placeholder: 'Informe o email',
       formControlName: 'email'
     },
-    {
-      formControlName: 'observacao'
-    },
     ]
 
   constructor(
@@ -100,6 +97,7 @@ export class CriarPedidoComponent {
     });
     group['horario'] = ['', [Validators.required]];
     group['ref'] = ['', []];
+    group['observacao'] = ['', []];
     group['email'] = ['', [Validators.required, this.emailValidator()]];
 
     return this.fb.group(group);

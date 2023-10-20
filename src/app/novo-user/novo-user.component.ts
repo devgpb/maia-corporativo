@@ -33,6 +33,7 @@ export class NovoUserComponent implements OnInit {
       nomeCompleto: ['', Validators.required],
       dataNascimento: ['', Validators.required],
       idSetor: ['', Validators.required],
+      celular: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       senha: ['', [Validators.required, Validators.minLength(6)]],
       cargo: ['', [Validators.required]],
@@ -67,5 +68,17 @@ export class NovoUserComponent implements OnInit {
         });
       })
     }
+  }
+
+  applyCelularMask(event: any): void {
+    let value = event.target.value;
+    value = value.replace(/\D/g, ''); // Remove tudo o que não for dígito
+
+    // Limita a 11 dígitos para o celular
+    value = value.substring(0, 11);
+
+    value = value.replace(/^(\d{2})(\d)/g, '($1) $2'); // Coloca parênteses em volta dos dois primeiros dígitos
+    value = value.replace(/(\d)(\d{4})$/, '$1-$2'); // Coloca hífen entre o quarto e o quinto dígitos
+    event.target.value = value;
   }
 }
