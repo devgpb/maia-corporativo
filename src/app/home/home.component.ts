@@ -119,7 +119,6 @@ export class HomeComponent  implements OnInit {
     const data = new Date(pedido.dataPedido).toISOString().split('T')[0]
 
 
-
     this.editForm.patchValue({
       nomeCompleto: pedido.nomeCompleto,
       celular: pedido.celular,

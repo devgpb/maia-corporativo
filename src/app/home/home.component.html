@@ -41,7 +41,7 @@
 
         <div class="detail">
           <span class="label">Data Do Pedido:</span>
-          <span class="content">{{ detalhes.dataPedido }}</span>
+          <span class="content">{{ formatarData(detalhes.dataPedido) }}</span>
         </div>
 
         <div class="detail">
@@ -136,7 +136,6 @@
 
         <div class="form-group w-100 btn-area ">
           <button [disabled]="nothingChanged()" type="submit" class="btn btn-primary">Salvar</button>
-          <!-- <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button> -->
         </div>
 
       </form>
