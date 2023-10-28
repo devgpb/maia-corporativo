@@ -17,10 +17,32 @@
   text-align: right;
 }
 
+.edit-form{
+  display: flex;
+  flex-wrap: wrap;
+  div{
+    width: 50%;
+    padding-left: 5px;
+  }
+
+  .btn-area {
+    display: flex;
+    justify-content: right;
+  }
+}
+
 .info{
 
   h2{
     text-align: center;
+  }
+
+  .icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    /* Outros estilos para o ícone, se necessário */
   }
 
   .details{
@@ -51,10 +73,58 @@
   }
 }
 
+.lista-pedidos{
+
+  .data{
+
+  }
+
+  .celular{
+    min-width: 140px;
+  }
+
+  .nome{
+    min-width: 150px;
+  }
+}
+
+.configs{
+  display: flex;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+
+  *{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .pagination{
+    margin-bottom: 0;
+    margin-left: 5px;
+  }
+
+  .page-size{
+
+    #pageSizeSelect{
+      width: 100px;
+      height: 38px;
+    }
+  }
+
+}
+
 @media (max-width: 768px) {
   .tabela{
     max-width: 100%;
     overflow-x: scroll;
     padding: 0px 0px !important;
   }
+
+  .info{
+    h4{
+      text-align: center;
+    }
+  }
 }
+

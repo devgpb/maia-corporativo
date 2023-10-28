@@ -1,10 +1,13 @@
-<div class="container mt-5 bg-light p-4 rounded tabela">
+<div class="container mt-5 bg-light p-4 rounded tabela ">
 
   <app-modal #modal class="info ">
-    <div class="w-100"  *ngIf="showDetails">
-      <h2>Detalhes
-      </h2>
-        <h4 class="ref-header  text-danger">Referencia: {{ detalhes.ref }}</h4>
+    <div class="w-100 "  *ngIf="showDetails">
+
+      <i class="fa solid fa-circle-xmark icon bg-danger text-white"
+      (click)="closeModal()"
+      ></i>
+      <h2>Detalhes</h2>
+      <h4 class="ref-header  text-danger">Referencia: {{ detalhes.ref }}</h4>
       <div class="details">
         <h3 class="w-100">Pessoal:</h3>
         <div class="detail">
@@ -64,6 +67,9 @@
     </div>
 
     <div class="w-100"  *ngIf="showEdit">
+      <i class="fa solid fa-circle-xmark icon bg-danger text-white"
+      (click)="closeModal()"
+      ></i>
       <h2>Editar Detalhes</h2>
 
       <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="edit-form">
@@ -129,9 +135,10 @@
           <input type="text" class="form-control" id="responsavel" formControlName="responsavel">
         </div>
 
-        <div class="form-group">
+        <div class="form-group w-100 mb-3">
           <label for="cidade">Observação:</label>
-          <input type="text" class="form-control" id="observacao" formControlName="observacao">
+          <textarea type="text" class="form-control " id="observacao" formControlName="observacao">
+          </textarea>
         </div>
 
         <div class="form-group w-100 btn-area ">
@@ -142,6 +149,32 @@
     </div>
   </app-modal>
 
+  <div class="configs" *ngIf="list.length > 0" >
+
+    <div class="page-size">
+      <label for="pageSizeSelect" class="form-label">Itens por página:</label>
+      <select id="pageSizeSelect" class="form-select" [(ngModel)]="pageSize" (change)="changePageSize()">
+        <option [value]="20">20</option>
+        <option [value]="50">50</option>
+        <option [value]="100">100</option>
+      </select>
+    </div>
+
+    <nav aria-label="Page navigation" class="ml-3">
+      <ul class="pagination">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <span class="page-link" (click)="changePage(currentPage - 1)">Anterior</span>
+        </li>
+        <!-- Gere números de página com base na quantidade total de itens e tamanho da página -->
+        <li class="page-item" *ngFor="let page of getPagesArray()" [class.active]="page === currentPage">
+          <span class="page-link" (click)="changePage(page)">{{ page }}</span>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === this.getTotalPages()">
+          <span class="page-link" (click)="changePage(currentPage + 1)">Próximo</span>
+        </li>
+      </ul>
+    </nav>
+  </div>
 
   <table class="table table-bordered ">
     <thead class="thead-dark">
@@ -155,18 +188,17 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let pedido of list">
+      <tr *ngFor="let pedido of paginatedList"class="lista-pedidos">
         <td scope="row">{{ pedido.idPedido }}</td>
-        <td scope="row">{{ pedido.nomeCompleto }}</td>
-        <td scope="row">{{ pedido.celular }}</td>
-        <td scope="row">{{ formatarData(pedido.dataPedido) }}</td>
+        <td class="nome" scope="row">{{ pedido.nomeCompleto }}</td>
+        <td class="celular" scope="row">{{ pedido.celular }}</td>
+        <td class="data" scope="row">{{ formatarData(pedido.dataPedido) }}</td>
         <td scope="row">
           <div class="align-icon" >
             <i class="fa solid fa-eye icon bg-info text-white"
             (click)="abrirDetalhes(pedido)"></i>
-            <i class="fa solid fa-pen icon bg-warning text-white"
+            <i class="fa solid fa-pen icon bg-warning text-white separar"
             (click)="abrirEdicao(pedido)" *ngIf="isAdm"></i>
-
           </div>
         </td>
         <th scope="col">

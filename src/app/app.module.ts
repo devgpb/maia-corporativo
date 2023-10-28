@@ -6,6 +6,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './services/auth/auth.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DataTablesModule } from "angular-datatables";
+
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -50,6 +53,8 @@ import { MeusRelatoriosComponent } from './meus-relatorios/meus-relatorios.compo
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
+		DataTablesModule,
+
   ],
   providers: [
     {

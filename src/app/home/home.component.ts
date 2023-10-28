@@ -19,16 +19,19 @@ import Swal from 'sweetalert2';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent  implements OnInit {
+
   public isAdm = false;
   public user: IUser;
   public showDetails = true;
   public showEdit = false;
-  // public idPedido: any = ''
   public pedidoEmEdicao: any;
   list: IPedido[] = [];
   public editForm: FormGroup;
   audio = new Audio();
 
+  public pageSize: number = 20; // Quantidade de itens por página
+  public currentPage: number = 1; // Página atual
+  public totalItems: number = 0; // Total de itens
 
   constructor(
     private pedidosService:PedidosService,
@@ -72,14 +75,6 @@ export class HomeComponent  implements OnInit {
 
     this.atualizarPedidos()
 
-    if(this.isAdm){
-      this.webSocketService.getNovoPedido().subscribe((novoPedido: IPedido) => {
-        this.list.push(novoPedido);
-        this.audio.play().catch(error => {
-          console.error("Erro ao reproduzir áudio:", error);
-        });
-      });
-    }
   }
 
   atualizarPedidos(){
@@ -96,6 +91,27 @@ export class HomeComponent  implements OnInit {
       day: '2-digit'
     };
     return data.toLocaleDateString('pt-BR', options);
+  }
+
+  get paginatedList(): IPedido[] {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    return this.list.slice(startIndex, startIndex + this.pageSize);
+  }
+
+  public getTotalPages(): number {
+    return Math.ceil(this.list.length / this.pageSize);
+  }
+
+  public changePageSize(): void {
+    this.currentPage = 1; // Resetar para a primeira página ao mudar o tamanho da página
+  }
+
+  public getPagesArray(): number[] {
+    return Array.from({ length: this.getTotalPages() }, (_, i) => i + 1);
+  }
+
+  public changePage(page: number): void {
+    this.currentPage = page;
   }
 
   objectKeys(obj: any) {
@@ -174,6 +190,37 @@ export class HomeComponent  implements OnInit {
     })
   }
 
+  retrocederPedido(pedido: IPedido){
+    Swal.fire({
+      title: 'Deseja mesmo retroceder o pedido?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Não',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.pedidosService.retrocederPedido(pedido.idPedido).subscribe(avancado =>{
+          if(avancado){
+            Swal.fire({
+              icon: "success",
+              title: "Pedido Retrocedido!",
+              confirmButtonColor: "#3C58BF"
+            });
+            const index = this.list.indexOf(pedido);
+            this.list.splice(index,1)
+          }else{
+            Swal.fire({
+              icon: "error",
+              title: "Pedido Não Retrocedido!",
+            });
+          }
+        })
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire('Pedido não foi apagado.', '', 'info');
+      }
+    });
+  }
+
   deletarPedido(pedido: IPedido){
 
     Swal.fire({
@@ -226,5 +273,4 @@ export class HomeComponent  implements OnInit {
       console.log('cep é inválido devido a:', this.editForm.get('cep')?.errors);
     }
   }
-
 }
