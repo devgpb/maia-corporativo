@@ -150,8 +150,9 @@
   </app-modal>
 
   <div class="configs" *ngIf="list.length > 0" >
+    <input class="mr-3" type="text" [(ngModel)]="searchText" placeholder="Pesquisar...">
 
-    <div class="page-size">
+    <div class="page-size separar">
       <label for="pageSizeSelect" class="form-label">Itens por página:</label>
       <select id="pageSizeSelect" class="form-select" [(ngModel)]="pageSize" (change)="changePageSize()">
         <option [value]="20">20</option>
@@ -188,7 +189,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let pedido of paginatedList"class="lista-pedidos">
+      <tr *ngFor="let pedido of paginatedList | pesquisa:searchText"class="lista-pedidos">
         <td scope="row">{{ pedido.idPedido }}</td>
         <td class="nome" scope="row">{{ pedido.nomeCompleto }}</td>
         <td class="celular" scope="row">{{ pedido.celular }}</td>

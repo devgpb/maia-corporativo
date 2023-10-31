@@ -1,41 +1,51 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter,  SimpleChanges, OnChanges } from '@angular/core';
 import { PedidosService } from '../services/pedidos/pedidos.service';
 import { WebSocketService } from '../services/WebSocket/web-socket.service';
 import { ModalService } from '../services/modal/modal.service';
 import { AuthService } from '../services/auth/auth.service';
-
+import { Router } from '@angular/router';
+import * as Constantes from "../constants";
 import { IPedido } from '../interfaces/IPedido';
 import Swal from 'sweetalert2';
 import { Cargos, IUser } from '../interfaces/IUser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-
 @Component({
-  selector: 'app-instalar',
-  templateUrl: './instalar.component.html',
-  styleUrls: ['./instalar.component.scss']
+  selector: 'app-tabela-pedidos',
+  templateUrl: './tabela-pedidos.component.html',
+  styleUrls: ['./tabela-pedidos.component.scss']
 })
-
-export class InstalarComponent implements OnInit{
-
+export class TabelaPedidosComponent implements OnChanges  {
   public isAdm = false;
   public user: IUser;
   public showDetails = true;
   public showEdit = false;
   public pedidoEmEdicao: any;
-  list: IPedido[] = [];
+  public canAvancar: boolean = true;
+  public canRetroceder:boolean = true;
   public editForm: FormGroup;
-  audio = new Audio();
+  public titulo: string = "";
+  public textoApoio: string = "";
 
-  public pageSize: number = 20; // Quantidade de itens por página
+  public indicePagina: number = 0;
+  public totalPaginas: number = 0;
+
+  audio = new Audio();
+  list: IPedido[] = [];
+  @Input() status: string = '';
+
+  public pageSize: number = 10; // Quantidade de itens por página
   public currentPage: number = 1; // Página atual
   public totalItems: number = 0; // Total de itens
+  searchText: string = '';
+
 
   constructor(
     private pedidosService:PedidosService,
     private webSocketService:WebSocketService,
     private modalService: ModalService,
     private authService: AuthService,
+    private router: Router,
     private fb: FormBuilder
   ) {
     this.user = authService.getUser()
@@ -68,15 +78,35 @@ export class InstalarComponent implements OnInit{
     });
   }
 
-  ngOnInit(): void {
-    this.isAdm = this.user.cargo == Cargos.ADMINISTRADOR
+  public reloadDisplay(){
+    this.titulo = Constantes.titulos[this.status]
+    this.textoApoio = Constantes.descricoesStatus[this.status]
 
-    this.atualizarPedidos()
-
+    this.totalPaginas = Constantes.rotasPedidos.length;
+    this.indicePagina = Constantes.rotasPedidos.indexOf(this.status)
+    this.canRetroceder = this.indicePagina !== 0
+    this.canAvancar = this.indicePagina !== this.totalPaginas  - 1
   }
 
+  ngOnInit(): void {
+    this.isAdm = this.user.cargo == Cargos.ADMINISTRADOR
+    this.reloadDisplay();
+    this.atualizarPedidos()
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    // Verifique se a propriedade status foi alterada
+    if (changes['status'] && changes['status'].currentValue !== changes['status'].previousValue) {
+      // Chame a função de atualização de pedidos com o novo status
+      this.reloadDisplay();
+      this.atualizarPedidos();
+    }
+  }
+
+
+
   atualizarPedidos(){
-    this.pedidosService.getInstalar(this.isAdm ? undefined : this.user.idUsuario ).subscribe(pedidos =>{
+    this.pedidosService.getPedidosByStatus(this.status,this.isAdm ? undefined : this.user.idUsuario ).subscribe(pedidos =>{
       this.list = pedidos
     })
   }
@@ -110,6 +140,21 @@ export class InstalarComponent implements OnInit{
 
   public changePage(page: number): void {
     this.currentPage = page;
+  }
+
+  public avancarPagina(){
+    const indexAtual = Constantes.rotasPedidos.indexOf(this.status) + 1;
+    const index = indexAtual > this.totalPaginas -1 ? 0 : indexAtual
+    const pagina = Constantes.rotasPedidos[index]
+    this.router.navigate(['/pedidos/'+ pagina]);
+  }
+
+  public voltarPagina(){
+    const indexAtual = Constantes.rotasPedidos.indexOf(this.status) - 1;
+    const index = indexAtual < 0 ? this.totalPaginas - 1 : indexAtual
+    const pagina = Constantes.rotasPedidos[index]
+
+    this.router.navigate(['/pedidos/'+ pagina]);
   }
 
   objectKeys(obj: any) {
@@ -272,4 +317,3 @@ export class InstalarComponent implements OnInit{
     }
   }
 }
-

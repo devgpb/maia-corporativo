@@ -1,6 +1,11 @@
 .icon{
   padding: 9px;
   border-radius: 6px;
+  cursor: pointer;
+}
+
+.tabela-container{
+  overflow-x: scroll;
 }
 
 .separar{
@@ -73,14 +78,17 @@
   }
 }
 
+.navigation{
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
 .lista-pedidos{
 
-  .data{
-
-  }
 
   .celular{
-    min-width: 140px;
+    min-width: 150px;
   }
 
   .nome{
@@ -111,6 +119,12 @@
     }
   }
 
+}
+
+.contadores{
+  width: 100%;
+  display: flex;
+  justify-content: end;
 }
 
 @media (max-width: 768px) {

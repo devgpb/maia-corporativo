@@ -18,14 +18,14 @@ import { MenuComponent } from './menu/menu.component';
 import { ModalComponent } from './modal/modal.component';
 import { ReferenciasComponent } from './referencias/referencias.component';
 import { LoginComponent } from './login/login.component';
-import { ProcessoComponent } from './processo/processo.component';
-import { InstalarComponent } from './instalar/instalar.component';
-import { FinalizadosComponent } from './finalizados/finalizados.component';
 import { ContaComponent } from './conta/conta.component';
 import { SetoresComponent } from './setores/setores.component';
 import { NovoUserComponent } from './novo-user/novo-user.component';
 import { CriarPedidoComponent } from './criar-pedido/criar-pedido.component';
 import { MeusRelatoriosComponent } from './meus-relatorios/meus-relatorios.component';
+import { PesquisaPipe } from './pipes/pesquisa/pesquisa.pipe';
+import { TabelaPedidosComponent } from './tabela-pedidos/tabela-pedidos.component';
+import { PedidosComponent } from './pedidos/pedidos.component';
 
 @NgModule({
   declarations: [
@@ -36,14 +36,14 @@ import { MeusRelatoriosComponent } from './meus-relatorios/meus-relatorios.compo
     ModalComponent,
     ReferenciasComponent,
     LoginComponent,
-    ProcessoComponent,
-    InstalarComponent,
-    FinalizadosComponent,
     ContaComponent,
     SetoresComponent,
     NovoUserComponent,
     CriarPedidoComponent,
-    MeusRelatoriosComponent
+    MeusRelatoriosComponent,
+    PesquisaPipe,
+    TabelaPedidosComponent,
+    PedidosComponent
   ],
   imports: [
     BrowserModule,

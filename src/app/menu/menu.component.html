@@ -5,7 +5,7 @@
         <a class="nav-link" routerLink="/ref"
         [routerLinkActive]="['active-link']"
         [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('/ref') ? true : null">Referências</a>
+        [attr.disabled]="isActive('/ref') ? true : null">Usuários</a>
       </li>
 
       <li class="nav-item active" *ngIf="userCargo=='ADMINISTRADOR'">
@@ -15,9 +15,9 @@
         [attr.disabled]="isActive('/setores') ? true : null">Setores</a>
       </li>
 
-      <li class="nav-item" *ngIf="userCargo=='ADMINISTRADOR'">
+      <!-- <li class="nav-item" *ngIf="userCargo=='ADMINISTRADOR'">
         <a class="nav-link" (click)="toggleSubmenu('relatorios')" role="button">Relatórios Gerenciais</a>
-      </li>
+      </li> -->
 
       <li class="nav-item">
         <a class="nav-link" (click)="toggleSubmenu('pedidos')" role="button">
@@ -48,26 +48,42 @@
 
   <div class="submenu"  *ngIf="isOpen">
     <div class="w-100" *ngIf="menuSelected == 'pedidos'">
-      <a routerLink="/home"
+      <a routerLink="/pedidos/prospectados"
       [routerLinkActive]="['active-link']"
       [routerLinkActiveOptions]="{exact: true}"
-      [attr.disabled]="isActive('/home') ? true : null">Recebidos</a>
+      [attr.disabled]="isActive('/home') ? true : null">Prospectados</a>
 
-      <a routerLink="/processo"
+      <a routerLink="/pedidos/apresentacao"
       [routerLinkActive]="['active-link']"
       [routerLinkActiveOptions]="{exact: true}"
-      [attr.disabled]="isActive('/processo') ? true : null">Em Processo</a>
+      [attr.disabled]="isActive('/processo') ? true : null">Em Apresentação</a>
 
-      <a routerLink="/instalar"
+      <a routerLink="/pedidos/acompanhamento"
       [routerLinkActive]="['active-link']"
       [routerLinkActiveOptions]="{exact: true}"
-      [attr.disabled]="isActive('/instalar') ? true : null">A Instalar</a>
+      [attr.disabled]="isActive('/instalar') ? true : null">Acompanhamento</a>
 
-      <a routerLink="/finalizados"
+      <a routerLink="/pedidos/negociacao"
+      [routerLinkActive]="['active-link']"
+      [routerLinkActiveOptions]="{exact: true}"
+      [attr.disabled]="isActive('/negociacao') ? true : null">Em Negociação</a>
+
+      <a routerLink="/pedidos/fechado"
+      [routerLinkActive]="['active-link']"
+      [routerLinkActiveOptions]="{exact: true}"
+      [attr.disabled]="isActive('/fechado') ? true : null">Fechados</a>
+
+      <a routerLink="/pedidos/instalacao"
+      [routerLinkActive]="['active-link']"
+      [routerLinkActiveOptions]="{exact: true}"
+      [attr.disabled]="isActive('/instalacao') ? true : null">Etapa Instalação</a>
+
+      <a routerLink="/pedidos/finalizados"
       [routerLinkActive]="['active-link']"
       [routerLinkActiveOptions]="{exact: true}"
       [attr.disabled]="isActive('/finalizados') ? true : null">Finalizados</a>
-      <a  routerLink="pedidos/criar"
+
+      <a  routerLink="pedido/criar"
       [routerLinkActive]="['active-link']"
       [routerLinkActiveOptions]="{exact: true}"
       [attr.disabled]="isActive('pedidos/criar') ? true : null">Novo Pedido</a>

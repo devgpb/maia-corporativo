@@ -32,6 +32,7 @@ export class HomeComponent  implements OnInit {
   public pageSize: number = 20; // Quantidade de itens por página
   public currentPage: number = 1; // Página atual
   public totalItems: number = 0; // Total de itens
+  searchText: string = '';
 
   constructor(
     private pedidosService:PedidosService,
@@ -134,7 +135,6 @@ export class HomeComponent  implements OnInit {
     this.showEdit = true
     const data = new Date(pedido.dataPedido).toISOString().split('T')[0]
 
-
     this.editForm.patchValue({
       nomeCompleto: pedido.nomeCompleto,
       celular: pedido.celular,
@@ -149,6 +149,7 @@ export class HomeComponent  implements OnInit {
       responsavel: pedido.responsavel,
       observacao:pedido.observacao
     });
+
     this.pedidoEmEdicao = pedido
     this.detalhes = pedido;
     this.openModal()
