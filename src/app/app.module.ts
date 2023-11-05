@@ -1,4 +1,9 @@
-import { NgModule } from '@angular/core';
+import { registerLocaleData } from "@angular/common";
+import localePt from "@angular/common/locales/pt";
+import { defineLocale } from "ngx-bootstrap/chronos";
+import { ptBrLocale } from "ngx-bootstrap/locale";
+
+import { NgModule,LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BlockUIModule } from "ng-block-ui";
 import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -7,7 +12,9 @@ import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './services/auth/auth.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataTablesModule } from "angular-datatables";
-
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NumericOnlyDirective } from "./services/utils/numeric-only.directive";
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +33,12 @@ import { MeusRelatoriosComponent } from './meus-relatorios/meus-relatorios.compo
 import { PesquisaPipe } from './pipes/pesquisa/pesquisa.pipe';
 import { TabelaPedidosComponent } from './tabela-pedidos/tabela-pedidos.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
+import { RelatorioVendasComponent } from './relatorio-vendas/relatorio-vendas.component';
+import { VisualValidatorComponent } from './components/visual-validator/visual-validator.component';
+
+
+defineLocale("pt-br", ptBrLocale);
+registerLocaleData(localePt);
 
 @NgModule({
   declarations: [
@@ -43,7 +56,10 @@ import { PedidosComponent } from './pedidos/pedidos.component';
     MeusRelatoriosComponent,
     PesquisaPipe,
     TabelaPedidosComponent,
-    PedidosComponent
+    PedidosComponent,
+    RelatorioVendasComponent,
+    VisualValidatorComponent,
+    NumericOnlyDirective
   ],
   imports: [
     BrowserModule,
@@ -54,6 +70,8 @@ import { PedidosComponent } from './pedidos/pedidos.component';
     FormsModule,
     BrowserAnimationsModule,
 		DataTablesModule,
+    BsDatepickerModule.forRoot(),
+    NgSelectModule,
 
   ],
   providers: [

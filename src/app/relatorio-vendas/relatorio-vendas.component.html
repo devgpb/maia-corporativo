@@ -1,0 +1,76 @@
+<div class=" mt-5 bg-light p-4 rounded tabela">
+
+
+  <form [formGroup]="searchForm" class="form" (submit)="search()">
+
+      <div class="form-row">
+        <div class="form-group col-12 col-sm-6">
+          <label for="datas">Intervalo de Tempo:</label>
+            <input formControlName="datas" type="text" id="datas" class="form-control"
+              placeholder="Intervalo de Tempo" bsDaterangepicker [bsConfig]="bsConfig" autocomplete="off">
+        </div>
+        <div class="form-group col-12 col-sm-6">
+          <label for="status">Período:</label>
+          <ng-select id="periodos" class="ng-select-md"
+            [items]="periodos"
+            bindValue="id"
+            bindLabel="nome"
+            (ngModelChange)="periodChanged()"
+            dropdownPosition="bottom"
+            placeholder="Personalizado"
+            formControlName="periodo"
+            [title]="periodoTitle"
+          >
+            <ng-template ng-option-tmp let-item="item">
+              <div [title]="item.nome">{{item.nome}}</div>
+            </ng-template>
+          </ng-select>
+        </div>
+      </div>
+
+    <div class="actions ">
+
+      <button class="icon btn btn-primary">
+        <i  class="fa-solid fa-file "></i>
+        Gerar RSA
+      </button>
+
+    </div>
+
+  </form>
+
+  <div *ngIf="relatorioRSA" class="relatorio-rsa ">
+
+    <div class="text bg-primary text-white">
+      RSA - Método Infinity Solar🌞 <br><br>
+
+      Período {{inicioRelatorio}} a {{fimRelatorio}} <br><br>
+
+      Leads captados Método Infinity Solar:  {{relatorioRSA.pedidosTrafegoPago}}<br><br>
+
+      Orçamentos gerados: {{relatorioRSA.orcamentosGerados}}<br><br>
+
+      Visitas efetuadas: {{relatorioRSA.visitasRealizadas}}<br><br>
+
+      Quantidade vendas realizadas: {{relatorioRSA.pedidosFinalizado}}<br><br>
+
+      Faturamento das vendas: {{relatorioRSA.totalFaturamento | currency:'BRL'}}<br><br>
+
+      Vendas engatilhadas: {{ relatorioRSA.vendasEngatilhadas }}<br><br>
+
+      Lead caiu no whatsapp(sem querer/por engano): {{relatorioRSA.pedidosEngano}}<br><br>
+
+      Não respondeu whatsapp: {{relatorioRSA.pedidosSemRespostas}}<br><br>
+
+      Orçamentos em kWh média: {{relatorioRSA.mediaConsumoEnergia}}<br><br>
+
+      <button class="btn btn-primary" (click)="copyReportToClipboard()">
+        <i class="fa fa-clipboard" aria-hidden="true"></i> Copiar Relatório
+      </button>
+    </div>
+
+
+  </div>
+
+
+</div>

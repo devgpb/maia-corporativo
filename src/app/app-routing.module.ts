@@ -12,6 +12,7 @@ import { NovoUserComponent } from './novo-user/novo-user.component';
 import { CriarPedidoComponent } from './criar-pedido/criar-pedido.component';
 import { MeusRelatoriosComponent } from './meus-relatorios/meus-relatorios.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
+import { RelatorioVendasComponent } from './relatorio-vendas/relatorio-vendas.component';
 
 import { AuthGuard } from './services/guard/auth.guard';
 
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: "pedido/criar", component: CriarPedidoComponent, canActivate: [AuthGuard] },
   { path: "setores", component: SetoresComponent, canActivate: [AuthGuard] },
   { path: "relatorios/meus", component: MeusRelatoriosComponent, canActivate: [AuthGuard] },
+  { path: "relatoriosGerenciais/vendas", component: RelatorioVendasComponent, canActivate: [AuthGuard] },
   { path: "ref", component: ReferenciasComponent, canActivate: [AuthGuard]  },
   { path: '**', redirectTo: 'conta', pathMatch: 'full'  }
 ];

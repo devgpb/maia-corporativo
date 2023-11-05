@@ -19,8 +19,16 @@ export class UserService {
 		return this.http.post<boolean>(`${environment.apiURL}/usuarios`,dados)
 	}
 
+  public deletarUser(id: any): Observable<any>{
+		return this.http.delete(`${environment.apiURL}/usuarios/${id}`)
+	}
+
   public getColaboradores (): Observable<any[]>{
 		return this.http.get<any[]>(`${environment.apiURL}/usuarios/colaboradores`)
+	}
+
+  public getAllUsuarios(): Observable<any[]>{
+		return this.http.get<any[]>(`${environment.apiURL}/usuarios`)
 	}
 
   public getCargos (): Observable<any[]>{

@@ -4,8 +4,41 @@
   cursor: pointer;
 }
 
+.id{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.navegacao{
+  display: flex;
+  justify-content: center;
+  .holder{
+    width: 28px;
+    margin: 0px 20px;
+    i{
+      cursor: pointer;
+    }
+  }
+
+}
+
 .tabela-container{
   overflow-x: scroll;
+}
+
+.check-list{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .check{
+    padding: 10px 10px;
+    i{
+      font-size: 2rem;
+    }
+  }
 }
 
 .separar{
@@ -25,7 +58,7 @@
 .edit-form{
   display: flex;
   flex-wrap: wrap;
-  div{
+  div.form-group{
     width: 50%;
     padding-left: 5px;
   }
@@ -54,7 +87,7 @@
 
     display: flex;
     flex-wrap: wrap;
-
+    justify-content: center;
     .separator{
       width: 100%;
       height: 0px;
@@ -64,12 +97,13 @@
 
     .detail{
       margin: 2px 5px;
-      background-color: #81C784;
+      // background-color: #81C784;
+      border-bottom: 2px solid #81C784;
       padding: 10px 15px;
 
 
       .label{
-        color: white;
+        color: black;
       }
       .content{
         margin-left: 12px;
@@ -81,7 +115,7 @@
 .navigation{
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .lista-pedidos{
@@ -124,7 +158,7 @@
 .contadores{
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 @media (max-width: 768px) {

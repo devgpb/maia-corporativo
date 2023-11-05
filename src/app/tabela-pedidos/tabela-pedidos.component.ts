@@ -30,6 +30,10 @@ export class TabelaPedidosComponent implements OnChanges  {
   public indicePagina: number = 0;
   public totalPaginas: number = 0;
 
+  public indiceDetalhe: number = 0;
+  public indiceLimiteDetalhe: number = 0;
+
+
   audio = new Audio();
   list: IPedido[] = [];
   @Input() status: string = '';
@@ -71,8 +75,10 @@ export class TabelaPedidosComponent implements OnChanges  {
       cep: ['', Validators.required],
       status: ['', Validators.required],
       consumoDeEnergiaMensal: ['', Validators.required],
+      faturamento: [0],
       dataPedido: ['', Validators.required],
       observacao: [''],
+      detalhes: [{}],
       ref: [''],
       responsavel: ['']
     });
@@ -102,8 +108,6 @@ export class TabelaPedidosComponent implements OnChanges  {
       this.atualizarPedidos();
     }
   }
-
-
 
   atualizarPedidos(){
     this.pedidosService.getPedidosByStatus(this.status,this.isAdm ? undefined : this.user.idUsuario ).subscribe(pedidos =>{
@@ -168,15 +172,43 @@ export class TabelaPedidosComponent implements OnChanges  {
   abrirDetalhes(pedido: IPedido){
     this.showEdit = false
     this.showDetails = true
+    this.indiceDetalhe = this.list.indexOf(pedido)
+    this.indiceLimiteDetalhe = this.list.length
     this.detalhes = pedido;
+
     this.openModal()
   }
 
-  abrirEdicao(pedido: IPedido){
-    this.showDetails = false
-    this.showEdit = true
-    const data = new Date(pedido.dataPedido).toISOString().split('T')[0]
+  voltarPedido(pedido: IPedido, edit = false){
+    const indexAntigo = this.list.indexOf(pedido)
+    this.detalhes = this.list[indexAntigo - 1]
+    this.indiceDetalhe = indexAntigo - 1
 
+    if(edit){
+      this.showDetails = false
+      this.showEdit = true
+      this.gerarFormEdicao(this.detalhes)
+    }
+
+  }
+
+  proximoPedido(pedido: IPedido, edit = false){
+    const indexAntigo = this.list.indexOf(pedido)
+    this.detalhes = this.list[indexAntigo + 1]
+    this.indiceDetalhe = indexAntigo + 1
+
+
+
+    if(edit){
+      this.showDetails = false
+      this.showEdit = true
+      this.gerarFormEdicao(this.detalhes)
+    }
+
+  }
+
+  gerarFormEdicao( pedido:IPedido ){
+    const data = new Date(pedido.dataPedido).toISOString().split('T')[0]
 
     this.editForm.patchValue({
       nomeCompleto: pedido.nomeCompleto,
@@ -187,16 +219,41 @@ export class TabelaPedidosComponent implements OnChanges  {
       cep: pedido.cep,
       status: pedido.status,
       consumoDeEnergiaMensal: pedido.consumoDeEnergiaMensal,
+      faturamento: pedido.faturamento,
       dataPedido: data,
       ref: pedido.ref,
       responsavel: pedido.responsavel,
-      observacao:pedido.observacao
+      observacao:pedido.observacao,
+      detalhes: pedido.detalhes
     });
+
     this.pedidoEmEdicao = pedido
+  }
+
+  abrirEdicao(pedido: IPedido){
+    this.showDetails = false
+    this.showEdit = true
+
+    this.indiceDetalhe = this.list.indexOf(pedido)
+    this.indiceLimiteDetalhe = this.list.length
+
+    this.gerarFormEdicao(pedido)
+
     this.detalhes = pedido;
     this.openModal()
   }
 
+  toggleDetalhe(detalhe: string){
+    const detalhesAtualizados = {
+      ...this.editForm.value.detalhes, // copia todas as propriedades existentes
+      [detalhe]: !this.editForm.value.detalhes[detalhe] // sobrescreve apenas a propriedade específica
+    };
+
+    this.editForm.patchValue({
+      detalhes: detalhesAtualizados
+    });
+
+  }
 
   nothingChanged(): boolean {
     const formValues = this.editForm.value;
@@ -208,9 +265,16 @@ export class TabelaPedidosComponent implements OnChanges  {
            formValues.rua === this.pedidoEmEdicao.rua &&
            formValues.cep === this.pedidoEmEdicao.cep &&
            formValues.consumoDeEnergiaMensal === this.pedidoEmEdicao.consumoDeEnergiaMensal &&
+           formValues.faturamento === this.pedidoEmEdicao.faturamento &&
            formValues.dataPedido === new Date(this.pedidoEmEdicao.dataPedido).toISOString().split('T')[0] &&
            formValues.responsavel === this.pedidoEmEdicao.responsavel &&
-           formValues.observacao === this.pedidoEmEdicao.observacao;
+           formValues.observacao === this.pedidoEmEdicao.observacao &&
+           formValues.detalhes.trafegoPago === this.pedidoEmEdicao.detalhes.trafegoPago &&
+           formValues.detalhes.orcamentoGerado === this.pedidoEmEdicao.detalhes.orcamentoGerado &&
+           formValues.detalhes.vendaEngatilhada === this.pedidoEmEdicao.detalhes.vendaEngatilhada &&
+           formValues.detalhes.visitaRealizada === this.pedidoEmEdicao.detalhes.visitaRealizada &&
+           formValues.detalhes.semResposta === this.pedidoEmEdicao.detalhes.semResposta;
+
 
   }
 
@@ -307,6 +371,10 @@ export class TabelaPedidosComponent implements OnChanges  {
 
   onSubmit() {
     if (this.editForm.valid) {
+
+      if(this.editForm.value.faturamento <= 0){
+        this.editForm.value.faturamento = null
+      }
 
       this.pedidosService.updatePedido(this.pedidoEmEdicao.idPedido,this.editForm.value).subscribe(resp =>{
         this.atualizarPedidos()

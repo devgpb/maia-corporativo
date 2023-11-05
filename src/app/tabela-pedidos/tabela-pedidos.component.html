@@ -3,12 +3,71 @@
   <app-modal #modal class="info ">
     <div class="w-100 "  *ngIf="showDetails">
 
+      <div class="id">
+        {{ detalhes.idPedido }}
+      </div>
+
       <i class="fa solid fa-circle-xmark icon bg-danger text-white"
       (click)="closeModal()"
       ></i>
-      <h2>Detalhes</h2>
-      <h4 class="ref-header  text-danger">Referencia: {{ detalhes.ref }}</h4>
+
+      <!-- Navegação -->
+      <h2 class="navegacao">
+
+        <div class="holder">
+          <i class="fa-solid fa-angles-left text-info"
+          (click)="voltarPedido(detalhes)"
+          *ngIf="indiceDetalhe > 0"
+          ></i>
+        </div>
+
+        Detalhes
+
+        <div class="holder">
+          <i class="fa-solid fa-angles-right text-info"
+          *ngIf="indiceDetalhe < indiceLimiteDetalhe - 1"
+          (click)="proximoPedido(detalhes)"
+          ></i>
+        </div>
+      </h2>
+      <!-- Navegação -->
+
+      <h4 class="ref-header  text-danger">Data Criado: {{ formatarData(detalhes.dataPedido) }}</h4>
       <div class="details">
+
+        <h3 class="w-100">Detalhes:</h3>
+        <div class="check-list">
+          <div class="check">
+            <i class="fa-solid "
+            [ngClass]="detalhes?.detalhes?.trafegoPago ? 'fa-check text-success' : 'fa-x text-danger'"
+            ></i> Tráfego Pago
+          </div>
+
+          <div class="check">
+            <i class="fa-solid"
+            [ngClass]="detalhes?.detalhes?.orcamentoGerado ? 'fa-check text-success' : 'fa-x text-danger'"
+            ></i> Orçamento Gerado
+          </div>
+
+          <div class="check">
+            <i class="fa-solid"
+            [ngClass]="detalhes?.detalhes?.vendaEngatilhada ? 'fa-check text-success' : 'fa-x text-danger'"
+            ></i> Venda Engatilhada
+          </div>
+
+          <div class="check">
+            <i class="fa-solid"
+            [ngClass]="detalhes?.detalhes?.visitaRealizada ? 'fa-check text-success' : 'fa-x text-danger'"
+            ></i> Visita Realizada
+          </div>
+
+          <div class="check">
+            <i class="fa-solid"
+            [ngClass]="detalhes?.detalhes?.semResposta ? 'fa-check text-success' : 'fa-x text-danger'"
+            ></i> Sem Resposta
+          </div>
+        </div>
+
         <h3 class="w-100">Pessoal:</h3>
         <div class="detail">
           <span class="label">Nome:</span>
@@ -37,9 +96,15 @@
           <span class="label">Status:</span>
           <span class="content">{{ detalhes.status }}</span>
         </div>
+
         <div class="detail">
           <span class="label">Consumo:</span>
           <span class="content">{{ detalhes.consumoDeEnergiaMensal }}</span>
+        </div>
+
+        <div class="detail">
+          <span class="label">Faturamento:</span>
+          <span class="content">{{ detalhes.faturamento | currency:'BRL' }}</span>
         </div>
 
         <div class="detail">
@@ -70,9 +135,69 @@
       <i class="fa solid fa-circle-xmark icon bg-danger text-white"
       (click)="closeModal()"
       ></i>
-      <h2>Editar Detalhes</h2>
+
+
+      <div class="id">
+        {{ detalhes.idPedido }}
+      </div>
+
+      <!-- Navegação -->
+      <h2 class="navegacao">
+        <div class="holder">
+          <i class="fa-solid fa-angles-left text-info"
+          (click)="voltarPedido(detalhes,true)"
+          *ngIf="indiceDetalhe > 0"
+          ></i>
+        </div>
+
+
+        Editar Detalhes
+        <div class="holder">
+          <i class="fa-solid fa-angles-right text-info"
+          *ngIf="indiceDetalhe < indiceLimiteDetalhe - 1"
+          (click)="proximoPedido(detalhes,true)"
+          ></i>
+        </div>
+      </h2>
+      <!-- Navegação -->
 
       <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="edit-form">
+        <h3 class="w-100">Detalhes:</h3>
+
+        <div class="check-list">
+          <div class="check" (click)="toggleDetalhe('trafegoPago')">
+            <i class="fa-solid"
+            [ngClass]="{'fa-check text-success': editForm.value.detalhes.trafegoPago, 'fa-x text-danger': !editForm.value.detalhes.trafegoPago}"
+            ></i> Tráfego Pago
+          </div>
+
+          <div class="check" (click)="toggleDetalhe('orcamentoGerado')">
+            <i class="fa-solid"
+            [ngClass]="{'fa-check text-success': editForm.value.detalhes.orcamentoGerado, 'fa-x text-danger': !editForm.value.detalhes.orcamentoGerado}"
+            ></i> Orçamento Gerado
+          </div>
+
+          <div class="check" (click)="toggleDetalhe('vendaEngatilhada')">
+            <i class="fa-solid"
+            [ngClass]="{'fa-check text-success': editForm.value.detalhes.vendaEngatilhada, 'fa-x text-danger': !editForm.value.detalhes.vendaEngatilhada}"
+            ></i>  Venda Engatilhada
+          </div>
+
+          <div class="check" (click)="toggleDetalhe('visitaRealizada')">
+            <i class="fa-solid"
+            [ngClass]="{'fa-check text-success': editForm.value.detalhes.visitaRealizada, 'fa-x text-danger': !editForm.value.detalhes.visitaRealizada}"
+            ></i>  Visita Realizada
+          </div>
+
+
+          <div class="check" (click)="toggleDetalhe('semResposta')">
+            <i class="fa-solid"
+            [ngClass]="{'fa-check text-success': editForm.value.detalhes.semResposta, 'fa-x text-danger': !editForm.value.detalhes.semResposta}"
+            ></i>  Sem Resposta
+          </div>
+
+        </div>
+        <span class="w-100 text-center text-primary infor">Clique em um detalhe para alterar seu valor</span>
 
         <!-- Pessoal -->
         <h3 class="w-100">Pessoal:</h3>
@@ -117,7 +242,14 @@
 
         <div class="form-group">
           <label for="consumoDeEnergiaMensal">Consumo Mensal de Energia:</label>
-          <input type="number" class="form-control" id="consumoDeEnergiaMensal" formControlName="consumoDeEnergiaMensal">
+          <input type="text" class="form-control" id="consumoDeEnergiaMensal" formControlName="consumoDeEnergiaMensal" appNumericOnly>
+        </div>
+
+        <div class="form-group">
+          <label for="faturamento">Faturamento (R$):</label>
+          <input type="text" class="form-control"
+          id="faturamento" formControlName="faturamento"
+          appNumericOnly >
         </div>
 
         <div class="form-group">

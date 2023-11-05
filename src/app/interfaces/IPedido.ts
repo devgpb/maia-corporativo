@@ -3,6 +3,8 @@ export interface IPedido{
   idPedido?: string | number;
   nomeCompleto: string;
   consumoDeEnergiaMensal: number;
+  faturamento?: number;
+
   celular : string;
   cep : string;
   rua : string;
@@ -14,5 +16,7 @@ export interface IPedido{
   observacao?: string;
   status: string;
   responsavel: string;
+
+  detalhes:any;
 }
 

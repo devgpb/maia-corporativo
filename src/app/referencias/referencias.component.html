@@ -11,18 +11,18 @@
         <tr>
           <th scope="col">Link</th>
           <th scope="col">Nome</th>
-          <!-- <th scope="col">Ações</th> -->
+          <th scope="col">Ações</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let ref of list">
           <td scope="row" (click)="copiarLink(ref.referencia)">{{ ref.referencia }}</td>
           <td scope="row">{{ ref.nomeCompleto }}</td>
-          <!-- <td scope="row" >
+          <td scope="row" >
             <i
             class="fa-solid fa-trash-can icon bg-danger text-white"
             (click)="apagar(ref)"></i>
-          </td> -->
+          </td>
 
         </tr>
       </tbody>

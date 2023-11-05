@@ -4,9 +4,10 @@ import Swal, { SweetAlertResult } from "sweetalert2";
 
 
 import { AuthService } from '../services/auth/auth.service';
-import { Cargos } from '../interfaces/IUser';
+import { Cargos, IUser } from '../interfaces/IUser';
 import { ReferenciasService } from '../services/referenciasService/referencias.service';
 import { IReferencia } from '../interfaces/IReferencia';
+import { UserService } from '../services/user/user.service';
 @Component({
   selector: 'app-referencias',
   templateUrl: './referencias.component.html',
@@ -15,11 +16,12 @@ import { IReferencia } from '../interfaces/IReferencia';
 export class ReferenciasComponent implements OnInit {
 
   form: FormGroup;
-  list: IReferencia[] | any[];
+  list: IUser[] | any[];
 
   constructor(
     private fb: FormBuilder,
     private refService:ReferenciasService,
+    private userService: UserService,
     private authService: AuthService
 
   ){
@@ -31,55 +33,55 @@ export class ReferenciasComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.cargosPermitidos([Cargos.ADMINISTRADOR,Cargos.GESTOR])
-    this.refService.getReferencias().subscribe(ref => {
+    this.userService.getAllUsuarios().subscribe(ref => {
       this.list = ref
     })
   }
 
 
-  salvar() {
-    if (this.form.valid) {
-      this.refService.salvarReferencia(this.form.get('referencia')?.value).subscribe(res =>{
-        if(res.referencia){
-          this.form.get('referencia')?.setValue('')
-          this.list.push(res)
-        }
-      })
-    } else {
-      console.log("Formulário inválido.");
-    }
-  }
-
-  // apagar(ref:IReferencia){
-  //   Swal.fire({
-  //     title: 'Deseja mesmo apagar a referência?',
-  //     icon: 'question',
-  //     showCancelButton: true,
-  //     confirmButtonText: 'Sim',
-  //     cancelButtonText: 'Não',
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       this.refService.apagarReferencia(ref.referencia).subscribe(apagado =>{
-  //         if(apagado){
-  //           Swal.fire({
-  //             icon: "success",
-  //             title: "Referência Apagado!",
-  //             confirmButtonColor: "#3C58BF"
-  //           });
-  //           const index = this.list.indexOf(ref);
-  //           this.list.splice(index,1)
-  //         }else{
-  //           Swal.fire({
-  //             icon: "error",
-  //             title: "Referência Não Apagado!",
-  //           });
-  //         }
-  //       })
-  //     } else if (result.dismiss === Swal.DismissReason.cancel) {
-  //       Swal.fire('Referência não foi apagado.', '', 'info');
-  //     }
-  //   });
+  // salvar() {
+  //   if (this.form.valid) {
+  //     this.refService.salvarReferencia(this.form.get('referencia')?.value).subscribe(res =>{
+  //       if(res.referencia){
+  //         this.form.get('referencia')?.setValue('')
+  //         this.list.push(res)
+  //       }
+  //     })
+  //   } else {
+  //     console.log("Formulário inválido.");
+  //   }
   // }
+
+  apagar(ref:IUser){
+    Swal.fire({
+      title: 'Deseja mesmo apagar o usuário?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Não',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.deletarUser(ref.idUsuario).subscribe(apagado =>{
+          if(apagado){
+            Swal.fire({
+              icon: "success",
+              title: "Usuario Apagado!",
+              confirmButtonColor: "#3C58BF"
+            });
+            const index = this.list.indexOf(ref);
+            this.list.splice(index,1)
+          }else{
+            Swal.fire({
+              icon: "error",
+              title: "Usuario Não Apagado!",
+            });
+          }
+        })
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire('Usuario não foi apagado.', '', 'info');
+      }
+    });
+  }
 
 
   copiarLink(codigo:string) {

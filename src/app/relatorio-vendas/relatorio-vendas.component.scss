@@ -1,0 +1,40 @@
+.tabela{
+  margin: 0 4%;
+  overflow: -webkit-paged-x;
+}
+
+.actions{
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 18px;
+  margin-top: 20px;
+}
+
+.form-row{
+  display: flex;
+
+
+  .form-group{
+    padding: 0px 18px;
+  }
+}
+
+
+.relatorio-rsa{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  .text{
+    display: flex;
+    flex-direction: column;
+    background-color: #ccc;
+    padding: 15px 15px;
+    border: 1px solid white;
+
+    button{
+      margin-top: 20px;
+    }
+  }
+}
+

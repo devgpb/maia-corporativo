@@ -5,22 +5,27 @@
         <a class="nav-link" routerLink="/ref"
         [routerLinkActive]="['active-link']"
         [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('/ref') ? true : null">Usuários</a>
+        [attr.disabled]="isActive('/ref') ? true : null"> <i class="fa-solid fa-user"></i> Usuários</a>
       </li>
 
       <li class="nav-item active" *ngIf="userCargo=='ADMINISTRADOR'">
         <a class="nav-link" routerLink="/setores"
         [routerLinkActive]="['active-link']"
         [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('/setores') ? true : null">Setores</a>
+        [attr.disabled]="isActive('/setores') ? true : null"> <i class="fa-solid fa-clipboard"></i> Setores</a>
       </li>
 
-      <!-- <li class="nav-item" *ngIf="userCargo=='ADMINISTRADOR'">
-        <a class="nav-link" (click)="toggleSubmenu('relatorios')" role="button">Relatórios Gerenciais</a>
-      </li> -->
+      <li class="nav-item" *ngIf="userCargo=='ADMINISTRADOR'">
+        <a class="nav-link" (click)="toggleSubmenu('relatorios')"
+        role="button" [class.sub-active]="menuSelected == 'relatorios' && isOpen">
+        <i class="fa-solid fa-gears"></i> Relatórios Gerenciais</a>
+      </li>
 
       <li class="nav-item">
-        <a class="nav-link" (click)="toggleSubmenu('pedidos')" role="button">
+        <a class="nav-link" (click)="toggleSubmenu('pedidos')"
+        role="button" [class.sub-active]="menuSelected == 'pedidos' && isOpen"
+        >
+          <i class="fa-solid fa-paper-plane"></i>
           <span *ngIf="userCargo=='COLABORADOR'">Meus</span>
           Pedidos</a>
       </li>
@@ -29,19 +34,19 @@
         <a class="nav-link" routerLink="usuarios/novo"
         [routerLinkActive]="['active-link']"
         [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('usuarios/novo') ? true : null">Novo Usuario</a>
+        [attr.disabled]="isActive('usuarios/novo') ? true : null"><i class="fa-solid fa-user-plus"></i> Novo Usuario</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="relatorios/meus"
         [routerLinkActive]="['active-link']"
         [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('relatorios/meus') ? true : null">Meu Relatório</a>
+        [attr.disabled]="isActive('relatorios/meus') ? true : null"><i class="fa-solid fa-star"></i> Meu Relatório</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="/conta"
         [routerLinkActive]="['active-link']"
         [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('/conta') ? true : null">Minha Conta</a>
+        [attr.disabled]="isActive('/conta') ? true : null"><i class="fa-solid fa-user-pen"></i> Minha Conta</a>
       </li>
     </ul>
   </div>
@@ -86,14 +91,14 @@
       <a  routerLink="pedido/criar"
       [routerLinkActive]="['active-link']"
       [routerLinkActiveOptions]="{exact: true}"
-      [attr.disabled]="isActive('pedidos/criar') ? true : null">Novo Pedido</a>
+      [attr.disabled]="isActive('pedidos/criar') ? true : null"><i class="fa-solid fa-circle-plus"></i>Novo Pedido</a>
     </div>
 
     <div class="w-100" *ngIf="menuSelected == 'relatorios'">
-      <a routerLink="/home"
+      <a routerLink="relatoriosGerenciais/vendas"
       [routerLinkActive]="['active-link']"
       [routerLinkActiveOptions]="{exact: true}"
-      [attr.disabled]="isActive('/home') ? true : null">Colaboradores</a>
+      [attr.disabled]="isActive('relatoriosGerenciais/vendas') ? true : null">Relatórios de Vendas</a>
     </div>
   </div>
 </nav>

@@ -1,6 +1,6 @@
 .navbar-nav .nav-link {
-  margin-left: 15px;
-  margin-right: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .nav-cont{
@@ -17,24 +17,26 @@
   overflow-x: scroll;
 }
 
+.active-link{
+  // color: #65946e;
+}
 
+.sub-active{
+  border-bottom: 5px solid #ccc;
+}
 
 .navbar-collapse {
   justify-content: center;
 }
 
 .active-link {
-  background-color: #ccc;
+  background-color: #65946e;
+  color: white !important;
   // ou qualquer outro estilo que você deseja aplicar
   pointer-events: none; // para desativar o link
 }
 .navbar{
   width: 100%;
-}
-
-.submenu {
-  overflow: hidden;
-  // ... outros estilos
 }
 
 .closed{
@@ -47,18 +49,6 @@
   flex-direction: column !important;
 }
 
-// .dropdown-menu {
-//   display: none;
-//   transition: max-height 0.3s ease-out;
-//   max-height: 0;
-//   overflow: hidden;
-// }
-
-// .dropdown.show .dropdown-menu {
-//   display: block;
-//   max-height: 300px; // altere para se adaptar ao tamanho que você deseja
-// }
-
 .submenu {
   background-color: #f8f9fa; // Isso é apenas o mesmo bg-light do Bootstrap. Ajuste conforme necessário.
   min-height: 35px;
@@ -67,11 +57,12 @@
   align-items: center;
   transition: max-height 0.3s ease-out;
   overflow: hidden;
-
+  i{
+    margin-right: 5px;
+  }
   a {
-      margin: 10px 15px;
+      padding: 10px 15px;
       color: rgba(0,0,0, 0.65); // Cor padrão do link do Bootstrap.
-      padding: 10px 0;
       &:hover {
           text-decoration: none;
       }

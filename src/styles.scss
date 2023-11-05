@@ -3,4 +3,153 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~@fortawesome/fontawesome-free/css/all.min.css";
 
+@import "~ngx-bootstrap/datepicker/bs-datepicker.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
 
+.icon{
+  padding: 9px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.theme-dark-blue .bs-datepicker-head, .theme-dark-blue .bs-datepicker-body table td span.selected, .theme-dark-blue .bs-datepicker-body table td.selected span, .theme-dark-blue .bs-datepicker-body table td span[class*="select-"]:after, .theme-dark-blue .bs-datepicker-body table td[class*="select-"] span:after {
+	background-color: #3C58BF;
+}
+
+bs-days-calendar-view:nth-child(2){
+  margin-left: 20px;
+}
+
+.theme-dark-blue .bs-datepicker-body table td.week span {
+	color: #3C58BF;
+}
+body .ui-datepicker .ui-timepicker {
+	padding: .25em 0;
+
+}
+.cal-month-view .cal-day-cell.cal-today .cal-day-number {
+	font-size: 1.6em;
+	margin-bottom: 0;
+}
+.t-calendar .cal-weekend .bs-tooltip-left .tooltip-inner {
+	margin-top: 20px;
+}
+
+/* ng-select */
+
+.ng-select.ng-select-single .ng-select-container {
+	width: 100%;
+	font-weight: 400;
+	color: #495057;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #ced4da;
+	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	height: calc(1.5em + .5rem + 2px);
+	padding: .25rem .5rem;
+	font-size: .875rem;
+	line-height: 1.5;
+	border-radius: .2rem;
+	min-height: unset;
+	padding-right: 0;
+}
+
+.ng-select-md.ng-select.ng-select-single .ng-select-container {
+	height: calc(1.5em + .825rem + 2px);
+	padding: .375rem .75rem;
+	padding-right: 0;
+	font-size: .95rem;
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-placeholder {
+	color: #495057;
+}
+
+.ng-select .ng-arrow-wrapper {
+	text-align: right;
+	padding-right: 0;
+}
+
+.ng-select .ng-arrow-wrapper .ng-arrow {
+	border-color: #495057 transparent transparent;
+}
+
+.ng-select.ng-select-opened>.ng-select-container .ng-arrow {
+	border-color: transparent transparent #495057;
+}
+
+.ng-select .ng-select-container .ng-value-container {
+	padding-right: 10px;
+	padding-left: 0;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items {
+	font-weight: 400;
+	font-size: .875rem;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+	padding: .25rem .5rem;
+}
+
+.ng-select .ng-clear-wrapper {
+	color: #495057;
+	padding-top: 4px;
+	padding-left: 5px;
+}
+
+.multiselect-dropdown .dropdown-btn {
+	border: 1px solid #ced4da !important;
+	color: #495057 !important;
+	padding-right: 2px !important;
+}
+
+.multiselect-dropdown .dropdown-btn .dropdown-down {
+	border-top: 5px solid #495057 !important;
+	border-left: 5px solid transparent !important;
+	border-right: 5px solid transparent !important;
+	padding-bottom: 2px !important;
+}
+
+.multiselect-dropdown .dropdown-btn .dropdown-up {
+	border-bottom: 5px solid #495057 !important;
+	border-left: 5px solid transparent !important;
+	border-right: 5px solid transparent !important;
+	padding-bottom: 2px !important;
+}
+
+.big-modal.modal-dialog {
+	max-width: 90%;
+}
+
+.form-field.is-invalid .ng-select-container, .form-field.is-invalid>span>input {
+	border-color: #dc3545 !important;
+	padding-right: calc(.75em + .75rem);
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23dc3545' viewBox='-2 -2 7 7'%3e%3cpath stroke='%23dc3545' d='M0 0l3 3m0-3L0 3'/%3e%3ccircle r='.5'/%3e%3ccircle cx='3' r='.5'/%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E");
+	background-repeat: no-repeat;
+	background-position: center right calc(.375em + .1875rem);
+	background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+}
+
+.form-field.is-invalid .ng-select-container:focus, .form-field.is-invalid.ng-select.ng-select-focused:not(.ng-select-opened)>.ng-select-container, .form-field.is-invalid>span>input:focus {
+	border-color: #dc3545;
+	box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, .25) !important;
+}
+
+.form-field.is-invalid~.invalid-feedback {
+	display: block;
+}
+
+.form-field.is-valid .ng-select-container, .form-field.is-valid>span>input {
+	border-color: #28a745 !important;
+	padding-right: calc(.75em + .75rem);
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+	background-repeat: no-repeat;
+	background-position: center right calc(.375em + .1875rem);
+	background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+}
+
+.form-field.is-valid .ng-select-container:focus, .form-field.is-valid.ng-select.ng-select-focused:not(.ng-select-opened)>.ng-select-container, .form-field.is-valid>span>input:focus {
+	border-color: #28a745;
+	box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, .25) !important;
+}
