@@ -27,6 +27,22 @@
   overflow-x: scroll;
 }
 
+.apoio{
+  margin-bottom: 5px;
+}
+
+.cabecalho{
+  background-color: white;
+  min-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .total{
+    font-size: 1.6rem;
+  }
+}
+
 .check-list{
   width: 100%;
   display: flex;
