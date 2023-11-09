@@ -1,7 +1,69 @@
-.icon{
-  padding: 9px;
+.card-pedido{
+  border: 2px solid #65946e;
+  margin: 5px 10px;
+  border-radius: 18px;
+  overflow: hidden;
+  // padding: 0 12px;
+  width: 300px;
+  .header{
+    display: flex;
+    // justify-content: space-around;
+    background-color: #65946e;
+    color: white;
+    padding: 10px 0;
+
+
+
+
+    .nome{
+      width: 100%;
+      text-align: center;
+
+    }
+  }
+
+  .checkers{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    min-height: 200px;
+
+    .id-pedido{
+      min-width: 10px;
+      padding: 0px 10px;
+    }
+
+    .data{
+      font-weight: bold;
+    }
+    div{
+      padding: 5px 0;
+    }
+    .edit{
+      margin-bottom: 10px;
+
+    }
+    .align-icon{
+      margin-bottom: 5px;
+    }
+  }
+}
+
+
+.mini-icon{
+  padding: 8px 0;
   border-radius: 6px;
+  text-align: center;
   cursor: pointer;
+  width: 50px;
+}
+
+.icon{
+  padding: 8px 0;
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+  width: 90px;
 }
 
 .id{
@@ -13,6 +75,7 @@
 .navegacao{
   display: flex;
   justify-content: center;
+  margin-top: 5px;
   .holder{
     width: 28px;
     margin: 0px 20px;
@@ -86,9 +149,10 @@
 }
 
 .info{
-
   h2{
     text-align: center;
+    margin-top: 30px !important;
+
   }
 
   .icon {
