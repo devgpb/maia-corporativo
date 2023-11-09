@@ -358,17 +358,17 @@
           (click)="retrocederPedido(pedido)"
           >Retroceder</i>
           <i class="icon bg-danger text-white separar"
-          (click)="avancarPedido(pedido)"
+          (click)="deletarPedido(pedido)"
           >Deletar</i>
           <i *ngIf="canAvancar"  class="icon bg-primary text-white separar"
-          (click)="deletarPedido(pedido)"
+          (click)="avancarPedido(pedido)"
           >Avançar</i>
         </div>
       </div>
     </div>
   </div>
 
- 
+
   <h1 class="text-center" *ngIf="list.length === 0">
     - Sem Pedidos! -
   </h1>
