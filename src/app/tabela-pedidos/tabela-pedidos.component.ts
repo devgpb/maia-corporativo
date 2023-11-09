@@ -100,6 +100,14 @@ export class TabelaPedidosComponent implements OnChanges  {
     this.atualizarPedidos()
   }
 
+  podeEditar(){
+    if(this.isAdm) return true
+
+    if([0,1,2].includes(this.indicePagina)) return true
+
+    return false
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     // Verifique se a propriedade status foi alterada
     if (changes['status'] && changes['status'].currentValue !== changes['status'].previousValue) {

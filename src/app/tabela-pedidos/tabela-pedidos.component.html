@@ -351,7 +351,7 @@
           <i class="fa-solid fa-eye mini-icon bg-info text-white"
            (click)="abrirDetalhes(pedido)" ></i>
           <i class="fa-solid fa-pen mini-icon bg-success text-white separar"
-          (click)="abrirEdicao(pedido)" *ngIf="isAdm"></i>
+          (click)="abrirEdicao(pedido)" *ngIf="podeEditar()"></i>
         </div>
         <div class="align-icon" >
           <i *ngIf="canRetroceder" class="icon bg-warning text-white"
