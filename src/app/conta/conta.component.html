@@ -18,6 +18,20 @@
     </div>
 
     <div class="form-group">
+      <label for="cpf">CPF</label>
+      <input type="text" class="form-control" id="cpf" formControlName="cpf"
+      placeholder="000.000.000-00"
+      (input)="applyCpfMask($event)">
+    </div>
+
+    <div class="form-group">
+      <label for="cnpj">CNPJ</label>
+      <input type="text" class="form-control" id="cnpj" formControlName="cnpj"
+      (input)="applyCnpjMask($event)"
+      placeholder="00.000.000/0000-00">
+    </div>
+
+    <div class="form-group">
       <label for="idSetor">Setor</label>
       <input type="text" class="form-control" id="idSetor" formControlName="setor">
     </div>
@@ -44,7 +58,7 @@
       <label for="email">Email</label>
       <input type="email" class="form-control" id="email" formControlName="email">
     </div>
-    
+
     <div class="form-group ">
       <label for="celular">Celular</label>
       <input type="text" formControlName="celular" class="form-control" id="celular" placeholder="(00)-0000-0000" (input)="applyCelularMask($event)">
@@ -55,9 +69,35 @@
       <input type="text" class="form-control" id="cargo" formControlName="cargo" >
     </div>
 
+    <h2 class="text-uppercase text-center w-100">endereço</h2>
+
+    <div class="form-group ">
+      <label for="cep">CEP</label>
+      <input type="text" formControlName="cep" class="form-control" id="cep" placeholder="00000-000" (input)="applyCepMask($event); onCepChange()" >
+    </div>
+
+    <div class="form-row d-flex justify-content-center align-items-center ">
+
+      <div class="form-group ">
+        <label for="cidade">Cidade</label>
+        <input type="text" class="form-control" id="cidade" placeholder="Informe a cidade"
+        formControlName="cidade">
+      </div>
+      <div class="form-group ">
+        <label for="rua">Rua</label>
+        <input type="text" class="form-control" id="rua" placeholder="Informe a rua"  formControlName="rua">
+      </div>
+
+      <div class="form-group ">
+        <label for="numero">Numero</label>
+        <input type="text" class="form-control" id="numero" placeholder="Informe a numero"  formControlName="rua">
+      </div>
+    </div>
+
     <div class="w-100 d-flex justify-content-end">
       <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid || !nothingChanged()">Atualizar</button>
     </div>
+
   </div>
 
 </form>

@@ -1,6 +1,12 @@
 .navbar-nav .nav-link {
   padding-left: 15px;
   padding-right: 15px;
+  text-align: center;
+
+  i{
+    width: 100%;
+    text-align: center;
+  }
 }
 
 .nav-cont{
@@ -51,12 +57,15 @@
 
 .submenu {
   background-color: #f8f9fa; // Isso é apenas o mesmo bg-light do Bootstrap. Ajuste conforme necessário.
-  min-height: 35px;
+  min-height: 50px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   transition: max-height 0.3s ease-out;
   overflow: hidden;
+  div{
+    min-height: 35px;
+  }
   i{
     margin-right: 5px;
   }
@@ -116,11 +125,12 @@
     min-height: 50px;
   }
   a,li{
-    display: flex;
-    align-items: center;
+    // display: flex;
+    // align-items: center;
   }
   .nav-principal{
-    padding-bottom: 10px;
+    padding-bottom: 0px;
     justify-content: start;
+    align-items: flex-end;
   }
 }

@@ -31,25 +31,6 @@ export class CriarPedidoComponent {
 
   fields = [
     {
-      label: 'Nome',
-      type: 'text',
-      placeholder: 'Informe o nome',
-      formControlName: 'nome'
-    },
-    {
-      label: 'Celular',
-      type: 'text',
-      placeholder: 'Informe o celular',
-      formControlName: 'celular',
-      maskFunction: 'applyCelularMask'
-    },
-    {
-      label: 'Consumo de Energia Mensal',
-      type: 'text',
-      placeholder: 'Informe o consumo',
-      formControlName: 'consumo'
-    },
-    {
       label: 'Cidade',
       type: 'text',
       placeholder: 'Informe a cidade',
@@ -93,12 +74,15 @@ export class CriarPedidoComponent {
   private initializeForm(): FormGroup {
     let group: any = {};
     this.fields.forEach(field => {
-      group[field.formControlName] = ['', [Validators.required]];
+      group[field.formControlName] = [''];
     });
-    group['horario'] = ['', [Validators.required]];
-    group['ref'] = ['', []];
-    group['observacao'] = ['', []];
-    group['email'] = ['', [Validators.required, this.emailValidator()]];
+    group['nome'] = ['', [Validators.required]];
+    group['celular'] = ['', [Validators.required, Validators.minLength(12)]];
+    group['consumo'] = [0];
+    group['horario'] = ["tarde"];
+    group['ref'] = [''];
+    group['observacao'] = [''];
+    group['email'] = ['', [this.emailValidator()]];
 
     return this.fb.group(group);
   }
@@ -112,11 +96,12 @@ export class CriarPedidoComponent {
     this.form.get("rua")?.setValue('')
     this.form.get("cidade")?.setValue('')
     this.form.get("email")?.setValue('')
-    this.form.get("horario")?.setValue('')
+    this.form.get("horario")?.setValue('tarde')
     this.form.get("observacao")?.setValue('')
     this.form.get("ref")?.setValue('')
 
   }
+
 
   onSubmit(): void {
 
