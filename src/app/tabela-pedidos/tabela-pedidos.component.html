@@ -328,7 +328,7 @@
   </div>
 
   <div class="d-flex justify-content-center flex-wrap">
-    <div class="card-pedido" *ngFor="let pedido of paginatedList | pesquisa:searchText">
+    <div class="card-pedido" *ngFor="let pedido of list | pesquisa: searchText : currentPage : pageSize">
       <div class="header">
 
 

@@ -38,7 +38,7 @@ export class AuthService {
   cargosPermitidos(allowedRoles: string[]): boolean {
     const isAllowed = allowedRoles.includes(this.getCargo());
     if (!isAllowed) {
-      this.router.navigate(['/home']);  // Redireciona para home se não estiver permitido.
+      this.router.navigate(['/pedidos/']);  // Redireciona para home se não estiver permitido.
     }
     return isAllowed;
   }

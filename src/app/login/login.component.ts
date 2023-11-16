@@ -32,7 +32,7 @@ export class LoginComponent {
 
 
       this.authService.login(email, password).subscribe(res => {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/pedidos']);
       },(error)=>{
         this.invalidCred = true
         // this.error = JSON.stringify(error)

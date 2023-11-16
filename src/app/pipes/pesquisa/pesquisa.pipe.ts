@@ -5,23 +5,21 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class PesquisaPipe implements PipeTransform {
 
-  transform(items: any[], searchText: string): any[] {
-    if (!items) {
-      return [];
-    }
-    if (!searchText) {
-      return items;
-    }
-    searchText = searchText.toLowerCase();
-    return items.filter(item => {
-      return Object.values(item).some(val => {
-        // Asseguramos que val é uma string ou um número antes de chamar toString()
-        if (typeof val === 'string' || typeof val === 'number') {
-          return val.toString().toLowerCase().includes(searchText);
-        }
-        return false;
+  transform(items: any[], searchText: string, page: number, itemsPerPage: number): any[] {
+    // Primeiro, aplicamos a pesquisa
+    let filteredItems = items;
+    if (searchText) {
+      searchText = searchText.toLowerCase();
+      filteredItems = items.filter(item => {
+        return Object.values(item).some(val =>
+          typeof val === 'string' && val.toLowerCase().includes(searchText)
+        );
       });
-    });
+    }
+
+    // Em seguida, aplicamos a paginação
+    const startIndex = (page - 1) * itemsPerPage;
+    return filteredItems.slice(startIndex, startIndex + itemsPerPage);
   }
 
 }

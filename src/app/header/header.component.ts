@@ -9,7 +9,7 @@ import { AuthService } from '../services/auth/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  public currentPage: string = 'home';
+  public currentPage: string = 'pedidos';
 
   public userName: string = ''
 
