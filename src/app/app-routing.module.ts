@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: "relatorios/meus", component: MeusRelatoriosComponent, canActivate: [AuthGuard] },
   { path: "relatoriosGerenciais/vendas", component: RelatorioVendasComponent, canActivate: [AuthGuard] },
   { path: "ref", component: ReferenciasComponent, canActivate: [AuthGuard]  },
-  { path: '**', redirectTo: 'conta', pathMatch: 'full'  }
+  { path: '**', redirectTo: 'pedidos/prospectados', pathMatch: 'full'  }
 ];
 
 @NgModule({

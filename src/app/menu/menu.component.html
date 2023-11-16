@@ -52,7 +52,18 @@
   </div>
 
   <div class="submenu"  *ngIf="isOpen">
-    <div class="w-100" *ngIf="menuSelected == 'pedidos'">
+    <div class="w-100 sub-area" *ngIf="menuSelected == 'pedidos'">
+
+      <a  routerLink="pedido/criar"
+      [routerLinkActive]="['active-link']"
+      [routerLinkActiveOptions]="{exact: true}"
+      [attr.disabled]="isActive('pedidos/criar') ? true : null"><i class="fa-solid fa-circle-plus"></i>Novo Pedido</a>
+
+
+      <div class="d-flex align-items-center">
+        <div class="separator"></div>
+      </div>
+
       <a routerLink="/pedidos/prospectados"
       [routerLinkActive]="['active-link']"
       [routerLinkActiveOptions]="{exact: true}"
@@ -88,13 +99,10 @@
       [routerLinkActiveOptions]="{exact: true}"
       [attr.disabled]="isActive('/finalizados') ? true : null">Finalizados</a>
 
-      <a  routerLink="pedido/criar"
-      [routerLinkActive]="['active-link']"
-      [routerLinkActiveOptions]="{exact: true}"
-      [attr.disabled]="isActive('pedidos/criar') ? true : null"><i class="fa-solid fa-circle-plus"></i>Novo Pedido</a>
+
     </div>
 
-    <div class="w-100" *ngIf="menuSelected == 'relatorios'">
+    <div class="w-100 sub-area" *ngIf="menuSelected == 'relatorios'">
       <a routerLink="relatoriosGerenciais/vendas"
       [routerLinkActive]="['active-link']"
       [routerLinkActiveOptions]="{exact: true}"

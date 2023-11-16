@@ -57,15 +57,26 @@
 
 .submenu {
   background-color: #f8f9fa; // Isso é apenas o mesmo bg-light do Bootstrap. Ajuste conforme necessário.
-  min-height: 50px;
+  // min-height: 50px;
   display: flex;
   justify-content: center;
   align-items: flex-end;
   transition: max-height 0.3s ease-out;
   overflow: hidden;
-  div{
-    min-height: 35px;
+  div.sub-area{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    // min-height: 35px;
   }
+
+  .separator{
+    height: 18px;
+    width: 1px;
+    border: 1px solid #ccc;
+    border-radius: 40%;
+  }
+
   i{
     margin-right: 5px;
   }
