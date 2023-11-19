@@ -99,7 +99,21 @@
       [routerLinkActiveOptions]="{exact: true}"
       [attr.disabled]="isActive('/finalizados') ? true : null">Finalizados</a>
 
+      <div class="d-flex align-items-center">
+        <div class="separator"></div>
+      </div>
 
+      <a routerLink="/pedidos/standby"
+      [routerLinkActive]="['active-link']"
+      [routerLinkActiveOptions]="{exact: true}"
+      [attr.disabled]="isActive('/standby') ? true : null">
+      <i class="fa-regular fa-hourglass text-warning"></i>StandBy</a>
+
+      <a routerLink="/pedidos/perdidos"
+      [routerLinkActive]="['active-link']"
+      [routerLinkActiveOptions]="{exact: true}"
+      [attr.disabled]="isActive('/perdidos') ? true : null">
+      <i class="fa-regular fa-triangle-exclamation  text-danger"></i>Perdidos</a>
     </div>
 
     <div class="w-100 sub-area" *ngIf="menuSelected == 'relatorios'">

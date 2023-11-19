@@ -274,7 +274,19 @@
         </div>
 
         <div class="form-group w-100 btn-area ">
-          <button [disabled]="nothingChanged()" type="submit" class="btn btn-primary">Salvar</button>
+          <div class="specials" >
+            <button class="btn btn-warning" (click)="marcarStandby()" *ngIf="!rotaEspecial"><i class="fa-regular fa-hourglass text-dark"></i>STANDBY</button>
+
+            <button class="btn btn-danger" (click)="marcarPerdido()"
+            style="margin-left: 5px;" *ngIf="!rotaEspecial"><i class="fa-regular fa-triangle-exclamation "></i>PERDIDO</button>
+            <!-- <button class="btn btn-primary">Salvar</button> -->
+
+          </div>
+
+          <div class="save">
+            <button [disabled]="nothingChanged()" type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+
         </div>
 
       </form>
@@ -354,13 +366,20 @@
           (click)="abrirEdicao(pedido)" *ngIf="podeEditar()"></i>
         </div>
         <div class="align-icon" >
-          <i *ngIf="canRetroceder" class="icon bg-warning text-white"
+          <!-- Apenas para rotas especiais -->
+          <i *ngIf="rotaEspecial"  class="icon bg-dark text-white separar"
+          (click)="liberarPedido(pedido)"
+          >Reativar</i>
+          <!-- Apenas para rotas especiais -->
+
+
+          <i *ngIf="canRetroceder && !rotaEspecial" class="icon bg-warning text-white"
           (click)="retrocederPedido(pedido)"
           >Retroceder</i>
           <i class="icon bg-danger text-white separar"
           (click)="deletarPedido(pedido)"
           >Deletar</i>
-          <i *ngIf="canAvancar"  class="icon bg-primary text-white separar"
+          <i *ngIf="canAvancar && !rotaEspecial"  class="icon bg-primary text-white separar"
           (click)="avancarPedido(pedido)"
           >Avançar</i>
         </div>

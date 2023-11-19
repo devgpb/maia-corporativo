@@ -72,4 +72,20 @@ export class PedidosService {
   public setPedido (pedido: INovoPedido): Observable<INovoPedido>{
 		return this.http.post<INovoPedido>(`${environment.apiURL}/pedidos`,  pedido )
 	}
+
+  public marcarStandby(idPedido: any): Observable<IPedido[]>{
+		return this.http.put<IPedido[]>(`${environment.apiURL}/pedidos/marcarStandby/${idPedido}`, {})
+	}
+
+  public removerStandby(idPedido: any): Observable<string>{
+		return this.http.put<string>(`${environment.apiURL}/pedidos/removerStandby/${idPedido}`, {})
+	}
+
+  public marcarPerdido(idPedido: any): Observable<IPedido[]>{
+		return this.http.put<IPedido[]>(`${environment.apiURL}/pedidos/marcarPerdido/${idPedido}`, {})
+	}
+
+  public removerPerdido(idPedido: any): Observable<string>{
+		return this.http.put<string>(`${environment.apiURL}/pedidos/removerPerdido/${idPedido}`, {})
+	}
 }

@@ -144,7 +144,11 @@
 
   .btn-area {
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
+
+    i{
+      margin-right: 3px;
+    }
   }
 }
 

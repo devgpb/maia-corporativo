@@ -1,5 +1,6 @@
 export const pedidos = ['PROSPECTADO', 'APRESENTACAO', 'ACOMPANHAMENTO', 'NEGOCIACAO', 'FECHADO', 'INSTALACAO', 'FINALIZADO']
 
+
 export const titulos: { [key: string]: string } = {
   "prospectados":"Prospectados",
   "apresentacao":"Em Apresentação",
@@ -21,3 +22,5 @@ export const descricoesStatus: { [key: string]: string } = {
 export const rotasPedidos =
 ["prospectados","apresentacao","acompanhamento","negociacao","fechado","instalacao","finalizados"]
 
+export const rotasEspeciais =
+["standby","perdidos"]

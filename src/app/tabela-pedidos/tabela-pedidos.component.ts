@@ -27,6 +27,7 @@ export class TabelaPedidosComponent implements OnChanges  {
   public titulo: string = "";
   public textoApoio: string = "";
 
+
   public indicePagina: number = 0;
   public totalPaginas: number = 0;
 
@@ -37,6 +38,8 @@ export class TabelaPedidosComponent implements OnChanges  {
   audio = new Audio();
   list: IPedido[] = [];
   @Input() status: string = '';
+  @Input() rotaEspecial: boolean = false;
+
 
   public pageSize: number = 10; // Quantidade de itens por página
   public currentPage: number = 1; // Página atual
@@ -294,8 +297,8 @@ export class TabelaPedidosComponent implements OnChanges  {
           title: "Pedido Avançado!",
           confirmButtonColor: "#3C58BF"
         });
-        const index = this.list.indexOf(pedido);
-        this.list.splice(index,1)
+        this.reloadDisplay();
+        this.atualizarPedidos();
       }else{
         Swal.fire({
           icon: "error",
@@ -321,8 +324,8 @@ export class TabelaPedidosComponent implements OnChanges  {
               title: "Pedido Retrocedido!",
               confirmButtonColor: "#3C58BF"
             });
-            const index = this.list.indexOf(pedido);
-            this.list.splice(index,1)
+            this.reloadDisplay();
+            this.atualizarPedidos();
           }else{
             Swal.fire({
               icon: "error",
@@ -331,7 +334,7 @@ export class TabelaPedidosComponent implements OnChanges  {
           }
         })
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Pedido não foi apagado.', '', 'info');
+        Swal.fire('Pedido não foi retrocedido.', '', 'info');
       }
     });
   }
@@ -353,8 +356,8 @@ export class TabelaPedidosComponent implements OnChanges  {
               title: "Pedido Apagado!",
               confirmButtonColor: "#3C58BF"
             });
-            const index = this.list.indexOf(pedido);
-            this.list.splice(index,1)
+            this.reloadDisplay();
+            this.atualizarPedidos();
           }else{
             Swal.fire({
               icon: "error",
@@ -375,6 +378,84 @@ export class TabelaPedidosComponent implements OnChanges  {
 
   closeModal() {
     this.modalService.hide();
+  }
+
+  marcarStandby(){
+    this.pedidosService.marcarStandby(this.pedidoEmEdicao.idPedido).subscribe(pedido => {
+      console.log(pedido)
+      if(pedido){
+        Swal.fire({
+          icon: "success",
+          title: "Pedido Em StandBy!",
+          confirmButtonColor: "#3C58BF"
+        });
+        this.reloadDisplay();
+        this.atualizarPedidos();
+      }else{
+        Swal.fire({
+          icon: "error",
+          title: "Operação Não Realizada, Favor Contatar Suporte!",
+        });
+      }
+    })
+  }
+
+  marcarPerdido(){
+    this.pedidosService.marcarPerdido(this.pedidoEmEdicao.idPedido).subscribe(pedido => {
+      if(pedido){
+        Swal.fire({
+          icon: "success",
+          title: "Pedido Em Perdidos!",
+          confirmButtonColor: "#3C58BF"
+        });
+        this.reloadDisplay();
+        this.atualizarPedidos();
+      }else{
+        Swal.fire({
+          icon: "error",
+          title: "Operação Não Realizada, Favor Contatar Suporte!",
+        });
+      }
+    })
+  }
+
+  liberarPedido(pedido: IPedido){
+    if(this.status == 'standby')
+      this.pedidosService.removerStandby(pedido.idPedido).subscribe(checker => {
+        if(checker){
+          Swal.fire({
+            icon: "success",
+            title: "Pedido Retornado a  "+checker.toUpperCase()+"  !",
+            confirmButtonColor: "#3C58BF"
+          });
+          this.reloadDisplay();
+          this.atualizarPedidos();
+        }else{
+          Swal.fire({
+            icon: "error",
+            title: "Operação Não Realizada, Favor Contatar Suporte!",
+          });
+        }
+      })
+
+      if(this.status == 'perdidos')
+      this.pedidosService.removerPerdido(pedido.idPedido).subscribe(checker => {
+        if(checker){
+
+          Swal.fire({
+            icon: "success",
+            title: "Pedido Retornado a  "+checker.toUpperCase()+"  !",
+            confirmButtonColor: "#3C58BF"
+          });
+          this.reloadDisplay();
+          this.atualizarPedidos();
+        }else{
+          Swal.fire({
+            icon: "error",
+            title: "Operação Não Realizada, Favor Contatar Suporte!",
+          });
+        }
+      })
   }
 
   onSubmit() {
