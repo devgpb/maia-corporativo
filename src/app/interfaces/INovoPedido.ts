@@ -13,6 +13,6 @@ export interface INovoPedido{
   observacao?: string;
   dataPedido?: string;
   status?: string;
-  responsavel?: string;
+  indicacao?: string;
 }
 

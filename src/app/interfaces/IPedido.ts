@@ -15,7 +15,7 @@ export interface IPedido{
   dataPedido: string;
   observacao?: string;
   status: string;
-  responsavel: string;
+  indicacao: string;
 
   detalhes:any;
 }

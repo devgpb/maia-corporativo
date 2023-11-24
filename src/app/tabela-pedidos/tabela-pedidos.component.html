@@ -118,8 +118,8 @@
         </div>
 
         <div class="detail">
-          <span class="label">Responsável:</span>
-          <span class="content">{{ detalhes.responsavel ? detalhes.responsavel : "Sem"}}</span>
+          <span class="label">Indicação:</span>
+          <span class="content">{{ detalhes.indicacao ? detalhes.indicacao : "Sem"}}</span>
         </div>
 
         <span class="separator"></span>
@@ -165,22 +165,16 @@
         <h3 class="w-100">Detalhes:</h3>
 
         <div class="check-list">
-          <div class="check" (click)="toggleDetalhe('trafegoPago')">
+          <!-- <div class="check" (click)="toggleDetalhe('trafegoPago')">
             <i class="fa-solid"
             [ngClass]="{'fa-check text-success': editForm.value.detalhes.trafegoPago, 'fa-x text-danger': !editForm.value.detalhes.trafegoPago}"
             ></i> Tráfego Pago
-          </div>
+          </div> -->
 
           <div class="check" (click)="toggleDetalhe('orcamentoGerado')">
             <i class="fa-solid"
             [ngClass]="{'fa-check text-success': editForm.value.detalhes.orcamentoGerado, 'fa-x text-danger': !editForm.value.detalhes.orcamentoGerado}"
             ></i> Orçamento Gerado
-          </div>
-
-          <div class="check" (click)="toggleDetalhe('vendaEngatilhada')">
-            <i class="fa-solid"
-            [ngClass]="{'fa-check text-success': editForm.value.detalhes.vendaEngatilhada, 'fa-x text-danger': !editForm.value.detalhes.vendaEngatilhada}"
-            ></i>  Venda Engatilhada
           </div>
 
           <div class="check" (click)="toggleDetalhe('visitaRealizada')">
@@ -189,13 +183,23 @@
             ></i>  Visita Realizada
           </div>
 
-
-          <div class="check" (click)="toggleDetalhe('semResposta')">
+          <div class="check" (click)="toggleDetalhe('contratoAssinado')">
             <i class="fa-solid"
-            [ngClass]="{'fa-check text-success': editForm.value.detalhes.semResposta, 'fa-x text-danger': !editForm.value.detalhes.semResposta}"
-            ></i>  Sem Resposta
+            [ngClass]="{'fa-check text-success': editForm.value.detalhes.contratoAssinado, 'fa-x text-danger': !editForm.value.detalhes.contratoAssinado}"
+            ></i>  Contrato Assinado
           </div>
 
+          <div class="check" (click)="toggleDetalhe('equipamentoComprado')">
+            <i class="fa-solid"
+            [ngClass]="{'fa-check text-success': editForm.value.detalhes.equipamentoComprado, 'fa-x text-danger': !editForm.value.detalhes.equipamentoComprado}"
+            ></i>  Equipamento Comprado
+          </div>
+
+          <div class="check" (click)="toggleDetalhe('sistemaHomologado')">
+            <i class="fa-solid"
+            [ngClass]="{'fa-check text-success': editForm.value.detalhes.sistemaHomologado, 'fa-x text-danger': !editForm.value.detalhes.sistemaHomologado}"
+            ></i>  Sistema Homologado
+          </div>
         </div>
         <span class="w-100 text-center text-primary infor">Clique em um detalhe para alterar seu valor</span>
 
@@ -209,7 +213,7 @@
 
         <div class="form-group">
           <label for="celular">Celular:</label>
-          <input type="tel" class="form-control" id="celular" formControlName="celular">
+          <input type="tel" class="form-control" id="celular" formControlName="celular" placeholder="(00)-0000-0000" (input)="applyCelularMask($event)">
         </div>
 
         <div class="form-group">
@@ -263,8 +267,8 @@
         </div>
 
         <div class="form-group">
-          <label for="responsavel">Responsável:</label>
-          <input type="text" class="form-control" id="responsavel" formControlName="responsavel">
+          <label for="indicacao">Indicação:</label>
+          <input type="text" class="form-control" id="indicacao" formControlName="indicacao">
         </div>
 
         <div class="form-group w-100 mb-3">
@@ -307,8 +311,8 @@
   <div class="configs" *ngIf="list.length > 0" >
     <input class="mr-3" type="text" [(ngModel)]="searchText" placeholder="Pesquisar...">
 
-    <div class="page-size separar">
-      <label for="pageSizeSelect" class="form-label">Itens por página:</label>
+    <div class="page-size select-container separar">
+      <label for="pageSizeSelect" class="form-label mb-0 ">Itens por página:</label>
       <select id="pageSizeSelect" class="form-select" [(ngModel)]="pageSize" (change)="changePageSize()">
         <option [value]="10">10</option>
         <option [value]="20">20</option>
@@ -317,7 +321,31 @@
       </select>
     </div>
 
-    <nav aria-label="Page navigation" class="ml-3">
+    <div class="ordenator">
+      <div class="select-container">
+        <select class="form-select criterio" (change)="selecionarCriterio($event)">
+          <option value="">Ordenar Por</option>
+          <option value="idPedido">ID</option>
+          <option value="nomeCompleto">Nome</option>
+          <option value="consumoDeEnergiaMensal">Consumo</option>
+          <option value="cidade">Cidade</option>
+        </select>
+
+      </div>
+
+      <div class="orders-ratio">
+        <input type="radio" id="asc" name="direction" value="asc" (change)="setOrderDirection('asc')" checked>
+        <i class="fa-solid fa-arrow-down-short-wide asc"></i>
+        <br>
+
+        <input type="radio" id="desc" name="direction" value="desc" (change)="setOrderDirection('desc')">
+        <i class="fa-solid fa-arrow-down-short-wide desc"></i><br>
+      </div>
+    </div>
+
+
+
+    <nav aria-label="Page navigation" class="ml-3 w-100">
       <ul class="pagination">
         <li class="page-item" [class.disabled]="currentPage === 1">
           <span class="page-link" (click)="changePage(currentPage - 1)">Anterior</span>
@@ -331,6 +359,7 @@
         </li>
       </ul>
     </nav>
+
   </div>
 
   <div class="cabecalho">

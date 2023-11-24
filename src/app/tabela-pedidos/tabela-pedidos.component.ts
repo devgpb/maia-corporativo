@@ -27,6 +27,8 @@ export class TabelaPedidosComponent implements OnChanges  {
   public titulo: string = "";
   public textoApoio: string = "";
 
+  orderDirection: string = 'asc'; // Direção da ordenação
+  criterioOrdenacao: string = ""
 
   public indicePagina: number = 0;
   public totalPaginas: number = 0;
@@ -71,7 +73,7 @@ export class TabelaPedidosComponent implements OnChanges  {
     // Inicialização do formulário
     return this.fb.group({
       nomeCompleto: ['', Validators.required],
-      celular: ['', Validators.required],
+      celular: ['', [Validators.required, Validators.minLength(12)]],
       email: [''],
       cidade: [''],
       rua: [''],
@@ -83,7 +85,7 @@ export class TabelaPedidosComponent implements OnChanges  {
       observacao: [''],
       detalhes: [{}],
       ref: [''],
-      responsavel: ['']
+      indicacao: ['']
     });
   }
 
@@ -109,6 +111,18 @@ export class TabelaPedidosComponent implements OnChanges  {
     if([0,1,2].includes(this.indicePagina)) return true
 
     return false
+  }
+
+  applyCelularMask(event: any): void {
+    let value = event.target.value;
+    value = value.replace(/\D/g, ''); // Remove tudo o que não for dígito
+
+    // Limita a 11 dígitos para o celular
+    value = value.substring(0, 11);
+
+    value = value.replace(/^(\d{2})(\d)/g, '($1) $2'); // Coloca parênteses em volta dos dois primeiros dígitos
+    value = value.replace(/(\d)(\d{4})$/, '$1-$2'); // Coloca hífen entre o quarto e o quinto dígitos
+    event.target.value = value;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -233,7 +247,7 @@ export class TabelaPedidosComponent implements OnChanges  {
       faturamento: pedido.faturamento,
       dataPedido: data,
       ref: pedido.ref,
-      responsavel: pedido.responsavel,
+      indicacao: pedido.indicacao,
       observacao:pedido.observacao,
       detalhes: pedido.detalhes
     });
@@ -278,13 +292,14 @@ export class TabelaPedidosComponent implements OnChanges  {
            formValues.consumoDeEnergiaMensal === this.pedidoEmEdicao.consumoDeEnergiaMensal &&
            formValues.faturamento === this.pedidoEmEdicao.faturamento &&
            formValues.dataPedido === new Date(this.pedidoEmEdicao.dataPedido).toISOString().split('T')[0] &&
-           formValues.responsavel === this.pedidoEmEdicao.responsavel &&
+           formValues.indicacao === this.pedidoEmEdicao.indicacao &&
            formValues.observacao === this.pedidoEmEdicao.observacao &&
-           formValues.detalhes.trafegoPago === this.pedidoEmEdicao.detalhes.trafegoPago &&
+          //  formValues.detalhes.trafegoPago === this.pedidoEmEdicao.detalhes.trafegoPago &&
            formValues.detalhes.orcamentoGerado === this.pedidoEmEdicao.detalhes.orcamentoGerado &&
-           formValues.detalhes.vendaEngatilhada === this.pedidoEmEdicao.detalhes.vendaEngatilhada &&
+           formValues.detalhes.contratoAssinado === this.pedidoEmEdicao.detalhes.contratoAssinado &&
            formValues.detalhes.visitaRealizada === this.pedidoEmEdicao.detalhes.visitaRealizada &&
-           formValues.detalhes.semResposta === this.pedidoEmEdicao.detalhes.semResposta;
+           formValues.detalhes.equipamentoComprado === this.pedidoEmEdicao.detalhes.equipamentoComprado &&
+           formValues.detalhes.sistemaHomologado === this.pedidoEmEdicao.detalhes.sistemaHomologado;
 
 
   }
@@ -458,6 +473,34 @@ export class TabelaPedidosComponent implements OnChanges  {
       })
   }
 
+  selecionarCriterio(event: Event): void{
+    const selectElement = event.target as HTMLSelectElement;
+    this.criterioOrdenacao = selectElement.value
+    this.ordenarPor()
+  }
+
+  ordenarPor(): void {
+    const criterio = this.criterioOrdenacao
+    if (criterio === 'consumoDeEnergiaMensal' || criterio === 'idPedido') {
+      this.list.sort((a, b) => {
+        let firstValue = +a[criterio];
+        let secondValue = +b[criterio];
+        return this.orderDirection === 'asc' ? firstValue - secondValue : secondValue - firstValue;
+      });
+    } else {
+      this.list.sort((a, b) => {
+        return this.orderDirection === 'asc' ? a[criterio].localeCompare(b[criterio]) : b[criterio].localeCompare(a[criterio]);
+      });
+    }
+
+  }
+
+
+  setOrderDirection(direction: string): void {
+    this.orderDirection = direction;
+    this.ordenarPor()
+  }
+
   onSubmit() {
     if (this.editForm.valid) {
 
@@ -470,7 +513,7 @@ export class TabelaPedidosComponent implements OnChanges  {
       })
       this.closeModal()
     } else {
-      console.log('cep é inválido devido a:', this.editForm.get('cep')?.errors);
+      console.log('cep é inválido devido a:', this.editForm.errors);
     }
   }
 }

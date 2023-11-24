@@ -218,10 +218,17 @@
   display: flex;
   margin-bottom: 20px;
   flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
   *{
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  select{
+    height: 40px;
   }
 
   .pagination{
@@ -230,20 +237,65 @@
   }
 
   .page-size{
-
+    label{
+      margin-right: 5px;
+    }
     #pageSizeSelect{
       width: 100px;
-      height: 38px;
+      padding: 2px 12px;
     }
+
   }
 
+
+  .ordenator{
+    .criterio{
+      width: 130px;
+      padding: 2px 10px;
+
+    }
+
+    .orders-ratio{
+      input{
+        transform: scale(1.5);
+        margin-right: 5px;
+      }
+
+      i{
+        font-size: 1.5rem;
+        margin-right: 15px;
+
+      }
+
+      i.asc{
+        transform: rotate(180deg);
+      }
+
+      i.desc{
+      }
+    }
+  }
 }
+
+
+
 
 .contadores{
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
+
+.select-container {
+  margin: 10px;
+}
+
+select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
 
 @media (max-width: 768px) {
   .tabela{
