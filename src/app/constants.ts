@@ -7,7 +7,7 @@ export const titulos: { [key: string]: string } = {
   "acompanhamento": "Acompanhamento",
   "interessado":"Clientes Interessados",
   "engatilhado":"Venda Engatilhada",
-  "fechado":"Fechado",
+  "fechado":"Pedidos Fechados",
   "instalacao": "Etapada De Instalação",
   "finalizados":"Finalizados"}
 

@@ -39,32 +39,32 @@
         <div class="check-list">
           <div class="check">
             <i class="fa-solid "
-            [ngClass]="detalhes?.detalhes?.trafegoPago ? 'fa-check text-success' : 'fa-x text-danger'"
-            ></i> Tráfego Pago
-          </div>
-
-          <div class="check">
-            <i class="fa-solid"
             [ngClass]="detalhes?.detalhes?.orcamentoGerado ? 'fa-check text-success' : 'fa-x text-danger'"
             ></i> Orçamento Gerado
           </div>
 
           <div class="check">
             <i class="fa-solid"
-            [ngClass]="detalhes?.detalhes?.vendaEngatilhada ? 'fa-check text-success' : 'fa-x text-danger'"
-            ></i> Venda Engatilhada
-          </div>
-
-          <div class="check">
-            <i class="fa-solid"
             [ngClass]="detalhes?.detalhes?.visitaRealizada ? 'fa-check text-success' : 'fa-x text-danger'"
-            ></i> Visita Realizada
+            ></i>  Visita Realizada
           </div>
 
           <div class="check">
             <i class="fa-solid"
-            [ngClass]="detalhes?.detalhes?.semResposta ? 'fa-check text-success' : 'fa-x text-danger'"
-            ></i> Sem Resposta
+            [ngClass]="detalhes?.detalhes?.contratoAssinado ? 'fa-check text-success' : 'fa-x text-danger'"
+            ></i> Contrato Assinado
+          </div>
+
+          <div class="check">
+            <i class="fa-solid"
+            [ngClass]="detalhes?.detalhes?.equipamentoComprado ? 'fa-check text-success' : 'fa-x text-danger'"
+            ></i> Equipamento Comprado
+          </div>
+
+          <div class="check">
+            <i class="fa-solid"
+            [ngClass]="detalhes?.detalhes?.sistemaHomologado ? 'fa-check text-success' : 'fa-x text-danger'"
+            ></i> Sistema Homologado
           </div>
         </div>
 
@@ -380,7 +380,8 @@
 
       <div class="checkers">
         <div class="id-pedido">
-          {{ pedido.idPedido }}
+          <span>ID:{{ pedido.idPedido }}</span>
+          <span>{{pedido.consumoDeEnergiaMensal}}Kw/h</span>
         </div>
         <div class="data d-flex justify-content-center ">
           {{ formatarData(pedido.dataPedido) }}
