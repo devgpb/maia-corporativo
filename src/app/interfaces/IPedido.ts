@@ -17,6 +17,8 @@ export interface IPedido{
   status: string;
   indicacao: string;
 
+  datas: any;
+
   detalhes:any;
 }
 

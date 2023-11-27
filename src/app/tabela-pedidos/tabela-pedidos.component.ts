@@ -79,7 +79,6 @@ export class TabelaPedidosComponent implements OnChanges  {
 
     this.bsConfig = {
       containerClass: 'theme-default',
-      dateInputFormat: 'DD/MM/YYYY'
     };
   }
 
@@ -104,12 +103,12 @@ export class TabelaPedidosComponent implements OnChanges  {
       indicacao: [''],
       datas: this.fb.group({
         dataVisita: this.fb.group({
-          data: [],
+          data: [''],
           hora: [0],
           minuto: [0]
         }),
         dataInstalacao: this.fb.group({
-          data: [],
+          data: [''],
           hora: [0],
           minuto: [0]
         }),
@@ -178,12 +177,16 @@ export class TabelaPedidosComponent implements OnChanges  {
     return data.toLocaleDateString('pt-BR', options);
   }
 
-  formatarDataEvento(data: Date) {
-    try{
-      return data.toISOString();
-    }catch(e){
+  formatarDataEvento(dataString: string ) {
+    if(dataString == null || dataString == undefined){
       return null
     }
+
+    if(typeof dataString == 'string'){
+      return dataString
+    }
+
+    return new Date(dataString).toLocaleDateString();
   }
 
   get paginatedList(): IPedido[] {
@@ -284,8 +287,8 @@ export class TabelaPedidosComponent implements OnChanges  {
   gerarFormEdicao( pedido:IPedido ){
     const data = new Date(pedido.dataPedido).toISOString().split('T')[0]
 
-    const dataVisita = this.convertUTCtoLocal(pedido['datasPedidos'].dataVisita, 'America/Sao_Paulo')
-    const dataInstalacao = this.convertUTCtoLocal(pedido['datasPedidos'].dataInstalacao, 'America/Sao_Paulo')
+    const dataVisita = pedido['datasPedidos'].dataVisita
+    const dataInstalacao = pedido['datasPedidos'].dataInstalacao
 
     // const dataPedido =
     this.editForm.patchValue({
@@ -318,28 +321,30 @@ export class TabelaPedidosComponent implements OnChanges  {
     });
 
     if(dataVisita){
-    const dataVisitaFormatado = dataVisita.split('T')
-
+      const tempoSeparado = dataVisita.split('T')
+      const datas = tempoSeparado[0].split("-");
+      //`${datas[2]}/${datas[1]}/${datas[0]}`
       this.editForm.patchValue({
         datas:{
           dataVisita:{
-            data:this.formatarData(dataVisitaFormatado[0]),
-            hora: dataVisitaFormatado[1].split(":")[0],
-            minuto: dataVisitaFormatado[1].split(":")[1]
+            data: `${datas[2]}/${datas[1]}/${datas[0]}`,
+            hora: tempoSeparado[1].split(":")[0],
+            minuto: tempoSeparado[1].split(":")[1]
           },
         }
       })
     }
 
     if(dataInstalacao){
-      const dataInstalacaoFormatado = dataInstalacao.split('T')
+      const tempoSeparado = dataInstalacao.split('T')
+      const datas = tempoSeparado[0].split("-");
 
       this.editForm.patchValue({
         datas:{
           dataInstalacao:{
-            data:this.formatarData(dataInstalacaoFormatado[0]),
-            hora: dataInstalacaoFormatado[1].split(":")[0],
-            minuto: dataInstalacaoFormatado[1].split(":")[1]
+            data: `${datas[2]}/${datas[1]}/${datas[0]}`,
+            hora: tempoSeparado[1].split(":")[0],
+            minuto: tempoSeparado[1].split(":")[1]
           }
         }
       })
@@ -602,9 +607,27 @@ export class TabelaPedidosComponent implements OnChanges  {
         this.editForm.value.faturamento = null
       }
 
+
+
+
+      this.editForm.get('datas').get('dataVisita').get("data")
+      .setValue(this.formatarDataEvento(this.editForm.value.datas.dataVisita.data))
+
+      this.editForm.get('datas').get('dataInstalacao').get("data")
+      .setValue(this.formatarDataEvento(this.editForm.value.datas.dataInstalacao.data))
+
+      console.log(this.editForm.value)
       this.pedidosService.updatePedido(this.pedidoEmEdicao.idPedido,this.editForm.value).subscribe(resp =>{
         this.atualizarPedidos()
       })
+
+      // this.editForm.patchValue({
+      //   datas:{
+      //     dataVisita: this.formatarData(this.editForm.value.datas.dataVisita.data),
+      //     dataInstalacao: this.formatarData(this.editForm.value.datas.dataInstalacao.data)
+      //   }
+      // })
+
 
       this.closeModal()
     } else {
