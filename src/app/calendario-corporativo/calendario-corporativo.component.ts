@@ -54,6 +54,7 @@ export class CalendarioCorporativoComponent implements OnInit {
     events:this.eventArray,
     themeSystem:"bootstrap5",
     aspectRatio:2,
+    slotMinTime: '08:00:00',
     eventClick: (clickInfo) => {
       this.eventoModal = {
         local: clickInfo.event.extendedProps['local'],
