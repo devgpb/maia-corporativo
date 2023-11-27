@@ -48,7 +48,6 @@ export class ReferenciasComponent implements OnInit {
   //       }
   //     })
   //   } else {
-  //     console.log("Formulário inválido.");
   //   }
   // }
 

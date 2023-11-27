@@ -12,7 +12,7 @@ import { CriarPedidoComponent } from './criar-pedido/criar-pedido.component';
 import { MeusRelatoriosComponent } from './meus-relatorios/meus-relatorios.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
 import { RelatorioVendasComponent } from './relatorio-vendas/relatorio-vendas.component';
-
+import { CalendarioCorporativoComponent } from './calendario-corporativo/calendario-corporativo.component';
 import { AuthGuard } from './services/guard/auth.guard';
 
 const routes: Routes = [
@@ -27,6 +27,7 @@ const routes: Routes = [
   { path: "relatorios/meus", component: MeusRelatoriosComponent, canActivate: [AuthGuard] },
   { path: "relatoriosGerenciais/vendas", component: RelatorioVendasComponent, canActivate: [AuthGuard] },
   { path: "ref", component: ReferenciasComponent, canActivate: [AuthGuard]  },
+  { path: "calendario", component: CalendarioCorporativoComponent, canActivate: [AuthGuard]  },
   { path: '**', redirectTo: 'pedidos/prospectados', pathMatch: 'full'  }
 ];
 

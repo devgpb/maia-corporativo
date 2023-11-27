@@ -15,11 +15,21 @@
         [attr.disabled]="isActive('/setores') ? true : null"> <i class="fa-solid fa-clipboard"></i> Setores</a>
       </li>
 
+
+      <li class="nav-item active" *ngIf="userCargo=='ADMINISTRADOR'">
+        <a class="nav-link" routerLink="calendario"
+        [routerLinkActive]="['active-link']"
+        [routerLinkActiveOptions]="{exact: true}"
+        [attr.disabled]="isActive('calendario') ? true : null"><i class="fa-solid fa-calendar-days"></i>Calendário</a>
+      </li>
+
+
       <li class="nav-item" *ngIf="userCargo=='ADMINISTRADOR'">
         <a class="nav-link" (click)="toggleSubmenu('relatorios')"
         role="button" [class.sub-active]="menuSelected == 'relatorios' && isOpen">
         <i class="fa-solid fa-gears"></i> Relatórios Gerenciais</a>
       </li>
+
 
       <li class="nav-item">
         <a class="nav-link" (click)="toggleSubmenu('pedidos')"

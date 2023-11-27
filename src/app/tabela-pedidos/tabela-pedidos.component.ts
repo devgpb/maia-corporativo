@@ -9,6 +9,13 @@ import { IPedido } from '../interfaces/IPedido';
 import Swal from 'sweetalert2';
 import { Cargos, IUser } from '../interfaces/IUser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { ptBrLocale } from 'ngx-bootstrap/chronos';
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { formatDate } from '@angular/common';
+import * as moment from 'moment-timezone';
+
+defineLocale('pt-br', ptBrLocale);
 
 @Component({
   selector: 'app-tabela-pedidos',
@@ -36,6 +43,9 @@ export class TabelaPedidosComponent implements OnChanges  {
   public indiceDetalhe: number = 0;
   public indiceLimiteDetalhe: number = 0;
 
+  // Marcação de datas
+	public bsConfig: Partial<BsDatepickerConfig>;
+
 
   audio = new Audio();
   list: IPedido[] = [];
@@ -51,23 +61,29 @@ export class TabelaPedidosComponent implements OnChanges  {
 
   constructor(
     private pedidosService:PedidosService,
-    private webSocketService:WebSocketService,
+    // private webSocketService:WebSocketService,
     private modalService: ModalService,
     private authService: AuthService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private localeService: BsLocaleService
   ) {
     this.user = authService.getUser()
     this.detalhes = {}
     this.editForm = this.initializeForm();
     this.editForm.get('ref')?.disable();
     this.editForm.get('status')?.disable();
-    this.audio.src = '../../assets/audio/tem_um_novo_pedido.mp3';
-    this.audio.load();
+    // this.audio.src = '../../assets/audio/tem_um_novo_pedido.mp3';
+    // this.audio.load();
+    this.localeService.use('pt-br');
+
+    this.bsConfig = {
+      containerClass: 'theme-default',
+      dateInputFormat: 'DD/MM/YYYY'
+    };
   }
 
   detalhes: IPedido | any;
-
 
   initializeForm() {
     // Inicialização do formulário
@@ -85,7 +101,19 @@ export class TabelaPedidosComponent implements OnChanges  {
       observacao: [''],
       detalhes: [{}],
       ref: [''],
-      indicacao: ['']
+      indicacao: [''],
+      datas: this.fb.group({
+        dataVisita: this.fb.group({
+          data: [],
+          hora: [0],
+          minuto: [0]
+        }),
+        dataInstalacao: this.fb.group({
+          data: [],
+          hora: [0],
+          minuto: [0]
+        }),
+      }),
     });
   }
 
@@ -150,6 +178,14 @@ export class TabelaPedidosComponent implements OnChanges  {
     return data.toLocaleDateString('pt-BR', options);
   }
 
+  formatarDataEvento(data: Date) {
+    try{
+      return data.toISOString();
+    }catch(e){
+      return null
+    }
+  }
+
   get paginatedList(): IPedido[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     return this.list.slice(startIndex, startIndex + this.pageSize);
@@ -185,6 +221,8 @@ export class TabelaPedidosComponent implements OnChanges  {
 
     this.router.navigate(['/pedidos/'+ pagina]);
   }
+
+
 
   objectKeys(obj: any) {
     return Object.keys(obj);
@@ -232,9 +270,24 @@ export class TabelaPedidosComponent implements OnChanges  {
 
   }
 
+  convertUTCtoLocal = (dateString: string, timeZone: string) => {
+    if(dateString == null){
+      return null
+    }
+    try{
+      return moment(dateString).tz(timeZone).format('YYYY-MM-DDTHH:mm:ss.SSS');
+    }catch(e){
+      return null
+    }
+  };
+
   gerarFormEdicao( pedido:IPedido ){
     const data = new Date(pedido.dataPedido).toISOString().split('T')[0]
 
+    const dataVisita = this.convertUTCtoLocal(pedido['datasPedidos'].dataVisita, 'America/Sao_Paulo')
+    const dataInstalacao = this.convertUTCtoLocal(pedido['datasPedidos'].dataInstalacao, 'America/Sao_Paulo')
+
+    // const dataPedido =
     this.editForm.patchValue({
       nomeCompleto: pedido.nomeCompleto,
       celular: pedido.celular,
@@ -249,8 +302,48 @@ export class TabelaPedidosComponent implements OnChanges  {
       ref: pedido.ref,
       indicacao: pedido.indicacao,
       observacao:pedido.observacao,
-      detalhes: pedido.detalhes
+      detalhes: pedido.detalhes,
+      datas:{
+        dataVisita:{
+          data :null,
+          hora: 0,
+          minuto: 0
+        },
+        dataInstalacao:{
+          data :null,
+          hora: 0,
+          minuto: 0
+        },
+      }
     });
+
+    if(dataVisita){
+    const dataVisitaFormatado = dataVisita.split('T')
+
+      this.editForm.patchValue({
+        datas:{
+          dataVisita:{
+            data:this.formatarData(dataVisitaFormatado[0]),
+            hora: dataVisitaFormatado[1].split(":")[0],
+            minuto: dataVisitaFormatado[1].split(":")[1]
+          },
+        }
+      })
+    }
+
+    if(dataInstalacao){
+      const dataInstalacaoFormatado = dataInstalacao.split('T')
+
+      this.editForm.patchValue({
+        datas:{
+          dataInstalacao:{
+            data:this.formatarData(dataInstalacaoFormatado[0]),
+            hora: dataInstalacaoFormatado[1].split(":")[0],
+            minuto: dataInstalacaoFormatado[1].split(":")[1]
+          }
+        }
+      })
+    }
 
     this.pedidoEmEdicao = pedido
   }
@@ -294,6 +387,8 @@ export class TabelaPedidosComponent implements OnChanges  {
            formValues.dataPedido === new Date(this.pedidoEmEdicao.dataPedido).toISOString().split('T')[0] &&
            formValues.indicacao === this.pedidoEmEdicao.indicacao &&
            formValues.observacao === this.pedidoEmEdicao.observacao &&
+           formValues.datas === this.pedidoEmEdicao.datas &&
+
           //  formValues.detalhes.trafegoPago === this.pedidoEmEdicao.detalhes.trafegoPago &&
            formValues.detalhes.orcamentoGerado === this.pedidoEmEdicao.detalhes.orcamentoGerado &&
            formValues.detalhes.contratoAssinado === this.pedidoEmEdicao.detalhes.contratoAssinado &&
@@ -397,7 +492,6 @@ export class TabelaPedidosComponent implements OnChanges  {
 
   marcarStandby(){
     this.pedidosService.marcarStandby(this.pedidoEmEdicao.idPedido).subscribe(pedido => {
-      console.log(pedido)
       if(pedido){
         Swal.fire({
           icon: "success",
@@ -511,6 +605,7 @@ export class TabelaPedidosComponent implements OnChanges  {
       this.pedidosService.updatePedido(this.pedidoEmEdicao.idPedido,this.editForm.value).subscribe(resp =>{
         this.atualizarPedidos()
       })
+
       this.closeModal()
     } else {
       console.log('cep é inválido devido a:', this.editForm.errors);

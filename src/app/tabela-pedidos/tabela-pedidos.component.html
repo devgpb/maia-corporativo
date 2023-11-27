@@ -203,6 +203,49 @@
         </div>
         <span class="w-100 text-center text-primary infor">Clique em um detalhe para alterar seu valor</span>
 
+        <!-- Marcar Datas -->
+        <h3 class="w-100 mt-3 mb-3">Marcação de Eventos:</h3>
+
+        <div class="form-group w-100 d-flex eventos justify-content-between" formGroupName="datas">
+
+          <div class="visita" formGroupName="dataVisita">
+            <label for="datas">Data Visita:</label>
+            <input formControlName="data" type="text" id="datas" class="form-control"
+              placeholder="Data da visita" bsDatepicker [bsConfig]="bsConfig" autocomplete="off">
+
+              <div class="timepicker-container">
+                <div class="timepicker-inputs">
+                  <span>h</span>
+                  <input type="number" formControlName="hora" min="0" max="23">
+                  <span>:</span>
+                  <input type="number" formControlName="minuto" min="0" max="59">
+                  <span>m</span>
+
+                </div>
+                <!-- Você pode adicionar botões ou lógica adicional se necessário -->
+              </div>
+          </div>
+
+          <div class="visita" formGroupName="dataInstalacao">
+            <label for="datas">Data Instalação:</label>
+            <input formControlName="data" type="text" id="datas" class="form-control"
+              placeholder="Data da visita" bsDatepicker [bsConfig]="bsConfig" autocomplete="off">
+
+              <div class="timepicker-container">
+                <div class="timepicker-inputs">
+                  <span>h</span>
+                  <input type="number" formControlName="hora" min="0" max="23">
+                  <span>:</span>
+                  <input type="number" formControlName="minuto" min="0" max="59">
+                  <span>m</span>
+
+                </div>
+                <!-- Você pode adicionar botões ou lógica adicional se necessário -->
+              </div>
+          </div>
+
+        </div>
+
         <!-- Pessoal -->
         <h3 class="w-100">Pessoal:</h3>
 
@@ -276,6 +319,9 @@
           <textarea type="text" class="form-control " id="observacao" formControlName="observacao">
           </textarea>
         </div>
+
+
+
 
         <div class="form-group w-100 btn-area ">
           <div class="specials" >

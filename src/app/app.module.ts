@@ -15,7 +15,7 @@ import { DataTablesModule } from "angular-datatables";
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NumericOnlyDirective } from "./services/utils/numeric-only.directive";
-
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,6 +34,7 @@ import { TabelaPedidosComponent } from './tabela-pedidos/tabela-pedidos.componen
 import { PedidosComponent } from './pedidos/pedidos.component';
 import { RelatorioVendasComponent } from './relatorio-vendas/relatorio-vendas.component';
 import { VisualValidatorComponent } from './components/visual-validator/visual-validator.component';
+import { CalendarioCorporativoComponent } from './calendario-corporativo/calendario-corporativo.component';
 
 
 defineLocale("pt-br", ptBrLocale);
@@ -57,7 +58,8 @@ registerLocaleData(localePt);
     PedidosComponent,
     RelatorioVendasComponent,
     VisualValidatorComponent,
-    NumericOnlyDirective
+    NumericOnlyDirective,
+    CalendarioCorporativoComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +72,7 @@ registerLocaleData(localePt);
 		DataTablesModule,
     BsDatepickerModule.forRoot(),
     NgSelectModule,
-
+    FullCalendarModule,
   ],
   providers: [
     {
