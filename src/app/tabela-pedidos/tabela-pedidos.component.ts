@@ -33,6 +33,7 @@ export class TabelaPedidosComponent implements OnChanges  {
   public editForm: FormGroup;
   public titulo: string = "";
   public textoApoio: string = "";
+  public loading: boolean = true;
 
   orderDirection: string = 'asc'; // Direção da ordenação
   criterioOrdenacao: string = ""
@@ -128,8 +129,8 @@ export class TabelaPedidosComponent implements OnChanges  {
 
   ngOnInit(): void {
     this.isAdm = this.user.cargo == Cargos.ADMINISTRADOR
+    this.atualizarPedidos();
     this.reloadDisplay();
-    this.atualizarPedidos()
   }
 
   podeEditar(){
@@ -162,9 +163,13 @@ export class TabelaPedidosComponent implements OnChanges  {
   }
 
   atualizarPedidos(){
+    this.loading = true
+
     this.pedidosService.getPedidosByStatus(this.status,this.isAdm ? undefined : this.user.idUsuario ).subscribe(pedidos =>{
       this.list = pedidos
+      this.loading = false
     })
+
   }
 
   formatarData(dataString: string): string {
