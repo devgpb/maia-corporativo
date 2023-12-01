@@ -48,7 +48,7 @@ export class CalendarioCorporativoComponent implements OnInit {
   }
 
   calendarOptions: CalendarOptions = {
-    initialView: 'timeGridWeek',
+    initialView: window.innerWidth > 600 ? 'timeGridWeek' : 'timeGridDay',
     plugins: [dayGridPlugin,timeGridPlugin],
     locale: "pt-br",
     events:this.eventArray,
