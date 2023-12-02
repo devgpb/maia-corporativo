@@ -37,6 +37,7 @@ import { PedidosComponent } from './pedidos/pedidos.component';
 import { RelatorioVendasComponent } from './relatorio-vendas/relatorio-vendas.component';
 import { VisualValidatorComponent } from './components/visual-validator/visual-validator.component';
 import { CalendarioCorporativoComponent } from './calendario-corporativo/calendario-corporativo.component';
+import { NovoEventoComponent } from './novo-evento/novo-evento.component';
 
 
 defineLocale("pt-br", ptBrLocale);
@@ -61,7 +62,8 @@ registerLocaleData(localePt);
     RelatorioVendasComponent,
     VisualValidatorComponent,
     NumericOnlyDirective,
-    CalendarioCorporativoComponent
+    CalendarioCorporativoComponent,
+    NovoEventoComponent
   ],
   imports: [
     BrowserModule,

@@ -17,10 +17,9 @@
 
 
       <li class="nav-item active" *ngIf="userCargo=='ADMINISTRADOR'">
-        <a class="nav-link" routerLink="calendario"
-        [routerLinkActive]="['active-link']"
-        [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('calendario') ? true : null"><i class="fa-solid fa-calendar-days"></i>Calendário</a>
+        <a class="nav-link" (click)="toggleSubmenu('calendario')"
+        role="button" [class.sub-active]="menuSelected == 'calendario' && isOpen">
+        <i class="fa-solid fa-calendar-days"></i>Eventos</a>
       </li>
 
 
@@ -131,6 +130,21 @@
       [routerLinkActive]="['active-link']"
       [routerLinkActiveOptions]="{exact: true}"
       [attr.disabled]="isActive('relatoriosGerenciais/vendas') ? true : null">Relatórios de Vendas</a>
+    </div>
+
+    <div class="w-100 sub-area" *ngIf="menuSelected == 'calendario'">
+
+      <a routerLink="calendario"
+          [routerLinkActive]="['active-link']"
+          [routerLinkActiveOptions]="{exact: true}"
+          [attr.disabled]="isActive('calendario') ? true : null">Calendário
+      </a>
+
+      <a routerLink="eventos/novo"
+          [routerLinkActive]="['active-link']"
+          [routerLinkActiveOptions]="{exact: true}"
+          [attr.disabled]="isActive('eventos/novo') ? true : null">Novo Evento
+      </a>
     </div>
   </div>
 </nav>

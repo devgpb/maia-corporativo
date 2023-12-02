@@ -13,6 +13,7 @@ import { MeusRelatoriosComponent } from './meus-relatorios/meus-relatorios.compo
 import { PedidosComponent } from './pedidos/pedidos.component';
 import { RelatorioVendasComponent } from './relatorio-vendas/relatorio-vendas.component';
 import { CalendarioCorporativoComponent } from './calendario-corporativo/calendario-corporativo.component';
+import { NovoEventoComponent } from './novo-evento/novo-evento.component';
 import { AuthGuard } from './services/guard/auth.guard';
 
 const routes: Routes = [
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: "relatoriosGerenciais/vendas", component: RelatorioVendasComponent, canActivate: [AuthGuard] },
   { path: "ref", component: ReferenciasComponent, canActivate: [AuthGuard]  },
   { path: "calendario", component: CalendarioCorporativoComponent, canActivate: [AuthGuard]  },
+  { path: "eventos/novo", component: NovoEventoComponent, canActivate: [AuthGuard]  },
   { path: '**', redirectTo: 'pedidos/prospectados', pathMatch: 'full'  }
 ];
 

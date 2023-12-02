@@ -59,21 +59,28 @@ export class CalendarioCorporativoComponent implements OnInit {
       this.eventoModal = {
         local: clickInfo.event.extendedProps['local'],
         tipo: clickInfo.event.extendedProps['tipo'],
-        data: clickInfo.event.extendedProps['data']
+        data: clickInfo.event.extendedProps['data'],
+        detalhes: clickInfo.event.extendedProps['detalhes']
       }
+      console.log(this.eventoModal.data.data)
       this.openModal()
     },
   };
 
-  formatarData(dataString: string): string {
-    const data = new Date(dataString);
-    const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit'
-    };
-    return data.toLocaleDateString('pt-BR', options);
-  }
+  // formatarData(dataString: string): string {
+  //   if(dataString){
+  //     const partes = dataString.split("/")
+  //     const novaData = `${partes[1]}/${partes[0]}/${partes[2]}`
+  //     const data = new Date(dataString);
+  //     const options: Intl.DateTimeFormatOptions = {
+  //       year: 'numeric',
+  //       month: '2-digit',
+  //       day: '2-digit'
+  //     };
+  //     return novaData;
+  //   }
+  //   return ""
+  // }
 
   openModal() {
     this.modalService.show();

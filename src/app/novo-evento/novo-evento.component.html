@@ -1,0 +1,48 @@
+
+<div class="form align-items-center" [formGroup]="eventForm">
+
+  <h1 class="w-100 text-center mb-3">Criar Evento</h1>
+
+  <div class="nome w-100 d-flex justify-content-center">
+      <div class="form-group ">
+        <label for="nomeCompleto">Nome Do Evento</label>
+        <input type="text" class="form-control" id="nomeCompleto" formControlName="nome"
+        placeholder="Digite o nome do evento">
+      </div>
+  </div>
+
+  <div class="data">
+    <label for="datas">Data do Evento:</label>
+    <input formControlName="data" type="text" id="datas" class="form-control"
+      placeholder="Data da visita" bsDatepicker [bsConfig]="bsConfig" autocomplete="off">
+      <div class="timepicker-container">
+        <div class="timepicker-inputs">
+          <span>h</span>
+          <input type="number" formControlName="hora" min="0" max="23">
+          <span>:</span>
+          <input type="number" formControlName="minuto" min="0" max="59">
+          <span>m</span>
+        </div>
+      </div>
+  </div>
+
+
+
+  <div class="detalhes">
+    <div>
+      <div class="form-group">
+        <label for="detalhes">Detalhes do Evento</label>
+        <textarea  class="form-control" id="detalhes" formControlName="detalhes"
+        placeholder="Forneça quaisquer detalhes sobre o evento"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="error alert alert-warning w-100" *ngIf="formInvalid">
+    <span class="" > Horário Inválido, corrija ou entre em contato com o suporte. </span>
+  </div>
+
+  <div class="save">
+    <button (click)="submit()">MARCAR</button>
+  </div>
+</div>

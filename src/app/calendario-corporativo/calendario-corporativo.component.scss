@@ -4,8 +4,37 @@
   justify-content: center;
 
   .info{
+    cursor: default;
+    .headers{
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.5rem;
 
 
+
+      .data{
+        span{
+          display: flex;
+          color: green;
+          font-weight: bolder;
+        }
+      }
+
+      .hora{
+        text-align: right;
+        span{
+          display: flex;
+          color: green;
+          font-weight: bolder;
+          justify-content: end;
+
+        }
+      }
+    }
+
+    .title{
+      margin-bottom: 20px;
+    }
   }
 
   .calendar{
@@ -16,6 +45,11 @@
 
 @media only screen and (max-width: 600px) {
   .c-holder{
+
+    .info{
+
+    }
+
     .calendar{
       min-height: 600px;
       width: 90%;

@@ -153,3 +153,26 @@ body .ui-datepicker .ui-timepicker {
 	border-color: #28a745;
 	box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, .25) !important;
 }
+
+
+button{
+  background-color:#77d42a;
+	border-radius:6px;
+	border:1px solid #268a16;
+	display:inline-block;
+	cursor:pointer;
+	color: white;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+}
+
+button:hover {
+	background-color:#5cb811;
+}
+button:active {
+	position:relative;
+	top:1px;
+}
