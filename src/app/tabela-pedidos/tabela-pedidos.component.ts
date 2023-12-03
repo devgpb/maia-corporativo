@@ -182,16 +182,23 @@ export class TabelaPedidosComponent implements OnChanges  {
     return data.toLocaleDateString('pt-BR', options);
   }
 
-  formatarDataEvento(dataString: string ) {
-    if(dataString == null || dataString == undefined){
+  formatarDataEvento(dataString: any ) {
+    console.log(dataString.data)
+    if(dataString.data == null || dataString.data == undefined){
       return null
     }
 
-    if(typeof dataString == 'string'){
-      return dataString
-    }
+    // if(typeof dataString.data == 'string'){
+    //   return dataString
+    // }
 
-    return new Date(dataString).toLocaleDateString();
+
+    const dataEventos = new Date(dataString.data)
+    dataEventos.setHours(dataString.hora, dataString.minuto, 0);
+
+    dataString.data = dataEventos
+
+    return dataString.data;
   }
 
   get paginatedList(): IPedido[] {
@@ -292,9 +299,6 @@ export class TabelaPedidosComponent implements OnChanges  {
   gerarFormEdicao( pedido:IPedido ){
     const data = new Date(pedido.dataPedido).toISOString().split('T')[0]
 
-    const dataVisita = pedido['datasPedidos'].dataVisita
-    const dataInstalacao = pedido['datasPedidos'].dataInstalacao
-
     // const dataPedido =
     this.editForm.patchValue({
       nomeCompleto: pedido.nomeCompleto,
@@ -325,14 +329,18 @@ export class TabelaPedidosComponent implements OnChanges  {
       }
     });
 
-    if(dataVisita){
+    if(pedido['datasPedidos'].dataVisita){
+      const visita = new Date(pedido['datasPedidos'].dataVisita)
+      visita.setHours(visita.getHours() - 3)
+      const dataVisita = visita.toISOString()
+
       const tempoSeparado = dataVisita.split('T')
       const datas = tempoSeparado[0].split("-");
       //`${datas[2]}/${datas[1]}/${datas[0]}`
       this.editForm.patchValue({
         datas:{
           dataVisita:{
-            data: `${datas[2]}/${datas[1]}/${datas[0]}`,
+            data: `${datas[1]}/${datas[2]}/${datas[0]}`,
             hora: tempoSeparado[1].split(":")[0],
             minuto: tempoSeparado[1].split(":")[1]
           },
@@ -340,14 +348,19 @@ export class TabelaPedidosComponent implements OnChanges  {
       })
     }
 
-    if(dataInstalacao){
+    if(pedido['datasPedidos'].dataInstalacao){
+      const instalacao = new Date(pedido['datasPedidos'].dataInstalacao)
+      instalacao.setHours(instalacao.getHours() - 3)
+      const dataInstalacao = instalacao.toISOString()
+
+
       const tempoSeparado = dataInstalacao.split('T')
       const datas = tempoSeparado[0].split("-");
 
       this.editForm.patchValue({
         datas:{
           dataInstalacao:{
-            data: `${datas[2]}/${datas[1]}/${datas[0]}`,
+            data: `${datas[1]}/${datas[2]}/${datas[0]}`,
             hora: tempoSeparado[1].split(":")[0],
             minuto: tempoSeparado[1].split(":")[1]
           }
@@ -608,18 +621,18 @@ export class TabelaPedidosComponent implements OnChanges  {
   onSubmit() {
     if (this.editForm.valid) {
 
+
       if(this.editForm.value.faturamento <= 0){
         this.editForm.value.faturamento = null
       }
 
 
 
-
       this.editForm.get('datas').get('dataVisita').get("data")
-      .setValue(this.formatarDataEvento(this.editForm.value.datas.dataVisita.data))
+      .setValue(this.formatarDataEvento(this.editForm.value.datas.dataVisita))
 
       this.editForm.get('datas').get('dataInstalacao').get("data")
-      .setValue(this.formatarDataEvento(this.editForm.value.datas.dataInstalacao.data))
+      .setValue(this.formatarDataEvento(this.editForm.value.datas.dataInstalacao))
 
       console.log(this.editForm.value)
       this.pedidosService.updatePedido(this.pedidoEmEdicao.idPedido,this.editForm.value).subscribe(resp =>{

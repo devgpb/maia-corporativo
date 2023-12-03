@@ -52,6 +52,7 @@ export class CalendarioCorporativoComponent implements OnInit {
     plugins: [dayGridPlugin,timeGridPlugin],
     locale: "pt-br",
     events:this.eventArray,
+    allDaySlot: false,
     themeSystem:"bootstrap5",
     aspectRatio:2,
     slotMinTime: '08:00:00',
