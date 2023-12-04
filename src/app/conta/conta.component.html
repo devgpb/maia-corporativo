@@ -33,7 +33,9 @@
 
     <div class="form-group">
       <label for="idSetor">Setor</label>
-      <input type="text" class="form-control" id="idSetor" formControlName="setor">
+      <select class="form-control" id="setor" formControlName="idSetor">
+        <option *ngFor="let setor of list" [value]="setor.idSetor">{{setor.nome}}</option>
+      </select>
     </div>
 
     <div  class="form-group">

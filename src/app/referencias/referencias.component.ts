@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import Swal, { SweetAlertResult } from "sweetalert2";
-
+import { Router } from '@angular/router';
 
 import { AuthService } from '../services/auth/auth.service';
 import { Cargos, IUser } from '../interfaces/IUser';
@@ -22,8 +22,8 @@ export class ReferenciasComponent implements OnInit {
     private fb: FormBuilder,
     private refService:ReferenciasService,
     private userService: UserService,
-    private authService: AuthService
-
+    private authService: AuthService,
+    private router: Router
   ){
     this.list = []
     this.form = this.fb.group({
@@ -39,17 +39,9 @@ export class ReferenciasComponent implements OnInit {
   }
 
 
-  // salvar() {
-  //   if (this.form.valid) {
-  //     this.refService.salvarReferencia(this.form.get('referencia')?.value).subscribe(res =>{
-  //       if(res.referencia){
-  //         this.form.get('referencia')?.setValue('')
-  //         this.list.push(res)
-  //       }
-  //     })
-  //   } else {
-  //   }
-  // }
+  editar(ref: any){
+    this.router.navigate([`/conta/editar/${ref.idUsuario}`])
+  }
 
   apagar(ref:IUser){
     Swal.fire({

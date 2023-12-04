@@ -15,6 +15,10 @@ export class UserService {
 		return this.http.put<boolean>(`${environment.apiURL}/usuarios/${idUser}`,dados)
 	}
 
+  public getUser(id: number): Observable<IUser>{
+		return this.http.get<IUser>(`${environment.apiURL}/usuarios/${id}`)
+	}
+
   public cadastrarUser(dados: any): Observable<boolean>{
 		return this.http.post<boolean>(`${environment.apiURL}/usuarios`,dados)
 	}
