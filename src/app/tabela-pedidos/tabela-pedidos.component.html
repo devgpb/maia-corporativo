@@ -404,6 +404,19 @@
       </ul>
     </nav>
 
+    <div class="bulk-avance" *ngIf="listaPedidosId.length > 0">
+      <div (click)="retrocederPedidos()"
+      class="retroceder d-flex justify-content-center align-items-center"
+      *ngIf="canRetroceder" > <i class="fa-solid fa-angles-left"></i>
+      Retroceder Selecionados</div>
+
+      <div class="space"></div>
+      <div (click)="avancarPedidos()"
+      *ngIf="canAvancar"
+      class="avancar d-flex justify-content-center align-items-center"
+      >
+        Avançar Selecionados <i class="fa-solid fa-angles-right"></i></div>
+    </div>
   </div>
 
   <div class="cabecalho">
@@ -419,8 +432,7 @@
   <div class="d-flex justify-content-center flex-wrap" *ngIf="!loading">
     <div class="card-pedido" *ngFor="let pedido of list | pesquisa: searchText : currentPage : pageSize">
       <div class="header">
-
-
+        <input type="checkbox" [id]="'pedido-' + pedido.id" [checked]="pedido.selected" (change)="onCardSelect(pedido)" class="checkbox-custom">
         <div class="nome text-truncate text-uppercase">
           {{ pedido.nomeCompleto }}
         </div>

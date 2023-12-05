@@ -3,22 +3,26 @@
   margin: 5px 10px;
   border-radius: 18px;
   overflow: hidden;
-  // padding: 0 12px;
   width: 300px;
+
   .header{
     display: flex;
-    // justify-content: space-around;
     background-color: #65946e;
     color: white;
     padding: 10px 0;
-
+    align-items: center;
 
 
 
     .nome{
       width: 100%;
       text-align: center;
+      flex-grow: 1;
+      margin-left: -24px;
+    }
 
+    .checkbox {
+      margin-right: 10px; /* Espaço entre o checkbox e o texto */
     }
   }
 
@@ -277,6 +281,27 @@
       }
     }
   }
+
+  .bulk-avance{
+    margin-top: 12px;
+
+    div{
+      padding: 8px;
+      color: white;
+      .fa-solid{
+        margin-bottom: 0 !important;
+        margin: 0 5px;
+      }
+    }
+
+    .retroceder{
+      background-color: rgba(var(--bs-warning-rgb),var(--bs-bg-opacity))!important;
+    }
+
+    .avancar{
+      background-color: rgba(var(--bs-primary-rgb),var(--bs-bg-opacity))!important;
+    }
+  }
 }
 
 .eventos{
@@ -350,6 +375,12 @@ select {
   animation: spin 2s linear infinite;
 }
 
+.radio{
+  input{
+    position: relative;
+  }
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -374,7 +405,7 @@ select {
     justify-content: center;
     align-items: center;
 
-    *{
+    div{
       margin-bottom: 2px;
     }
   }

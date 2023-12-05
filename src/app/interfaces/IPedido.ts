@@ -20,5 +20,7 @@ export interface IPedido{
   datas: any;
 
   detalhes:any;
+
+  selected?: boolean;
 }
 

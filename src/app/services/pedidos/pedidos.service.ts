@@ -57,6 +57,14 @@ export class PedidosService {
 		return this.http.post<IPedido[]>(`${environment.apiURL}/pedidos/avancar/${idPedido}`,{})
 	}
 
+  public avancarPedidos(listaIds: Array<number>): Observable<boolean>{
+		return this.http.post<boolean>(`${environment.apiURL}/pedidos/avancarLista`, {lista: listaIds})
+	}
+
+  public retrocederPedidos(listaIds: Array<number>): Observable<boolean>{
+		return this.http.post<boolean>(`${environment.apiURL}/pedidos/retrocederLista`, {lista: listaIds})
+	}
+
   public updatePedido(idPedido: any,pedido: IPedido): Observable<IPedido[]>{
 		return this.http.put<IPedido[]>(`${environment.apiURL}/pedidos/${idPedido}`, pedido)
 	}

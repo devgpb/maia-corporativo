@@ -47,8 +47,8 @@ export class TabelaPedidosComponent implements OnChanges  {
   // Marcação de datas
 	public bsConfig: Partial<BsDatepickerConfig>;
 
+  public listaPedidosId = []
 
-  audio = new Audio();
   list: IPedido[] = [];
   @Input() status: string = '';
   @Input() rotaEspecial: boolean = false;
@@ -62,7 +62,6 @@ export class TabelaPedidosComponent implements OnChanges  {
 
   constructor(
     private pedidosService:PedidosService,
-    // private webSocketService:WebSocketService,
     private modalService: ModalService,
     private authService: AuthService,
     private router: Router,
@@ -128,7 +127,8 @@ export class TabelaPedidosComponent implements OnChanges  {
   }
 
   ngOnInit(): void {
-    this.isAdm = this.user.cargo == Cargos.ADMINISTRADOR
+    this.isAdm = this.user.cargo == Cargos.ADMINISTRADOR;
+    this.listaPedidosId = [];
     this.atualizarPedidos();
     this.reloadDisplay();
   }
@@ -157,6 +157,7 @@ export class TabelaPedidosComponent implements OnChanges  {
     // Verifique se a propriedade status foi alterada
     if (changes['status'] && changes['status'].currentValue !== changes['status'].previousValue) {
       // Chame a função de atualização de pedidos com o novo status
+      this.listaPedidosId = [];
       this.reloadDisplay();
       this.atualizarPedidos();
     }
@@ -616,6 +617,57 @@ export class TabelaPedidosComponent implements OnChanges  {
   setOrderDirection(direction: string): void {
     this.orderDirection = direction;
     this.ordenarPor()
+  }
+
+  onCardSelect(pedido: IPedido): void {
+    pedido.selected = !pedido.selected;
+    this.updateSelectedCardIds();
+  }
+
+  private updateSelectedCardIds(): void {
+    this.listaPedidosId = this.list
+      .filter(pedido => pedido.selected)
+      .map(pedido => pedido.idPedido);
+  }
+
+  avancarPedidos(){
+    this.pedidosService.avancarPedidos(this.listaPedidosId).subscribe( avancado => {
+      if(avancado){
+        Swal.fire({
+          icon: "success",
+          title: "Pedidos Avançados!",
+          confirmButtonColor: "#3C58BF"
+        });
+        this.listaPedidosId = [];
+        this.reloadDisplay();
+        this.atualizarPedidos();
+      }else{
+        Swal.fire({
+          icon: "error",
+          title: "Pedidos Não Avançados!",
+        });
+      }
+    })
+  }
+
+  retrocederPedidos(){
+    this.pedidosService.retrocederPedidos(this.listaPedidosId).subscribe( avancado => {
+      if(avancado){
+        Swal.fire({
+          icon: "success",
+          title: "Pedidos Retrocedidos!",
+          confirmButtonColor: "#3C58BF"
+        });
+        this.listaPedidosId = [];
+        this.reloadDisplay();
+        this.atualizarPedidos();
+      }else{
+        Swal.fire({
+          icon: "error",
+          title: "Pedido Não Retrocedidos!",
+        });
+      }
+    })
   }
 
   onSubmit() {
