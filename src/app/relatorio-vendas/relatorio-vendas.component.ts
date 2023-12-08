@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IValidations } from "src/app/components/visual-validator/visual-validator.component";
 import { BsDaterangepickerConfig, BsLocaleService } from "ngx-bootstrap/datepicker";
-import { RelatoriosGerenciaisService } from '../services/relatorios-gerenciais/relatorio-pessoal.service';
+import { RelatoriosGerenciaisService } from '../services/relatorios-gerenciais/relatorios-gerenciais.service';
 
 import * as moment from "moment";
 import { formatDate } from '@angular/common';
@@ -26,8 +26,6 @@ export class RelatorioVendasComponent {
 
   public inicioRelatorio: string = "";
   public fimRelatorio: string = "";
-
-  public relatorioRSA = undefined;
 
 
   constructor(
@@ -80,10 +78,8 @@ export class RelatorioVendasComponent {
     const showInicio = dataInicio.split("-")
     const showFim = dataFim.split("-")
 
-    this.relatoriosService.getRelatorioRSA(dataInicio,dataFim).subscribe(resp => {
-      this.relatorioRSA = resp
-      this.inicioRelatorio = `${showInicio[2]}/${showInicio[1]}`
-      this.fimRelatorio = `${showFim[2]}/${showFim[1]}`
+    this.relatoriosService.getRelatorioGeral(dataInicio,dataFim).subscribe(resp => {
+      console.log(resp)
     })
   }
 
@@ -116,43 +112,9 @@ export class RelatorioVendasComponent {
 	}
 
 
-  async copyReportToClipboard() {
-    const textToCopy = this.getTextToCopy();
-    if (navigator.clipboard) {
-      try {
-        await navigator.clipboard.writeText(textToCopy);
-        Swal.fire({
-          icon: "success",
-          title: "Relatório Copiado para a área de transferência!",
-          confirmButtonColor: "#3C58BF"
-        });
-      } catch (err) {
-        Swal.fire({
-          icon:"error",
-          title: "Relatório Não Copiado!",
-          text: "Tente copiar manualmente",
-        });
-        console.error('Falha ao copiar: ', err);
-      }
-    }
-  }
 
-  private getTextToCopy(): string {
-    // Aqui você constrói o texto que deseja copiar
-    const lines = [
-      `RSA - Método Infinity Solar🌞`,
-      `Período ${this.inicioRelatorio} a ${this.fimRelatorio}`,
-      `Leads captados Método Infinity Solar:  ${this.relatorioRSA.pedidosTrafegoPago}`,
-      `Orçamentos gerados: ${this.relatorioRSA.orcamentosGerados}`,
-      `Quantidade vendas realizadas: ${this.relatorioRSA.pedidosFinalizado}`,
-      `Faturamento das vendas:`,
-      `Vendas engatilhadas: ${ this.relatorioRSA.vendasEngatilhadas }`,
-      `Lead caiu no whatsapp(sem querer/por engano): ${this.relatorioRSA.pedidosEngano}`,
-      `Não respondeu whatsapp: ${this.relatorioRSA.pedidosSemRespostas}`,
-      ` Orçamentos em kWh média: ${this.relatorioRSA.mediaConsumoEnergia}`,
-    ];
-    return lines.join('\n\n'); // Junta todas as linhas com quebra de linha
-  }
+
+
 }
 
 

@@ -16,6 +16,15 @@ export class RelatoriosGerenciaisService {
 		return this.http.get<any>(`${environment.apiURL}/relatorio/usuario/realizados/${id}`)
 	}
 
+  getRelatorioGeral(dataInicio: string, dataFim: string): Observable<any>{
+    let params = new HttpParams()
+    .append("dataInicio", dataInicio)
+    .append("dataFim", dataFim)
+
+
+    return this.http.get(`${environment.apiURL}/relatorios/geral`);
+  }
+
   getRelatorioRSA(dataInicio: string, dataFim: string): Observable<any> {
     let params = new HttpParams()
 			.append("dataInicio", dataInicio)
