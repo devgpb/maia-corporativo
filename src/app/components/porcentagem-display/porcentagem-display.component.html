@@ -1,0 +1,21 @@
+<div class="porcentagem">
+  <div class="taxa d-flex flex-column align-items-center">
+    <p>{{title}}</p>
+
+    <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+      <!-- Círculo externo -->
+      <circle cx="100" cy="100" r="90" fill="transparent" stroke="#ccc" stroke-width="10"/>
+
+      <!-- Círculo de preenchimento de progresso -->
+      <circle cx="100" cy="100" r="90" fill="transparent" stroke="#4169E1" stroke-width="10"
+              stroke-dasharray="565" [style.strokeDashoffset]="calcularDashOffset()"/>
+
+      <!-- Texto da porcentagem -->
+      <text x="50%" y="50%" text-anchor="middle" dy="10" font-size="24" fill="#000">
+        {{label}}
+      </text>
+    </svg>
+
+    <span class="w-100 text-center">{{value}}%</span>
+  </div>
+</div>

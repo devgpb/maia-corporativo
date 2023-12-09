@@ -1,7 +1,6 @@
-<div class=" mt-5 bg-light p-4 rounded tabela">
+<div class=" mt-5 bg-light p-4 rounded relatorio">
 
-
-  <form [formGroup]="searchForm" class="form" (submit)="search()">
+  <!-- <form [formGroup]="searchForm" class="form" (submit)="search()">
 
       <div class="form-row d-flex flex-wrap">
         <div class="form-group col-12 col-sm-6">
@@ -37,7 +36,93 @@
 
     </div>
 
-  </form>
+
+
+
+  </form> -->
+  <h1 class="w-100 text-center"> Relatório Geral </h1>
+
+  <div class="percents">
+    <porcentagem-display
+    class="display"
+    label="Conversão"
+    [value]="valoresFixos.taxaConversaoGeral"
+    title="Prospectados para Finalizados"
+    ></porcentagem-display>
+
+    <porcentagem-display
+    class="display"
+    label="Conversão"
+    [value]="valoresFixos.taxaConversaoOrcamento"
+    title="Orçamentos Gerados para Finalizados"
+    ></porcentagem-display>
+  </div>
+
+  <div class="charts">
+    <div class="chart">
+      <canvas baseChart
+        [type]="performanceChartType"
+        [data]="performanceBarChart"
+        [options]="performanceOptions">
+      </canvas>
+    </div>
+
+    <div class="chart">
+      <canvas baseChart
+        [type]="pedidosPordiaType"
+        [data]="pedidosPordiaData"
+        [options]="pedidosPordiaOptions">
+      </canvas>
+    </div>
+
+  <div class="tabelas">
+    <!-- Tabela de tempo médio de estágio -->
+    <div class="tabela">
+      <p class="title">Tempo médio de transição de etapas</p>
+      <table class="tempo-medio table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">De</th>
+            <th scope="col">Para</th>
+            <th scope="col">Dias</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of tabelas.temposMedios">
+            <td>{{ item.de }}</td>
+            <td>{{ item.para }}</td>
+            <td>{{ item.dias }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tabela">
+      <p class="title">Quantidade de Pedidos</p>
+      <table class="tempo-medio table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Status</th>
+            <th scope="col">Quantidade</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of tabelas.quantidadeStatus">
+            <td>{{ item.status }}</td>
+            <td>{{ item.quantidade }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+
+
+
+
+
 
   <!-- <div *ngIf="relatorioRSA" class="relatorio-rsa ">
 

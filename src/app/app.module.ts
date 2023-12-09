@@ -17,6 +17,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NumericOnlyDirective } from "./services/utils/numeric-only.directive";
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { DatePipe } from "@angular/common";
+import { NgChartsModule } from 'ng2-charts';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -38,6 +39,7 @@ import { RelatorioVendasComponent } from './relatorio-vendas/relatorio-vendas.co
 import { VisualValidatorComponent } from './components/visual-validator/visual-validator.component';
 import { CalendarioCorporativoComponent } from './calendario-corporativo/calendario-corporativo.component';
 import { NovoEventoComponent } from './novo-evento/novo-evento.component';
+import { PorcentagemDisplayComponent } from './components/porcentagem-display/porcentagem-display.component';
 
 
 defineLocale("pt-br", ptBrLocale);
@@ -63,7 +65,8 @@ registerLocaleData(localePt);
     VisualValidatorComponent,
     NumericOnlyDirective,
     CalendarioCorporativoComponent,
-    NovoEventoComponent
+    NovoEventoComponent,
+    PorcentagemDisplayComponent
   ],
   imports: [
     BrowserModule,
@@ -77,6 +80,7 @@ registerLocaleData(localePt);
     BsDatepickerModule.forRoot(),
     NgSelectModule,
     FullCalendarModule,
+    NgChartsModule,
   ],
   providers: [
     {
