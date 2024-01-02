@@ -97,6 +97,7 @@
       <label for="pagamentoTotal" class="form-label">Pagamento Total</label>
       <div class="d-flex align-content-center">
         <input type="text" class="form-control" id="pagamentoTotal" name="pagamentoTotal" [(ngModel)]="contrato.pagamentoTotal" required >
+        <span class="money">,00</span>
       </div>
 
 
@@ -106,14 +107,20 @@
     <div class="line">
       <div class="">
       <label for="pagamentoP1" class="form-label">Pagamento Parcial 1</label>
+      <div class="d-flex align-content-center">
       <input type="text" class="form-control" id="pagamentoP1" name="pagamentoP1" [(ngModel)]="contrato.pagamentoP1" required>
+      <span class="money">,00</span>
+      </div>
       </div>
     </div>
 
     <div class="line">
       <div class="">
       <label for="pagamentoP2" class="form-label">Pagamento Parcial 2</label>
+      <div class="d-flex align-content-center">
       <input type="text" class="form-control" id="pagamentoP2" name="pagamentoP2" [(ngModel)]="contrato.pagamentoP2" required>
+      <span class="money">,00</span>
+      </div>
       </div>
     </div>
 
