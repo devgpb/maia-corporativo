@@ -1,0 +1,126 @@
+<div class="container  w-100">
+
+  <h2 class="w-100 text-center">- Gerar Contrato -</h2>
+
+  <form (ngSubmit)="submitForm()" #contratoForm="ngForm" class="d-flex flex-wrap justify-content-center">
+    <div class="separator w-100 text-center mt-4">
+      <h3>Cliente</h3>
+    </div>
+
+    <div class="line">
+      <div class="" style="width: 150px;">
+      <label for="numeroContrato" class="form-label">Número do Contrato</label>
+      <input type="text" class="form-control" id="numeroContrato" name="numeroContrato" [(ngModel)]="contrato.numeroContrato" placeholder="Numero" required>
+      </div>
+    </div>
+
+    <div class="line">
+      <div class=""  style="width: 350px;">
+      <label for="nomeContratante" class="form-label">Nome do Contratante</label>
+      <input type="text" class="form-control" id="nomeContratante" name="nomeContratante" [(ngModel)]="contrato.nomeContratante" placeholder="Nome Contratante" required>
+      </div>
+    </div>
+
+    <div class="line">
+      <div class="" style="width: 160px;">
+      <label for="cpfContratante" class="form-label">CPF do Contratante</label>
+      <input type="text" class="form-control" id="cpfContratante" name="cpfContratante" [(ngModel)]="contrato.cpfContratante" placeholder="000.000.000-00"
+      (input)="applyCpfMask($event)" required>
+      </div>
+    </div>
+
+    <div class="line">
+      <div class="" style="width: 450px;">
+      <label for="enderecoInstalacao" class="form-label">Endereço de Instalação</label>
+      <input type="text" class="form-control" id="enderecoInstalacao" name="enderecoInstalacao" [(ngModel)]="contrato.enderecoInstalacao" placeholder="Endereço de Instalação" required>
+      </div>
+    </div>
+
+    <div class="separator w-100 text-center mt-4">
+      <h3>Instalação</h3>
+    </div>
+
+
+    <div class="line w-100 d-flex justify-content-center">
+      <div class="" style="width: 150px;">
+      <label for="potenciaGerador" class="form-label">Potência do Gerador</label>
+      <input type="text" class="form-control" id="potenciaGerador" name="potenciaGerador" [(ngModel)]="contrato.potenciaGerador" placeholder="Potência" required>
+      </div>
+    </div>
+
+
+
+
+
+    <div class="line d-flex w-100 justify-content-center">
+      <div class="" style="width: 550px;">
+      <label for="inversores" class="form-label">Inversores</label>
+      <!-- <textarea name="" class="form-control" id="inversores" name="inversores" [(ngModel)]="contrato.inversores" required></textarea> -->
+      <input type="text" class="form-control" id="inversores" name="inversores" [(ngModel)]="contrato.inversores" placeholder="Inversores" required>
+      </div>
+
+      <div style="width: 60px; margin-left: 2px">
+        <label for="quantInversores" class="form-label">Quantidade</label>
+        <input type="text" class="form-control" id="quantInversores" name="quantInversores" [(ngModel)]="contrato.quantInversores" (input)="validarNumero($event)" required>
+      </div>
+
+    </div>
+
+    <div class="line d-flex w-100 justify-content-center">
+      <div class="" style="width: 550px;">
+      <label for="modulos" class="form-label">Módulos</label>
+      <input type="text" class="form-control" id="modulos" name="modulos" [(ngModel)]="contrato.modulos" required placeholder="Módulos">
+      </div>
+      <div style="width: 60px; margin-left: 2px">
+        <label for="quantModulos" class="form-label">Quantidade</label>
+        <input type="text" class="form-control" id="quantModulos" name="quantModulos" [(ngModel)]="contrato.quantModulos" (input)="validarNumero($event)" required>
+      </div>
+    </div>
+
+    <div class="line d-flex w-100 justify-content-center">
+      <div class="" style="width: 550px;">
+      <label for="suporte" class="form-label">Suporte</label>
+      <input type="text" class="form-control" id="suporte" name="suporte" [(ngModel)]="contrato.suporte" required placeholder="Suporte">
+      </div>
+      <div style="width: 60px; margin-left: 2px">
+        <label for="quantSuporte" class="form-label">Quantidade</label>
+        <input type="text" class="form-control" id="quantSuporte" name="quantSuporte" [(ngModel)]="contrato.quantSuporte" (input)="validarNumero($event)" required>
+      </div>
+    </div>
+
+    <div class="separator w-100 text-center mt-4">
+      <h3>Pagamento</h3>
+    </div>
+
+    <div class="line">
+      <div class="">
+      <label for="pagamentoTotal" class="form-label">Pagamento Total</label>
+      <div class="d-flex align-content-center">
+        <input type="text" class="form-control" id="pagamentoTotal" name="pagamentoTotal" [(ngModel)]="contrato.pagamentoTotal" required >
+      </div>
+
+
+      </div>
+    </div>
+
+    <div class="line">
+      <div class="">
+      <label for="pagamentoP1" class="form-label">Pagamento Parcial 1</label>
+      <input type="text" class="form-control" id="pagamentoP1" name="pagamentoP1" [(ngModel)]="contrato.pagamentoP1" required>
+      </div>
+    </div>
+
+    <div class="line">
+      <div class="">
+      <label for="pagamentoP2" class="form-label">Pagamento Parcial 2</label>
+      <input type="text" class="form-control" id="pagamentoP2" name="pagamentoP2" [(ngModel)]="contrato.pagamentoP2" required>
+      </div>
+    </div>
+
+  </form>
+
+  <div class="w-100 d-flex justify-content-end">
+    <button type="submit" (click)="submitForm()" class="btn btn-primary">BAIXAR WORD</button>
+  </div>
+</div>
+

@@ -15,6 +15,7 @@ import { RelatorioVendasComponent } from './relatorio-vendas/relatorio-vendas.co
 import { CalendarioCorporativoComponent } from './calendario-corporativo/calendario-corporativo.component';
 import { NovoEventoComponent } from './novo-evento/novo-evento.component';
 import { AuthGuard } from './services/guard/auth.guard';
+import { CriarContratoComponent } from './criar-contrato/criar-contrato.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -31,6 +32,8 @@ const routes: Routes = [
   { path: "ref", component: ReferenciasComponent, canActivate: [AuthGuard]  },
   { path: "calendario", component: CalendarioCorporativoComponent, canActivate: [AuthGuard]  },
   { path: "eventos/novo", component: NovoEventoComponent, canActivate: [AuthGuard]  },
+  { path: "contrato/gerar", component: CriarContratoComponent, canActivate: [AuthGuard]  },
+
   { path: '**', redirectTo: 'pedidos/prospectados', pathMatch: 'full'  }
 ];
 

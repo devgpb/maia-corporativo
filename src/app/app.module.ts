@@ -40,6 +40,7 @@ import { VisualValidatorComponent } from './components/visual-validator/visual-v
 import { CalendarioCorporativoComponent } from './calendario-corporativo/calendario-corporativo.component';
 import { NovoEventoComponent } from './novo-evento/novo-evento.component';
 import { PorcentagemDisplayComponent } from './components/porcentagem-display/porcentagem-display.component';
+import { CriarContratoComponent } from './criar-contrato/criar-contrato.component';
 
 
 defineLocale("pt-br", ptBrLocale);
@@ -66,7 +67,8 @@ registerLocaleData(localePt);
     NumericOnlyDirective,
     CalendarioCorporativoComponent,
     NovoEventoComponent,
-    PorcentagemDisplayComponent
+    PorcentagemDisplayComponent,
+    CriarContratoComponent
   ],
   imports: [
     BrowserModule,
