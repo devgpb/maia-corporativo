@@ -1,0 +1,32 @@
+form div{
+
+  margin: 10px 0;
+}
+
+button{
+  margin-top: 20px;
+  width: 200px;
+
+}
+
+.types{
+  display: flex;
+  justify-content: space-evenly;
+
+  div{
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+
+    p{
+      cursor: pointer;
+    }
+
+    p.chosen{
+      color: #0a58ca
+    }
+
+  }
+}
+
+

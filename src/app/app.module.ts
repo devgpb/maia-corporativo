@@ -41,6 +41,8 @@ import { CalendarioCorporativoComponent } from './calendario-corporativo/calenda
 import { NovoEventoComponent } from './novo-evento/novo-evento.component';
 import { PorcentagemDisplayComponent } from './components/porcentagem-display/porcentagem-display.component';
 import { CriarContratoComponent } from './criar-contrato/criar-contrato.component';
+import { EquipamentosComponent } from './equipamentos/equipamentos.component';
+import { DimencionarProjetoComponent } from './dimencionar-projeto/dimencionar-projeto.component';
 
 
 defineLocale("pt-br", ptBrLocale);
@@ -68,7 +70,9 @@ registerLocaleData(localePt);
     CalendarioCorporativoComponent,
     NovoEventoComponent,
     PorcentagemDisplayComponent,
-    CriarContratoComponent
+    CriarContratoComponent,
+    EquipamentosComponent,
+    DimencionarProjetoComponent
   ],
   imports: [
     BrowserModule,

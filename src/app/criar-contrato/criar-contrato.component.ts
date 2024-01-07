@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AutomacoesService } from '../services/automacoes/automacoes.service';
+import { EquipamentosService } from '../services/equipamentos/equipamento.service';
 
 @Component({
   selector: 'app-criar-contrato',
@@ -11,8 +12,14 @@ export class CriarContratoComponent implements OnInit {
 
   azul = false;
 
+  equipamentos: any = {
+    inversores: [],
+    placas: []
+  };
+
   constructor(
-    private automacoesService: AutomacoesService
+    private automacoesService: AutomacoesService,
+    private equipamentosService: EquipamentosService
   ){
 
   }
@@ -22,8 +29,8 @@ export class CriarContratoComponent implements OnInit {
     nomeContratante: "",
     cpfContratante: "",
     enderecoInstalacao: "",
-    inversores: "",
-    modulos: "",
+    inversores: '',
+    modulos: '',
     suporte: "",
     pagamentoTotal: "",
     pagamentoP1: "",
@@ -35,6 +42,9 @@ export class CriarContratoComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadContrato();
+    this.equipamentosService.getEquipamentos().subscribe(equip =>{
+      this.equipamentos = equip
+    })
   }
 
 
@@ -50,10 +60,8 @@ export class CriarContratoComponent implements OnInit {
   }
 
   submitForm() {
-    console.log(this.contrato);
 
     this.automacoesService.getContratoWord(this.contrato).subscribe(response => {
-      console.log(response);
       this.saveContrato();
     }, error => {
       console.error('Erro na requisição:', error);
@@ -76,10 +84,10 @@ export class CriarContratoComponent implements OnInit {
   }
 
 
-  validarNumero(event: any) {
-    const valor = event.target.value;
-    if (valor <= 0 || !/^\d*$/.test(valor)) {
-      event.target.value = null;
+  validarNumero(event: KeyboardEvent) {
+    // Permitir apenas dígitos numéricos
+    if (!/[0-9]/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Tab') {
+      event.preventDefault();
     }
   }
 }

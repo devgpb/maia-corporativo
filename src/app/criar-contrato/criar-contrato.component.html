@@ -55,13 +55,19 @@
     <div class="line d-flex w-100 justify-content-center">
       <div class="" style="width: 550px;">
       <label for="inversores" class="form-label">Inversores</label>
-      <!-- <textarea name="" class="form-control" id="inversores" name="inversores" [(ngModel)]="contrato.inversores" required></textarea> -->
-      <input type="text" class="form-control" id="inversores" name="inversores" [(ngModel)]="contrato.inversores" placeholder="Inversores" required>
+      <select class="form-control" id="inversores" name="inversores" [(ngModel)]="contrato.inversores" required>
+        <option value="">Selecione um Inversor</option>
+
+
+        <option *ngFor="let inversor of equipamentos.inversores" [value]="inversor.nome">{{ inversor.nome }}
+
+        </option>
+      </select>
       </div>
 
       <div style="width: 60px; margin-left: 2px">
         <label for="quantInversores" class="form-label">Quantidade</label>
-        <input type="text" class="form-control" id="quantInversores" name="quantInversores" [(ngModel)]="contrato.quantInversores" (input)="validarNumero($event)" required>
+        <input type="text" class="form-control" id="quantInversores" name="quantInversores" [(ngModel)]="contrato.quantInversores" (keydown)="validarNumero($event)" required>
       </div>
 
     </div>
@@ -69,11 +75,18 @@
     <div class="line d-flex w-100 justify-content-center">
       <div class="" style="width: 550px;">
       <label for="modulos" class="form-label">Módulos</label>
-      <input type="text" class="form-control" id="modulos" name="modulos" [(ngModel)]="contrato.modulos" required placeholder="Módulos">
+      <!-- <input type="text" class="form-control" id="modulos" name="modulos" [(ngModel)]="contrato.modulos" required placeholder="Módulos"> -->
+      <select class="form-control" id="placas" name="placas" [(ngModel)]="contrato.modulos" required>
+        <option *ngFor="let placa of equipamentos.placas" [value]="placa.nome">{{ placa.nome }}
+
+        </option>
+      </select>
+
+
       </div>
       <div style="width: 60px; margin-left: 2px">
         <label for="quantModulos" class="form-label">Quantidade</label>
-        <input type="text" class="form-control" id="quantModulos" name="quantModulos" [(ngModel)]="contrato.quantModulos" (input)="validarNumero($event)" required>
+        <input type="text" class="form-control" id="quantModulos" name="quantModulos" [(ngModel)]="contrato.quantModulos" (keydown)="validarNumero($event)" required>
       </div>
     </div>
 
@@ -84,7 +97,7 @@
       </div>
       <div style="width: 60px; margin-left: 2px">
         <label for="quantSuporte" class="form-label">Quantidade</label>
-        <input type="text" class="form-control" id="quantSuporte" name="quantSuporte" [(ngModel)]="contrato.quantSuporte" (input)="validarNumero($event)" required>
+        <input type="text" class="form-control" id="quantSuporte" name="quantSuporte" [(ngModel)]="contrato.quantSuporte" (keydown)="validarNumero($event)" required>
       </div>
     </div>
 

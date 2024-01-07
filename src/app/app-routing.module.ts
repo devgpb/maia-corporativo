@@ -16,6 +16,8 @@ import { CalendarioCorporativoComponent } from './calendario-corporativo/calenda
 import { NovoEventoComponent } from './novo-evento/novo-evento.component';
 import { AuthGuard } from './services/guard/auth.guard';
 import { CriarContratoComponent } from './criar-contrato/criar-contrato.component';
+import { EquipamentosComponent } from './equipamentos/equipamentos.component';
+import { DimencionarProjetoComponent } from './dimencionar-projeto/dimencionar-projeto.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -33,9 +35,13 @@ const routes: Routes = [
   { path: "calendario", component: CalendarioCorporativoComponent, canActivate: [AuthGuard]  },
   { path: "eventos/novo", component: NovoEventoComponent, canActivate: [AuthGuard]  },
   { path: "contrato/gerar", component: CriarContratoComponent, canActivate: [AuthGuard]  },
+  { path: "equipamentos", component: EquipamentosComponent, canActivate: [AuthGuard]  },
+  { path: "projetos/dimencionar", component: DimencionarProjetoComponent, canActivate: [AuthGuard]  },
+
 
   { path: '**', redirectTo: 'pedidos/prospectados', pathMatch: 'full'  }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
