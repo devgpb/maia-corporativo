@@ -30,9 +30,23 @@
     </div>
 
     <div class="line">
-      <div class="" style="width: 450px;">
+      <div class="" style="width: 500px;">
       <label for="enderecoInstalacao" class="form-label">Endereço de Instalação</label>
       <input type="text" class="form-control" id="enderecoInstalacao" name="enderecoInstalacao" [(ngModel)]="contrato.enderecoInstalacao" placeholder="Endereço de Instalação" required>
+      </div>
+    </div>
+
+    <div class="line">
+      <div class="" style="width: 250px;">
+      <label for="email" class="form-label">Email</label>
+      <input type="text" class="form-control" id="email" name="email" [(ngModel)]="contrato.email" placeholder="Email" required>
+      </div>
+    </div>
+
+    <div class="line">
+      <div class="" style="width: 250px;">
+      <label for="celular" class="form-label">Celular</label>
+      <input type="text" class="form-control" id="celular" name="celular" [(ngModel)]="contrato.celular" placeholder="(00)-0000-0000" (input)="applyCelularMask($event)" required>
       </div>
     </div>
 
@@ -134,6 +148,24 @@
       <input type="text" class="form-control" id="pagamentoP2" name="pagamentoP2" [(ngModel)]="contrato.pagamentoP2" required>
       <span class="money">,00</span>
       </div>
+      </div>
+    </div>
+
+    <div class="separator w-100 text-center mt-4">
+      <h3>Detalhes</h3>
+    </div>
+
+    <div class="line">
+      <div class="" style="width: 250px;">
+      <label for="cidade" class="form-label">Cidade</label>
+      <input type="text" class="form-control" id="cidade" name="cidade" [(ngModel)]="contrato.cidade" placeholder="Cidade" required>
+      </div>
+    </div>
+
+    <div class="line">
+      <div class="" style="width: 300px;">
+      <label for="data" class="form-label">Data</label>
+      <input type="text" class="form-control" id="data" name="data" [(ngModel)]="contrato.data" placeholder="Data" required>
       </div>
     </div>
 

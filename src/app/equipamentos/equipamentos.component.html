@@ -25,6 +25,10 @@
             <input [(ngModel)]="equip.placa.marca" type="text" class="form-control" id="marca" name="marca" placeholder="Marca">
           </div>
           <div class="form-group">
+            <label for="modelo">Modelo</label>
+            <input [(ngModel)]="equip.placa.modelo" type="text" class="form-control" id="modelo" name="modelo" placeholder="Marca">
+          </div>
+          <div class="form-group">
             <label for="tipo">Potência (W)</label>
             <input [(ngModel)]="equip.placa.potencia" type="text" class="form-control" id="tipo" name="tipo" placeholder="Potência" (keydown)="validarNumero($event)">
           </div>

@@ -18,7 +18,8 @@ export class EquipamentosComponent implements OnInit{
   equip = {
     placa: {
       marca: "",
-      potencia: ""
+      potencia: "",
+      modelo: ""
     },
     inversor:{
       marca: "",
@@ -29,16 +30,7 @@ export class EquipamentosComponent implements OnInit{
   }
 
   equipMap = {
-    placa: {
-      marca: "",
-      potencia: ""
-    },
-    inversor:{
-      marca: "",
-      modelo: "",
-      corrente: "",
-      potencia: "",
-    }
+    ...this.equip
   }
 
   tipo = "placa";
@@ -84,7 +76,7 @@ export class EquipamentosComponent implements OnInit{
     if(this.tipo == 'placa'){
       const placa = this.equip.placa
 
-      return `${placa.marca.trim()} ${placa.potencia.trim().replace(/,/g, '.')}W`
+      return `${placa.marca.trim()} ${placa.modelo.trim()} ${placa.potencia.trim().replace(/,/g, '.')}W`
     }else if(this.tipo == 'inversor'){
       const inv = this.equip.inversor
 
