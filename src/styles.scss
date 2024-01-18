@@ -156,6 +156,56 @@ body .ui-datepicker .ui-timepicker {
 }
 
 
+
+.dataTables_wrapper, table.dataTable {
+	clear: none;
+}
+
+.dataTables_filter input, .dataTables_length select {
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #495057;
+	background-color: #fff;
+	border: 1px solid #ced4da;
+	border-radius: .25rem;
+}
+
+table.dataTable.table-bordered thead th, table.dataTable.table-bordered thead td, table.dataTable.table-bordered.no-footer {
+	border-bottom: 1px solid #dee2e6;
+}
+
+table.dataTable tfoot th, table.dataTable tfoot td {
+	border-top: 1px solid #dee2e6;
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th {
+	background-color: white;
+}
+
+.table-striped>tbody>tr:nth-child(even)>td, .table-striped>tbody>tr:nth-child(even)>th, .table-striped>thead>tr {
+	background-color: rgba(0, 0, 0, .05);
+}
+
+table.dataTable {
+	min-width: 0;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+	color: white !important;
+	border: 1px solid #1E3AA1;
+	background-color: #3C58BF;
+	background: linear-gradient(to bottom, #3C58BF 0%, #1E3AA1 100%);
+}
+
+.theme-dark-blue .bs-datepicker-head, .theme-dark-blue .bs-datepicker-body table td span.selected, .theme-dark-blue .bs-datepicker-body table td.selected span, .theme-dark-blue .bs-datepicker-body table td span[class*="select-"]:after, .theme-dark-blue .bs-datepicker-body table td[class*="select-"] span:after {
+	background-color: #3C58BF;
+}
+
+.theme-dark-blue .bs-datepicker-body table td.week span {
+	color: #3C58BF;
+}
+
 button{
   background-color:#77d42a;
 	border-radius:6px;

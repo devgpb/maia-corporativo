@@ -57,7 +57,7 @@
           </div>
         </div>
 
-        <button type="button" class="btn btn-primary" (click)="adicionarEquipamento()">Adicionar Equipamento</button>
+        <button type="button" class="btn btn-primary add-equip" (click)="adicionarEquipamento()">Adicionar Equipamento</button>
 
         <div class="alert animate__animated animate__bounceIn" [class.animate__bounceOut]="alertHandler"
         >
@@ -72,6 +72,52 @@
 
         </div>
       </form>
+
+      <div >
+        <h2 class="w-100 text-center "> Listagem </h2>
+
+        <table datatable #equips [dtOptions]="dtOptionsEquips" [dtTrigger]="dtTriggerEquips"
+        class="row-border table-striped table-bordered w-100"  >
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th class="actions text-center">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let equip of listaEquipamentos">
+            <ng-container *ngIf="equip.isEditing; else viewMode">
+              <td class="w-100">
+                <input type="text" class="w-100" [(ngModel)]="equip.nome" (keyup.enter)="salvarEquipamento(equip)" />
+              </td>
+              <td class="d-flex justify-content-center align-content-center">
+                <button class="btn btn-sm btn-success ml-2" (click)="salvarEquipamento(equip)" title="Salvar">
+                  <i class="fa fa-check"></i>
+                </button>
+                <button class="btn btn-sm btn-secondary ml-2" (click)="cancelarEdicao(equip)" title="Cancelar">
+                  <i class="fa fa-times"></i>
+                </button>
+              </td>
+            </ng-container>
+            <ng-template #viewMode>
+              <td>{{ equip.nome }}</td>
+              <td class="d-flex justify-content-center align-content-center">
+                <button class="btn btn-sm btn-primary ml-2" (click)="iniciarEdicao(equip)" title="Editar">
+                  <i class="fa fa-pencil-alt"></i>
+                </button>
+                <button class="btn btn-sm btn-danger ml-2" (click)="removerEquipamento(equip)" title="Excluir">
+                  <i class="fa fa-trash-alt"></i>
+                </button>
+              </td>
+            </ng-template>
+          </tr>
+        </tbody>
+
+        </table>
+
+
+
+      </div>
     </div>
   </div>
 </div>

@@ -38,8 +38,8 @@ export class CriarContratoComponent implements OnInit {
     nomeContratante: "",
     cpfContratante: "",
     enderecoInstalacao: "",
-    inversores: '',
-    modulos: '',
+    inversores: null,
+    modulos: null,
     suporte: "",
     pagamentoTotal: "",
     pagamentoP1: "",
@@ -50,12 +50,13 @@ export class CriarContratoComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.loadContrato();
     this.equipamentosService.getEquipamentos().subscribe(equip =>{
       this.equipamentos = equip
     })
 
     moment.locale('pt-br');
+
+    this.loadContrato()
 
     this.contrato.data = moment().format('LL');
   }

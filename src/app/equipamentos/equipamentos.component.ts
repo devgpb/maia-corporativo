@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { EquipamentosService } from '../services/equipamentos/equipamento.service';
+import { DataTableDirective } from 'angular-datatables';
 import { eq } from '@fullcalendar/core/internal-common';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-equipamentos',
@@ -11,6 +13,13 @@ export class EquipamentosComponent implements OnInit{
 
   nome: string;
   marca: string;
+  listaEquipamentos = []
+
+  @ViewChild("equips", { read: DataTableDirective, static: true })
+	private dataTableEquips: DataTableDirective;
+	public dtOptionsEquips: DataTables.Settings = { };
+  public dtTriggerEquips: Subject<any> = new Subject();
+
 
   cadastrado = undefined;
   alertHandler = undefined;
@@ -35,15 +44,43 @@ export class EquipamentosComponent implements OnInit{
 
   tipo = "placa";
 
-  constructor(private equipamentoService: EquipamentosService){}
-
-  ngOnInit(): void {
-
+  constructor(private equipamentoService: EquipamentosService){
+    this.dtOptionsEquips = {
+			lengthMenu: [60, 30],
+			stateSave: true,
+      ordering: true,
+      language: {
+        emptyTable: 'Nenhum equipamento disponível'
+      }
+		};
   }
 
+  ngOnInit(): void {
+    this.carregarTabela()
+  }
+
+  carregarTabela(){
+     // Destruir a DataTable atual antes de recarregar os novos dados
+     if (this.dataTableEquips?.dtInstance) {
+      this.dataTableEquips.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy();
+        this.equipamentoService.getTiposEquipamentos(this.tipo).subscribe(equip => {
+          this.listaEquipamentos = equip
+          this.dtTriggerEquips.next(equip);
+        })
+      });
+    } else {
+      // Se a DataTable ainda não foi inicializada, basta emitir os novos dados
+      this.equipamentoService.getTiposEquipamentos(this.tipo).subscribe(equip => {
+        this.listaEquipamentos = equip
+        this.dtTriggerEquips.next(equip);
+      })
+    }
+  }
+
+
+
   adicionarEquipamento(){
-
-
 
     const equipamento = {
       nome: this.gerarNomeEquip(),
@@ -88,6 +125,7 @@ export class EquipamentosComponent implements OnInit{
 
   mudarTipo(tipo: string){
     this.tipo = tipo
+    this.carregarTabela()
   }
 
   validarNumero(event: KeyboardEvent) {
@@ -96,4 +134,28 @@ export class EquipamentosComponent implements OnInit{
       event.preventDefault();
     }
   }
+
+  removerEquipamento(equip: any){
+    this.equipamentoService.deleteEquipamento(equip.idEquipamento).subscribe(resp =>{
+      this.listaEquipamentos = this.listaEquipamentos.filter(e => e.idEquipamento !== equip.idEquipamento);
+    })
+  }
+
+  iniciarEdicao(equip: any) {
+    equip.isEditing = true;
+    equip.editNome = equip.nome; // Guardar o nome original em caso de cancelamento
+  }
+
+  salvarEquipamento(equip: any) {
+
+    this.equipamentoService.putEquipamentos(equip).subscribe(resp => {
+      equip.isEditing = false;
+    });
+  }
+
+  cancelarEdicao(equip: any) {
+    equip.nome = equip.editNome; // Restaurar o nome original
+    equip.isEditing = false;
+  }
+
 }

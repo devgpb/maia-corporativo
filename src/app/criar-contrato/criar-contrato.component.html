@@ -69,14 +69,10 @@
     <div class="line d-flex w-100 justify-content-center">
       <div class="" style="width: 550px;">
       <label for="inversores" class="form-label">Inversores</label>
-      <select class="form-control" id="inversores" name="inversores" [(ngModel)]="contrato.inversores" required>
-        <option value="">Selecione um Inversor</option>
 
+      <ng-select class=" selecter" [(ngModel)]="contrato.inversores" [items]="equipamentos.inversores" bindLabel="nome" bindValue="nome" [placeholder]="contrato.inversores || 'Selecione um Inversor'" name="inversores" >
+      </ng-select>
 
-        <option *ngFor="let inversor of equipamentos.inversores" [value]="inversor.nome">{{ inversor.nome }}
-
-        </option>
-      </select>
       </div>
 
       <div style="width: 60px; margin-left: 2px">
@@ -89,12 +85,10 @@
     <div class="line d-flex w-100 justify-content-center">
       <div class="" style="width: 550px;">
       <label for="modulos" class="form-label">Módulos</label>
-      <!-- <input type="text" class="form-control" id="modulos" name="modulos" [(ngModel)]="contrato.modulos" required placeholder="Módulos"> -->
-      <select class="form-control" id="placas" name="placas" [(ngModel)]="contrato.modulos" required>
-        <option *ngFor="let placa of equipamentos.placas" [value]="placa.nome">{{ placa.nome }}
 
-        </option>
-      </select>
+      <ng-select class=" selecter" [(ngModel)]="contrato.modulos" [items]="equipamentos.placas" bindLabel="nome" bindValue="nome" [placeholder]="contrato.modulos || 'Selecione um Modulo'" name="placas">
+      </ng-select>
+
 
 
       </div>
