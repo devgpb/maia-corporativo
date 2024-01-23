@@ -102,7 +102,7 @@
           <span class="content">{{ detalhes.consumoDeEnergiaMensal }}</span>
         </div>
 
-        <div class="detail">
+        <div class="detail" *ngIf="userCargo=='ADMINISTRADOR'">
           <span class="label">Faturamento:</span>
           <span class="content">{{ detalhes.faturamento | currency:'BRL' }}</span>
         </div>

@@ -42,7 +42,7 @@ export class EquipamentosComponent implements OnInit{
     ...this.equip
   }
 
-  tipo = "placa";
+  private _tipo = "placa";
 
   constructor(private equipamentoService: EquipamentosService){
     this.dtOptionsEquips = {
@@ -56,6 +56,9 @@ export class EquipamentosComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    // Inicializa 'tipo' com valor do Local Storage ou valor padrão
+    this._tipo = localStorage.getItem('tipo') || this._tipo;
+    
     this.carregarTabela()
   }
 
@@ -78,7 +81,15 @@ export class EquipamentosComponent implements OnInit{
     }
   }
 
+  // Getter e Setter para 'tipo'
+  set tipo(value: string) {
+    this._tipo = value;
+    localStorage.setItem('tipo', value);
+  }
 
+  get tipo(): string {
+    return localStorage.getItem('tipo') || this._tipo;
+  }
 
   adicionarEquipamento(){
 
@@ -98,6 +109,7 @@ export class EquipamentosComponent implements OnInit{
     this.equipamentoService.postEquipamento(equipamento).subscribe(resp => {
       if(resp.nome){
         this.cadastrado = true
+        this.listaEquipamentos.push(resp)
       }else{
         this.cadastrado = false
       }

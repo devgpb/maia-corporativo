@@ -58,6 +58,7 @@ export class TabelaPedidosComponent implements OnChanges  {
   public currentPage: number = 1; // Página atual
   public totalItems: number = 0; // Total de itens
   searchText: string = '';
+  public userCargo = "";
 
 
   constructor(
@@ -69,6 +70,7 @@ export class TabelaPedidosComponent implements OnChanges  {
     private localeService: BsLocaleService
   ) {
     this.user = authService.getUser()
+    this.userCargo = this.user.cargo
     this.detalhes = {}
     this.editForm = this.initializeForm();
     this.editForm.get('ref')?.disable();

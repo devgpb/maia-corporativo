@@ -6,6 +6,11 @@
   margin-bottom: 50px;
 }
 
+.space{
+  width: 10px;
+  height: 1px;
+}
+
 .money{
   font-size: 17px;
   padding-top: 8px;
@@ -17,3 +22,53 @@
 }
 
 
+.lista-contratos{
+  // background-color: #90cf9c;
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px 12px;
+  z-index: 0;
+
+  .card{
+    display: flex;
+    justify-content: center;
+    padding: 12px 12px;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:hover {
+      background-color: #407f5c;
+      i {
+        color: #ffffff;
+      }
+      span{
+        color: #ffffff;
+      }
+    }
+
+    i{
+      color: #5ea66c;
+      margin: 0 2px;
+
+    }
+  }
+}
+
+.animate__fadeOutDown{
+  z-index: -5;
+}
+
+.pagamento-area{
+  position: relative;
+  width: 100%;
+  height: 200px;
+
+  >div{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}

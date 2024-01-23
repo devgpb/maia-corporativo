@@ -16,6 +16,10 @@ import 'moment/locale/pt-br';
 export class CriarContratoComponent implements OnInit {
 
   azul = false;
+  tipoContrato = undefined;
+  // O nível de pagamento serve para controlar os inputs, baseado na forma de pagamento a vista
+  nivelPagamentoVista = 0
+
 
   equipamentos: any = {
     inversores: [],
@@ -44,6 +48,7 @@ export class CriarContratoComponent implements OnInit {
     pagamentoTotal: "",
     pagamentoP1: "",
     pagamentoP2: "",
+    pagamentoP3: "",
     quantInversores: "",
     quantModulos: "",
     quantSuporte: ""
@@ -64,18 +69,30 @@ export class CriarContratoComponent implements OnInit {
 
   loadContrato() {
     const savedContrato = localStorage.getItem('contrato');
+    const savedTipoContrato = localStorage.getItem('tipoContrato');
+    const nivelPagamentoVista = localStorage.getItem('nivelPagamentoVista');
+
     if (savedContrato) {
       this.contrato = JSON.parse(savedContrato);
+    }
+
+    if (savedTipoContrato) {
+      this.tipoContrato = JSON.parse(savedTipoContrato);
+      this.nivelPagamentoVista = JSON.parse(nivelPagamentoVista);
+
     }
   }
 
   saveContrato() {
     localStorage.setItem('contrato', JSON.stringify(this.contrato));
+    localStorage.setItem('tipoContrato', JSON.stringify(this.tipoContrato));
+    localStorage.setItem('nivelPagamentoVista', JSON.stringify(this.nivelPagamentoVista));
+
   }
 
   submitForm() {
 
-    this.automacoesService.getContratoWord(this.contrato).subscribe(response => {
+    this.automacoesService.getContratoWord(this.tipoContrato,this.contrato).subscribe(response => {
       Swal.fire({
         icon: "success",
         title: "Seu Contro Foi Gerado!",
@@ -126,5 +143,29 @@ export class CriarContratoComponent implements OnInit {
     if (!/[0-9]/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Tab') {
       event.preventDefault();
     }
+  }
+
+  selecionaTipoContrato(valor: string){
+
+    switch (valor){
+      case "umPagamentoAVista":
+        this.nivelPagamentoVista = 1
+      break
+
+      case "doisPagamentosAVista":
+        this.nivelPagamentoVista = 2
+      break
+
+      case "tresPagamentosAVista":
+        this.nivelPagamentoVista = 3
+      break
+    }
+
+    this.tipoContrato = valor;
+  }
+
+  limparTipoContrato(event){
+    event.preventDefault()
+    this.tipoContrato = undefined
   }
 }
