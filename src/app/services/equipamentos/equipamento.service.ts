@@ -27,13 +27,22 @@ export class EquipamentosService {
 		return this.http.delete(`${environment.apiURL}/equipamentos/${id}`);
   }
 
-  public getDimencionamento( equipamento ): Observable<Blob>{
+  public getDimencionamentoWord( equipamento ): Observable<Blob>{
     let params = new HttpParams();
     Object.keys(equipamento).forEach(key => {
       params = params.append(key, equipamento[key]);
     });
 
-		return this.http.get(`${environment.apiURL}/equipamentos/dimencionamento`, { params, responseType: 'blob' }).pipe(tap(blob => this.triggerDownload(blob, `dimencionamento.docx`)));;
+		return this.http.get(`${environment.apiURL}/equipamentos/dimensionamento/word`, { params, responseType: 'blob' }).pipe(tap(blob => this.triggerDownload(blob, `dimensionamento.docx`)));;
+  }
+
+  public getDimencionamento( equipamento ): Observable<any>{
+    let params = new HttpParams();
+    Object.keys(equipamento).forEach(key => {
+      params = params.append(key, equipamento[key]);
+    });
+
+		return this.http.get(`${environment.apiURL}/equipamentos/dimensionamento`, { params });;
   }
 
   public postEquipamento (info : any): Observable<any>{

@@ -1,4 +1,4 @@
-<h2 class="w-100 text-center">- Dimencionar Projeto -</h2>
+<h2 class="w-100 text-center">- Dimensionar Projeto -</h2>
 
 <div class="line d-flex w-100 justify-content-center">
 
@@ -20,9 +20,13 @@
 
 </div>
 
-
+<div class="resultado w-100 justify-content-center d-flex flex-column mt-4">
+    <p class=" text-center ">Quantidades de placas: {{dimensionamento?.placasMaximas}}</p>
+    <p class=" text-center ">Disjuntor: {{dimensionamento?.disjuntor}}A</p>
+    <p class=" text-center ">Bitola: {{dimensionamento?.bitola}}mm²</p>
+</div>
 
 
 <div class="w-100 d-flex justify-content-center mt-4 ">
-  <button (click)="dimencionar()">Dimencionar!</button>
+  <button (click)="dimencionar()">Dimensionar!</button>
 </div>

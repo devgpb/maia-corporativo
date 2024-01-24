@@ -12,6 +12,8 @@ export class DimencionarProjetoComponent implements OnInit {
   inversor = ''
   placa = ''
 
+  dimensionamento: any;
+
   equipamentos: any = {
     inversores: [],
     placas: []
@@ -29,7 +31,7 @@ export class DimencionarProjetoComponent implements OnInit {
 
   dimencionar(){
     this.equipamentosService.getDimencionamento({inversor:this.inversor, placa: this.placa}).subscribe(dimen => {
-      console.log(dimen)
+      this.dimensionamento = dimen
     })
   }
 }
