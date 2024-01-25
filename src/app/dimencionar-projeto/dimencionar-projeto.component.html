@@ -4,18 +4,16 @@
 
   <div class="input" style="width: 550px;">
     <label for="inversores" class="form-label">Inversores</label>
-    <select class="form-control" id="inversores" name="inversores" [(ngModel)]="inversor" required>
-      <option value="">Selecione um Inversor</option>
-      <option *ngFor="let inversor of equipamentos.inversores" [value]="inversor.nome">{{ inversor.nome }}</option>
-    </select>
+
+    <ng-select class="selecter" [(ngModel)]="inversor" [items]="equipamentos.inversores" bindLabel="nome" bindValue="nome" [placeholder]="inversor || 'Selecione um Inversor'" name="inversor" (change)="dimencionar()">
+    </ng-select>
   </div>
 
   <div class="input" style="width: 550px;">
     <label for="placas" class="form-label">Módulos</label>
-    <select class="form-control" id="placas" name="placas" [(ngModel)]="placa" required>
-      <option value="">Selecione um Módulo</option>
-      <option *ngFor="let placa of equipamentos.placas" [value]="placa.nome">{{ placa.nome }}</option>
-    </select>
+
+    <ng-select class="selecter" [(ngModel)]="placa" [items]="equipamentos.placas" bindLabel="nome" bindValue="nome" [placeholder]="placa || 'Selecione um Modulo'" name="placas" (change)="dimencionar()">
+    </ng-select>
   </div>
 
 </div>
@@ -27,6 +25,6 @@
 </div>
 
 
-<div class="w-100 d-flex justify-content-center mt-4 ">
+<!-- <div class="w-100 d-flex justify-content-center mt-4 ">
   <button (click)="dimencionar()">Dimensionar!</button>
-</div>
+</div> -->
