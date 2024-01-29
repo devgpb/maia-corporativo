@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import * as moment from 'moment';
 // Importar o locale em português
 import 'moment/locale/pt-br';
+import { toInt } from 'ngx-bootstrap/chronos/utils/type-checks';
 
 @Component({
   selector: 'app-criar-contrato',
@@ -95,10 +96,11 @@ export class CriarContratoComponent implements OnInit {
     this.automacoesService.getContratoWord(this.tipoContrato,this.contrato).subscribe(response => {
       Swal.fire({
         icon: "success",
-        title: "Seu Contro Foi Gerado!",
+        title: "Seu Contrato Foi Gerado!",
         text: "Recomenda-se verificar os dados!",
         confirmButtonColor: "#3C58BF"
       });
+      this.contrato.numeroContrato = (Number(this.contrato.numeroContrato) + 1).toString()
       this.saveContrato();
     }, error => {
       Swal.fire({
