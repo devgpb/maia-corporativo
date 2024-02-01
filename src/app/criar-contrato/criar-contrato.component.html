@@ -160,7 +160,7 @@
             <div class="">
             <label for="pagamentoTotal" class="form-label">Pagamento Total</label>
             <div class="d-flex align-content-center">
-              <input type="text" class="form-control" id="pagamentoTotal" name="pagamentoTotal" [(ngModel)]="contrato.pagamentoTotal" required >
+              <input type="text" class="form-control" id="pagamentoTotal" name="pagamentoTotal" [(ngModel)]="contrato.pagamentoTotal" required  (input)="applyNumberMask($event)">
               <span class="money">,00</span>
             </div>
 
@@ -172,7 +172,7 @@
             <div class="">
             <label for="pagamentoP1" class="form-label">Pagamento Parcial 1</label>
             <div class="d-flex align-content-center">
-            <input type="text" class="form-control" id="pagamentoP1" name="pagamentoP1" [(ngModel)]="contrato.pagamentoP1" required>
+            <input type="text" class="form-control" id="pagamentoP1" name="pagamentoP1" [(ngModel)]="contrato.pagamentoP1" (input)="applyNumberMask($event)">
             <span class="money">,00</span>
             </div>
             </div>
@@ -182,7 +182,7 @@
             <div class="">
             <label for="pagamentoP2" class="form-label">Pagamento Parcial 2</label>
             <div class="d-flex align-content-center">
-            <input type="text" class="form-control" id="pagamentoP2" name="pagamentoP2" [(ngModel)]="contrato.pagamentoP2" required>
+            <input type="text" class="form-control" id="pagamentoP2" name="pagamentoP2" [(ngModel)]="contrato.pagamentoP2" (input)="applyNumberMask($event)">
             <span class="money">,00</span>
             </div>
             </div>
@@ -192,7 +192,7 @@
             <div class="">
             <label for="pagamentoP3" class="form-label">Pagamento Parcial 3</label>
             <div class="d-flex align-content-center">
-            <input type="text" class="form-control" id="pagamentoP3" name="pagamentoP3" [(ngModel)]="contrato.pagamentoP3" required>
+            <input type="text" class="form-control" id="pagamentoP3" name="pagamentoP3" [(ngModel)]="contrato.pagamentoP3" (input)="applyNumberMask($event)">
             <span class="money">,00</span>
             </div>
             </div>

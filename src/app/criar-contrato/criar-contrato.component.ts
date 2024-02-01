@@ -147,6 +147,17 @@ export class CriarContratoComponent implements OnInit {
     }
   }
 
+  applyNumberMask(event: any): void {
+    let value = event.target.value;
+    value = value.replace(/\D/g, ''); // Remove tudo o que não for dígito
+
+    // Adicione a máscara de milhares (adicionando "." a cada 3 casas decimais)
+    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+    event.target.value = value;
+  }
+
+
   selecionaTipoContrato(valor: string){
 
     switch (valor){
