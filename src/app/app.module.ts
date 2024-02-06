@@ -18,7 +18,7 @@ import { NumericOnlyDirective } from "./services/utils/numeric-only.directive";
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { DatePipe } from "@angular/common";
 import { NgChartsModule } from 'ng2-charts';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -72,7 +72,7 @@ registerLocaleData(localePt);
     PorcentagemDisplayComponent,
     CriarContratoComponent,
     EquipamentosComponent,
-    DimencionarProjetoComponent
+    DimencionarProjetoComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,6 +87,7 @@ registerLocaleData(localePt);
     NgSelectModule,
     FullCalendarModule,
     NgChartsModule,
+    DragDropModule
   ],
   providers: [
     {

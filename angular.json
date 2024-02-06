@@ -34,8 +34,9 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.js",
-							"node_modules/datatables.net/js/jquery.dataTables.js"
+              "./node_modules/jquery/dist/jquery.js",
+							"./node_modules/datatables.net/js/jquery.dataTables.js",
+              "./node_modules/particles.js/particles.js"
             ]
           },
           "configurations": {
@@ -105,7 +106,9 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/particles.js/particles.js"
+            ]
           }
         }
       }

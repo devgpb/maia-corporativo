@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Importe FormBuilder, FormGroup e Validators
 import { faL } from '@fortawesome/free-solid-svg-icons';
 
+declare var particlesJS: any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   public loginForm: FormGroup; // Crie um FormGroup
   public invalidCred: boolean = false;
   public error:any;
@@ -38,5 +39,11 @@ export class LoginComponent {
         // this.error = JSON.stringify(error)
       });
     }
+  }
+
+  ngOnInit(): void {
+    particlesJS.load('particles-js', '../assets/particles.json', function() {
+      console.log('callback - particles.js config loaded');
+    });
   }
 }
