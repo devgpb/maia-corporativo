@@ -1,6 +1,6 @@
-<ng-container *ngIf="mostrar">
+<ng-container *ngIf="mostrar" @modalAnimation>
   <div>
-    <div (click)="toggle()" class="overlay"></div>
+    <div (click)="close()" class="overlay"></div>
 
     <div class="modalt">
       <ng-content></ng-content>

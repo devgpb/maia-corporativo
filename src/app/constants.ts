@@ -26,3 +26,27 @@ export const rotasPedidos =
 
 export const rotasEspeciais =
 ["standby","perdidos"]
+
+export const dtlanguage = {
+  processing: "Processando...",
+  search: "Pesquisar:",
+  lengthMenu: "Mostrar _MENU_ registros por página",
+  info: "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+  infoEmpty: "Mostrando 0 até 0 de 0 registros",
+  infoFiltered: "(filtrado de _MAX_ registros no total)",
+  infoPostFix: "",
+  loadingRecords: "Carregando registros...",
+  zeroRecords: "Nenhum registro encontrado",
+  emptyTable: "Nenhuma dado disponível na tabela",
+  paginate: {
+    first: "Primeiro",
+    previous: "Anterior",
+    next: "Seguinte",
+    last: "Último"
+  },
+  aria: {
+    sortAscending: ": ativar para ordenar a coluna em ordem ascendente",
+    sortDescending: ": ativar para ordenar a coluna em ordem descendente"
+  }
+}
+

@@ -1,0 +1,204 @@
+<div class="w-100">
+  <i class="fa solid fa-circle-xmark icon bg-danger text-white"
+  (click)="toggleModal()"
+  ></i>
+
+
+  <div class="id">
+    {{ detalhes?.idPedido }}
+  </div>
+
+  <!-- Navegação -->
+  <h2 class="navegacao">
+    <div class="holder">
+      <i class="fa-solid fa-angles-left text-info"
+      (click)="voltarPedido(detalhes,true)"
+      *ngIf="indiceDetalhe > 0"
+      ></i>
+    </div>
+
+
+    {{ detalhes?.nomeCompleto }}
+
+    <div class="holder">
+      <i class="fa-solid fa-angles-right text-info"
+      *ngIf="indiceDetalhe < indiceLimiteDetalhe - 1"
+      (click)="proximoPedido(detalhes,true)"
+      ></i>
+    </div>
+  </h2>
+  <!-- Navegação -->
+
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="edit-form">
+    <h3 class="w-100">Detalhes:</h3>
+
+    <div class="check-list">
+
+      <div class="check" (click)="toggleDetalhe('orcamentoGerado')">
+        <i class="fa-solid"
+        [ngClass]="{'fa-check text-success': editForm.value.detalhes?.orcamentoGerado, 'fa-x text-danger': !editForm.value.detalhes?.orcamentoGerado}"
+        ></i> Orçamento Gerado
+      </div>
+
+      <div class="check" (click)="toggleDetalhe('visitaRealizada')">
+        <i class="fa-solid"
+        [ngClass]="{'fa-check text-success': editForm.value.detalhes?.visitaRealizada, 'fa-x text-danger': !editForm.value.detalhes?.visitaRealizada}"
+        ></i>  Visita Realizada
+      </div>
+
+      <div class="check" (click)="toggleDetalhe('contratoAssinado')">
+        <i class="fa-solid"
+        [ngClass]="{'fa-check text-success': editForm.value.detalhes?.contratoAssinado, 'fa-x text-danger': !editForm.value.detalhes?.contratoAssinado}"
+        ></i>  Contrato Assinado
+      </div>
+
+      <div class="check" (click)="toggleDetalhe('equipamentoComprado')">
+        <i class="fa-solid"
+        [ngClass]="{'fa-check text-success': editForm.value.detalhes?.equipamentoComprado, 'fa-x text-danger': !editForm.value.detalhes?.equipamentoComprado}"
+        ></i>  Equipamento Comprado
+      </div>
+
+      <div class="check" (click)="toggleDetalhe('sistemaHomologado')">
+        <i class="fa-solid"
+        [ngClass]="{'fa-check text-success': editForm.value.detalhes?.sistemaHomologado, 'fa-x text-danger': !editForm.value.detalhes?.sistemaHomologado}"
+        ></i>  Sistema Homologado
+      </div>
+    </div>
+    <span class="w-100 text-center text-primary infor">Clique em um detalhe para alterar seu valor</span>
+
+
+    <!-- Marcar Datas -->
+    <!-- <h3 class="w-100 mt-3 mb-3">Marcação de Eventos:</h3>
+
+    <div class="form-group w-100 d-flex eventos justify-content-between" formGroupName="datas">
+
+      <div class="visita" formGroupName="dataVisita">
+        <label for="datas">Data Visita:</label>
+        <input formControlName="data" type="text" id="datas" class="form-control"
+          placeholder="Data da visita" bsDatepicker [bsConfig]="bsConfig" autocomplete="off">
+
+          <div class="timepicker-container">
+            <div class="timepicker-inputs">
+              <span>h</span>
+              <input type="number" formControlName="hora" min="0" max="23">
+              <span>:</span>
+              <input type="number" formControlName="minuto" min="0" max="59">
+              <span>m</span>
+            </div>
+          </div>
+      </div>
+
+      <div class="visita" formGroupName="dataInstalacao">
+        <label for="datas">Data Instalação:</label>
+        <input formControlName="data" type="text" id="datas" class="form-control"
+          placeholder="Data da Instalação" bsDatepicker [bsConfig]="bsConfig" autocomplete="off">
+
+          <div class="timepicker-container">
+            <div class="timepicker-inputs">
+              <span>h</span>
+              <input type="number" formControlName="hora" min="0" max="23">
+              <span>:</span>
+              <input type="number" formControlName="minuto" min="0" max="59">
+              <span>m</span>
+
+            </div>
+          </div>
+      </div>
+
+    </div> -->
+
+    <!-- Pessoal -->
+    <h3 class="w-100">Pessoal:</h3>
+
+    <div class="form-group">
+      <label for="nomeCompleto">Nome:</label>
+      <input type="text" class="form-control" id="nomeCompleto" formControlName="nomeCompleto">
+    </div>
+
+    <div class="form-group">
+      <label for="celular">Celular:</label>
+      <input type="tel" class="form-control" id="celular" formControlName="celular" placeholder="(00)-0000-0000" (input)="applyCelularMask($event)">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" formControlName="email">
+    </div>
+
+    <div class="form-group">
+      <label for="cidade">Cidade:</label>
+      <input type="text" class="form-control" id="cidade" formControlName="cidade">
+    </div>
+
+    <div class="form-group">
+      <label for="rua">Rua:</label>
+      <input type="text" class="form-control" id="rua" formControlName="rua">
+    </div>
+
+    <div class="form-group">
+      <label for="cep">CEP:</label>
+      <input type="text" class="form-control" id="cep" formControlName="cep" maxlength="10" placeholder="00000-000">
+    </div>
+
+    <!-- Gerencial -->
+    <h3 class="w-100">Gerencial:</h3>
+
+    <div class="form-group">
+      <label for="status">Status:</label>
+      <input type="text" class="form-control" id="status" formControlName="status">
+    </div>
+
+    <div class="form-group">
+      <label for="consumoDeEnergiaMensal">Consumo Mensal de Energia:</label>
+      <input type="text" class="form-control" id="consumoDeEnergiaMensal" formControlName="consumoDeEnergiaMensal" appNumericOnly>
+    </div>
+
+    <div class="form-group">
+      <label for="faturamento">Faturamento (R$):</label>
+      <input type="text" class="form-control"
+      id="faturamento" formControlName="faturamento"
+      appNumericOnly >
+    </div>
+
+    <div class="form-group">
+      <label for="dataPedido">Data do Pedido:</label>
+      <input type="date" class="form-control" id="dataPedido" formControlName="dataPedido">
+    </div>
+
+    <div class="form-group">
+      <label for="ref">Referência:</label>
+      <input type="text" class="form-control" id="ref" formControlName="ref">
+    </div>
+
+    <div class="form-group">
+      <label for="indicacao">Indicação:</label>
+      <input type="text" class="form-control" id="indicacao" formControlName="indicacao">
+    </div>
+
+    <div class="form-group w-100 mb-3">
+      <label for="cidade">Observação:</label>
+      <textarea type="text" class="form-control " id="observacao" formControlName="observacao">
+      </textarea>
+    </div>
+
+
+
+
+    <div class="form-group w-100 btn-area ">
+      <div class="specials" >
+        <button class="btn btn-warning" (click)="marcarStandby()" *ngIf="!rotaEspecial"><i class="fa-regular fa-hourglass text-dark"></i>STANDBY</button>
+
+        <button class="btn btn-danger" (click)="marcarPerdido()"
+        style="margin-left: 5px;" *ngIf="!rotaEspecial"><i class="fa-regular fa-triangle-exclamation "></i>PERDIDO</button>
+        <!-- <button class="btn btn-primary">Salvar</button> -->
+
+      </div>
+
+      <div class="save">
+        <button [disabled]="nothingChanged()" type="submit" class="btn btn-primary">Salvar</button>
+      </div>
+
+    </div>
+
+  </form>
+</div>

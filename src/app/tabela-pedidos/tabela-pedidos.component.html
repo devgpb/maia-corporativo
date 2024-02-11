@@ -411,6 +411,15 @@
       Retroceder Selecionados</div>
 
       <div class="space"></div>
+
+      <div (click)="enviarPara()"
+      class=" enviar d-flex justify-content-center align-items-center"
+      >
+        Enviar Para...
+      </div>
+
+      <div class="space"></div>
+
       <div (click)="avancarPedidos()"
       *ngIf="canAvancar"
       class="avancar d-flex justify-content-center align-items-center"
@@ -453,7 +462,7 @@
           <i class="fa-solid fa-eye mini-icon bg-info text-white"
            (click)="abrirDetalhes(pedido)" ></i>
           <i class="fa-solid fa-pen mini-icon bg-success text-white separar"
-          (click)="abrirEdicao(pedido)" *ngIf="podeEditar()"></i>
+          (click)="abrirEdicao(pedido)" *ngIf="podeEditar"></i>
         </div>
         <div class="align-icon" >
           <!-- Apenas para rotas especiais -->

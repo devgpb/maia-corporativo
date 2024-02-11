@@ -18,13 +18,14 @@ nav {
   padding: 5px 0;
   background-image: url('../../assets/gridsolar3.png'); /* Caminho para a imagem otimizada */
   background-repeat: repeat; /* Faz a imagem se repetir */
+  background-size: cover;
   // background-size: cover;
 
 }
 
 img {
-	height: 50px;
-  margin-left: 5px;
+	height: 45px;
+  margin-left: 12px;
 }
 
 .navbar-brand {

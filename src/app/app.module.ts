@@ -20,6 +20,7 @@ import { DatePipe } from "@angular/common";
 import { NgChartsModule } from 'ng2-charts';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -43,6 +44,9 @@ import { PorcentagemDisplayComponent } from './components/porcentagem-display/po
 import { CriarContratoComponent } from './criar-contrato/criar-contrato.component';
 import { EquipamentosComponent } from './equipamentos/equipamentos.component';
 import { DimencionarProjetoComponent } from './dimencionar-projeto/dimencionar-projeto.component';
+import { DisplayPedidosComponent } from './display-pedidos/display-pedidos.component';
+import { EditComponent } from './display-pedidos/edit/edit.component';
+import { DatasComponent } from './display-pedidos/datas/datas.component';
 
 
 defineLocale("pt-br", ptBrLocale);
@@ -73,6 +77,9 @@ registerLocaleData(localePt);
     CriarContratoComponent,
     EquipamentosComponent,
     DimencionarProjetoComponent,
+    DisplayPedidosComponent,
+    EditComponent,
+    DatasComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,7 +94,7 @@ registerLocaleData(localePt);
     NgSelectModule,
     FullCalendarModule,
     NgChartsModule,
-    DragDropModule
+    DragDropModule,
   ],
   providers: [
     {

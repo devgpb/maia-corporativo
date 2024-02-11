@@ -1,0 +1,72 @@
+<app-modal #modal class="info ">
+  <app-edit
+  [detalhes]="pedido"
+  [rotaEspecial]="rotaEspecial"
+  [list]="listaPedidos"
+  (atualizarPedidos)="refazerTabela()"
+  ></app-edit>
+</app-modal>
+
+<div class="table-responsive">
+
+  <div class="w-100 details d-flex justify-content-center align-content-center ">
+
+    <div class="select-count" *ngIf="listaPedidosId.length > 0">
+      Pedidos Selecionados: {{listaPedidosId.length}}
+    </div>
+
+  </div>
+
+  <table datatable #pedidos [dtOptions]="dtOptionsPedidos" [dtTrigger]="dtTriggerPedidos"
+  class="row-border table-striped table-bordered w-100"  >
+  <thead>
+    <tr>
+    <th class="col-check">
+      <input class="check"
+      type="checkbox" [(ngModel)]="allSelected" (change)="selecionarTodos($event)">
+    </th>
+    <th class="col-id">Id</th>
+    <th class="col-nome">Nome</th>
+    <th class="col-data">Data</th>
+    <th class="col-obs">Obs</th>
+    <th class="col-status">Status</th>
+    <th class="col-acoes actions text-center">Ações</th>
+    <th style="display:none;"></th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let pedido of listaPedidos">
+    <td class="text-center">
+      <input class="check" type="checkbox" [(ngModel)]="pedido.selected"
+       (change)="atualizarSelecionados(pedido)"
+      > </td>
+    <td>{{pedido.idPedido}}</td>
+    <td>{{pedido.nomeCompleto}}</td>
+    <td class="text-center">{{ formatarData(pedido.dataPedido) }}</td>
+    <td >{{ pedido.observacao }}</td>
+    <td class="text-center">{{pedido.status}}</td>
+    <td class="text-center">
+       <!-- Apenas para rotas especiais -->
+       <i *ngIf="rotaEspecial"  class="icon bg-dark text-white separar"
+       (click)="liberarPedido(pedido)"
+       >Reativar</i>
+       <!-- Apenas para rotas especiais -->
+       <i *ngIf="canRetroceder && !rotaEspecial" class=" icon bg-primary text-white fa-solid fa-angles-left"
+       (click)="retrocederPedido(pedido)"
+       ></i>
+       <i class="icon fa-solid fa-pen mini-icon bg-success text-white separar"
+          (click)="abrirEdicao(pedido)" *ngIf="podeEditar"></i>
+
+       <i class="icon bg-danger text-white separar fa-solid fa-trash-arrow-up"
+       (click)="deletarPedido(pedido)"
+       ></i>
+       <i *ngIf="canAvancar && !rotaEspecial"  class="icon bg-primary text-white fa-solid fa-angles-right separar"
+       (click)="avancarPedido(pedido)"
+       ></i>
+    </td>
+    <td  style="display:none;">{{pedido.dataPedido}}</td>
+  </tr>
+  </tbody>
+  </table>
+</div>
+

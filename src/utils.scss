@@ -1,0 +1,38 @@
+$color-alpha: #1772FF;
+$color-form-highlight: #EEEEEE;
+
+table{
+  border-collapse: collapse;
+  border: none;
+  padding-top: 5px !important;
+
+  thead{
+    background:#000;
+    color: white;
+    tr{
+
+      th{
+        border: none;
+        text-align: center !important;
+      }
+    }
+  }
+
+
+  tbody{
+
+
+    tr{
+      height: 100%;
+    }
+
+    td{
+      border: none;
+      height: 100%;
+      &:nth-of-type(odd) {
+        background:$color-form-highlight;
+      }
+    }
+  }
+}
+

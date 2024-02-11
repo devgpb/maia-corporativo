@@ -1,0 +1,33 @@
+.col-check { width: 5%; }
+.col-id { width: 5%; }
+.col-nome { width: 25%; }
+.col-data { width: 10%; }
+.col-status { width: 10%; }
+.col-acoes { width: 20%; }
+
+.separar{
+  margin-left: 5px;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.checkbox-case{
+  margin: 0 auto;
+}
+
+.check{
+  transform: scale(1.7);
+}
+
+@media (max-width: 600px) {
+  .dataTable thead {
+  }
+  // Outras regras para melhorar a responsividade
+}
+
+
+
+

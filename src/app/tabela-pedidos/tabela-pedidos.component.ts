@@ -129,13 +129,13 @@ export class TabelaPedidosComponent implements OnChanges  {
   }
 
   ngOnInit(): void {
-    this.isAdm = this.user.cargo == Cargos.ADMINISTRADOR;
+    this.isAdm = this.user.cargo == Cargos.ADMINISTRADOR;this.user.cargo == Cargos.ADMINISTRADOR
     this.listaPedidosId = [];
     this.atualizarPedidos();
     this.reloadDisplay();
   }
 
-  podeEditar(){
+  get podeEditar(){
     if(this.isAdm) return true
 
     if([0,1,2].includes(this.indicePagina)) return true
@@ -239,8 +239,6 @@ export class TabelaPedidosComponent implements OnChanges  {
 
     this.router.navigate(['/pedidos/'+ pagina]);
   }
-
-
 
   objectKeys(obj: any) {
     return Object.keys(obj);
@@ -705,5 +703,39 @@ export class TabelaPedidosComponent implements OnChanges  {
     } else {
       console.log('cep é inválido devido a:', this.editForm.errors);
     }
+  }
+
+  enviarPara(){
+    // Serve para escolher qual estágio irá o grupo de pedidos
+
+    const opcoes = {
+      '1': 'Opção 1',
+      '2': 'Opção 2',
+      '3': 'Opção 3'
+      // Adicione mais opções conforme necessário
+    };
+
+
+    Swal.fire({
+      title: 'Selecione uma opção',
+      input: 'select',
+      inputOptions: Constantes.pedidos,
+      inputPlaceholder: 'Selecione',
+      showCancelButton: true,
+      inputValidator: (value) => {
+        return new Promise((resolve) => {
+          if (value === '') {
+            resolve('Você precisa selecionar uma opção');
+          } else {
+            resolve('');
+          }
+        });
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log('Opção selecionada:', result.value);
+        // Processe a opção selecionada usando result.value
+      }
+    });
   }
 }

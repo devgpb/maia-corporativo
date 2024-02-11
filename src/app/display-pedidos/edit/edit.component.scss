@@ -1,116 +1,3 @@
-.card-pedido{
-  border: 2px solid #65946e;
-  margin: 5px 10px;
-  border-radius: 18px;
-  overflow: hidden;
-  width: 300px;
-
-  .header{
-    display: flex;
-    background-color: #65946e;
-    color: white;
-    padding: 10px 0;
-    align-items: center;
-
-
-
-    .nome{
-      width: 100%;
-      text-align: center;
-      flex-grow: 1;
-      margin-left: -24px;
-    }
-
-    .checkbox {
-      margin-right: 10px; /* Espaço entre o checkbox e o texto */
-    }
-  }
-
-  .checkers{
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    min-height: 200px;
-
-    .id-pedido{
-      min-width: 10px;
-      padding: 0px 10px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .data{
-      font-weight: bold;
-    }
-    div{
-      padding: 5px 0;
-    }
-    .edit{
-      margin-bottom: 10px;
-
-    }
-    .align-icon{
-      margin-bottom: 5px;
-    }
-  }
-}
-
-
-.mini-icon{
-  padding: 8px 0;
-  border-radius: 6px;
-  text-align: center;
-  cursor: pointer;
-  width: 50px;
-}
-
-.icon{
-  padding: 8px 0;
-  border-radius: 6px;
-  text-align: center;
-  cursor: pointer;
-  width: 90px;
-}
-
-.id{
-  position: absolute;
-  top: 10px;
-  left: 10px;
-}
-
-.navegacao{
-  display: flex;
-  justify-content: center;
-  margin-top: 5px;
-  .holder{
-    width: 28px;
-    margin: 0px 20px;
-    i{
-      cursor: pointer;
-    }
-  }
-
-}
-
-.tabela-container{
-  overflow-x: scroll;
-}
-
-.apoio{
-  margin-bottom: 5px;
-}
-
-.cabecalho{
-  background-color: white;
-  min-height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .total{
-    font-size: 1.6rem;
-  }
-}
 
 .check-list{
   width: 100%;
@@ -158,49 +45,48 @@
   }
 }
 
-.info{
-  h2{
-    text-align: center;
-    margin-top: 30px !important;
+h2{
+  text-align: center;
+  margin-top: 30px !important;
 
+}
+
+.icon {
+  position: absolute !important;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  /* Outros estilos para o ícone, se necessário */
+}
+
+.details{
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  .separator{
+    width: 100%;
+    height: 0px;
+    margin: 15px 10px;
+    border: 1px solid black;
   }
 
-  .icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    /* Outros estilos para o ícone, se necessário */
-  }
+  .detail{
+    margin: 2px 5px;
+    // background-color: #81C784;
+    border-bottom: 2px solid #81C784;
+    padding: 10px 15px;
 
-  .details{
 
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    .separator{
-      width: 100%;
-      height: 0px;
-      margin: 15px 10px;
-      border: 1px solid black;
+    .label{
+      color: black;
     }
-
-    .detail{
-      margin: 2px 5px;
-      // background-color: #81C784;
-      border-bottom: 2px solid #81C784;
-      padding: 10px 15px;
-
-
-      .label{
-        color: black;
-      }
-      .content{
-        margin-left: 12px;
-      }
+    .content{
+      margin-left: 12px;
     }
   }
 }
+
 
 .navigation{
   width: 100%;
@@ -418,3 +304,16 @@ select {
   }
 }
 
+.navegacao{
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+  .holder{
+    width: 28px;
+    margin: 0px 20px;
+    i{
+      cursor: pointer;
+    }
+  }
+
+}

@@ -1,20 +1,15 @@
-import { Injectable, ApplicationRef, Injector, EmbeddedViewRef, ComponentRef, ViewContainerRef } from '@angular/core';
-import { ModalComponent } from '../../modal/modal.component';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService {
 
+  constructor() {}
 
-  constructor(
-    private appRef: ApplicationRef,
-    private injector: Injector
-  ) {
-  }
-
-  private modalVisibility = new Subject<boolean>();
+  // Inicialize com um valor falso, supondo que o modal esteja escondido inicialmente
+  private modalVisibility = new BehaviorSubject<boolean>(false);
   modalVisibility$ = this.modalVisibility.asObservable();
 
   show() {
@@ -23,5 +18,10 @@ export class ModalService {
 
   hide() {
     this.modalVisibility.next(false);
+  }
+
+  toggle() {
+    // Pega o valor atual e inverte-o
+    this.modalVisibility.next(!this.modalVisibility.value);
   }
 }
