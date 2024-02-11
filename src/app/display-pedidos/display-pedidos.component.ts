@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter,  SimpleChanges, OnChanges, ViewChild, OnInit } from '@angular/core';
 import { PedidosService } from '../services/pedidos/pedidos.service';
 import { DataTableDirective } from 'angular-datatables';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject, delay, timeInterval, timer } from 'rxjs';
 import { AuthService } from '../services/auth/auth.service';
 import { Router } from '@angular/router';
 import * as Constantes from "../constants";
@@ -77,6 +77,9 @@ export class DisplayPedidosComponent implements OnInit, OnChanges{
   }
 
   getPedidos(){
+    this.loading = true
+    this.listaPedidos = []
+
     this.pedidosService.getPedidosByStatus(this.status,this.isAdm ? undefined : this.user.idUsuario ).subscribe(pedidos =>{
       this.indicePagina = Constantes.rotasPedidos.indexOf(this.status)
       this.totalPaginas = Constantes.rotasPedidos.length;
@@ -247,9 +250,19 @@ export class DisplayPedidosComponent implements OnInit, OnChanges{
     });
   }
 
+  apagarTabela(){
+    if (this.dataTablePedidos?.dtInstance) {
+      this.dataTablePedidos.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+      });
+      this.dtTriggerPedidos.complete();
+
+    }
+  }
+
   ngOnChanges(changes: SimpleChanges) {
 
-    if (changes['status']) {
+    if (changes['status'] && changes['status'].currentValue != 'criar') {
       this.refazerTabela()
       this.allSelected = false
       this.listaPedidosId = [];
@@ -257,14 +270,6 @@ export class DisplayPedidosComponent implements OnInit, OnChanges{
   }
 
   ngOnDestroy(): void {
-    // Destrói a instância da DataTable para evitar vazamentos de memória
-    if (this.dataTablePedidos?.dtInstance) {
-      this.dataTablePedidos.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
-      });
-    }
-    // Completa o Subject para garantir que não haja subscrições pendentes
-    this.dtTriggerPedidos.complete();
   }
 
   toggleModal() {

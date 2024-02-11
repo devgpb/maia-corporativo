@@ -23,11 +23,31 @@
 }
 
 @media (max-width: 600px) {
-  .dataTable thead {
-  }
+
   // Outras regras para melhorar a responsividade
 }
 
 
 
 
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 200px; /* Ajuste a altura conforme necessário */
+}
+
+.loading-circle {
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-top: 5px solid blue; /* Cor do círculo */
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
