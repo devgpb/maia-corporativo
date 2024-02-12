@@ -61,6 +61,12 @@ export class PedidosService {
 		return this.http.post<boolean>(`${environment.apiURL}/pedidos/avancarLista`, {lista: listaIds})
 	}
 
+  public handleMultiplePedidos(listaIds: Array<number | string>, acao: string, status = undefined): Observable<boolean>{
+    return this.http.post<boolean>(`${environment.apiURL}/pedidos/multiplos`,
+      {lista: listaIds, acao: acao, status: status}
+    );
+  }
+
   public retrocederPedidos(listaIds: Array<number>): Observable<boolean>{
 		return this.http.post<boolean>(`${environment.apiURL}/pedidos/retrocederLista`, {lista: listaIds})
 	}

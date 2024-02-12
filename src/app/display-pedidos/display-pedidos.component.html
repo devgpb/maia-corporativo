@@ -11,11 +11,43 @@
 
   <div class="w-100 details d-flex justify-content-center align-content-center ">
 
-    <div class="select-count" *ngIf="listaPedidosId.length > 0">
-      Pedidos Selecionados: {{listaPedidosId.length}}
+    <div class="select-count d-flex flex-column  justify-content-center align-content-center" *ngIf="listaPedidosId.length > 0">
+      <span class="w-100 text-center counter">
+        Pedidos Selecionados: {{listaPedidosId.length}}
+      </span>
+
+      <div class="choices">
+
+        <i  class="icon  bg-primary  text-white fa-solid fa-angles-left separar"
+        (click)="handleMultiplosPedidos('mudar')"
+        ><span>RETROCEDER PEDIDOS</span> </i>
+
+        <i  class="icon bg-danger text-white fa-solid fa-trash-arrow-up separar"
+        (click)="handleMultiplosPedidos('apagar')"
+        ><span>APAGAR PEDIDOS</span></i>
+
+        <i  class="icon bg-primary text-white fa-solid fa-angles-right separar"
+       (click)="handleMultiplosPedidos('avancar')"
+       ><span>AVANÇAR PEDIDOS</span></i>
+
+      </div>
+      <div class="choices d-flex w-100 justify-content-center align-items-center  ">
+        <span class="label">Mandar Para Status:</span>
+
+        <ng-select class="ml-2" [items]="rotas"
+           bindLabel="label"
+           bindValue="value"
+           placeholder="Selecione uma rota"
+           [(ngModel)]="statusSelecionado">
+        </ng-select>
+
+        <i  class="icon arrow text-primary  fa-solid fa-circle-arrow-right separar"
+       (click)="handleMultiplosPedidos('mudar', true)"
+       ></i>
+      </div>
     </div>
 
-  </div>
+    </div>
 
   <table datatable #pedidos [dtOptions]="dtOptionsPedidos" [dtTrigger]="dtTriggerPedidos"
   class="row-border table-striped table-bordered w-100"  >

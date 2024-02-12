@@ -16,6 +16,8 @@ import { formatDate } from '@angular/common';
 import * as moment from 'moment-timezone';
 import { ModalService } from '../services/modal/modal.service';
 
+import { todasRotas } from '../constants';
+
 defineLocale('pt-br', ptBrLocale);
 
 @Component({
@@ -44,16 +46,15 @@ export class DisplayPedidosComponent implements OnInit, OnChanges{
   public totalPaginas: number;
   public listaPedidosId: Array<number | string> = []
   public pedido: IPedido
-
+  public rotas = todasRotas;
+  public statusSelecionado: string;
 
   constructor(
     private authService: AuthService,
     private modalService: ModalService,
     private pedidosService: PedidosService,
   ){
-
-
-    this.user = authService.getUser()
+    this.user = this.authService.getUser()
     this.isAdm = this.user.cargo == Cargos.ADMINISTRADOR
   }
 
@@ -115,6 +116,28 @@ export class DisplayPedidosComponent implements OnInit, OnChanges{
         Swal.fire({
           icon: "error",
           title: "Pedido Não Avançado!",
+        });
+      }
+    })
+  }
+
+  handleMultiplosPedidos(action: string, isStatus: boolean = undefined){
+
+    const status = isStatus ? this.statusSelecionado : undefined
+    console.log(status)
+    this.pedidosService.handleMultiplePedidos(this.listaPedidosId, action, status).subscribe(checker =>{
+      if(checker){
+        Swal.fire({
+          icon: "success",
+          title: "Pedidos Atualizados!",
+          confirmButtonColor: "#3C58BF"
+        });
+        this.carregarTabela()
+        this.listaPedidosId = [];
+      }else{
+        Swal.fire({
+          icon: "error",
+          title: "Operação Não Realizada, Favor Contatar Suporte!",
         });
       }
     })
@@ -231,6 +254,8 @@ export class DisplayPedidosComponent implements OnInit, OnChanges{
       }
     });
   }
+
+
 
   //  UTILS
   formatarData(dataString: string): string {

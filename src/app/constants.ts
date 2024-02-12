@@ -27,6 +27,8 @@ export const rotasPedidos =
 export const rotasEspeciais =
 ["standby","perdidos"]
 
+export const todasRotas = [...pedidos, "STANDBY", "PERDIDOS"]
+
 export const dtlanguage = {
   processing: "Processando...",
   search: "Pesquisar:",

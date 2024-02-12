@@ -47,6 +47,35 @@
   animation: spin 2s linear infinite;
 }
 
+.select-count{
+
+  .counter{
+    font-size: 1.8rem;
+  }
+
+  .choices{
+    margin-bottom: 5px;
+
+    .label{
+      margin-right: 5px;
+    }
+    
+    .arrow{
+      font-size: 1.5rem;
+    }
+
+    i span{
+      font-family: "Roboto Light", "Roboto", Helvetica, Arial, sans-serif;
+      padding-left: 10px;
+    }
+  }
+}
+
+
+.choices i {
+  vertical-align: bottom;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
