@@ -33,6 +33,7 @@ export class CriarContratoComponent implements OnInit {
   ){
 
   }
+
   contrato = {
     numeroContrato : "",
     celular: "",
@@ -82,6 +83,18 @@ export class CriarContratoComponent implements OnInit {
       this.nivelPagamentoVista = JSON.parse(nivelPagamentoVista);
 
     }
+
+    const savedPedido = localStorage.getItem('pedido');
+    if (savedPedido) {
+      const pedido = JSON.parse(savedPedido);
+      this.contrato.nomeContratante = pedido.nomeCompleto;
+      this.contrato.celular = pedido.celular;
+      this.contrato.email = pedido.email;
+      this.contrato.cidade = pedido.cidade;
+      this.contrato.enderecoInstalacao = pedido.endereco;
+      this.contrato.cpfContratante = "";
+      this.contrato.enderecoInstalacao = `${pedido.rua} ${pedido.cep}`;
+    }
   }
 
   saveContrato() {
@@ -91,8 +104,29 @@ export class CriarContratoComponent implements OnInit {
 
   }
 
-  submitForm() {
+  formatToGo(value: any) {
+    // Remove tudo o que não é dígito
+    let num = value.replace(/\D/g, '');
 
+    // Converte para número para remover zeros à esquerda, depois volta para string
+    num = parseInt(num, 10).toString();
+
+    // Reaplica a formatação de milhares
+    // Esta expressão regular insere pontos como separadores de milhar
+    num = num.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    return num == "NaN" ? "" : num;
+  }
+
+  formatNumbers() {
+    const contrato = this.contrato;
+    contrato.pagamentoTotal = this.formatToGo(contrato.pagamentoTotal)
+    contrato.pagamentoP1 = this.formatToGo(contrato.pagamentoP1)
+    contrato.pagamentoP2 = this.formatToGo(contrato.pagamentoP2)
+    contrato.pagamentoP3 = this.formatToGo(contrato.pagamentoP3)
+  }
+
+  submitForm() {
+    this.formatNumbers()
     this.automacoesService.getContratoWord(this.tipoContrato,this.contrato).subscribe(response => {
       Swal.fire({
         icon: "success",
@@ -149,13 +183,18 @@ export class CriarContratoComponent implements OnInit {
 
   applyNumberMask(event: any): void {
     let value = event.target.value;
-    value = value.replace(/\D/g, ''); // Remove tudo o que não for dígito
+    // Remove tudo o que não é dígito
+    value = value.replace(/\D/g, '');
 
-    // Adicione a máscara de milhares (adicionando "." a cada 3 casas decimais)
-    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    // Converte para número para remover zeros à esquerda, depois volta para string
+    value = parseInt(value, 10).toString();
+
+    // Reaplica a formatação de milhares
+    // Esta expressão regular insere pontos como separadores de milhar
+    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
 
     event.target.value = value;
-  }
+}
 
 
   selecionaTipoContrato(valor: string){

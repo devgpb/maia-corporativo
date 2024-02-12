@@ -3,20 +3,16 @@ import { PedidosService } from '../services/pedidos/pedidos.service';
 import { DataTableDirective } from 'angular-datatables';
 import { BehaviorSubject, Subject, delay, timeInterval, timer } from 'rxjs';
 import { AuthService } from '../services/auth/auth.service';
-import { Router } from '@angular/router';
 import * as Constantes from "../constants";
 import { IPedido } from '../interfaces/IPedido';
 import Swal from 'sweetalert2';
 import { Cargos, IUser } from '../interfaces/IUser';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { ptBrLocale } from 'ngx-bootstrap/chronos';
 import { defineLocale } from 'ngx-bootstrap/chronos';
-import { formatDate } from '@angular/common';
-import * as moment from 'moment-timezone';
 import { ModalService } from '../services/modal/modal.service';
 
 import { todasRotas } from '../constants';
+import { StorageService } from '../services/storage/storage.service';
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -53,6 +49,7 @@ export class DisplayPedidosComponent implements OnInit, OnChanges{
     private authService: AuthService,
     private modalService: ModalService,
     private pedidosService: PedidosService,
+    private storageService: StorageService
   ){
     this.user = this.authService.getUser()
     this.isAdm = this.user.cargo == Cargos.ADMINISTRADOR
@@ -134,6 +131,7 @@ export class DisplayPedidosComponent implements OnInit, OnChanges{
         });
         this.carregarTabela()
         this.listaPedidosId = [];
+        this.statusSelecionado = undefined
       }else{
         Swal.fire({
           icon: "error",
@@ -299,6 +297,10 @@ export class DisplayPedidosComponent implements OnInit, OnChanges{
 
   toggleModal() {
     this.modalService.toggle();
+  }
+
+  salvarPedidoStorage(pedido: IPedido){
+    this.storageService.setItem('pedido', JSON.stringify(pedido))
   }
 
   get podeEditar(){

@@ -43,7 +43,7 @@ export class DimencionarProjetoComponent implements OnInit {
 
     const potenciaInversorW = this.extrairNumero(inversorQ.potencia) * 1000; // Convertendo de kW para W, se necessário
     const potenciaPlacaW = this.extrairNumero(placaQ.potencia);
-    const placasMaximas = Math.ceil(potenciaInversorW / potenciaPlacaW);
+    const placasMaximas = Math.floor(potenciaInversorW / potenciaPlacaW);
 
     this.dimensionamento = {
       placasMaximas : placasMaximas,
