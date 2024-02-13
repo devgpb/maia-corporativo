@@ -132,25 +132,24 @@ export class CriarContratoComponent implements OnInit {
 
   submitForm() {
     this.formatNumbers()
-    console.log(this.contrato.modulos)
-    // this.automacoesService.getContratoWord(this.tipoContrato,this.contrato).subscribe(response => {
-    //   Swal.fire({
-    //     icon: "success",
-    //     title: "Seu Contrato Foi Gerado!",
-    //     text: "Recomenda-se verificar os dados!",
-    //     confirmButtonColor: "#3C58BF"
-    //   });
-    //   this.contrato.numeroContrato = (Number(this.contrato.numeroContrato) + 1).toString()
-    //   this.saveContrato();
-    // }, error => {
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Há algum campo faltando!",
-    //     text: "Por favor, revise os campos ou entre em contato!",
-    //     confirmButtonColor: "#3C58BF"
-    //   });
-    //   console.error('Erro na requisição:', error);
-    // });
+    this.automacoesService.getContratoWord(this.tipoContrato,this.contrato).subscribe(response => {
+      Swal.fire({
+        icon: "success",
+        title: "Seu Contrato Foi Gerado!",
+        text: "Recomenda-se verificar os dados!",
+        confirmButtonColor: "#3C58BF"
+      });
+      this.contrato.numeroContrato = (Number(this.contrato.numeroContrato) + 1).toString()
+      this.saveContrato();
+    }, error => {
+      Swal.fire({
+        icon: "error",
+        title: "Há algum campo faltando!",
+        text: "Por favor, revise os campos ou entre em contato!",
+        confirmButtonColor: "#3C58BF"
+      });
+      console.error('Erro na requisição:', error);
+    });
   }
 
   set setQuantModulos(value: string) {
