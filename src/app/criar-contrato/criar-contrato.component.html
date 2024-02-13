@@ -86,26 +86,27 @@
       <div class="" style="width: 550px;">
       <label for="modulos" class="form-label">Módulos</label>
 
-      <ng-select class=" selecter" [(ngModel)]="contrato.modulos" [items]="equipamentos.placas" bindLabel="nome" bindValue="nome" [placeholder]="contrato.modulos || 'Selecione um Modulo'" name="placas">
+      <ng-select class=" selecter" [(ngModel)]="contrato.modulos" [items]="equipamentos.placas" bindLabel="nome" bindValue="nome" [placeholder]="contrato.modulos || 'Selecione um Modulo'" name="modulos" >
       </ng-select>
-
 
 
       </div>
       <div style="width: 60px; margin-left: 2px">
         <label for="quantModulos" class="form-label">Quantidade</label>
-        <input type="text" class="form-control" id="quantModulos" name="quantModulos" [(ngModel)]="contrato.quantModulos" (keydown)="validarNumero($event)" required>
+        <input type="text" class="form-control" id="quantModulos" name="quantModulos" [(ngModel)]="contrato.quantModulos" (keydown)="validarNumero($event)" (keyup)="calcularPotenciaTotal()" [value]="contrato.quantModulos" required>
       </div>
     </div>
 
     <div class="line d-flex w-100 justify-content-center">
       <div class="" style="width: 550px;">
-      <label for="suporte" class="form-label">Suporte</label>
-      <input type="text" class="form-control" id="suporte" name="suporte" [(ngModel)]="contrato.suporte" required placeholder="Suporte">
+      <label for="suporte" class="form-label">Suportes</label>
+      <ng-select class=" selecter" [(ngModel)]="contrato.suporte" [items]="tiposSuportes" bindLabel="nome" bindValue="nome" [placeholder]="contrato.suporte || 'Selecione um Modulo'" name="placas" >
+      </ng-select>
+
       </div>
       <div style="width: 60px; margin-left: 2px">
         <label for="quantSuporte" class="form-label">Quantidade</label>
-        <input type="text" class="form-control" id="quantSuporte" name="quantSuporte" [(ngModel)]="contrato.quantSuporte" (keydown)="validarNumero($event)" required>
+        <input type="text" class="form-control" id="quantSuporte" name="quantSuporte" [value]="contrato.quantSuporte" disabled>
       </div>
     </div>
 

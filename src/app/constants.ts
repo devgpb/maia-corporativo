@@ -52,3 +52,15 @@ export const dtlanguage = {
   }
 }
 
+export const mapaEquipamentos = {
+  placa: "marca modelo potencia",
+  inversor:"marca modelo corrente potencia"
+}
+
+export const tiposSuportes = [
+  "FIBROCIMENTO",
+  "SOLO",
+  "CERÂMICO",
+  "METÁLICO"
+]
+

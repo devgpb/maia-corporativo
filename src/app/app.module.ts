@@ -34,7 +34,6 @@ import { NovoUserComponent } from './novo-user/novo-user.component';
 import { CriarPedidoComponent } from './criar-pedido/criar-pedido.component';
 import { MeusRelatoriosComponent } from './meus-relatorios/meus-relatorios.component';
 import { PesquisaPipe } from './pipes/pesquisa/pesquisa.pipe';
-import { TabelaPedidosComponent } from './tabela-pedidos/tabela-pedidos.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
 import { RelatorioVendasComponent } from './relatorio-vendas/relatorio-vendas.component';
 import { VisualValidatorComponent } from './components/visual-validator/visual-validator.component';
@@ -66,7 +65,6 @@ registerLocaleData(localePt);
     CriarPedidoComponent,
     MeusRelatoriosComponent,
     PesquisaPipe,
-    TabelaPedidosComponent,
     PedidosComponent,
     RelatorioVendasComponent,
     VisualValidatorComponent,

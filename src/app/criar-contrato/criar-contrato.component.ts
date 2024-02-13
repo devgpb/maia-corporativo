@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AutomacoesService } from '../services/automacoes/automacoes.service';
 import { EquipamentosService } from '../services/equipamentos/equipamento.service';
 import Swal from 'sweetalert2';
+import { mapaEquipamentos, tiposSuportes } from '../constants';
+
 
 import * as moment from 'moment';
 // Importar o locale em português
@@ -20,8 +22,8 @@ export class CriarContratoComponent implements OnInit {
   tipoContrato = undefined;
   // O nível de pagamento serve para controlar os inputs, baseado na forma de pagamento a vista
   nivelPagamentoVista = 0
-
-
+  mapaEquipamentos = mapaEquipamentos
+  tiposSuportes = tiposSuportes
   equipamentos: any = {
     inversores: [],
     placas: []
@@ -46,7 +48,7 @@ export class CriarContratoComponent implements OnInit {
     enderecoInstalacao: "",
     inversores: null,
     modulos: null,
-    suporte: "",
+    suporte: null,
     pagamentoTotal: "",
     pagamentoP1: "",
     pagamentoP2: "",
@@ -56,6 +58,8 @@ export class CriarContratoComponent implements OnInit {
     quantSuporte: ""
   };
 
+
+
   ngOnInit(): void {
     this.equipamentosService.getEquipamentos().subscribe(equip =>{
       this.equipamentos = equip
@@ -64,6 +68,7 @@ export class CriarContratoComponent implements OnInit {
     moment.locale('pt-br');
 
     this.loadContrato()
+    console.log(this.contrato.modulos,this.contrato.quantModulos)
 
     this.contrato.data = moment().format('LL');
   }
@@ -127,24 +132,66 @@ export class CriarContratoComponent implements OnInit {
 
   submitForm() {
     this.formatNumbers()
-    this.automacoesService.getContratoWord(this.tipoContrato,this.contrato).subscribe(response => {
-      Swal.fire({
-        icon: "success",
-        title: "Seu Contrato Foi Gerado!",
-        text: "Recomenda-se verificar os dados!",
-        confirmButtonColor: "#3C58BF"
-      });
-      this.contrato.numeroContrato = (Number(this.contrato.numeroContrato) + 1).toString()
-      this.saveContrato();
-    }, error => {
-      Swal.fire({
-        icon: "error",
-        title: "Há algum campo faltando!",
-        text: "Por favor, revise os campos ou entre em contato!",
-        confirmButtonColor: "#3C58BF"
-      });
-      console.error('Erro na requisição:', error);
-    });
+    console.log(this.contrato.modulos)
+    // this.automacoesService.getContratoWord(this.tipoContrato,this.contrato).subscribe(response => {
+    //   Swal.fire({
+    //     icon: "success",
+    //     title: "Seu Contrato Foi Gerado!",
+    //     text: "Recomenda-se verificar os dados!",
+    //     confirmButtonColor: "#3C58BF"
+    //   });
+    //   this.contrato.numeroContrato = (Number(this.contrato.numeroContrato) + 1).toString()
+    //   this.saveContrato();
+    // }, error => {
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Há algum campo faltando!",
+    //     text: "Por favor, revise os campos ou entre em contato!",
+    //     confirmButtonColor: "#3C58BF"
+    //   });
+    //   console.error('Erro na requisição:', error);
+    // });
+  }
+
+  set setQuantModulos(value: string) {
+    this.contrato.quantModulos = value;
+    this.contrato.quantSuporte = value;
+  }
+
+  transformarEquipamento(tipo, valorString) {
+    // Verificar se o tipo de equipamento existe no mapa
+    if (!this.mapaEquipamentos[tipo]) {
+        throw new Error(`Tipo de equipamento desconhecido: ${tipo}`);
+    }
+
+    // Dividir a string de propriedades com base nos espaços
+    const propriedades = valorString.split(' ');
+
+    // Dividir a string de chaves do mapaEquipamentos com base nos espaços
+    const chaves = this.mapaEquipamentos[tipo].split(' ');
+
+    // Verificar se a quantidade de propriedades corresponde
+    if (propriedades.length !== chaves.length) {
+        throw new Error(`Quantidade de propriedades não corresponde para o tipo ${tipo}`);
+    }
+
+    // Criar o objeto de equipamento com as chaves e valores correspondentes
+    let objetoEquipamento = {};
+    for (let i = 0; i < chaves.length; i++) {
+        objetoEquipamento[chaves[i]] = propriedades[i];
+    }
+
+    return objetoEquipamento;
+  }
+
+  calcularPotenciaTotal() {
+    // Quantidade de modelos x pot modulos. ex: (550 x 2) -> 1.100 -> 1,1 kW
+    const moduloPotencia = (this.transformarEquipamento("placa", this.contrato.modulos) as any).potencia;
+    const potencia  = parseFloat(moduloPotencia.replace(/[^0-9,]/g, '').replace(',', '.'));
+    const resultado = Number(this.contrato.quantModulos) * potencia;
+    const resultadoEmKW = resultado / 1000;
+    console.log(moduloPotencia, resultado, resultadoEmKW)
+    this.contrato.potenciaGerador = resultadoEmKW.toFixed(1);
   }
 
   applyCpfMask(event: any): void {
@@ -194,7 +241,7 @@ export class CriarContratoComponent implements OnInit {
     value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
 
     event.target.value = value;
-}
+  }
 
 
   selecionaTipoContrato(valor: string){

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EquipamentosService } from '../services/equipamentos/equipamento.service';
+import { mapaEquipamentos } from '../constants';
 
 @Component({
   selector: 'app-dimencionar-projeto',
@@ -8,10 +9,7 @@ import { EquipamentosService } from '../services/equipamentos/equipamento.servic
 })
 export class DimencionarProjetoComponent implements OnInit {
 
-  mapaEquipamentos = {
-    placa: "marca modelo potencia",
-    inversor:"marca modelo corrente potencia"
-  }
+  mapaEquipamentos = mapaEquipamentos
 
   inversor = null
   placa = null
