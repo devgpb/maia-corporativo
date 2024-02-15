@@ -68,8 +68,6 @@ export class CriarContratoComponent implements OnInit {
     moment.locale('pt-br');
 
     this.loadContrato()
-    console.log(this.contrato.modulos,this.contrato.quantModulos)
-
     this.contrato.data = moment().format('LL');
   }
 
@@ -152,9 +150,10 @@ export class CriarContratoComponent implements OnInit {
     });
   }
 
-  set setQuantModulos(value: string) {
-    this.contrato.quantModulos = value;
-    this.contrato.quantSuporte = value;
+  setQuantModulos(event: any) {
+    const valor = event.target.value;
+    this.contrato.quantModulos = valor;
+    this.contrato.quantSuporte = valor;
   }
 
   transformarEquipamento(tipo, valorString) {
@@ -189,7 +188,6 @@ export class CriarContratoComponent implements OnInit {
     const potencia  = parseFloat(moduloPotencia.replace(/[^0-9,]/g, '').replace(',', '.'));
     const resultado = Number(this.contrato.quantModulos) * potencia;
     const resultadoEmKW = resultado / 1000;
-    console.log(moduloPotencia, resultado, resultadoEmKW)
     this.contrato.potenciaGerador = resultadoEmKW.toFixed(1);
   }
 
