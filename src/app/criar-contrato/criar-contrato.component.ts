@@ -109,15 +109,19 @@ export class CriarContratoComponent implements OnInit {
 
   formatToGo(value: any) {
     // Remove tudo o que não é dígito
-    let num = value.replace(/\D/g, '');
+    if(value){
+      let num = value.replace(/\D/g, '');
 
-    // Converte para número para remover zeros à esquerda, depois volta para string
-    num = parseInt(num, 10).toString();
+      // Converte para número para remover zeros à esquerda, depois volta para string
+      num = parseInt(num, 10).toString();
 
-    // Reaplica a formatação de milhares
-    // Esta expressão regular insere pontos como separadores de milhar
-    num = num.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-    return num == "NaN" ? "" : num;
+      // Reaplica a formatação de milhares
+      // Esta expressão regular insere pontos como separadores de milhar
+      num = num.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+      return num == "NaN" ? "" : num;
+    }
+
+    return ""
   }
 
   formatNumbers() {
