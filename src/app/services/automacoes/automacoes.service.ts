@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, tap } from 'rxjs';
+import { Observable, of, tap, throwError } from 'rxjs';
 import { HttpClient, HttpParams, HttpResponse } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { IEvento } from 'src/app/interfaces/IEvento';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,21 @@ export class AutomacoesService {
             // Lidar com o erro ou situação em que não há corpo na resposta.
           }
         })
+      );
+  }
+
+  public getProcuracaoWord(info: any): Observable<HttpResponse<Blob>> {
+
+    return this.http.post(`${environment.apiURL}/templates/procuracao`, info, { observe: 'response', responseType: 'blob' })
+      .pipe(
+        tap((response: HttpResponse<Blob>) => {
+          let filename = this.extractFilename(response);
+          if (response.body) {
+            this.triggerDownload(response.body, filename);
+          } else {
+            // Lidar com o erro ou situação em que não há corpo na resposta.
+          }
+        }),
       );
   }
 

@@ -1,0 +1,49 @@
+.input{
+  padding: 12px 10px;
+}
+
+.space{
+  width: 10px;
+  height: 1px;
+}
+
+.checkers{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+
+  .form-check{
+    margin-right: 10px;
+
+
+    .form-check-input{
+      scale: 1.5;
+    }
+  }
+}
+
+.actions{
+  margin: 12px;
+}
+
+
+// Responsive
+@media (max-width: 768px) {
+  .checkers{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+
+    .form-check{
+      margin-right: 25px;
+
+
+      .form-check-input{
+        scale: 1.5;
+      }
+    }
+  }
+}
+

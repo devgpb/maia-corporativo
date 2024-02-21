@@ -46,6 +46,7 @@ import { DimencionarProjetoComponent } from './dimencionar-projeto/dimencionar-p
 import { DisplayPedidosComponent } from './display-pedidos/display-pedidos.component';
 import { EditComponent } from './display-pedidos/edit/edit.component';
 import { DatasComponent } from './display-pedidos/datas/datas.component';
+import { CriarProcuracaoComponent } from './criar-procuracao/criar-procuracao.component';
 
 
 defineLocale("pt-br", ptBrLocale);
@@ -78,6 +79,7 @@ registerLocaleData(localePt);
     DisplayPedidosComponent,
     EditComponent,
     DatasComponent,
+    CriarProcuracaoComponent,
   ],
   imports: [
     BrowserModule,
