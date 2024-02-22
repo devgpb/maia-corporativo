@@ -8,10 +8,23 @@
         <input type="text" class="form-control" id="nomeCliente" name="nomeCliente" [(ngModel)]="procuracao.nomeCliente" style="width:350px" placeholder="Nome do cliente">
       </div>
 
-      <div class="input">
-        <label for="cpfCliente" class="form-label">CPF do Cliente</label>
-        <input type="text" class="form-control" id="cpfCliente" name="cpfCliente" [(ngModel)]="procuracao.cpfCliente" placeholder="000.000.000-00"
-        (input)="applyCpfMask($event)">
+      <div class="input d-flex  justify-content-center flex-column  ">
+
+        <div *ngIf="identificacao == 'cpf' " @onEnter>
+          <label for="cpfCliente" class="form-label">CPF do Cliente</label>
+          <input type="text" class="form-control" id="cpfCliente" name="cpfCliente" [(ngModel)]="procuracao.cpfCliente" placeholder="000.000.000-00"
+          (input)="applyCpfMask($event)">
+        </div>
+
+        <div *ngIf="identificacao == 'rg' " @onEnter>
+          <label for="rgCliente" class="form-label">RG do Cliente</label>
+          <input type="text" class="form-control" id="rgCliente" name="rgCliente" [(ngModel)]="procuracao.rgCliente" (input)="applyRgMask($event)"
+          placeholder="00.000.000/0000-00">
+        </div>
+
+        <button *ngIf="identificacao == 'cpf' " (click)="changeIdentificacao('rg')" @onEnter>Usar RG</button>
+        <button *ngIf="identificacao == 'rg' " (click)="changeIdentificacao('cpf')" @onEnter>Usar CPF</button>
+
       </div>
 
       <div class="input">
