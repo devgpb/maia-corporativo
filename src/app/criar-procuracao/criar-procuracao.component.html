@@ -1,8 +1,13 @@
-<h2 class="w-100 text-center">- Criar Procuração -</h2>
+<h2 class="w-100 text-center mb-3"> Criar Procuração </h2>
 
 
-<div class="form container d-flex flex-wrap   ">
-  <div class="inputs w-100 d-flex flex-wrap justify-content-center">
+<div class="form container d-flex flex-column   justify-content-center   ">
+
+  <div class="card">
+    <div class="card-header">
+      <span>Dados Pessoais Cliente</span>
+    </div>
+    <div class="inputs w-100 d-flex flex-wrap justify-content-center">
       <div class="input">
         <label for="nomeCliente" class="form-label">Nome do Cliente</label>
         <input type="text" class="form-control" id="nomeCliente" name="nomeCliente" [(ngModel)]="procuracao.nomeCliente" style="width:350px" placeholder="Nome do cliente">
@@ -42,9 +47,14 @@
       </div>
 
 
+    </div>
   </div>
 
-  <div class="inputs w-100 d-flex flex-wrap justify-content-center">
+  <div class="card">
+    <div class="card-header">
+      <span>Localização do Cliente</span>
+    </div>
+    <div class="inputs w-100 d-flex flex-wrap justify-content-center">
 
       <div class="input">
         <label for="cepCliente" class="form-label">CEP do Cliente</label>
@@ -61,16 +71,24 @@
         <input type="text" class="form-control" id="estadoCliente" name="estadoCliente" [(ngModel)]="procuracao.estadoCliente" placeholder="Estado do cliente">
       </div>
 
+    </div>
   </div>
 
-  <div class="inputs w-100 d-flex flex-wrap justify-content-center">
-    <div class="line">
-      <div class="input">
-        <label for="cidadeDocumento" class="form-label">Cidade do Documento</label>
-        <input type="text" class="form-control" id="cidadeDocumento" name="cidadeDocumento" [(ngModel)]="procuracao.cidadeDocumento" placeholder="Cidade de Criação do documento">
+  <div class="card">
+    <div class="card-header">
+      <span>Detalhes Documento</span>
+    </div>
+
+    <div class="inputs w-100 d-flex flex-wrap justify-content-center">
+      <div class="line">
+        <div class="input">
+          <label for="cidadeDocumento" class="form-label">Cidade do Documento</label>
+          <input type="text" class="form-control" id="cidadeDocumento" name="cidadeDocumento" [(ngModel)]="procuracao.cidadeDocumento" placeholder="Cidade de Criação do documento">
+        </div>
       </div>
     </div>
   </div>
+
 
   <!-- submit -->
   <div class="actions w-100 d-flex flex-wrap justify-content-center">

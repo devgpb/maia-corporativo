@@ -31,7 +31,7 @@ export class CriarProcuracaoComponent implements OnInit{
 
   procuracao = {
     nomeCliente : "",
-    isCasado: "",
+    isCasado: false,
     cpfCliente: "",
     rgCliente: "",
     ruaCliente: "",
@@ -39,6 +39,7 @@ export class CriarProcuracaoComponent implements OnInit{
     cepCliente: "",
     cidadeDocumento: "",
     identificacao: "",
+    distribuidora: "",
   };
 
   constructor(

@@ -6,6 +6,11 @@
   margin-bottom: 50px;
 }
 
+.card{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  margin-bottom: 20px;
+}
+
 .space{
   width: 10px;
   height: 1px;
@@ -72,3 +77,43 @@
     height: 100%;
   }
 }
+
+.big-input{
+  width: 500px;
+}
+
+.overflow{
+  text-overflow: ellipsis; 
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .big-input{
+    max-width: 100% !important;
+  }
+
+  .line{
+    width: 100%;
+  }
+
+  .pagamento-area{
+    position: relative;
+    width: 100%;
+    height: 500px;
+
+    >div{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .card{
+      margin: 6px 3px;
+      height: 140px;
+      width: 190px;
+    }
+  }
+}
+
