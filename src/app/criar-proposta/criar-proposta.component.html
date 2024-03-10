@@ -1,0 +1,147 @@
+<div class="container  w-100">
+
+  <app-modal #modal class="info  " @fadeIn>
+
+    <div class="modal-content">
+      <div class="modal-header w-100">
+        <h3 class="modal-title w-100 text-center text-warning" *ngIf="loading"  >Gerando Proposta...</h3>
+
+        <h3 class="modal-title w-100 text-center text-success" *ngIf="success" >Proposta Gerada</h3>
+
+        <h3 class="modal-title w-100 text-center text-danger" *ngIf="!loading && !success"  >Erro ao gerar proposta</h3>
+
+      </div>
+
+      <div class="w-100 d-flex justify-content-center">
+
+        <div class="loading-container" *ngIf="loading"  >
+          <div class="loading-circle"></div>
+        </div>
+      </div>
+
+      <div class="w-100 d-flex justify-content-center">
+        <i class="fa-regular fa-circle-check text-success big-icon"  *ngIf="success"  ></i>
+
+        <i class="fa-solid fa-triangle-exclamation big-icon text-danger"  *ngIf="!loading && !success"  ></i>
+      </div>
+
+      <p class="text-danger text-center" *ngIf="!loading && !success"> Por favor, revise seus dados</p>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.close()" *ngIf="success || !loading && !success"  >Fechar</button>
+      </div>
+    </div>
+
+
+
+  </app-modal>
+
+
+  <form (ngSubmit)="submitForm()" #contratoForm="ngForm" class="d-flex flex-column justify-content-center">
+    <div class="card">
+      <div class="card-header text-center ">
+        <h3>Gerar Proposta</h3>
+      </div>
+    </div>
+
+    <!-- Cliente -->
+    <div class="card">
+      <div class="card-header">
+        <span>Cliente</span>
+      </div>
+
+      <div class="d-flex w-100 justify-content-center flex-wrap ">
+        <div class="input line">
+          <label for="nomeCliente" class="form-label">Nome do Cliente</label>
+          <input type="text" class="form-control" id="nomeCliente" name="nomeCliente" [(ngModel)]="proposta.nomeCliente" style="width:350px" placeholder="Nome do cliente">
+        </div>
+
+        <div class="input line">
+          <label for="cidadeCliente" class="form-label">Cidade do Cliente</label>
+          <input type="text" class="form-control" id="cidadeCliente" name="cidadeCliente" [(ngModel)]="proposta.cidadeCliente" style="width:350px" placeholder="Cidade do cliente">
+        </div>
+
+        <div class="input line">
+          <label for="endereco" class="form-label">Endereço do cliente</label>
+          <input type="text" class="form-control" id="endereco" name="endereco" [(ngModel)]="proposta.endereco" style="width:350px" placeholder="Endereço do cliente">
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Instalação -->
+    <div class="card">
+      <div class="card-header">
+        <span>Conta de Energia</span>
+      </div>
+      <div class="d-flex w-100 justify-content-center overflow flex-wrap  ">
+
+        <div class="input line">
+          <label for="tipoConta" class="form-label">Tipo de Conta</label>
+          <select class="form-select" id="tipoConta" name="tipoConta" [(ngModel)]="proposta.tipoConta" style="width:350px">
+            <option value="Residencial">Residencial</option>
+            <option value="Comercial">Comercial</option>
+            <option value="Industrial">Industrial</option>
+          </select>
+        </div>
+
+        <div class="input line">
+          <label for="contaEnergia" class="form-label
+          ">Custo com Energia</label>
+          <input type="text" class="form-control" id="contaEnergia" name="contaEnergia" [(ngModel)]="proposta.contaEnergia" style="width:350px" placeholder="Custo com energia" currencyMask [options]="configMask">
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Projetos -->
+    <div class="card">
+      <div class="card-header">
+        <span>Projeto</span>
+      </div>
+      <div class="d-flex w-100 justify-content-center flex-wrap  ">
+        <div class="input line">
+          <label for="custoProjeto" class="form-label
+          ">Custo do Projeto</label>
+          <input type="text" class="form-control" id="custoProjeto" name="custoProjeto" [(ngModel)]="proposta.custoProjeto" style="width:350px" placeholder="Custo do Projeto" currencyMask [options]="configMask">
+        </div>
+
+        <!-- Valor de entrada -->
+        <div class="input line">
+          <label for="valorEntrada" class="form-label
+          ">Valor de Entrada</label>
+          <input type="text" class="form-control" id="valorEntrada" name="valorEntrada" [(ngModel)]="proposta.valorEntrada" style="width:350px" placeholder="Valor de Entrada"  currencyMask [options]="configMask">
+        </div>
+
+        <div class="input line">
+          <label for="tipoEstrutura" class="form-label">Tipo de Estrutura</label>
+          <select class="form-select" id="tipoEstrutura" name="tipoEstrutura" [(ngModel)]="proposta.tipoEstrutura" style="width:350px">
+            <option value="Solo">Solo</option>
+            <option value="Fibrocimento">Fibrocimento</option>
+            <option value="Telha Cerâmica">Telha Cerâmica</option>
+          </select>
+        </div>
+
+        <!-- select tipo inversor -->
+        <div class="input line">
+          <label for="tipoInversor" class="form-label
+          ">Tipo de Inversor</label>
+          <select class="form-select" id="tipoInversor" name="tipoInversor" [(ngModel)]="proposta.tipoInversor" style="width:350px">
+            <option value="String">String</option>
+            <option value="Microinversor">Microinversor</option>
+          </select>
+        </div>
+
+
+
+      </div>
+    </div>
+
+  </form>
+
+  <div class="w-100 d-flex justify-content-end">
+    <button type="submit" (click)="saveProposta()" class="btn btn-outline-secondary">Salvar Dados</button>
+    <div class="space"></div>
+    <button type="submit" (click)="submitForm()" class="btn btn-primary">BAIXAR WORD</button>
+  </div>
+</div>

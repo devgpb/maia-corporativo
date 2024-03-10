@@ -19,7 +19,7 @@ import { CriarContratoComponent } from './criar-contrato/criar-contrato.componen
 import { CriarProcuracaoComponent } from './criar-procuracao/criar-procuracao.component';
 import { EquipamentosComponent } from './equipamentos/equipamentos.component';
 import { DimencionarProjetoComponent } from './dimencionar-projeto/dimencionar-projeto.component';
-
+import { CriarPropostaComponent } from './criar-proposta/criar-proposta.component';
 
 
 const routes: Routes = [
@@ -39,6 +39,8 @@ const routes: Routes = [
   { path: "eventos/novo", component: NovoEventoComponent, canActivate: [AuthGuard]  },
   { path: "contrato/gerar", component: CriarContratoComponent, canActivate: [AuthGuard]  },
   { path: "procuracao/gerar", component: CriarProcuracaoComponent, canActivate: [AuthGuard]  },
+  { path: "proposta/gerar", component: CriarPropostaComponent, canActivate: [AuthGuard]  },
+
   { path: "equipamentos", component: EquipamentosComponent, canActivate: [AuthGuard]  },
   { path: "projetos/dimencionar", component: DimencionarProjetoComponent, canActivate: [AuthGuard]  },
 

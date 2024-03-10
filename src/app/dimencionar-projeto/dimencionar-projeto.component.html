@@ -1,19 +1,34 @@
-<h2 class="w-100 text-center">- Dimensionar Projeto -</h2>
-
-<div class="line d-flex w-100 justify-content-center">
-
-  <div class="input" style="width: 550px;">
-    <label for="inversores" class="form-label">Inversores</label>
-
-    <ng-select class="selecter" [(ngModel)]="inversor" [items]="equipamentos.inversores" bindLabel="nome" bindValue="nome" [placeholder]="inversor || 'Selecione um Inversor'" name="inversor" (change)="dimencionar()">
-    </ng-select>
+<!-- <h2 class="w-100 text-center">-  -</h2> -->
+<div class="container d-flex flex-column   justify-content-center">
+  <div class="card ">
+    <div class="card-header text-center ">
+      <h3>Dimensionar Projeto</h3>
+    </div>
   </div>
 
-  <div class="input" style="width: 550px;">
-    <label for="placas" class="form-label">Módulos</label>
 
-    <ng-select class="selecter" [(ngModel)]="placa" [items]="equipamentos.placas" bindLabel="nome" bindValue="nome" [placeholder]="placa || 'Selecione um Modulo'" name="placas" (change)="dimencionar()">
-    </ng-select>
+<div class="d-flex flex-column justify-content-center">
+  <div class="card d-flex ">
+    <div class="card-header">
+      <span>Equipamentos</span>
+    </div>
+
+    <div class="w-100 d-flex p-3">
+      <div class="input" style="width: 550px;">
+        <label for="inversores" class="form-label">Inversores</label>
+
+        <ng-select class="selecter" [(ngModel)]="inversor" [items]="equipamentos.inversores" bindLabel="nome" bindValue="nome" [placeholder]="inversor || 'Selecione um Inversor'" name="inversor" (change)="dimencionar()">
+        </ng-select>
+      </div>
+
+      <div class="input" style="width: 550px;">
+        <label for="placas" class="form-label">Módulos</label>
+
+        <ng-select class="selecter" [(ngModel)]="placa" [items]="equipamentos.placas" bindLabel="nome" bindValue="nome" [placeholder]="placa || 'Selecione um Modulo'" name="placas" (change)="dimencionar()">
+        </ng-select>
+      </div>
+    </div>
+
   </div>
 
 </div>
@@ -22,6 +37,7 @@
     <p class=" text-center ">Quantidades de placas: {{dimensionamento?.placasMaximas}}</p>
     <p class=" text-center ">Disjuntor: {{dimensionamento?.disjuntor}}A</p>
     <p class=" text-center ">Bitola: {{dimensionamento?.bitola}}mm²</p>
+</div>
 </div>
 
 

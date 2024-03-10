@@ -19,6 +19,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { DatePipe } from "@angular/common";
 import { NgChartsModule } from 'ng2-charts';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -47,6 +48,7 @@ import { DisplayPedidosComponent } from './display-pedidos/display-pedidos.compo
 import { EditComponent } from './display-pedidos/edit/edit.component';
 import { DatasComponent } from './display-pedidos/datas/datas.component';
 import { CriarProcuracaoComponent } from './criar-procuracao/criar-procuracao.component';
+import { CriarPropostaComponent } from './criar-proposta/criar-proposta.component';
 
 
 defineLocale("pt-br", ptBrLocale);
@@ -80,6 +82,7 @@ registerLocaleData(localePt);
     EditComponent,
     DatasComponent,
     CriarProcuracaoComponent,
+    CriarPropostaComponent,
   ],
   imports: [
     BrowserModule,
@@ -95,6 +98,7 @@ registerLocaleData(localePt);
     FullCalendarModule,
     NgChartsModule,
     DragDropModule,
+    CurrencyMaskModule
   ],
   providers: [
     {

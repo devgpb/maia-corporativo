@@ -1,0 +1,57 @@
+.line{
+  padding: 12px 12px;
+}
+
+
+
+.big-icon{
+  margin-top: 15px;
+  font-size: 4.0rem;
+}
+
+.container{
+  margin-bottom: 50px;
+}
+
+.card{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  margin-bottom: 20px;
+}
+
+.space{
+  width: 10px;
+  height: 1px;
+}
+
+.money{
+  font-size: 17px;
+  padding-top: 8px;
+}
+
+:host ::ng-deep .selecter .ng-select-container {
+  height: calc(1.5em + 0.75rem + 4px) !important;
+  border-color: #dee2e6;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 200px; /* Ajuste a altura conforme necessário */
+}
+
+.loading-circle {
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-top: 5px solid blue; /* Cor do círculo */
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 2s linear infinite;
+}
+
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
