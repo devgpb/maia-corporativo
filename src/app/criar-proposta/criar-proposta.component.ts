@@ -8,7 +8,7 @@ interface Proposta {
   cidadeCliente: string;
   endereco: string;
   tipoConta: string;
-  contaEnergia: string | number;
+  consumoEnergia: string | number;
   custoProjeto: string | number;
   tipoInversor: string;
   tipoEstrutura: string;
@@ -39,7 +39,7 @@ export class CriarPropostaComponent implements OnInit{
 
     tipoConta: "Residencial",
     tipoInversor: "Microinversor",
-    contaEnergia: '',
+    consumoEnergia: '',
 
     custoProjeto: '',
     tipoEstrutura: "Fibrocimento",
@@ -64,11 +64,11 @@ export class CriarPropostaComponent implements OnInit{
   submitForm(){
     this.loading = true;
     this.success = false;
-    
+
     this.modalService.toggle();
 
     const propostaFinal = {...this.proposta};
-    propostaFinal.contaEnergia = this.formatCurrencyToNumber(propostaFinal.contaEnergia.toString());
+    propostaFinal.consumoEnergia = this.formatCurrencyToNumber(propostaFinal.consumoEnergia.toString());
     propostaFinal.custoProjeto = this.formatCurrencyToNumber(propostaFinal.custoProjeto.toString());
     propostaFinal.valorEntrada = this.formatCurrencyToNumber(propostaFinal.valorEntrada.toString());
     this.automacoesService.getPropostaWord(propostaFinal).subscribe(resp => {
