@@ -57,7 +57,7 @@ export class CriarProcuracaoComponent implements OnInit{
     this.automacoesService.getProcuracaoWord(this.procuracao).subscribe(resp => {
       Swal.fire({
         icon: "success",
-        title: "SUa Procuração Foi Gerada!",
+        title: "Sua Procuração Foi Gerada!",
         text: "Recomenda-se verificar os dados!",
         confirmButtonColor: "#3C58BF"
       });
