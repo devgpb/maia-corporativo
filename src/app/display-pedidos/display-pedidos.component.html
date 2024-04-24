@@ -77,7 +77,7 @@
     <td class="text-center">{{ formatarData(pedido.dataPedido) }}</td>
     <td >{{ pedido.observacao }}</td>
     <td class="text-center">{{pedido.status}}</td>
-    <td class="text-center">
+    <td class="text-center" class="icons">
        <!-- Apenas para rotas especiais -->
        <i *ngIf="rotaEspecial"  class="icon bg-dark text-white separar"
        (click)="liberarPedido(pedido)"

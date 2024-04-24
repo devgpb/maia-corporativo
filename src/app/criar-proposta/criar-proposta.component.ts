@@ -41,7 +41,7 @@ export class CriarPropostaComponent implements OnInit{
     tipoInversor: "Microinversor",
     consumoEnergia: '',
 
-    custoProjeto: '',
+    custoProjeto: 0,
     tipoEstrutura: "Fibrocimento",
     valorEntrada: 0,
   }
