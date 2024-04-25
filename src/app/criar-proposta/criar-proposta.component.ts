@@ -46,6 +46,16 @@ export class CriarPropostaComponent implements OnInit{
     valorEntrada: 0,
   }
 
+  infoPessoal = {
+    rgCliente: "",
+    identidadeCliente: "",
+    emailCliente: "",
+    telefoneCliente: "",
+    estadoCliente: ""
+  }
+
+  comDetalhesPessoais = false
+
   configMask = { prefix: '', thousands: '.', decimal: ',', allowNegative: false, align:'left', }
   loading: boolean = true;
   success: boolean = false;
@@ -67,10 +77,15 @@ export class CriarPropostaComponent implements OnInit{
 
     this.modalService.toggle();
 
-    const propostaFinal = {...this.proposta};
+    let propostaFinal = {...this.proposta};
     propostaFinal.consumoEnergia = this.formatCurrencyToNumber(propostaFinal.consumoEnergia.toString());
     propostaFinal.custoProjeto = this.formatCurrencyToNumber(propostaFinal.custoProjeto.toString());
     propostaFinal.valorEntrada = this.formatCurrencyToNumber(propostaFinal.valorEntrada.toString());
+
+    propostaFinal = this.comDetalhesPessoais ? {
+      ...this.proposta, ...this.infoPessoal
+    } : propostaFinal
+
     this.automacoesService.getPropostaWord(propostaFinal).subscribe(resp => {
       this.loading = false;
       this.success = true;
@@ -123,5 +138,35 @@ export class CriarPropostaComponent implements OnInit{
 
     return valorNumerico;
 
+  }
+
+  applyRgMask(event: any): void {
+    let value = event.target.value;
+    // Remove tudo o que não for dígito
+    value = value.replace(/\D/g, '');
+
+    // Limita a 9 dígitos para o RG
+    value = value.substring(0, 9);
+
+    // Aplica a máscara do RG: XX.XXX.XXX-X
+    // A máscara é aplicada em uma única etapa para evitar conflitos entre as substituições
+    value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{1})?/, '$1.$2.$3-$4');
+
+    // Remove o traço final se não houver dígito após o traço
+    value = value.replace(/-$/, '');
+
+    event.target.value = value;
+  }
+
+  applyCelularMask(event: any): void {
+    let value = event.target.value;
+    value = value.replace(/\D/g, ''); // Remove tudo o que não for dígito
+
+    // Limita a 11 dígitos para o celular
+    value = value.substring(0, 11);
+
+    value = value.replace(/^(\d{2})(\d)/g, '($1) $2'); // Coloca parênteses em volta dos dois primeiros dígitos
+    value = value.replace(/(\d)(\d{4})$/, '$1-$2'); // Coloca hífen entre o quarto e o quinto dígitos
+    event.target.value = value;
   }
 }

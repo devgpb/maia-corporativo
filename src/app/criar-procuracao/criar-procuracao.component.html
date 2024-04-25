@@ -27,7 +27,7 @@
         <div *ngIf="identificacao == 'rg' " @onEnter>
           <label for="rgCliente" class="form-label">RG do Cliente</label>
           <input type="text" class="form-control" id="rgCliente" name="rgCliente" [(ngModel)]="procuracao.rgCliente" (input)="applyRgMask($event)"
-          placeholder="00.000.000/0000-00">
+          placeholder="00.000.000-0">
         </div>
 
         <button *ngIf="identificacao == 'cpf' " (click)="changeIdentificacao('rg')" @onEnter>Usar RG</button>

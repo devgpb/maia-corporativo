@@ -65,6 +65,53 @@
           <label for="endereco" class="form-label">Endereço do cliente</label>
           <input type="text" class="form-control" id="endereco" name="endereco" [(ngModel)]="proposta.endereco" style="width:350px" placeholder="Endereço do cliente">
         </div>
+
+        <div class="personal-details w-100">
+
+          <div *ngIf="!comDetalhesPessoais" class=" w-100 d-flex justify-content-center m-4 animate__animated"
+          [ngClass]="{'animate__fadeInUp': !comDetalhesPessoais, 'animate__fadeOutDown': comDetalhesPessoais}"
+          >
+            <button (click)="comDetalhesPessoais = true" >Ativar Detalhes</button>
+          </div>
+
+          <div *ngIf="comDetalhesPessoais" class="close w-100 d-flex justify-content-center m-4 animate__animated"
+          [ngClass]="{'animate__fadeInUp': comDetalhesPessoais, 'animate__fadeOutDown': !comDetalhesPessoais}"
+          >
+            <button (click)="comDetalhesPessoais = false" >Desativar Detalhes</button>
+          </div>
+
+
+          <div class="details-list d-flex flex-wrap  justify-content-center animate__animated" *ngIf="comDetalhesPessoais"
+          [ngClass]="{'animate__fadeInUp': comDetalhesPessoais, 'animate__fadeOutDown': !comDetalhesPessoais}"
+          >
+            <div class="input line">
+              <label for="identidadeCliente" class="form-label">CPF/CNPJ</label>
+              <input type="text" class="form-control" id="identidadeCliente" name="identidadeCliente" [(ngModel)]="infoPessoal.identidadeCliente" style="width:350px" placeholder="CPF ou CNPJ do cliente">
+            </div>
+
+            <div class="input line">
+              <label for="rgCliente" class="form-label">RG</label>
+              <input type="text" class="form-control" id="rgCliente" name="rgCliente" [(ngModel)]="infoPessoal.rgCliente" style="width:350px" (input)="applyRgMask($event)"
+              placeholder="00.000.000-0">
+            </div>
+
+            <div class="input line">
+              <label for="emailCliente" class="form-label">Email do cliente</label>
+              <input type="text" class="form-control" id="emailCliente" name="emailCliente" [(ngModel)]="infoPessoal.emailCliente" style="width:350px" placeholder="Email do cliente">
+            </div>
+
+            <div class="input line">
+              <label for="telefoneCliente" class="form-label">Telefone do cliente</label>
+              <input type="text" class="form-control" id="telefoneCliente" name="telefoneCliente" [(ngModel)]="infoPessoal.telefoneCliente" style="width:350px" placeholder="(00)-0000-0000" (input)="applyCelularMask($event)">
+            </div>
+
+            <div class="input line">
+              <label for="estadoCliente" class="form-label">UF do cliente</label>
+              <input type="text" class="form-control" id="estadoCliente" name="estadoCliente" [(ngModel)]="infoPessoal.estadoCliente" style="width:350px" placeholder="Estado do cliente">
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 

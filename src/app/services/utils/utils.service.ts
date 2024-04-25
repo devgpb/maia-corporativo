@@ -72,6 +72,23 @@ export class UtilsService {
 		return ["(", /[1-9]/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/];
 	}
 
+  public CnpjMask(event) {
+    let value = event.target.value;
+    // Remove tudo o que não for dígito
+    value = value.replace(/\D/g, '');
+
+    // Limita a 14 dígitos para o CNPJ
+    value = value.substring(0, 14);
+
+    // Aplica a máscara do CNPJ: 00.000.000/0000-00
+    value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+    value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+    value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
+    value = value.replace(/(\d{4})(\d)/, '$1-$2');
+
+    event.target.value = value;
+}
+
 	public cpfMask (rawValue: string): Array<string | RegExp> {
 		return [
 			/\d/, /\d/, /\d/,
