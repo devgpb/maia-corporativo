@@ -17,8 +17,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NumericOnlyDirective } from "./services/utils/numeric-only.directive";
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { DatePipe } from "@angular/common";
-import { NgChartsModule } from 'ng2-charts';
-import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 
@@ -36,7 +34,6 @@ import { CriarPedidoComponent } from './criar-pedido/criar-pedido.component';
 import { MeusRelatoriosComponent } from './meus-relatorios/meus-relatorios.component';
 import { PesquisaPipe } from './pipes/pesquisa/pesquisa.pipe';
 import { PedidosComponent } from './pedidos/pedidos.component';
-import { RelatorioVendasComponent } from './relatorio-vendas/relatorio-vendas.component';
 import { VisualValidatorComponent } from './components/visual-validator/visual-validator.component';
 import { CalendarioCorporativoComponent } from './calendario-corporativo/calendario-corporativo.component';
 import { NovoEventoComponent } from './novo-evento/novo-evento.component';
@@ -69,7 +66,6 @@ registerLocaleData(localePt);
     MeusRelatoriosComponent,
     PesquisaPipe,
     PedidosComponent,
-    RelatorioVendasComponent,
     VisualValidatorComponent,
     NumericOnlyDirective,
     CalendarioCorporativoComponent,
@@ -96,8 +92,6 @@ registerLocaleData(localePt);
     BsDatepickerModule.forRoot(),
     NgSelectModule,
     FullCalendarModule,
-    NgChartsModule,
-    DragDropModule,
     CurrencyMaskModule
   ],
   providers: [

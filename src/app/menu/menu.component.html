@@ -24,12 +24,6 @@
 
 
       <li class="nav-item" *ngIf="userCargo=='ADMINISTRADOR'">
-        <a class="nav-link" (click)="toggleSubmenu('relatorios')"
-        role="button" [class.sub-active]="menuSelected == 'relatorios' && isOpen">
-        <i class="fa-solid fa-gears"></i> Relatórios</a>
-      </li>
-
-      <li class="nav-item" *ngIf="userCargo=='ADMINISTRADOR'">
         <a class="nav-link" (click)="toggleSubmenu('automacoes')"
         role="button" [class.sub-active]="menuSelected == 'automacoes' && isOpen">
         <i class="fa-solid fa-robot"></i> Automações</a>

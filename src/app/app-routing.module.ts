@@ -11,7 +11,6 @@ import { NovoUserComponent } from './novo-user/novo-user.component';
 import { CriarPedidoComponent } from './criar-pedido/criar-pedido.component';
 import { MeusRelatoriosComponent } from './meus-relatorios/meus-relatorios.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
-import { RelatorioVendasComponent } from './relatorio-vendas/relatorio-vendas.component';
 import { CalendarioCorporativoComponent } from './calendario-corporativo/calendario-corporativo.component';
 import { NovoEventoComponent } from './novo-evento/novo-evento.component';
 import { AuthGuard } from './services/guard/auth.guard';
@@ -33,7 +32,6 @@ const routes: Routes = [
   { path: "pedido/criar", component: CriarPedidoComponent, canActivate: [AuthGuard] },
   { path: "setores", component: SetoresComponent, canActivate: [AuthGuard] },
   { path: "relatorios/meus", component: MeusRelatoriosComponent, canActivate: [AuthGuard] },
-  { path: "relatoriosGerenciais/vendas", component: RelatorioVendasComponent, canActivate: [AuthGuard] },
   { path: "ref", component: ReferenciasComponent, canActivate: [AuthGuard]  },
   { path: "calendario", component: CalendarioCorporativoComponent, canActivate: [AuthGuard]  },
   { path: "eventos/novo", component: NovoEventoComponent, canActivate: [AuthGuard]  },
