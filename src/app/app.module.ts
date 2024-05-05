@@ -46,6 +46,7 @@ import { EditComponent } from './display-pedidos/edit/edit.component';
 import { DatasComponent } from './display-pedidos/datas/datas.component';
 import { CriarProcuracaoComponent } from './criar-procuracao/criar-procuracao.component';
 import { CriarPropostaComponent } from './criar-proposta/criar-proposta.component';
+import { TruncatePipe } from './pipes/truncate/truncate.pipe';
 
 
 defineLocale("pt-br", ptBrLocale);
@@ -79,6 +80,7 @@ registerLocaleData(localePt);
     DatasComponent,
     CriarProcuracaoComponent,
     CriarPropostaComponent,
+    TruncatePipe,
   ],
   imports: [
     BrowserModule,

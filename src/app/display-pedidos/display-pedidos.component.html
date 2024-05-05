@@ -75,7 +75,11 @@
     <td>{{pedido.idPedido}}</td>
     <td>{{pedido.nomeCompleto}}</td>
     <td class="text-center">{{ formatarData(pedido.dataPedido) }}</td>
-    <td >{{ pedido.observacao }}</td>
+    <td class="tippy-obs">
+      <span  title="{{ pedido.observacao }}">
+        {{ pedido.observacao | truncate:90:true }}
+      </span>
+    </td>
     <td class="text-center">{{pedido.status}}</td>
     <td class="text-center" class="icons">
        <!-- Apenas para rotas especiais -->

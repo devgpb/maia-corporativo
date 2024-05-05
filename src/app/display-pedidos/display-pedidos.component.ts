@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter,  SimpleChanges, OnChanges, ViewChild, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter,  SimpleChanges, OnChanges, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { PedidosService } from '../services/pedidos/pedidos.service';
 import { DataTableDirective } from 'angular-datatables';
 import { BehaviorSubject, Subject, delay, timeInterval, timer } from 'rxjs';
@@ -10,7 +10,7 @@ import { Cargos, IUser } from '../interfaces/IUser';
 import { ptBrLocale } from 'ngx-bootstrap/chronos';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ModalService } from '../services/modal/modal.service';
-
+import tippy from 'tippy.js';
 import { todasRotas } from '../constants';
 import { StorageService } from '../services/storage/storage.service';
 
@@ -21,7 +21,8 @@ defineLocale('pt-br', ptBrLocale);
   templateUrl: './display-pedidos.component.html',
   styleUrls: ['./display-pedidos.component.scss']
 })
-export class DisplayPedidosComponent implements OnInit, OnChanges{
+
+export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit{
   listaPedidos: IPedido[] = new Array<IPedido>;
 
   @Input() status: string = '';
@@ -72,6 +73,14 @@ export class DisplayPedidosComponent implements OnInit, OnChanges{
       ],
 		};
     this.getPedidos()
+  }
+
+  ngAfterViewInit(): void {
+    tippy('.tippy-obs', {
+      placement: 'top',
+      allowHTML: true,
+      delay: [0, 0]
+    });
   }
 
   getPedidos(){
