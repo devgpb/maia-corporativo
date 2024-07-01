@@ -55,7 +55,8 @@ export class CriarContratoComponent implements OnInit {
     pagamentoP3: "",
     quantInversores: "",
     quantModulos: "",
-    quantSuporte: ""
+    quantSuporte: "",
+    distribuidora:""
   };
 
 
@@ -96,6 +97,7 @@ export class CriarContratoComponent implements OnInit {
       this.contrato.cidade = pedido.cidade;
       this.contrato.enderecoInstalacao = pedido.endereco;
       this.contrato.cpfContratante = "";
+      this.contrato.distribuidora = pedido.distribuidora;
       this.contrato.enderecoInstalacao = `${pedido.rua} ${pedido.cep}`;
     }
   }
