@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       pedidos.forEach(pedido => {
         this.notifications.push({nomeCompleto: pedido.nomeCompleto, cidade: pedido.cidade})
       });
-    })
+    });
     this.observarMudancasNoPedido();
     this.listenForNotifications();
     this.renderer.listen('window', 'click', (e: Event) => {
@@ -46,8 +46,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.showNotifications = false;
       }
     });
-
-    this.requestNotificationPermission();
   }
 
   private carregarPedidoInicial() {
@@ -74,18 +72,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.hasNewNotifications = true;
       this.playNotificationSound();
     });
-  }
-
-  private requestNotificationPermission() {
-    if (Notification.permission === 'default') {
-      Notification.requestPermission().then(permission => {
-        if (permission === 'granted') {
-          localStorage.setItem('notification-permission', 'granted');
-        } else {
-          localStorage.setItem('notification-permission', 'denied');
-        }
-      });
-    }
   }
 
   private playNotificationSound() {

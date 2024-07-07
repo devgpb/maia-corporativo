@@ -1,6 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-root',
@@ -15,18 +16,54 @@ import { Router } from "@angular/router";
     ]),
   ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Sistema Corporativo';
   public menuCollapsed: boolean = false;
-	public isLogin: boolean = false;
+  public isLogin: boolean = false;
 
-	constructor (private router: Router) {
-		this.router.events.subscribe(_ => {
-			this.isLogin = this.router.url.substr(1).indexOf("login") === 0;
-		});
-	}
+  constructor(private router: Router) {
+    this.router.events.subscribe(_ => {
+      this.isLogin = this.router.url.substr(1).indexOf("login") === 0;
+    });
+  }
 
-	// public collapseChange (event: Event) {
-	// 	this.menuCollapsed = event.;
-	// }
+  ngOnInit(): void {
+    if (!this.isLogin) {
+      this.checkNotificationPermission();
+    }
+  }
+
+  private checkNotificationPermission() {
+    const permission = localStorage.getItem('notification-permission');
+    if (permission !== 'granted' && Notification.permission !== 'granted') {
+      this.showNotificationPermissionAlert();
+    }
+  }
+
+  private showNotificationPermissionAlert() {
+    Swal.fire({
+      title: 'Ativar Notificações',
+      text: 'Para receber notificações de novos pedidos, ative as notificações.',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: 'Ativar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.requestNotificationPermission();
+      }
+    });
+  }
+
+  private requestNotificationPermission() {
+    Notification.requestPermission().then(permission => {
+      if (permission === 'granted') {
+        localStorage.setItem('notification-permission', 'granted');
+        Swal.fire('Notificações Ativadas!', 'Você receberá notificações de novos pedidos.', 'success');
+      } else {
+        localStorage.setItem('notification-permission', 'denied');
+        Swal.fire('Notificações Não Ativadas', 'Você não receberá notificações de novos pedidos.', 'error');
+      }
+    });
+  }
 }
