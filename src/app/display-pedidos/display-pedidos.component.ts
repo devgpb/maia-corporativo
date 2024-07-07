@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter,  SimpleChanges, OnChanges, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { PedidosService } from '../services/pedidos/pedidos.service';
 import { DataTableDirective } from 'angular-datatables';
-import { BehaviorSubject, Subject, delay, timeInterval, timer } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription, delay, timeInterval, timer } from 'rxjs';
 import { AuthService } from '../services/auth/auth.service';
 import * as Constantes from "../constants";
 import { IPedido } from '../interfaces/IPedido';
@@ -13,6 +13,7 @@ import { ModalService } from '../services/modal/modal.service';
 import tippy from 'tippy.js';
 import { todasRotas } from '../constants';
 import { StorageService } from '../services/storage/storage.service';
+import { WebSocketService } from '../services/WebSocket/web-socket.service';
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -45,12 +46,17 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
   public pedido: IPedido
   public rotas = todasRotas;
   public statusSelecionado: string;
+  private socketSub: Subscription;
+
+
 
   constructor(
     private authService: AuthService,
     private modalService: ModalService,
     private pedidosService: PedidosService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private webSocketService: WebSocketService,
+
   ){
     this.user = this.authService.getUser()
     this.isAdm = this.user.cargo == Cargos.ADMINISTRADOR
@@ -73,6 +79,13 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
       ],
 		};
     this.getPedidos()
+    this.listenForNotifications()
+  }
+
+  private listenForNotifications() {
+    this.socketSub = this.webSocketService.getNovoPedido().subscribe((pedido: any) => {
+      this.getPedidos()
+    });
   }
 
   ngAfterViewInit(): void {

@@ -67,8 +67,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private listenForNotifications() {
     this.socketSub = this.webSocketService.getNovoPedido().subscribe((pedido: any) => {
       this.notifications.unshift(pedido);
-      console.log(pedido);
-
       this.hasNewNotifications = true;
       this.playNotificationSound();
     });
