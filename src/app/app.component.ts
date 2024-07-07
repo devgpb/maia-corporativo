@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
 
   private checkNotificationPermission() {
     const permission = localStorage.getItem('notification-permission');
-    if (permission !== 'granted' && Notification.permission !== 'granted') {
+    if (permission !== 'granted' && (Notification.permission !== 'granted' || permission == null) ) {
       this.showNotificationPermissionAlert();
     }
   }

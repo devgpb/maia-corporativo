@@ -84,7 +84,7 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
 
   private listenForNotifications() {
     this.socketSub = this.webSocketService.getNovoPedido().subscribe((pedido: any) => {
-      this.getPedidos()
+      this.carregarTabela()
     });
   }
 
