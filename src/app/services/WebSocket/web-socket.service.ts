@@ -7,7 +7,7 @@ import { environment } from "src/environments/environment";
   providedIn: 'root'
 })
 export class WebSocketService {
-  private socket;
+  private socket: Socket;
 
   constructor() {
     this.socket = io(environment.socketURL, {
@@ -15,12 +15,12 @@ export class WebSocketService {
       extraHeaders: {
           "my-custom-header": "abcd"
       }
-  });
+    });
   }
 
   public getNovoPedido(): Observable<any> {
     return new Observable(observer => {
-      this.socket.on('novoPedido', (pedido:any) => {
+      this.socket.on('novoPedido', (pedido: any) => {
         observer.next(pedido);
       });
     });

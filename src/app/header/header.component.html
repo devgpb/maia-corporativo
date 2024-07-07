@@ -1,30 +1,33 @@
-<header class="w-100" >
-	<nav class="navbar animate__animated animate__fadeIn">
+<!-- src/app/header/header.component.html -->
+<header class="w-100">
+  <nav class="navbar animate__animated animate__fadeIn">
+    <img class="" src="../../assets/Logo Branca.png"/>
 
-
-
-		<img class=" " src="../../assets/Logo Branca.png"/>
-
-    <div class="navbar-brand ">
+    <div class="navbar-brand">
       <span class="text-uppercase text-center d-none d-sm-block">
         <span *ngIf="!nomePedido"> {{ userName || 'Sistema Corporativo' }} </span>
-
-
-
         <span *ngIf="nomePedido">
           Trabalhando: {{nomePedido}}
-          <i  class="icon arrow text-danger  fa-solid fa-circle-minus separar"
-          (click)="deletePedido()"
-          ></i>
+          <i class="icon arrow text-danger fa-solid fa-circle-minus separar"
+             (click)="deletePedido()"></i>
         </span>
       </span>
     </div>
 
-
-		<ul id="user-info" class="pull-right">
-
-       <a href="" (click)="logout()" class="logout">Logout <i class="fa fa-sign-out-alt"></i></a>
-
-		</ul>
-	</nav>
+    <ul id="user-info" class="pull-right  d-flex flex-row justify-content-center align-items-center">
+      <li class="notification d-flex flex-row justify-content-center align-items-center" (click)="toggleNotifications($event)">
+        <i class="fa fa-bell"></i>
+        <span *ngIf="hasNewNotifications" class="notification-badge"></span>
+        <div *ngIf="showNotifications" id="notifications-dropdown" class="notifications-dropdown">
+          <div *ngFor="let notification of notifications" class="notification-item">
+            <div class="notification-title">Nome: {{ notification.nomeCompleto || 'Sem Nome' }}</div>
+            <div class="notification-city">Cidade: {{ notification.cidade  || 'Sem Cidade'}}</div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <a href="" (click)="logout()" class="logout"><i class="fa fa-sign-out-alt"></i></a>
+      </li>
+    </ul>
+  </nav>
 </header>

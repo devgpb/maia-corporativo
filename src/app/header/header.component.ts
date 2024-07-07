@@ -1,9 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+// src/app/header/header.component.ts
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 import { Subscription } from 'rxjs';
 import { StorageService } from '../services/storage/storage.service';
-
+import { WebSocketService } from '../services/WebSocket/web-socket.service';
+import { PedidosService } from '../services/pedidos/pedidos.service';
 
 @Component({
   selector: 'app-header',
@@ -13,21 +15,38 @@ import { StorageService } from '../services/storage/storage.service';
 export class HeaderComponent implements OnInit, OnDestroy {
   public currentPage: string = 'pedidos';
   public nomePedido: string = undefined;
-  public userName: string = ''
+  public userName: string = '';
   private storageSub: Subscription;
+  public notifications: any[] = [];
+  public showNotifications: boolean = false;
+  public hasNewNotifications: boolean = true;
+  private socketSub: Subscription;
 
-	constructor (
-		private router: Router,
+  constructor(
+    private router: Router,
     private authService: AuthService,
-    private storageService: StorageService
-	) {
-
-	}
+    private storageService: StorageService,
+    private webSocketService: WebSocketService,
+    private pedidosService: PedidosService,
+    private renderer: Renderer2
+  ) {}
 
   ngOnInit(): void {
-      this.userName = this.authService.getUser().nomeCompleto.split(' ')[0];
-      this.carregarPedidoInicial();
-      this.observarMudancasNoPedido();
+    this.userName = this.authService.getUser().nomeCompleto.split(' ')[0];
+
+    this.carregarPedidoInicial();
+    this.pedidosService.getPedidosRecentes().subscribe(pedidos => {
+      pedidos.forEach(pedido => {
+        this.notifications.push({nomeCompleto: pedido.nomeCompleto, cidade: pedido.cidade})
+      });
+    })
+    this.observarMudancasNoPedido();
+    this.listenForNotifications();
+    this.renderer.listen('window', 'click', (e: Event) => {
+      if (!document.getElementById('notifications-dropdown').contains(e.target as Node)) {
+        this.showNotifications = false;
+      }
+    });
   }
 
   private carregarPedidoInicial() {
@@ -46,17 +65,45 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
-	public logout (): void {
-		this.authService.logout();
-	}
+  private listenForNotifications() {
+    this.socketSub = this.webSocketService.getNovoPedido().subscribe((pedido: any) => {
+      this.notifications.unshift(pedido);
+      console.log(pedido);
 
-  deletePedido() {
+      this.hasNewNotifications = true;
+      this.playNotificationSound();
+    });
+  }
+
+  private playNotificationSound() {
+    const audio = new Audio('assets/audio/chegou_pedido.mp3');
+    console.log("som, oi");
+
+    audio.play();
+  }
+
+  public toggleNotifications(event: Event) {
+    event.stopPropagation();
+    this.showNotifications = !this.showNotifications;
+    if (this.showNotifications) {
+      this.hasNewNotifications = false;
+    }
+  }
+
+  public logout(): void {
+    this.authService.logout();
+  }
+
+  public deletePedido() {
     this.storageService.removeItem('pedido');
   }
 
   ngOnDestroy() {
     if (this.storageSub) {
       this.storageSub.unsubscribe();
+    }
+    if (this.socketSub) {
+      this.socketSub.unsubscribe();
     }
   }
 }
