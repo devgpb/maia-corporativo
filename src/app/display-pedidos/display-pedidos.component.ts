@@ -106,7 +106,6 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   carregarTabela(){
-
     this.dataTablePedidos.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.destroy();
       this.getPedidos()

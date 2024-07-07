@@ -1,4 +1,3 @@
-// src/app/header/header.component.ts
 import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
@@ -47,6 +46,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.showNotifications = false;
       }
     });
+
+    this.requestNotificationPermission();
   }
 
   private carregarPedidoInicial() {
@@ -75,11 +76,25 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
-  private playNotificationSound() {
-    const audio = new Audio('assets/audio/chegou_pedido.mp3');
-    console.log("som, oi");
+  private requestNotificationPermission() {
+    if (Notification.permission === 'default') {
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          localStorage.setItem('notification-permission', 'granted');
+        } else {
+          localStorage.setItem('notification-permission', 'denied');
+        }
+      });
+    }
+  }
 
-    audio.play();
+  private playNotificationSound() {
+    const permission = localStorage.getItem('notification-permission');
+    if (permission === 'granted') {
+      const audio = new Audio('assets/audio/chegou_pedido.mp3');
+      console.log("som, oi");
+      audio.play();
+    }
   }
 
   public toggleNotifications(event: Event) {
