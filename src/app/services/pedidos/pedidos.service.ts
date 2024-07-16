@@ -25,13 +25,13 @@ export class PedidosService {
 	}
 
 
-  public getPedidosByStatus(status: string, id: string | undefined = undefined){
+  public getPedidosByStatus(status: string, id: string | undefined = undefined, cargo: string | undefined = undefined): Observable<IPedido[]>{
     let getuser = ''
     if(id){
       getuser = "/"+id
     }
-
-		return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos/${status}${getuser}`)
+    // enviar cargo
+		return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos/${status}${getuser}`, {params: {cargo: cargo}})
   }
 
   public getProcessando (id: string | undefined = undefined): Observable<IPedido[]>{
