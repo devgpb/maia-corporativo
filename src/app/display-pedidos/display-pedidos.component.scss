@@ -22,13 +22,6 @@
   transform: scale(1.7);
 }
 
-@media (max-width: 600px) {
-  .col-status{
-    width: 60px;
-  }
-  // Outras regras para melhorar a responsividade
-}
-
 
 
 
@@ -87,3 +80,25 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+@media (max-width: 600px) {
+  .col-status{
+    width: 60px;
+  }
+
+  .icons{
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 140px;
+    i{
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+  }
+  // Outras regras para melhorar a responsividade
+}
+
+
+

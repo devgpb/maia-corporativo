@@ -1,165 +1,176 @@
 header {
   box-shadow: 0px 3px 6px 0 rgba(0, 0, 0, 0.5);
-  z-index: 100; /* Ajuste para garantir que o header esteja acima de outros elementos */
+  z-index: 50; /* Ajuste para garantir que o header esteja acima de outros elementos */
   position: relative;
-}
 
-.logout {
-  text-decoration: none;
-}
+  .logout {
+    text-decoration: none;
+  }
 
-nav {
-  background-color: #65946e;
-  line-height: 50px;
-  vertical-align: middle;
-  border-radius: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding: 5px 0;
-  background-image: url('../../assets/gridsolar3.png'); /* Caminho para a imagem otimizada */
-  background-repeat: repeat; /* Faz a imagem se repetir */
-  background-size: cover;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-}
+  nav {
+    background-color: #65946e;
+    line-height: 50px;
+    vertical-align: middle;
+    border-radius: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding: 5px 0;
+    background-image: url('../../assets/gridsolar3.png'); /* Caminho para a imagem otimizada */
+    background-repeat: repeat; /* Faz a imagem se repetir */
+    background-size: cover;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
 
-img {
-  height: 45px;
-  margin-left: 12px;
-}
+    img {
+      height: 45px;
+      margin-left: 12px;
+    }
 
-.navbar-brand {
-  font-size: 22px;
-  color: white;
-  width: 100%;
-  position: absolute;
-}
+    .navbar-brand {
+      font-size: 22px;
+      color: white;
+      width: 100%;
+      position: absolute;
+    }
 
-#user-info {
-  font-size: 16px;
-  margin: auto 12px;
-  padding-right: 7px;
-  z-index: 7;
-  list-style: none;
-  position: relative;
-}
+    #user-info {
+      font-size: 16px;
+      margin: auto 12px;
+      padding-right: 7px;
+      z-index: 7;
+      list-style: none;
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
 
-#user-info a {
-  line-height: 22px;
-  color: white;
-  vertical-align: middle;
-  font-family: "Roboto Light", "Roboto", Helvetica, Arial, sans-serif;
-  display: inline-block;
-}
+      a {
+        line-height: 22px;
+        color: white;
+        vertical-align: middle;
+        font-family: "Roboto Light", "Roboto", Helvetica, Arial, sans-serif;
+        display: inline-block;
+      }
 
-#user-info i {
-  font-size: 22px;
-  padding-left: 10px;
-  vertical-align: bottom;
-}
+      i {
+        font-size: 22px;
+        padding-left: 10px;
+        vertical-align: bottom;
+      }
 
-#user-info>li {
-  padding-top: .5rem;
-  padding-bottom: .5rem;
-}
+      > li {
+        padding-top: .5rem;
+        padding-bottom: .5rem;
 
-ul.dropdown-menu {
-  background-color: #65946e;
-  margin: 0px;
-  padding: 0;
-  border-top: 0;
-  border-radius: 0;
-  border-bottom-left-radius: 5px;
-}
+        &:hover {
+          cursor: pointer;
+        }
+      }
 
-ul.dropdown-menu>li:focus,
-ul.dropdown-menu>li:hover {
-  background-color: #65946e;
-}
+      ul.dropdown-menu {
+        background-color: #65946e;
+        margin: 0px;
+        padding: 0;
+        border-top: 0;
+        border-radius: 0;
+        border-bottom-left-radius: 5px;
 
-ul.dropdown-menu>li>a {
-  padding-left: .5rem;
-}
+        > li:focus,
+        > li:hover {
+          background-color: #65946e;
+        }
 
-#user-info ul.dropdown-menu i {
-  font-size: 16px;
-}
+        > li > a {
+          padding-left: .5rem;
+        }
 
-#user-info>li:hover,
-ul.dropdown-menu>li:hover {
-  cursor: pointer;
-}
+        i {
+          font-size: 16px;
+        }
+      }
 
-.notification{
-  margin-right: 33px;
-}
 
-.notifications-dropdown {
-  position: absolute;
-  top: 50px;
-  right: 10px;
-  background-color: white;
-  border: 1px solid #ccc;
-  width: 300px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 999;
-  padding: 10px;
-  border-radius: 5px;
-  max-height: 640px;
-  overflow-y: auto;
-}
 
-.notification-item {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-}
+      .notification {
+        margin-right: 20px;
+        line-height: 20px !important;
+        i.fa-bell {
+          font-size: 24px;
+          cursor: pointer;
+          color: white;
+          margin-right: 12px;
+          position: relative;
+        }
 
-.notification-item:last-child {
-  border-bottom: none;
-}
+        .notification-badge {
+          position: absolute;
+          top: 32px;
+          right: 81px;
+          width: 13px;
+          height: 13px;
+          background-color: red;
+          border-radius: 50%;
+        }
 
-.notification-item:hover {
-  background-color: #f9f9f9;
-}
+        .notifications-dropdown {
+          position: absolute;
+          top: 50px;
+          right: 10px;
+          background-color: white;
+          border: 1px solid #ccc;
+          width: 300px;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          z-index: 999;
+          padding: 10px 0;
+          border-radius: 5px;
+          max-height: 640px;
+          overflow-y: auto;
 
-.notification i.fa-bell {
-  font-size: 24px;
-  cursor: pointer;
-  color: white;
-  margin-right: 12px;
-  position: relative;
-}
+          .notification-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
 
-.notification-badge {
-  position: absolute;
-  top: 32px;
-  right: 81px;
-  width: 13px;
-  height: 13px;
-  background-color: red;
-  border-radius: 50%;
-}
+            &:last-child {
+              border-bottom: none;
+            }
 
-.notification-title {
-  font-weight: bold;
-}
+            &:hover {
+              background-color: #f4f4f4;
+            }
 
-.notification-city {
-  color: gray;
-}
+            .notification-title {
+              font-weight: bold;
+              margin-bottom: 5px;
+            }
 
-/* Estilizando o scroll para um design fino */
-.notifications-dropdown::-webkit-scrollbar {
-  width: 8px;
-}
+            .notification-city {
+              color: gray;
+              font-size: 14px;
+            }
+          }
 
-.notifications-dropdown::-webkit-scrollbar-thumb {
-  background-color: #bbb;
-  border-radius: 10px;
-}
+          &::-webkit-scrollbar {
+            width: 6px;
+          }
 
-.notifications-dropdown::-webkit-scrollbar-track {
-  background-color: #f1f1f1;
+          &::-webkit-scrollbar-thumb {
+            background-color: #aaa;
+            border-radius: 3px;
+          }
+
+          &::-webkit-scrollbar-track {
+            background-color: #f1f1f1;
+          }
+        }
+      }
+
+
+
+    }
+  }
 }

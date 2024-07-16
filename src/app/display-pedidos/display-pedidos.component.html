@@ -19,7 +19,7 @@
       <div class="choices">
 
         <i  class="icon  bg-primary  text-white fa-solid fa-angles-left separar"
-        (click)="handleMultiplosPedidos('mudar')"
+        (click)="handleMultiplosPedidos('retroceder')"
         ><span>RETROCEDER PEDIDOS</span> </i>
 
         <i  class="icon bg-danger text-white fa-solid fa-trash-arrow-up separar"
@@ -81,7 +81,7 @@
       </span>
     </td>
     <td class="text-center">{{pedido.status}}</td>
-    <td class="text-center" class="icons">
+    <td class="text-center" class="icons d-flex flex-wrap">
        <!-- Apenas para rotas especiais -->
        <i *ngIf="rotaEspecial"  class="icon bg-dark text-white separar"
        (click)="liberarPedido(pedido)"
