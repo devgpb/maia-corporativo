@@ -67,10 +67,10 @@
     </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let pedido of listaPedidos">
+  <tr *ngFor="let pedido of listaPedidos" (click)="abrirEdicao(pedido)" class=" hover ">
     <td class="text-center">
       <input class="check" type="checkbox" [(ngModel)]="pedido.selected"
-       (change)="atualizarSelecionados(pedido)"
+       (change)="atualizarSelecionados(pedido)" (click)="stopPropagation($event)"
       > </td>
     <td>{{pedido.idPedido}}</td>
     <td>{{pedido.nomeCompleto}}</td>
@@ -84,24 +84,24 @@
     <td class="text-center" class="icons d-flex flex-wrap">
        <!-- Apenas para rotas especiais -->
        <i *ngIf="rotaEspecial"  class="icon bg-dark text-white separar"
-       (click)="liberarPedido(pedido)"
+       (click)="stopPropagation($event); liberarPedido(pedido)"
        >Reativar</i>
        <!-- Apenas para rotas especiais -->
        <i *ngIf="canRetroceder && !rotaEspecial" class=" icon bg-primary text-white fa-solid fa-angles-left"
-       (click)="retrocederPedido(pedido)"
+       (click)="stopPropagation($event); retrocederPedido(pedido)"
        ></i>
        <i class="icon fa-solid fa-pen mini-icon bg-success text-white separar"
           (click)="abrirEdicao(pedido)" *ngIf="podeEditar"></i>
 
        <i class="icon bg-danger text-white separar fa-solid fa-trash-arrow-up"
-       (click)="deletarPedido(pedido)"
+       (click)="stopPropagation($event); deletarPedido(pedido)"
        ></i>
 
        <i class="icon bg-warning text-white separar fa-solid fa-cube"
-       (click)="salvarPedidoStorage(pedido)"
+       (click)="stopPropagation($event); salvarPedidoStorage(pedido)"
        ></i>
        <i *ngIf="canAvancar && !rotaEspecial"  class="icon bg-primary text-white fa-solid fa-angles-right separar"
-       (click)="avancarPedido(pedido)"
+       (click)="stopPropagation($event); avancarPedido(pedido)"
        ></i>
     </td>
     <td  style="display:none;">{{pedido.dataPedido}}</td>

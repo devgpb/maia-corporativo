@@ -320,6 +320,10 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
     this.modalService.toggle();
   }
 
+  stopPropagation(event: Event) {
+    event.stopPropagation();
+  }
+
   salvarPedidoStorage(pedido: IPedido){
     this.storageService.setItem('pedido', JSON.stringify(pedido))
   }
