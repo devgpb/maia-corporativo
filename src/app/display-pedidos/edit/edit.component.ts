@@ -82,7 +82,7 @@ export class EditComponent implements OnInit, OnChanges{
   }
 
   gerarFormEdicao( pedido:IPedido ){
-    const data = new Date(pedido.dataPedido).toISOString().split('T')[0]
+    const data = new Date(pedido.dataPedido)
 
     // const dataPedido =
     this.editForm.patchValue({
@@ -279,7 +279,7 @@ export class EditComponent implements OnInit, OnChanges{
            formValues.cep === this.pedidoEmEdicao?.cep &&
            formValues.consumoDeEnergiaMensal === this.pedidoEmEdicao?.consumoDeEnergiaMensal &&
            formValues.faturamento === this.pedidoEmEdicao?.faturamento &&
-           formValues.dataPedido === new Date(this.pedidoEmEdicao?.dataPedido).toISOString().split('T')[0] &&
+           formValues.dataPedido === new Date(this.pedidoEmEdicao?.dataPedido) &&
            formValues.indicacao === this.pedidoEmEdicao?.indicacao &&
            formValues.observacao === this.pedidoEmEdicao?.observacao &&
            formValues.datas === this.pedidoEmEdicao?.datas &&
