@@ -1,115 +1,102 @@
 <app-modal #modal class="info ">
-  <app-edit
-  [detalhes]="pedido"
-  [rotaEspecial]="rotaEspecial"
-  [list]="listaPedidos"
-  (atualizarPedidos)="refazerTabela()"
-  ></app-edit>
+  <app-edit [detalhes]="pedido" [rotaEspecial]="rotaEspecial" [list]="listaPedidos"
+    (atualizarPedidos)="refazerTabela()"></app-edit>
 </app-modal>
 
 <div class="table-responsive">
 
   <div class="w-100 details d-flex justify-content-center align-content-center ">
 
-    <div class="select-count d-flex flex-column  justify-content-center align-content-center" *ngIf="listaPedidosId.length > 0">
+    <div class="select-count d-flex flex-column  justify-content-center align-content-center"
+      *ngIf="listaPedidosId.length > 0">
       <span class="w-100 text-center counter">
         Pedidos Selecionados: {{listaPedidosId.length}}
       </span>
 
       <div class="choices">
 
-        <i  class="icon  bg-primary  text-white fa-solid fa-angles-left separar"
-        (click)="handleMultiplosPedidos('retroceder')"
-        ><span>RETROCEDER PEDIDOS</span> </i>
+        <i class="icon  bg-primary  text-white fa-solid fa-angles-left separar"
+          (click)="handleMultiplosPedidos('retroceder')"><span>RETROCEDER PEDIDOS</span> </i>
 
-        <i  class="icon bg-danger text-white fa-solid fa-trash-arrow-up separar"
-        (click)="handleMultiplosPedidos('apagar')"
-        ><span>APAGAR PEDIDOS</span></i>
+        <i class="icon bg-danger text-white fa-solid fa-trash-arrow-up separar"
+          (click)="handleMultiplosPedidos('apagar')"><span>APAGAR PEDIDOS</span></i>
 
-        <i  class="icon bg-primary text-white fa-solid fa-angles-right separar"
-       (click)="handleMultiplosPedidos('avancar')"
-       ><span>AVANÇAR PEDIDOS</span></i>
+        <i class="icon bg-primary text-white fa-solid fa-angles-right separar"
+          (click)="handleMultiplosPedidos('avancar')"><span>AVANÇAR PEDIDOS</span></i>
 
       </div>
       <div class="choices d-flex w-100 justify-content-center align-items-center  ">
         <span class="label">Mandar Para Status:</span>
 
-        <ng-select class="ml-2" [items]="rotas"
-           bindLabel="label"
-           bindValue="value"
-           placeholder="Selecione uma rota"
-           [(ngModel)]="statusSelecionado">
+        <ng-select class="ml-2" [items]="rotas" bindLabel="label" bindValue="value" placeholder="Selecione uma rota"
+          [(ngModel)]="statusSelecionado">
         </ng-select>
 
-        <i  class="icon arrow text-primary  fa-solid fa-circle-arrow-right separar"
-       (click)="handleMultiplosPedidos('mudar', true)"
-       ></i>
+        <i class="icon arrow text-primary  fa-solid fa-circle-arrow-right separar"
+          (click)="handleMultiplosPedidos('mudar', true)"></i>
       </div>
     </div>
-
+    <div class="w-100 d-flex justify-content-end mb-3">
+      <button id="downloadExcel" class="btn btn-success" (click)="baixarListaPedidos()">
+        <i class="fas fa-file-excel"></i> Baixar Excel
+      </button>
     </div>
+  </div>
 
   <table datatable #pedidos [dtOptions]="dtOptionsPedidos" [dtTrigger]="dtTriggerPedidos"
-  class="row-border table-striped table-bordered w-100"  >
-  <thead>
-    <tr>
-    <th class="col-check">
-      <input class="check"
-      type="checkbox" [(ngModel)]="allSelected" (change)="selecionarTodos($event)">
-    </th>
-    <th class="col-id">Id</th>
-    <th class="col-nome">Nome</th>
-    <th class="col-data">Data</th>
-    <th class="col-obs">Obs</th>
-    <th class="col-status">Status</th>
-    <th class="col-acoes actions text-center">Ações</th>
-    <th style="display:none;"></th>
-    </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let pedido of listaPedidos" (click)="abrirEdicao(pedido)" class=" hover ">
-    <td class="text-center">
-      <input class="check" type="checkbox" [(ngModel)]="pedido.selected"
-       (change)="atualizarSelecionados(pedido)" (click)="stopPropagation($event)"
-      > </td>
-    <td>{{pedido.idPedido}}</td>
-    <td>{{pedido.nomeCompleto}}</td>
-    <td class="text-center">{{ formatarData(pedido.dataPedido) }}</td>
-    <td class="tippy-obs">
-      <span  title="{{ pedido.observacao }}">
-        {{ pedido.observacao | truncate:90:true }}
-      </span>
-    </td>
-    <td class="text-center">{{pedido.status}}</td>
-    <td class="text-center" class="icons d-flex flex-wrap">
-       <!-- Apenas para rotas especiais -->
-       <i *ngIf="rotaEspecial"  class="icon bg-dark text-white separar"
-       (click)="stopPropagation($event); liberarPedido(pedido)"
-       >Reativar</i>
-       <!-- Apenas para rotas especiais -->
-       <i *ngIf="canRetroceder && !rotaEspecial" class=" icon bg-primary text-white fa-solid fa-angles-left"
-       (click)="stopPropagation($event); retrocederPedido(pedido)"
-       ></i>
-       <i class="icon fa-solid fa-pen mini-icon bg-success text-white separar"
-          (click)="abrirEdicao(pedido)" *ngIf="podeEditar"></i>
+    class="row-border table-striped table-bordered w-100">
+    <thead>
+      <tr>
+        <th class="col-check">
+          <input class="check" type="checkbox" [(ngModel)]="allSelected" (change)="selecionarTodos($event)">
+        </th>
+        <th class="col-id">Id</th>
+        <th class="col-nome">Nome</th>
+        <th class="col-data">Data</th>
+        <th class="col-obs">Obs</th>
+        <th class="col-status">Status</th>
+        <th class="col-acoes actions text-center">Ações</th>
+        <th style="display:none;"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pedido of listaPedidos" (click)="abrirEdicao(pedido)" class=" hover ">
+        <td class="text-center">
+          <input class="check" type="checkbox" [(ngModel)]="pedido.selected" (change)="atualizarSelecionados(pedido)"
+            (click)="stopPropagation($event)">
+        </td>
+        <td>{{pedido.idPedido}}</td>
+        <td>{{pedido.nomeCompleto}}</td>
+        <td class="text-center">{{ pedido.dataPedido }}</td>
+        <td class="tippy-obs">
+          <span title="{{ pedido.observacao }}">
+            {{ pedido.observacao | truncate:90:true }}
+          </span>
+        </td>
+        <td class="text-center">{{pedido.status}}</td>
+        <td class="text-center" class="icons d-flex flex-wrap">
+          <!-- Apenas para rotas especiais -->
+          <i *ngIf="rotaEspecial" class="icon bg-dark text-white separar"
+            (click)="stopPropagation($event); liberarPedido(pedido)">Reativar</i>
+          <!-- Apenas para rotas especiais -->
+          <i *ngIf="canRetroceder && !rotaEspecial" class=" icon bg-primary text-white fa-solid fa-angles-left"
+            (click)="stopPropagation($event); retrocederPedido(pedido)"></i>
+          <i class="icon fa-solid fa-pen mini-icon bg-success text-white separar" (click)="abrirEdicao(pedido)"
+            *ngIf="podeEditar"></i>
 
-       <i class="icon bg-danger text-white separar fa-solid fa-trash-arrow-up"
-       (click)="stopPropagation($event); deletarPedido(pedido)"
-       ></i>
+          <i class="icon bg-danger text-white separar fa-solid fa-trash-arrow-up"
+            (click)="stopPropagation($event); deletarPedido(pedido)"></i>
 
-       <i class="icon bg-warning text-white separar fa-solid fa-cube"
-       (click)="stopPropagation($event); salvarPedidoStorage(pedido)"
-       ></i>
-       <i *ngIf="canAvancar && !rotaEspecial"  class="icon bg-primary text-white fa-solid fa-angles-right separar"
-       (click)="stopPropagation($event); avancarPedido(pedido)"
-       ></i>
-    </td>
-    <td  style="display:none;">{{pedido.dataPedido}}</td>
-  </tr>
-  </tbody>
+          <i class="icon bg-warning text-white separar fa-solid fa-cube"
+            (click)="stopPropagation($event); salvarPedidoStorage(pedido)"></i>
+          <i *ngIf="canAvancar && !rotaEspecial" class="icon bg-primary text-white fa-solid fa-angles-right separar"
+            (click)="stopPropagation($event); avancarPedido(pedido)"></i>
+        </td>
+        <td style="display:none;">{{pedido.dataPedido}}</td>
+      </tr>
+    </tbody>
   </table>
   <div class="loading-container" *ngIf="loading">
     <div class="loading-circle"></div>
   </div>
 </div>
-

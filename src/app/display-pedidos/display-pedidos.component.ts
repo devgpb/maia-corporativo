@@ -14,6 +14,7 @@ import tippy from 'tippy.js';
 import { todasRotas } from '../constants';
 import { StorageService } from '../services/storage/storage.service';
 import { WebSocketService } from '../services/WebSocket/web-socket.service';
+import { IConfigExcel } from '../interfaces/IConfigExcel';
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -326,6 +327,45 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
 
   salvarPedidoStorage(pedido: IPedido){
     this.storageService.setItem('pedido', JSON.stringify(pedido))
+  }
+
+  baixarListaPedidos(){
+    const config: IConfigExcel = {
+      dados: this.listaPedidos,
+      titulo: 'Relatório de Pedidos Engemaia - ' + new Date().toLocaleDateString().replace(/\//g, '-'),
+      descricao: 'Lista de pedidos em status ' + this.status,
+      chaves: [
+        { key: 'idPedido', name: 'ID' },
+        { key: 'nomeCompleto', name: 'Cliente' },
+        { key: 'dataPedido', name: 'Data do Pedido' },
+        { key: 'faturamento', name: 'Total' },
+        { key: 'status', name: 'Status' },
+        { key: 'observacao', name: 'Observação' },
+      ]
+    };
+
+    this.pedidosService.baixarListaPedidos(config).subscribe(
+      (response: Blob) => {
+        const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Lista_de_Pedidos.xlsx';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      },
+      error => {
+        console.error('Erro ao baixar a lista de pedidos', error);
+        // Logar error com swal
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro ao baixar a lista de pedidos',
+          text: 'Por favor, contacte o suporte.'
+        });
+      }
+    );
   }
 
   get podeEditar(){

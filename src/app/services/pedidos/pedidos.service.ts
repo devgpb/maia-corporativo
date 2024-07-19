@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { IPedido } from 'src/app/interfaces/IPedido';
 import { INovoPedido } from 'src/app/interfaces/INovoPedido';
+import { IConfigExcel } from 'src/app/interfaces/IConfigExcel';
 
 @Injectable({
   providedIn: 'root'
@@ -107,4 +108,9 @@ export class PedidosService {
   public removerPerdido(idPedido: any): Observable<string>{
 		return this.http.put<string>(`${environment.apiURL}/pedidos/removerPerdido/${idPedido}`, {})
 	}
+
+  public baixarListaPedidos(config:IConfigExcel): Observable<any>{
+    return this.http.post(`${environment.apiURL}/templates/excel`, config, {responseType: 'blob'})
+  }
+  
 }
