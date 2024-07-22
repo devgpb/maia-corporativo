@@ -14,6 +14,16 @@
     </div>
 
     <ul id="user-info" class="pull-right d-flex flex-row justify-content-center align-items-center">
+
+      <li class="mr-5 pedido">
+        <a routerLink="pedido/criar"
+        [routerLinkActive]="['active-link']" title="Novo Pedido"
+        [routerLinkActiveOptions]="{exact: true}">
+        <i class="fa-solid fa-circle-plus"></i>
+        </a>
+      </li>
+
+
       <li class="notification d-flex flex-row justify-content-center align-items-center" (click)="toggleNotifications($event)">
         <i class="fa fa-bell"></i>
         <span *ngIf="hasNewNotifications" class="notification-badge"></span>
@@ -24,6 +34,7 @@
           </div>
         </div>
       </li>
+
       <li>
         <a href="" (click)="logout()" class="logout"><i class="fa fa-sign-out-alt"></i></a>
       </li>

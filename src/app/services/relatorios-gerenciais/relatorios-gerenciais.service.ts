@@ -33,4 +33,10 @@ export class RelatoriosGerenciaisService {
 
     return this.http.get(`${environment.apiURL}/relatorios/rsa`, { params });
   }
+
+  getRelatorioPedidos(query: any): Observable<any> {
+    // post
+    return this.http.post(`${environment.apiURL}/relatorios/pedidos`, query);
+  }
+
 }

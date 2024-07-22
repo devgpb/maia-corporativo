@@ -1,0 +1,69 @@
+<app-modal #modal class="info ">
+  <app-edit [detalhes]="pedido" [rotaEspecial]="rotaEspecial" [list]="pedidosList"
+    (atualizarPedidos)="carregarTabela()"></app-edit>
+</app-modal>
+
+<div class="container mt-2 bg-light p-4 rounded d-flex justify-content-center flex-column">
+
+  <app-pesquisa-relatorio class="w-100 mb-5" (pesquisar)="pesquisarPedidos($event)"></app-pesquisa-relatorio>
+
+
+  <div class="w-100" [hidden]="pedidosList.length == 0">
+    <div class="w-100 d-flex justify-content-end mb-3">
+      <button id="downloadExcel" class="btn btn-success" (click)="baixarListaPedidos()">
+        <i class="fas fa-file-excel"></i> Baixar Excel
+      </button>
+    </div>
+
+    <table class="w-100" datatable #pedidos [dtOptions]="dtOptionsPedidos" [dtTrigger]="dtTriggerPedidos">
+      <thead>
+        <tr>
+          <th class="col-id">Id</th>
+          <th class="col-nome">Nome</th>
+          <th class="col-data">Data</th>
+          <th class="col-obs">Obs</th>
+          <th class="col-status">Status</th>
+          <th class="col-acoes actions text-center">Ações</th>
+          <th style="display:none;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pedido of pedidosList"  (click)="abrirEdicao(pedido)" class=" hover ">
+          <td>{{pedido.idPedido}}</td>
+          <td>{{pedido.nomeCompleto}}</td>
+          <td class="text-center">{{ pedido.dataPedido }}</td>
+          <td class="tippy-obs">
+            <span title="{{ pedido.observacao }}">
+              {{ pedido.observacao | truncate:90:true }}
+            </span>
+          </td>
+          <td class="text-center">{{pedido.status}}</td>
+          <td class="text-center" class="icons d-flex justify-content-center flex-wrap">
+
+            <i class="icon fa-solid fa-pen mini-icon bg-success text-white separar" (click)="stopPropagation($event);
+            abrirEdicao(pedido)"
+             *ngIf="podeEditar"></i>
+
+            <!-- <i *ngIf="rotaEspecial" class="icon bg-dark text-white separar"
+              (click)="stopPropagation($event); liberarPedido(pedido)">Reativar</i>
+            <i *ngIf="canRetroceder && !rotaEspecial" class=" icon bg-primary text-white fa-solid fa-angles-left"
+              (click)="stopPropagation($event); retrocederPedido(pedido)"></i>
+
+
+
+            <i class="icon bg-danger text-white separar fa-solid fa-trash-arrow-up"
+              (click)="stopPropagation($event); deletarPedido(pedido)"></i>
+
+            <i class="icon bg-warning text-white separar fa-solid fa-cube"
+              (click)="stopPropagation($event); salvarPedidoStorage(pedido)"></i>
+            <i *ngIf="canAvancar && !rotaEspecial" class="icon bg-primary text-white fa-solid fa-angles-right separar"
+              (click)="stopPropagation($event); avancarPedido(pedido)"></i> -->
+          </td>
+          <td style="display:none;">{{pedido.dataPedido}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+</div>

@@ -29,6 +29,8 @@ export const rotasEspeciais =
 
 export const todasRotas = [...pedidos, "STANDBY", "PERDIDO"]
 
+export const tiposPagamentos = ["À VISTA", "FINANCIADO"]
+
 export const dtlanguage = {
   processing: "Processando...",
   search: "Pesquisar:",

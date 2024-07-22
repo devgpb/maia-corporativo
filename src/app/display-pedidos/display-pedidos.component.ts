@@ -102,6 +102,7 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
     this.listaPedidos = []
     const idOrUndefined = this.isAdm ? undefined : this.user.idUsuario
     this.pedidosService.getPedidosByStatus(this.status,idOrUndefined, this.user.cargo).subscribe(pedidos =>{
+      console.log(pedidos)
       this.indicePagina = Constantes.rotasPedidos.indexOf(this.status)
       this.totalPaginas = Constantes.rotasPedidos.length;
       this.canRetroceder = this.indicePagina !== 0
@@ -301,7 +302,6 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
           dtInstance.destroy();
       });
       this.dtTriggerPedidos.complete();
-
     }
   }
 
@@ -338,7 +338,7 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
         { key: 'idPedido', name: 'ID' },
         { key: 'nomeCompleto', name: 'Cliente' },
         { key: 'dataPedido', name: 'Data do Pedido' },
-        { key: 'faturamento', name: 'Total' },
+        { key: 'faturamento', name: 'Total', tipo: 'money' },
         { key: 'status', name: 'Status' },
         { key: 'observacao', name: 'Observação' },
       ]

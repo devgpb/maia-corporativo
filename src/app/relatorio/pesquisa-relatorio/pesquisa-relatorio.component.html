@@ -1,0 +1,39 @@
+<div class="w-100">
+  <!-- Inputs para pesquisa de pedidos -->
+  <div class="d-flex justify-content-lg-start w-100">
+
+    <div class="input d-flex align-items-center mr-2">
+      <label for="rangeDatas" class="mr-1">Intervalo:</label>
+      <input type="text" class="form-control" placeholder="Escolha um intervalo de datas" bsDaterangepicker
+        [(ngModel)]="pesquisa.rangeDatas" [bsConfig]="bsConfig">
+    </div>
+
+    <div class="input d-flex align-items-center mr-2">
+      <label for="monthSelect" class="mr-1">Período:</label>
+      <select id="monthSelect" class="form-control" (change)="onMonthChange($event)">
+        <option value="0">Selecione um mês</option>
+        <option *ngFor="let month of months" [value]="month.value">{{ month.label }}</option>
+        <option value="todos">Todos até o atual</option>
+      </select>
+    </div>
+
+    <div class="input d-flex align-items-center mr-2">
+      <label for="monthSelect" class="mr-1">Status:</label>
+      <select id="monthSelect" class="form-control" [(ngModel)]="pesquisa.status" (ngModelChange)="onStatusChange($event)">
+        <option value="0">Selecione um status</option>
+        <option *ngFor="let status of statusList" [value]="status">{{ status }}</option>
+        <option value="null">Todos</option>
+      </select>
+    </div>
+
+    <div class="input d-flex align-items-center mr-2">
+      <!-- Nome Cliente -->
+      <label for="nomeCliente" class="mr-1">Nome:</label>
+      <input type="text" class="form-control" id="nomeCliente" [(ngModel)]="pesquisa.nomeCompleto">
+    </div>
+
+    <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="iniciarPesquisa()">
+      <i class="fa-solid fa-search"></i>
+    </button>
+  </div>
+</div>

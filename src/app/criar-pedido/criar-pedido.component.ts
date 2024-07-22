@@ -78,7 +78,7 @@ export class CriarPedidoComponent {
     });
     group['nome'] = ['', [Validators.required]];
     group['celular'] = ['', [Validators.required, Validators.minLength(12)]];
-    group['consumo'] = [0];
+    group['consumo'] = [null];
     group['horario'] = ["tarde"];
     group['ref'] = [''];
     group['observacao'] = [''];

@@ -2,77 +2,81 @@
   <div class="nav-cont collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav nav-principal">
       <li class="nav-item " *ngIf="userCargo=='ADMINISTRADOR'">
-        <a class="nav-link" routerLink="/ref"
-        [routerLinkActive]="['active-link']"
-        [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('/ref') ? true : null"> <i class="fa-solid fa-user"></i> Usuários</a>
+        <a class="nav-link" routerLink="/ref" [routerLinkActive]="['active-link']"
+          [routerLinkActiveOptions]="{exact: true}" [attr.disabled]="isActive('/ref') ? true : null"> <i
+            class="fa-solid fa-user"></i> Usuários</a>
       </li>
 
       <li class="nav-item active" *ngIf="userCargo=='ADMINISTRADOR'">
-        <a class="nav-link" routerLink="/setores"
-        [routerLinkActive]="['active-link']"
-        [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('/setores') ? true : null"> <i class="fa-solid fa-clipboard"></i> Setores</a>
+        <a class="nav-link" routerLink="/setores" [routerLinkActive]="['active-link']"
+          [routerLinkActiveOptions]="{exact: true}" [attr.disabled]="isActive('/setores') ? true : null"> <i
+            class="fa-solid fa-clipboard"></i> Setores</a>
       </li>
 
 
-      <li class="nav-item active" *ngIf="userCargo=='ADMINISTRADOR'">
+      <!-- <li class="nav-item active" *ngIf="userCargo=='ADMINISTRADOR'">
         <a class="nav-link" (click)="toggleSubmenu('calendario')"
         role="button" [class.sub-active]="menuSelected == 'calendario' && isOpen">
         <i class="fa-solid fa-calendar-days"></i>Eventos</a>
+      </li> -->
+
+
+      <li class="nav-item" *ngIf="userCargo=='ADMINISTRADOR'">
+        <a class="nav-link" (click)="toggleSubmenu('automacoes')" role="button"
+          [class.sub-active]="menuSelected == 'automacoes' && isOpen">
+          <i class="fa-solid fa-robot"></i> Automações</a>
+      </li>
+
+
+      <!-- tela de relatorio -->
+      <li class="nav-item active" *ngIf="userCargo=='ADMINISTRADOR'">
+        <a class="nav-link" routerLink="/relatorio" [routerLinkActive]="['active-link']"
+          [routerLinkActiveOptions]="{exact: true}" [attr.disabled]="isActive('/relatorio') ? true : null"><i
+            class="fa-solid fa-chart-line"></i>Relatório</a>
       </li>
 
 
       <li class="nav-item" *ngIf="userCargo=='ADMINISTRADOR'">
-        <a class="nav-link" (click)="toggleSubmenu('automacoes')"
-        role="button" [class.sub-active]="menuSelected == 'automacoes' && isOpen">
-        <i class="fa-solid fa-robot"></i> Automações</a>
-      </li>
-
-      <li class="nav-item" *ngIf="userCargo=='ADMINISTRADOR'">
-        <a class="nav-link" routerLink="/equipamentos"
-        [routerLinkActive]="['active-link']"
-        [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('/equipamentos') ? true : null"> <i class="fa-solid fa-wrench"></i> Equipamentos</a>
+        <a class="nav-link" routerLink="/equipamentos" [routerLinkActive]="['active-link']"
+          [routerLinkActiveOptions]="{exact: true}" [attr.disabled]="isActive('/equipamentos') ? true : null"> <i
+            class="fa-solid fa-wrench"></i> Equipamentos</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" (click)="toggleSubmenu('pedidos')"
-        role="button" [class.sub-active]="menuSelected == 'pedidos' && isOpen"
-        >
+        <a class="nav-link" (click)="toggleSubmenu('pedidos')" role="button"
+          [class.sub-active]="menuSelected == 'pedidos' && isOpen">
           <i class="fa-solid fa-paper-plane"></i>
           <span *ngIf="userCargo=='COLABORADOR'">Meus</span>
           Pedidos</a>
       </li>
 
       <li class="nav-item active" *ngIf="userCargo=='ADMINISTRADOR'">
-        <a class="nav-link" routerLink="usuarios/novo"
-        [routerLinkActive]="['active-link']"
-        [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('usuarios/novo') ? true : null"><i class="fa-solid fa-user-plus"></i> Novo Usuario</a>
+        <a class="nav-link" routerLink="usuarios/novo" [routerLinkActive]="['active-link']"
+          [routerLinkActiveOptions]="{exact: true}" [attr.disabled]="isActive('usuarios/novo') ? true : null"><i
+            class="fa-solid fa-user-plus"></i> Novo Usuario</a>
       </li>
+
+      <!-- Meu Relatório -->
+      <!-- <li class="nav-item">
+        <a class="nav-link" routerLink="relatorios/meus" [routerLinkActive]="['active-link']"
+          [routerLinkActiveOptions]="{exact: true}" [attr.disabled]="isActive('relatorios/meus') ? true : null"><i
+            class="fa-solid fa-star"></i> Meu Relatório</a>
+      </li> -->
       <li class="nav-item">
-        <a class="nav-link" routerLink="relatorios/meus"
-        [routerLinkActive]="['active-link']"
-        [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('relatorios/meus') ? true : null"><i class="fa-solid fa-star"></i> Meu Relatório</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/conta"
-        [routerLinkActive]="['active-link']"
-        [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('/conta') ? true : null"><i class="fa-solid fa-user-pen"></i> Minha Conta</a>
+        <a class="nav-link" routerLink="/conta" [routerLinkActive]="['active-link']"
+          [routerLinkActiveOptions]="{exact: true}" [attr.disabled]="isActive('/conta') ? true : null"><i
+            class="fa-solid fa-user-pen"></i> Minha Conta</a>
       </li>
     </ul>
   </div>
 
-  <div class="submenu"  *ngIf="isOpen">
+  <div class="submenu" *ngIf="isOpen">
     <div class="w-100 sub-area" *ngIf="menuSelected == 'pedidos'">
 
-      <a  routerLink="pedido/criar"
-      [routerLinkActive]="['active-link']"
-      [routerLinkActiveOptions]="{exact: true}"
-      [attr.disabled]="isActive('pedidos/criar') ? true : null"><i class="fa-solid fa-circle-plus"></i>Novo Pedido</a>
+      <a routerLink="pedido/criar" [routerLinkActive]="['active-link']" [routerLinkActiveOptions]="{exact: true}"
+        [attr.disabled]="isActive('pedidos/criar') ? true : null">
+        <i class="fa-solid fa-circle-plus"></i>Novo Pedido
+      </a>
 
 
       <div class="d-flex align-items-center">
@@ -123,26 +127,24 @@
         <div class="separator"></div>
       </div>
 
-      <a routerLink="/pedidos/standby"
-      [routerLinkActive]="['active-link']"
-      [routerLinkActiveOptions]="{exact: true}"
-      [attr.disabled]="isActive('/standby') ? true : null">
-      <i class="fa-regular fa-hourglass text-warning"></i>StandBy</a>
+      <a routerLink="/pedidos/standby" [routerLinkActive]="['active-link']" [routerLinkActiveOptions]="{exact: true}"
+        [attr.disabled]="isActive('/standby') ? true : null">
+        <i class="fa-regular fa-hourglass text-warning"></i>StandBy</a>
 
-      <a routerLink="/pedidos/perdidos"
-      [routerLinkActive]="['active-link']"
-      [routerLinkActiveOptions]="{exact: true}"
-      [attr.disabled]="isActive('/perdidos') ? true : null">
-      <i class="fa-regular fa-triangle-exclamation  text-danger"></i>Perdidos</a>
+      <a routerLink="/pedidos/perdidos" [routerLinkActive]="['active-link']" [routerLinkActiveOptions]="{exact: true}"
+        [attr.disabled]="isActive('/perdidos') ? true : null">
+        <i class="fa-regular fa-triangle-exclamation  text-danger"></i>Perdidos</a>
     </div>
 
-    <div class="w-100 sub-area" *ngIf="menuSelected == 'relatorios'">
-      <a routerLink="relatoriosGerenciais/vendas"
-      [routerLinkActive]="['active-link']"
-      [routerLinkActiveOptions]="{exact: true}"
-      [attr.disabled]="isActive('relatoriosGerenciais/vendas') ? true : null">Relatórios de Vendas</a>
-    </div>
+    <!-- <div class="w-100 sub-area" *ngIf="menuSelected == 'relatorios'">
+      <a routerLink="relatoriosGerenciais/vendas" [routerLinkActive]="['active-link']"
+        [routerLinkActiveOptions]="{exact: true}"
+        [attr.disabled]="isActive('relatoriosGerenciais/vendas') ? true : null">Relatórios de Vendas</a>
+    </div> -->
 
+
+    <!--
+    eventos
     <div class="w-100 sub-area" *ngIf="menuSelected == 'calendario'">
 
       <a routerLink="calendario"
@@ -156,19 +158,15 @@
           [routerLinkActiveOptions]="{exact: true}"
           [attr.disabled]="isActive('eventos/novo') ? true : null">Novo Evento
       </a>
-    </div>
+    </div> -->
 
     <div class="w-100 sub-area" *ngIf="menuSelected == 'automacoes'">
-      <a routerLink="contrato/gerar"
-          [routerLinkActive]="['active-link']"
-          [routerLinkActiveOptions]="{exact: true}"
-          [attr.disabled]="isActive('contratos/gerar') ? true : null">Gerar Contrato
+      <a routerLink="contrato/gerar" [routerLinkActive]="['active-link']" [routerLinkActiveOptions]="{exact: true}"
+        [attr.disabled]="isActive('contratos/gerar') ? true : null">Gerar Contrato
       </a>
 
-      <a routerLink="proposta/gerar"
-          [routerLinkActive]="['active-link']"
-          [routerLinkActiveOptions]="{exact: true}"
-          [attr.disabled]="isActive('proposta/gerar') ? true : null">Gerar Proposta
+      <a routerLink="proposta/gerar" [routerLinkActive]="['active-link']" [routerLinkActiveOptions]="{exact: true}"
+        [attr.disabled]="isActive('proposta/gerar') ? true : null">Gerar Proposta
       </a>
 
       <!-- <a routerLink="projetos/dimencionar"
@@ -177,12 +175,9 @@
           [attr.disabled]="isActive('projetos/dimencionar') ? true : null">Dimensionar Projeto
       </a> -->
 
-      <a routerLink="procuracao/gerar"
-          [routerLinkActive]="['active-link']"
-          [routerLinkActiveOptions]="{exact: true}"
-          [attr.disabled]="isActive('procuracao/gerar') ? true : null">Gerar Procuração
+      <a routerLink="procuracao/gerar" [routerLinkActive]="['active-link']" [routerLinkActiveOptions]="{exact: true}"
+        [attr.disabled]="isActive('procuracao/gerar') ? true : null">Gerar Procuração
       </a>
     </div>
   </div>
 </nav>
-

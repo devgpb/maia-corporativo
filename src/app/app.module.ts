@@ -47,6 +47,8 @@ import { DatasComponent } from './display-pedidos/datas/datas.component';
 import { CriarProcuracaoComponent } from './criar-procuracao/criar-procuracao.component';
 import { CriarPropostaComponent } from './criar-proposta/criar-proposta.component';
 import { TruncatePipe } from './pipes/truncate/truncate.pipe';
+import { RelatorioComponent } from './relatorio/relatorio.component';
+import { PesquisaRelatorioComponent } from './relatorio/pesquisa-relatorio/pesquisa-relatorio.component';
 
 
 defineLocale("pt-br", ptBrLocale);
@@ -81,6 +83,8 @@ registerLocaleData(localePt);
     CriarProcuracaoComponent,
     CriarPropostaComponent,
     TruncatePipe,
+    RelatorioComponent,
+    PesquisaRelatorioComponent,
   ],
   imports: [
     BrowserModule,
@@ -94,7 +98,7 @@ registerLocaleData(localePt);
     BsDatepickerModule.forRoot(),
     NgSelectModule,
     FullCalendarModule,
-    CurrencyMaskModule
+    CurrencyMaskModule,
   ],
   providers: [
     {

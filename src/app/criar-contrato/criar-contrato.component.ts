@@ -77,6 +77,8 @@ export class CriarContratoComponent implements OnInit {
     const savedContrato = localStorage.getItem('contrato');
     const savedTipoContrato = localStorage.getItem('tipoContrato');
     const nivelPagamentoVista = localStorage.getItem('nivelPagamentoVista');
+    const savedPedido = localStorage.getItem('pedido');
+
 
     if (savedContrato) {
       this.contrato = JSON.parse(savedContrato);
@@ -88,7 +90,6 @@ export class CriarContratoComponent implements OnInit {
 
     }
 
-    const savedPedido = localStorage.getItem('pedido');
     if (savedPedido) {
       const pedido = JSON.parse(savedPedido);
       this.contrato.nomeContratante = pedido.nomeCompleto;
@@ -99,6 +100,7 @@ export class CriarContratoComponent implements OnInit {
       this.contrato.cpfContratante = "";
       this.contrato.distribuidora = pedido.distribuidora;
       this.contrato.enderecoInstalacao = `${pedido.rua} ${pedido.cep}`;
+      this.contrato.cpfContratante = pedido.cpfCliente;
     }
   }
 

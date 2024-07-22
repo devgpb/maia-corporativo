@@ -4,6 +4,8 @@ export interface IPedido{
   nomeCompleto: string;
   consumoDeEnergiaMensal: number;
   faturamento?: number;
+  cpfCliente?: string;
+  formaPagamento?: string;
 
   celular : string;
   cep : string;

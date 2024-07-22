@@ -1,6 +1,7 @@
 interface Chave {
   key: string;
   name: string;
+  tipo?: string;
 }
 
 export interface IConfigExcel {

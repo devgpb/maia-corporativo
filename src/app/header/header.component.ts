@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public showNotifications: boolean = false;
   public hasNewNotifications: boolean = true;
   private socketSub: Subscription;
+  private globalClickListener: () => void;
 
   constructor(
     private router: Router,
@@ -36,13 +37,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.carregarPedidoInicial();
     this.pedidosService.getPedidosRecentes().subscribe(pedidos => {
       pedidos.forEach(pedido => {
-        this.notifications.push({nomeCompleto: pedido.nomeCompleto, cidade: pedido.cidade})
+        this.notifications.push({nomeCompleto: pedido.nomeCompleto, cidade: pedido.cidade});
       });
     });
     this.observarMudancasNoPedido();
     this.listenForNotifications();
-    this.renderer.listen('window', 'click', (e: Event) => {
-      if (!document.getElementById('notifications-dropdown').contains(e.target as Node)) {
+    this.globalClickListener = this.renderer.listen('window', 'click', (e: Event) => {
+      const notificationsDropdown = document.getElementById('notifications-dropdown');
+      if (notificationsDropdown && !notificationsDropdown.contains(e.target as Node)) {
         this.showNotifications = false;
       }
     });
@@ -103,6 +105,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
     if (this.socketSub) {
       this.socketSub.unsubscribe();
+    }
+    if (this.globalClickListener) {
+      this.globalClickListener();
     }
   }
 }

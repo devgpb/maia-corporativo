@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, EventEmitter, Output, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { IPedido } from 'src/app/interfaces/IPedido';
@@ -6,7 +6,11 @@ import { IUser } from 'src/app/interfaces/IUser';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ModalService } from 'src/app/services/modal/modal.service';
 import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
+import { Location } from '@angular/common';
+import { Router, NavigationStart } from '@angular/router';
 import Swal from 'sweetalert2';
+import * as Constantes from "../../constants";
+
 
 
 
@@ -15,10 +19,10 @@ import Swal from 'sweetalert2';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss']
 })
-export class EditComponent implements OnInit, OnChanges{
-  @Input() detalhes : IPedido;
+export class EditComponent implements OnInit, OnChanges, OnDestroy {
+  @Input() detalhes: IPedido;
   @Input() rotaEspecial: boolean = false;
-  @Input() list : IPedido[];
+  @Input() list: IPedido[];
 
   @Output() atualizarPedidos = new EventEmitter<any>();
 
@@ -28,7 +32,9 @@ export class EditComponent implements OnInit, OnChanges{
   public indiceLimiteDetalhe: number = 0;
   public userCargo = "";
   public user: IUser;
-	public bsConfig: Partial<BsDatepickerConfig>;
+  public bsConfig: Partial<BsDatepickerConfig>;
+  private handlePopStateBound: () => void;
+  public tiposPagamentos = Constantes.tiposPagamentos;
 
   constructor(
     private modalService: ModalService,
@@ -36,9 +42,10 @@ export class EditComponent implements OnInit, OnChanges{
     private fb: FormBuilder,
     private localeService: BsLocaleService,
     private authService: AuthService,
-
-  ){
-
+    private location: Location,
+    private router: Router
+  ) {
+    this.handlePopStateBound = this.handlePopState.bind(this);
   }
 
 
@@ -54,24 +61,49 @@ export class EditComponent implements OnInit, OnChanges{
     this.bsConfig = {
       containerClass: 'theme-default',
     };
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        if (event.restoredState && event.restoredState.navigationId) {
+          // Ação desejada
+          console.log('Botão de voltar pressionado');
+
+          // Cancelar a navegação
+          this.location.replaceState(this.location.path()); // Mantém a URL atual sem alterar
+        }
+      }
+    });
+
+    // Adiciona um ouvinte para eventos de popstate
+    window.addEventListener('popstate', this.handlePopStateBound);
   }
 
+  handlePopState(event: PopStateEvent) {
+    // Ação desejada
+    console.log('Botão de voltar pressionado (popstate)');
 
+    // Cancelar a navegação
+    this.location.replaceState(this.location.path()); // Mantém a URL atual sem alterar
+  }
+
+  ngOnDestroy() {
+    // Remove o ouvinte ao destruir o componente
+    window.removeEventListener('popstate', this.handlePopStateBound);
+  }
 
   onSubmit() {
     if (this.editForm.valid) {
 
-      if(this.editForm.value.faturamento <= 0){
+      if (this.editForm.value.faturamento <= 0) {
         this.editForm.value.faturamento = null
       }
 
       this.editForm.get('datas').get('dataVisita').get("data")
-      .setValue(this.formatarDataEvento(this.editForm.value.datas.dataVisita))
+        .setValue(this.formatarDataEvento(this.editForm.value.datas.dataVisita))
 
       this.editForm.get('datas').get('dataInstalacao').get("data")
-      .setValue(this.formatarDataEvento(this.editForm.value.datas.dataInstalacao))
+        .setValue(this.formatarDataEvento(this.editForm.value.datas.dataInstalacao))
 
-      this.pedidosService.updatePedido(this.pedidoEmEdicao.idPedido,this.editForm.value).subscribe(resp =>{
+      this.pedidosService.updatePedido(this.pedidoEmEdicao.idPedido, this.editForm.value).subscribe(resp => {
         this.atualizarPedidos.emit()
       })
 
@@ -81,7 +113,7 @@ export class EditComponent implements OnInit, OnChanges{
     }
   }
 
-  gerarFormEdicao( pedido:IPedido ){
+  gerarFormEdicao(pedido: IPedido) {
     const data = new Date(pedido.dataPedido)
 
     // const dataPedido =
@@ -96,25 +128,27 @@ export class EditComponent implements OnInit, OnChanges{
       consumoDeEnergiaMensal: pedido.consumoDeEnergiaMensal,
       faturamento: pedido.faturamento,
       dataPedido: data,
+      cpfCliente: pedido.cpfCliente,
+      formaPagamento: pedido.formaPagamento,
       ref: pedido.ref,
       indicacao: pedido.indicacao,
-      observacao:pedido.observacao,
+      observacao: pedido.observacao,
       detalhes: pedido.detalhes,
-      datas:{
-        dataVisita:{
-          data :null,
+      datas: {
+        dataVisita: {
+          data: null,
           hora: 0,
           minuto: 0
         },
-        dataInstalacao:{
-          data :null,
+        dataInstalacao: {
+          data: null,
           hora: 0,
           minuto: 0
         },
       }
     });
 
-    if(pedido['datasPedidos'].dataVisita){
+    if (pedido['datasPedidos'].dataVisita) {
       const visita = new Date(pedido['datasPedidos'].dataVisita)
       visita.setHours(visita.getHours() - 3)
       const dataVisita = visita.toISOString()
@@ -123,8 +157,8 @@ export class EditComponent implements OnInit, OnChanges{
       const datas = tempoSeparado[0].split("-");
       //`${datas[2]}/${datas[1]}/${datas[0]}`
       this.editForm.patchValue({
-        datas:{
-          dataVisita:{
+        datas: {
+          dataVisita: {
             data: `${datas[1]}/${datas[2]}/${datas[0]}`,
             hora: tempoSeparado[1].split(":")[0],
             minuto: tempoSeparado[1].split(":")[1]
@@ -133,7 +167,7 @@ export class EditComponent implements OnInit, OnChanges{
       })
     }
 
-    if(pedido['datasPedidos'].dataInstalacao){
+    if (pedido['datasPedidos'].dataInstalacao) {
       const instalacao = new Date(pedido['datasPedidos'].dataInstalacao)
       instalacao.setHours(instalacao.getHours() - 3)
       const dataInstalacao = instalacao.toISOString()
@@ -143,8 +177,8 @@ export class EditComponent implements OnInit, OnChanges{
       const datas = tempoSeparado[0].split("-");
 
       this.editForm.patchValue({
-        datas:{
-          dataInstalacao:{
+        datas: {
+          dataInstalacao: {
             data: `${datas[1]}/${datas[2]}/${datas[0]}`,
             hora: tempoSeparado[1].split(":")[0],
             minuto: tempoSeparado[1].split(":")[1]
@@ -156,16 +190,17 @@ export class EditComponent implements OnInit, OnChanges{
     this.pedidoEmEdicao = pedido
   }
 
-  marcarStandby(){
+  marcarStandby() {
     this.pedidosService.marcarStandby(this.pedidoEmEdicao.idPedido).subscribe(pedido => {
-      if(pedido){
+      if (pedido) {
         Swal.fire({
           icon: "success",
           title: "Pedido Em StandBy!",
           confirmButtonColor: "#3C58BF"
+        }).then(() => {
+          this.atualizarPedidos.emit()
         });
-        this.atualizarPedidos.emit();
-      }else{
+      } else {
         Swal.fire({
           icon: "error",
           title: "Operação Não Realizada, Favor Contatar Suporte!",
@@ -174,16 +209,17 @@ export class EditComponent implements OnInit, OnChanges{
     })
   }
 
-  marcarPerdido(){
+  marcarPerdido() {
     this.pedidosService.marcarPerdido(this.pedidoEmEdicao.idPedido).subscribe(pedido => {
-      if(pedido){
+      if (pedido) {
         Swal.fire({
           icon: "success",
           title: "Pedido Em Perdidos!",
           confirmButtonColor: "#3C58BF"
-        });
-        this.atualizarPedidos.emit();
-      }else{
+        }).then(() => {
+          this.atualizarPedidos.emit()
+        })
+      } else {
         Swal.fire({
           icon: "error",
           title: "Operação Não Realizada, Favor Contatar Suporte!",
@@ -192,7 +228,7 @@ export class EditComponent implements OnInit, OnChanges{
     })
   }
 
-  toggleDetalhe(detalhe: string){
+  toggleDetalhe(detalhe: string) {
     const detalhesAtualizados = {
       ...this.editForm.value.detalhes, // copia todas as propriedades existentes
       [detalhe]: !this.editForm.value.detalhes[detalhe] // sobrescreve apenas a propriedade específica
@@ -204,14 +240,14 @@ export class EditComponent implements OnInit, OnChanges{
 
   }
 
-  voltarPedido(pedido: IPedido, edit = false){
+  voltarPedido(pedido: IPedido, edit = false) {
     const indexAntigo = this.list.indexOf(pedido)
     this.detalhes = this.list[indexAntigo - 1]
     this.indiceDetalhe = indexAntigo - 1
     this.gerarFormEdicao(this.detalhes)
   }
 
-  proximoPedido(pedido: IPedido, edit = false){
+  proximoPedido(pedido: IPedido, edit = false) {
     const indexAntigo = this.list.indexOf(pedido)
     this.detalhes = this.list[indexAntigo + 1]
     this.indiceDetalhe = indexAntigo + 1
@@ -238,6 +274,8 @@ export class EditComponent implements OnInit, OnChanges{
       dataPedido: ['', Validators.required],
       observacao: [''],
       detalhes: [{}],
+      cpfCliente: [''],
+      formaPagamento: [null],
       ref: [''],
       indicacao: [''],
       datas: this.fb.group({
@@ -255,8 +293,8 @@ export class EditComponent implements OnInit, OnChanges{
     });
   }
 
-  formatarDataEvento(dataString: any ) {
-    if(dataString.data == null || dataString.data == undefined){
+  formatarDataEvento(dataString: any) {
+    if (dataString.data == null || dataString.data == undefined) {
       return null
     }
 
@@ -272,24 +310,27 @@ export class EditComponent implements OnInit, OnChanges{
     const formValues = this.editForm.value;
 
     return formValues.nomeCompleto === this.pedidoEmEdicao?.nomeCompleto &&
-           formValues.celular === this.pedidoEmEdicao?.celular &&
-           formValues.email === this.pedidoEmEdicao?.email &&
-           formValues.cidade === this.pedidoEmEdicao?.cidade &&
-           formValues.rua === this.pedidoEmEdicao?.rua &&
-           formValues.cep === this.pedidoEmEdicao?.cep &&
-           formValues.consumoDeEnergiaMensal === this.pedidoEmEdicao?.consumoDeEnergiaMensal &&
-           formValues.faturamento === this.pedidoEmEdicao?.faturamento &&
-           formValues.dataPedido === new Date(this.pedidoEmEdicao?.dataPedido) &&
-           formValues.indicacao === this.pedidoEmEdicao?.indicacao &&
-           formValues.observacao === this.pedidoEmEdicao?.observacao &&
-           formValues.datas === this.pedidoEmEdicao?.datas &&
+      formValues.celular === this.pedidoEmEdicao?.celular &&
+      formValues.email === this.pedidoEmEdicao?.email &&
+      formValues.cidade === this.pedidoEmEdicao?.cidade &&
+      formValues.rua === this.pedidoEmEdicao?.rua &&
+      formValues.cep === this.pedidoEmEdicao?.cep &&
+      formValues.consumoDeEnergiaMensal === this.pedidoEmEdicao?.consumoDeEnergiaMensal &&
+      formValues.faturamento === this.pedidoEmEdicao?.faturamento &&
+      formValues.dataPedido === new Date(this.pedidoEmEdicao?.dataPedido) &&
+      formValues.indicacao === this.pedidoEmEdicao?.indicacao &&
+      formValues.observacao === this.pedidoEmEdicao?.observacao &&
+      formValues.datas === this.pedidoEmEdicao?.datas &&
+      formValues.cpfCliente === this.pedidoEmEdicao?.cpfCliente &&
+      formValues.formaPagamento === this.pedidoEmEdicao?.formaPagamento &&
 
-          //  formValues.detalhes.trafegoPago === this.pedidoEmEdicao?.detalhes.trafegoPago &&
-           formValues.detalhes.orcamentoGerado === this.pedidoEmEdicao?.detalhes.orcamentoGerado &&
-           formValues.detalhes.contratoAssinado === this.pedidoEmEdicao?.detalhes.contratoAssinado &&
-           formValues.detalhes.visitaRealizada === this.pedidoEmEdicao?.detalhes.visitaRealizada &&
-           formValues.detalhes.equipamentoComprado === this.pedidoEmEdicao?.detalhes.equipamentoComprado &&
-           formValues.detalhes.sistemaHomologado === this.pedidoEmEdicao?.detalhes.sistemaHomologado;
+      //  formValues.detalhes.trafegoPago === this.pedidoEmEdicao?.detalhes.trafegoPago &&
+      formValues.detalhes.orcamentoGerado === this.pedidoEmEdicao?.detalhes.orcamentoGerado &&
+      formValues.detalhes.contratoAssinado === this.pedidoEmEdicao?.detalhes.contratoAssinado &&
+      formValues.detalhes.visitaRealizada === this.pedidoEmEdicao?.detalhes.visitaRealizada &&
+      formValues.detalhes.equipamentoComprado === this.pedidoEmEdicao?.detalhes.equipamentoComprado &&
+      formValues.detalhes.sistemaHomologado === this.pedidoEmEdicao?.detalhes.sistemaHomologado &&
+      formValues.detalhes.documentacaoGerada === this.pedidoEmEdicao?.detalhes.documentacaoGerada
 
 
   }
@@ -306,6 +347,19 @@ export class EditComponent implements OnInit, OnChanges{
     event.target.value = value;
   }
 
+  appyCPFMask(event: any): void {
+    let value = event.target.value;
+    value = value.replace(/\D/g, ''); // Remove tudo o que não for dígito
+
+    // Limita a 11 dígitos para o celular
+    value = value.substring(0, 11);
+
+    value = value.replace(/^(\d{3})(\d)/g, '$1.$2'); // Coloca ponto após o terceiro dígito
+    value = value.replace(/(\d{3})(\d)/, '$1.$2'); // Coloca ponto após o terceiro dígito
+    value = value.replace(/(\d{3})(\d)/, '$1-$2'); // Coloca hífen após o sexto dígito
+    event.target.value = value;
+  }
+
   formatarData(dataString: string): string {
     const data = new Date(dataString);
     const options: Intl.DateTimeFormatOptions = {
@@ -314,6 +368,10 @@ export class EditComponent implements OnInit, OnChanges{
       day: '2-digit'
     };
     return data.toLocaleDateString('pt-BR', options);
+  }
+
+  get canShowFormaPagamento() {
+    return this.userCargo === "ADMINISTRADOR" && this.pedidoEmEdicao?.status === "FECHADO"
   }
 
   ngOnChanges(changes: SimpleChanges) {

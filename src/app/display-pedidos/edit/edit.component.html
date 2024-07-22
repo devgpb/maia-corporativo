@@ -56,6 +56,12 @@
           [ngClass]="{'fa-check text-success': editForm.value.detalhes?.sistemaHomologado, 'fa-x text-danger': !editForm.value.detalhes?.sistemaHomologado}"></i>
         Sistema Homologado
       </div>
+
+      <div class="check" (click)="toggleDetalhe('documentacaoGerada')">
+        <i class="fa-solid"
+          [ngClass]="{'fa-check text-success': editForm.value.detalhes?.documentacaoGerada, 'fa-x text-danger': !editForm.value.detalhes?.documentacaoGerada}"></i>
+        Documentação Gerada
+      </div>
     </div>
     <span class="w-100 text-center text-primary infor">Clique em um detalhe para alterar seu valor</span>
 
@@ -110,6 +116,11 @@
       </div>
 
       <div class="form-group">
+        <label for="nomeCompleto">CPF:</label>
+        <input type="text" class="form-control" id="cpfCliente" formControlName="cpfCliente" (input)="appyCPFMask($event)">
+      </div>
+
+      <div class="form-group">
         <label for="celular">Celular:</label>
         <input type="tel" class="form-control" id="celular" formControlName="celular" placeholder="(00)-0000-0000"
           (input)="applyCelularMask($event)">
@@ -149,13 +160,22 @@
           appNumericOnly>
       </div>
 
+      <!-- Lista de formas de pagamento select -->
+      <div class="form-group" *ngIf="canShowFormaPagamento">
+        <label for="formaPagamento">Forma de Pagamento:</label>
+        <select class="form-control select" id="formaPagamento" formControlName="formaPagamento">
+          <option value="0">Selecione</option>
+          <option *ngFor="let pagamento of tiposPagamentos" [value]="pagamento">{{ pagamento }}</option>
+        </select>
+      </div>
+
       <div class="form-group">
         <label for="faturamento">Faturamento (R$):</label>
         <input type="text" class="form-control" id="faturamento" formControlName="faturamento" appNumericOnly>
       </div>
 
       <div class="form-group">
-        <label for="dataPedido">Data do Pedido:</label>
+        <label for="dataPedido">Mudança Mais Recente:</label>
         <input type="date" class="form-control" id="dataPedido" formControlName="dataPedido">
       </div>
 

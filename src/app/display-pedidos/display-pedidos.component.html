@@ -5,7 +5,7 @@
 
 <div class="table-responsive">
 
-  <div class="w-100 details d-flex justify-content-center align-content-center ">
+  <div class="w-100 details d-flex flex-column  justify-content-center align-content-center ">
 
     <div class="select-count d-flex flex-column  justify-content-center align-content-center"
       *ngIf="listaPedidosId.length > 0">
@@ -13,7 +13,7 @@
         Pedidos Selecionados: {{listaPedidosId.length}}
       </span>
 
-      <div class="choices">
+      <div class="choices d-flex w-100 justify-content-center">
 
         <i class="icon  bg-primary  text-white fa-solid fa-angles-left separar"
           (click)="handleMultiplosPedidos('retroceder')"><span>RETROCEDER PEDIDOS</span> </i>
@@ -81,7 +81,7 @@
           <!-- Apenas para rotas especiais -->
           <i *ngIf="canRetroceder && !rotaEspecial" class=" icon bg-primary text-white fa-solid fa-angles-left"
             (click)="stopPropagation($event); retrocederPedido(pedido)"></i>
-            
+
           <i class="icon fa-solid fa-pen mini-icon bg-success text-white separar" (click)="stopPropagation($event);
            abrirEdicao(pedido)"
             *ngIf="podeEditar"></i>
@@ -94,7 +94,7 @@
           <i *ngIf="canAvancar && !rotaEspecial" class="icon bg-primary text-white fa-solid fa-angles-right separar"
             (click)="stopPropagation($event); avancarPedido(pedido)"></i>
         </td>
-        <td style="display:none;">{{pedido.dataPedido}}</td>
+        <td style="display:none;">{{pedido['createdAt']}}</td>
       </tr>
     </tbody>
   </table>
