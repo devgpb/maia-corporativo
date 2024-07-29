@@ -5,4 +5,24 @@
   }
 }
 
+.status{
+  min-width: 250px;
+}
+
+.interval{
+  min-width: 300px !important;
+}
+
+
+// responsividade
+@media (max-width: 768px) {
+  .input{
+    margin: 12px 0;
+  }
+
+  .nome{
+    width: 100%;
+  }
+
+}
 

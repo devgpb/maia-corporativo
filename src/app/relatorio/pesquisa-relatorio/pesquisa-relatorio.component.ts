@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import * as Constants from '.././../constants';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { UtilsService } from '../../services//utils/utils.service';
 
 @Component({
   selector: 'app-pesquisa-relatorio',
@@ -16,7 +18,9 @@ export class PesquisaRelatorioComponent {
     rangeDatas: [new Date(new Date().getFullYear(), new Date().getMonth(), 1), new Date()],
     nomeCompleto: '',
     status: null,
-  };
+  }
+
+  dropdownSettingsStatus: IDropdownSettings
 
   bsConfig = {
     isAnimated: true,
@@ -29,8 +33,13 @@ export class PesquisaRelatorioComponent {
 
   months = this.generateMonths();
 
-  constructor(private localeService: BsLocaleService) {
+  constructor(
+    private localeService: BsLocaleService,
+    private utils: UtilsService
+  ) {
     this.localeService.use('pt-br');
+		this.dropdownSettingsStatus = this.utils.getDropdownSettings("id_status");
+
   }
 
   generateMonths() {
@@ -48,8 +57,8 @@ export class PesquisaRelatorioComponent {
 
 
 
-  onMonthChange(event: Event) {
-    const selectedMonth = (event.target as HTMLSelectElement).value;
+  onMonthChange(event: any) {
+    const selectedMonth = event.value;
     if (selectedMonth === 'all') {
       this.pesquisa.rangeDatas = [new Date(new Date().getFullYear(), 0, 1), new Date()];
     } else {
@@ -67,6 +76,7 @@ export class PesquisaRelatorioComponent {
   iniciarPesquisa() {
     // converter as datas para br string
     // const formattedDateRange = this.pesquisa.rangeDatas.map(date => date.toLocaleDateString('pt-BR'));
+    // console.log(this.pesquisa);
     this.pesquisar.emit({...this.pesquisa});
   }
 }

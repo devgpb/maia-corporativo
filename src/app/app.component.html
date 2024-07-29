@@ -1,5 +1,5 @@
 <div class="everything">
-  <app-header class="animate__animated animate__fadeIn" ></app-header>
+  <app-header *ngIf="!isLogin"></app-header>
 
   <app-menu *ngIf="!isLogin" class="animate__animated animate__fadeIn"></app-menu>
 

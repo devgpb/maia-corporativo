@@ -1,8 +1,8 @@
 <div class="w-100">
   <!-- Inputs para pesquisa de pedidos -->
-  <div class="d-flex justify-content-lg-start w-100">
+  <div class="d-flex flex-wrap justify-content-lg-start w-100">
 
-    <div class="input d-flex align-items-center mr-2">
+    <div class="input d-flex align-items-center mr-2 interval">
       <label for="rangeDatas" class="mr-1">Intervalo:</label>
       <input type="text" class="form-control" placeholder="Escolha um intervalo de datas" bsDaterangepicker
         [(ngModel)]="pesquisa.rangeDatas" [bsConfig]="bsConfig">
@@ -10,23 +10,24 @@
 
     <div class="input d-flex align-items-center mr-2">
       <label for="monthSelect" class="mr-1">Período:</label>
-      <select id="monthSelect" class="form-control" (change)="onMonthChange($event)">
-        <option value="0">Selecione um mês</option>
-        <option *ngFor="let month of months" [value]="month.value">{{ month.label }}</option>
-        <option value="todos">Todos até o atual</option>
-      </select>
+      <ng-select class="month" id="periodo" [items]="months" bindValue="value" bindLabel="label" dropdownPosition="bottom"
+        placeholder="Selecione um período" (change)="onMonthChange($event)">
+        <ng-template ng-option-tmp let-item="item">
+          <div [title]="item.label">{{ item.label }}</div>
+        </ng-template>
+      </ng-select>
     </div>
 
-    <div class="input d-flex align-items-center mr-2">
+    <div class="input d-flex align-items-center mr-2 status">
       <label for="monthSelect" class="mr-1">Status:</label>
-      <select id="monthSelect" class="form-control" [(ngModel)]="pesquisa.status" (ngModelChange)="onStatusChange($event)">
-        <option value="0">Selecione um status</option>
-        <option *ngFor="let status of statusList" [value]="status">{{ status }}</option>
-        <option value="null">Todos</option>
-      </select>
+
+      <ng-multiselect-dropdown class="w-100" name="pesquisa.status" [placeholder]="'Filtrar status'" [data]="statusList"
+        [(ngModel)]="pesquisa.status" [settings]="dropdownSettingsStatus">
+      </ng-multiselect-dropdown>
     </div>
 
-    <div class="input d-flex align-items-center mr-2">
+
+    <div class="input d-flex align-items-center mr-2 nome">
       <!-- Nome Cliente -->
       <label for="nomeCliente" class="mr-1">Nome:</label>
       <input type="text" class="form-control" id="nomeCliente" [(ngModel)]="pesquisa.nomeCompleto">

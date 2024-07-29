@@ -19,7 +19,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { DatePipe } from "@angular/common";
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 
-
+import { CommonModule } from "@angular/common";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -49,6 +49,7 @@ import { CriarPropostaComponent } from './criar-proposta/criar-proposta.componen
 import { TruncatePipe } from './pipes/truncate/truncate.pipe';
 import { RelatorioComponent } from './relatorio/relatorio.component';
 import { PesquisaRelatorioComponent } from './relatorio/pesquisa-relatorio/pesquisa-relatorio.component';
+import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 
 
 defineLocale("pt-br", ptBrLocale);
@@ -97,8 +98,10 @@ registerLocaleData(localePt);
 		DataTablesModule,
     BsDatepickerModule.forRoot(),
     NgSelectModule,
+		NgMultiSelectDropDownModule.forRoot(),
     FullCalendarModule,
     CurrencyMaskModule,
+    CommonModule
   ],
   providers: [
     {
