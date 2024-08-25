@@ -263,6 +263,10 @@ export class CriarContratoComponent implements OnInit {
       case "tresPagamentosAVista":
         this.nivelPagamentoVista = 3
       break
+
+      case "financiamento":
+        this.nivelPagamentoVista = 1
+      break
     }
 
     this.tipoContrato = valor;
