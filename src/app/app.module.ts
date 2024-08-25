@@ -50,6 +50,7 @@ import { TruncatePipe } from './pipes/truncate/truncate.pipe';
 import { RelatorioComponent } from './relatorio/relatorio.component';
 import { PesquisaRelatorioComponent } from './relatorio/pesquisa-relatorio/pesquisa-relatorio.component';
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
+import { FormGeneratorComponent } from './components/form-generator/form-generator.component';
 
 
 defineLocale("pt-br", ptBrLocale);
@@ -86,6 +87,7 @@ registerLocaleData(localePt);
     TruncatePipe,
     RelatorioComponent,
     PesquisaRelatorioComponent,
+    FormGeneratorComponent,
   ],
   imports: [
     BrowserModule,
