@@ -3,6 +3,9 @@ import { EquipamentosService } from '../services/equipamentos/equipamento.servic
 import { DataTableDirective } from 'angular-datatables';
 import { eq } from '@fullcalendar/core/internal-common';
 import { Subject } from 'rxjs';
+import Swal from 'sweetalert2';
+import * as Constantes from "../constants";
+
 
 @Component({
   selector: 'app-equipamentos',
@@ -28,13 +31,16 @@ export class EquipamentosComponent implements OnInit{
     placa: {
       marca: "",
       potencia: "",
-      modelo: ""
+      modelo: "",
+      garantiaFabricacao: "",
+      garantiaPerformance: "",
     },
     inversor:{
       marca: "",
       modelo: "",
       corrente: "",
       potencia: "",
+      garantiaFabricacao: "",
     }
   }
 
@@ -46,19 +52,19 @@ export class EquipamentosComponent implements OnInit{
 
   constructor(private equipamentoService: EquipamentosService){
     this.dtOptionsEquips = {
+      language: Constantes.dtlanguage,
 			lengthMenu: [60, 30],
 			stateSave: true,
       ordering: true,
-      language: {
-        emptyTable: 'Nenhum equipamento disponível'
-      }
+      processing: true,
+      searching: true,
 		};
   }
 
   ngOnInit(): void {
     // Inicializa 'tipo' com valor do Local Storage ou valor padrão
     this._tipo = localStorage.getItem('tipo') || this._tipo;
-    
+
     this.carregarTabela()
   }
 
@@ -148,8 +154,19 @@ export class EquipamentosComponent implements OnInit{
   }
 
   removerEquipamento(equip: any){
-    this.equipamentoService.deleteEquipamento(equip.idEquipamento).subscribe(resp =>{
-      this.listaEquipamentos = this.listaEquipamentos.filter(e => e.idEquipamento !== equip.idEquipamento);
+    // confirmação swal
+    Swal.fire({
+      icon: "error",
+      title: 'Tem certeza que deseja excluir este equipamento?',
+      showCancelButton: true,
+      confirmButtonText: `Sim`,
+      cancelButtonText: `Cancelar`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.equipamentoService.deleteEquipamento(equip.idEquipamento).subscribe(resp =>{
+          this.listaEquipamentos = this.listaEquipamentos.filter(e => e.idEquipamento !== equip.idEquipamento);
+        })
+      }
     })
   }
 
@@ -159,8 +176,7 @@ export class EquipamentosComponent implements OnInit{
   }
 
   salvarEquipamento(equip: any) {
-
-    this.equipamentoService.putEquipamentos(equip).subscribe(resp => {
+    this.equipamentoService.postEquipamento(equip).subscribe(resp => {
       equip.isEditing = false;
     });
   }

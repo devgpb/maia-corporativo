@@ -3,6 +3,7 @@ import { AutomacoesService } from '../services/automacoes/automacoes.service';
 import { EquipamentosService } from '../services/equipamentos/equipamento.service';
 import Swal from 'sweetalert2';
 import { mapaEquipamentos, tiposSuportes } from '../constants';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 
 import * as moment from 'moment';
@@ -13,7 +14,21 @@ import { toInt } from 'ngx-bootstrap/chronos/utils/type-checks';
 @Component({
   selector: 'app-criar-contrato',
   templateUrl: './criar-contrato.component.html',
-  styleUrls: ['./criar-contrato.component.scss']
+  styleUrls: ['./criar-contrato.component.scss'],
+  animations: [
+    trigger('onEnter', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms', style({ opacity: 1 }))
+      ])
+    ]),
+    trigger('onLeave', [
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate('300ms', style({ opacity: 0 }))
+      ])
+    ])
+  ]
 })
 
 export class CriarContratoComponent implements OnInit {
@@ -28,6 +43,8 @@ export class CriarContratoComponent implements OnInit {
     inversores: [],
     placas: []
   };
+
+  public identificacao = 'cpf';
 
   constructor(
     private automacoesService: AutomacoesService,
@@ -45,6 +62,11 @@ export class CriarContratoComponent implements OnInit {
     potenciaGerador: "",
     nomeContratante: "",
     cpfContratante: "",
+    cnpjContratante: "",
+    garantiaFabricacaoInversor: "",
+    garantiaPerformancePlaca: "",
+    garantiaFabricacaoPlaca: "",
+    identificacao: "",
     enderecoInstalacao: "",
     inversores: null,
     modulos: null,
@@ -98,9 +120,14 @@ export class CriarContratoComponent implements OnInit {
       this.contrato.cidade = pedido.cidade;
       this.contrato.enderecoInstalacao = pedido.endereco;
       this.contrato.cpfContratante = "";
+      this.contrato.garantiaFabricacaoInversor = "";
+      this.contrato.garantiaPerformancePlaca = "";
+      this.contrato.garantiaFabricacaoPlaca = "";
+      this.contrato.cnpjContratante = "";
       this.contrato.distribuidora = pedido.distribuidora;
       this.contrato.enderecoInstalacao = `${pedido.rua} ${pedido.cep}`;
       this.contrato.cpfContratante = pedido.cpfCliente;
+      this.contrato.cnpjContratante = pedido.rgCliente;
     }
   }
 
@@ -108,7 +135,6 @@ export class CriarContratoComponent implements OnInit {
     localStorage.setItem('contrato', JSON.stringify(this.contrato));
     localStorage.setItem('tipoContrato', JSON.stringify(this.tipoContrato));
     localStorage.setItem('nivelPagamentoVista', JSON.stringify(this.nivelPagamentoVista));
-
   }
 
   formatToGo(value: any) {
@@ -138,6 +164,12 @@ export class CriarContratoComponent implements OnInit {
 
   submitForm() {
     this.formatNumbers()
+
+    // Adaptando para enviar
+    this.contrato.identificacao = this.identificacao == 'cpf' ?
+    "Pessoa Física, CPF n° " + this.contrato.cpfContratante :
+    "Pessoa Jurídica, CNPJ n° " + this.contrato.cnpjContratante;
+
     this.automacoesService.getContratoWord(this.tipoContrato,this.contrato).subscribe(response => {
       Swal.fire({
         icon: "success",
@@ -248,6 +280,41 @@ export class CriarContratoComponent implements OnInit {
     event.target.value = value;
   }
 
+  applyRgMask(event: any): void {
+    let value = event.target.value;
+    // Remove tudo o que não for dígito
+    value = value.replace(/\D/g, '');
+
+    // Limita a 9 dígitos para o RG
+    value = value.substring(0, 9);
+
+    // Aplica a máscara do RG: XX.XXX.XXX-X
+    value = value.replace(/(\d{2})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+
+    event.target.value = value;
+  }
+
+  changeIdentificacao(identificacao: string) {
+    // limpar o campo antes de trocar para evitar conflitos
+    if (identificacao === 'cpf') {
+      this.contrato.cpfContratante = '';
+    } else {
+      this.contrato.cnpjContratante = '';
+    }
+
+    this.identificacao = identificacao;
+  }
+
+  onInversorChange(event: any) {
+    this.contrato.garantiaFabricacaoInversor = event.garantiaFabricacao;
+  }
+
+  onModuloChange(event: any) {
+    this.contrato.garantiaPerformancePlaca = event.garantiaPerformance
+    this.contrato.garantiaFabricacaoPlaca = event.garantiaFabricacao
+  }
 
   selecionaTipoContrato(valor: string){
 

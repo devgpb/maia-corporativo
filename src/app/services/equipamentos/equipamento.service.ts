@@ -46,7 +46,6 @@ export class EquipamentosService {
   }
 
   public postEquipamento (info : any): Observable<any>{
-
 		return this.http.post(`${environment.apiURL}/equipamentos`, info);
 	}
 

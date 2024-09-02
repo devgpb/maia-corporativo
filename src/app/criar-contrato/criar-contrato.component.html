@@ -29,13 +29,25 @@
           </div>
         </div>
 
-        <div class="line">
-          <div class="" style="width: 160px;">
-          <label for="cpfContratante" class="form-label">CPF do Contratante</label>
-          <input type="text" class="form-control" id="cpfContratante" name="cpfContratante" [(ngModel)]="contrato.cpfContratante" placeholder="000.000.000-00"
-          (input)="applyCpfMask($event)" required>
+        <div class="input d-flex  justify-content-center flex-column  ">
+
+          <div *ngIf="identificacao == 'cpf' " @onEnter>
+            <label for="cpfCliente" class="form-label">CPF do Cliente</label>
+            <input type="text" class="form-control" id="cpfCliente" name="cpfCliente" [(ngModel)]="contrato.cpfContratante" placeholder="000.000.000-00"
+            (input)="applyCpfMask($event)">
           </div>
+
+          <div *ngIf="identificacao == 'cnpj' " @onEnter>
+            <label for="cnpjCliente" class="form-label">RG do Cliente</label>
+            <input type="text" class="form-control" id="cnpjCliente" name="cnpjCliente" [(ngModel)]="contrato.cnpjContratante" (input)="applyRgMask($event)"
+            placeholder="00.000.000-0">
+          </div>
+
+          <button *ngIf="identificacao == 'cpf' " (click)="changeIdentificacao('cnpj')" @onEnter>Usar RG</button>
+          <button *ngIf="identificacao == 'cnpj' " (click)="changeIdentificacao('cpf')" @onEnter>Usar CPF</button>
+
         </div>
+
 
         <div class="line">
           <div class="big-input">
@@ -77,8 +89,21 @@
           <div class="" style="width: 550px;">
           <label for="inversores" class="form-label">Inversores</label>
 
-          <ng-select class=" selecter" [(ngModel)]="contrato.inversores" [items]="equipamentos.inversores" bindLabel="nome" bindValue="nome" [placeholder]="contrato.inversores || 'Selecione um Inversor'" name="inversores" >
+          <ng-select
+          class="selecter"
+          [(ngModel)]="contrato.inversores"
+          [items]="equipamentos.inversores"
+          bindLabel="nome"
+          [placeholder]="contrato.inversores || 'Selecione um Inversor'"
+          name="inversores"
+          (change)="onInversorChange($event)">
           </ng-select>
+
+          <!-- garantia fabricacao inversores -->
+          <div class="garantia" *ngIf="contrato.inversores">
+            <span  *ngIf="contrato.garantiaFabricacaoInversor">Garantia de Fabricação: <span class="bold">{{contrato.garantiaFabricacaoInversor}} Anos</span></span>
+            <span class="text-danger" *ngIf="!contrato.garantiaFabricacaoInversor">Por favor, Cadastrar Garantia de Fabricação! Sugeito a Erros de Automação!</span>
+          </div>
 
           </div>
 
@@ -93,8 +118,17 @@
           <div class="" style="width: 550px;">
           <label for="modulos" class="form-label">Módulos</label>
 
-          <ng-select class=" selecter" [(ngModel)]="contrato.modulos" [items]="equipamentos.placas" bindLabel="nome" bindValue="nome" [placeholder]="contrato.modulos || 'Selecione um Modulo'" name="modulos"  >
+          <ng-select class=" selecter" [(ngModel)]="contrato.modulos" [items]="equipamentos.placas" bindLabel="nome" bindValue="nome" [placeholder]="contrato.modulos || 'Selecione um Modulo'" name="modulos" (change)="onModuloChange($event)" >
           </ng-select>
+
+          <div class="garantia w-100" *ngIf="contrato.modulos">
+            <span  *ngIf="contrato.garantiaFabricacaoPlaca">Garantia de Fabricação: <span class="bold">{{contrato.garantiaFabricacaoPlaca}} Anos</span></span>
+            <span class="text-danger" *ngIf="!contrato.garantiaFabricacaoPlaca">Por favor, Cadastrar Garantia de Fabricação! Sugeito a Erros de Automação!</span>
+          </div>
+          <div class="garantia w-100" *ngIf="contrato.modulos">
+            <span  *ngIf="contrato.garantiaPerformancePlaca">Garantia de Performance: <span class="bold">{{contrato.garantiaPerformancePlaca}} Anos</span></span>
+            <span class="text-danger" *ngIf="!contrato.garantiaPerformancePlaca">Por favor, Cadastrar Garantia de Performance! Sugeito a Erros de Automação!</span>
+          </div>
 
 
           </div>
