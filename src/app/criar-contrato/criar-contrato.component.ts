@@ -290,18 +290,18 @@ export class CriarContratoComponent implements OnInit {
     event.target.value = value;
   }
 
-  applyRgMask(event: any): void {
+  applyCnpjMask(event: any): void {
     let value = event.target.value;
-    // Remove tudo o que não for dígito
-    value = value.replace(/\D/g, '');
+    value = value.replace(/\D/g, ''); // Remove tudo o que não for dígito
 
-    // Limita a 9 dígitos para o RG
-    value = value.substring(0, 9);
+    // Limita a 14 dígitos para o CNPJ
+    value = value.substring(0, 14);
 
-    // Aplica a máscara do RG: XX.XXX.XXX-X
+    // Aplica a máscara do CNPJ
     value = value.replace(/(\d{2})(\d)/, '$1.$2');
     value = value.replace(/(\d{3})(\d)/, '$1.$2');
-    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    value = value.replace(/(\d{3})(\d)/, '$1/$2');
+    value = value.replace(/(\d{4})(\d{1,2})$/, '$1-$2');
 
     event.target.value = value;
   }
