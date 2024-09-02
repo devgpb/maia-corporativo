@@ -38,13 +38,13 @@
           </div>
 
           <div *ngIf="identificacao == 'cnpj' " @onEnter>
-            <label for="cnpjCliente" class="form-label">RG do Cliente</label>
+            <label for="cnpjCliente" class="form-label">CNPJ do Cliente</label>
             <input type="text" class="form-control" id="cnpjCliente" name="cnpjCliente" [(ngModel)]="contrato.cnpjContratante" (input)="applyCnpjMask($event)"
             placeholder="00.000.000/0000-00">
           </div>
 
           <button *ngIf="identificacao == 'cpf' " (click)="changeIdentificacao('cnpj')" @onEnter>Usar RG</button>
-          <button *ngIf="identificacao == 'cnpj' " (click)="changeIdentificacao('cpf')" @onEnter>Usar CPF</button>
+          <button *ngIf="identificacao == 'cnpj' " (click)="changeIdentificacao('cpf')" @onEnter>Usar CNPJ</button>
 
         </div>
 
