@@ -95,7 +95,7 @@
           <!-- garantia fabricacao inversores -->
           <div class="garantia" *ngIf="contrato.inversores">
             <span  *ngIf="contrato.garantiaFabricacaoInversor">Garantia de Fabricação: <span class="bold">{{contrato.garantiaFabricacaoInversor}} Anos</span></span>
-            <span class="text-danger" *ngIf="!contrato.garantiaFabricacaoInversor">Por favor, Cadastrar Garantia de Fabricação! Sugeito a Erros de Automação!</span>
+            <span class="text-danger" *ngIf="!contrato.garantiaFabricacaoInversor">Por favor, Cadastrar Garantia de Fabricação! Sugeito a Erros de Automação! <span class="bold">{{contrato.inversores}}</span></span>
           </div>
 
           </div>
@@ -120,7 +120,8 @@
           </div>
           <div class="garantia w-100" *ngIf="contrato.modulos">
             <span  *ngIf="contrato.garantiaPerformancePlaca">Garantia de Performance: <span class="bold">{{contrato.garantiaPerformancePlaca}} Anos</span></span>
-            <span class="text-danger" *ngIf="!contrato.garantiaPerformancePlaca">Por favor, Cadastrar Garantia de Performance! Sugeito a Erros de Automação!</span>
+            <span class="text-danger" *ngIf="!contrato.garantiaPerformancePlaca">Por favor, Cadastrar Garantia de Performance! Sugeito a Erros de Automação!  <span class="bold">{{contrato.modulos}}</span></span>
+
           </div>
 
 
