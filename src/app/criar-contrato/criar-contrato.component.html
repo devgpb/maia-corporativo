@@ -89,14 +89,7 @@
           <div class="" style="width: 550px;">
           <label for="inversores" class="form-label">Inversores</label>
 
-          <ng-select
-          class="selecter"
-          [(ngModel)]="contrato.inversores"
-          [items]="equipamentos.inversores"
-          bindLabel="nome"
-          [placeholder]="contrato.inversores || 'Selecione um Inversor'"
-          name="inversores"
-          (change)="onInversorChange($event)">
+          <ng-select class=" selecter" [(ngModel)]="contrato.inversores" [items]="equipamentos.inversores" bindLabel="nome" bindValue="nome" [placeholder]="contrato.inversores || 'Selecione um Inversor'" name="inversores" (change)="onInversorChange($event)">
           </ng-select>
 
           <!-- garantia fabricacao inversores -->

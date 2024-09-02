@@ -85,12 +85,12 @@ export class CriarContratoComponent implements OnInit {
 
   ngOnInit(): void {
     this.equipamentosService.getEquipamentos().subscribe(equip =>{
-      this.equipamentos = equip
+      this.equipamentos = equip,
+      this.loadContrato()
     })
 
     moment.locale('pt-br');
 
-    this.loadContrato()
     this.contrato.data = moment().format('LL');
   }
 
@@ -101,9 +101,10 @@ export class CriarContratoComponent implements OnInit {
     const nivelPagamentoVista = localStorage.getItem('nivelPagamentoVista');
     const savedPedido = localStorage.getItem('pedido');
 
-
     if (savedContrato) {
       this.contrato = JSON.parse(savedContrato);
+      this.pesquisarGarantiasEquipamentos();
+
     }
 
     if (savedTipoContrato) {
@@ -129,6 +130,15 @@ export class CriarContratoComponent implements OnInit {
       this.contrato.cpfContratante = pedido.cpfCliente;
       this.contrato.cnpjContratante = pedido.rgCliente;
     }
+  }
+
+  pesquisarGarantiasEquipamentos() {
+    const inversor = this.equipamentos.inversores.find(inversor => inversor.nome == this.contrato.inversores);
+    const placa = this.equipamentos.placas.find(placa => placa.nome == this.contrato.modulos);
+    console.log(this.equipamentos.inversores)
+    this.contrato.garantiaFabricacaoInversor = inversor.garantiaFabricacao;
+    this.contrato.garantiaPerformancePlaca = placa.garantiaPerformance;
+    this.contrato.garantiaFabricacaoPlaca = placa.garantiaFabricacao;
   }
 
   saveContrato() {
