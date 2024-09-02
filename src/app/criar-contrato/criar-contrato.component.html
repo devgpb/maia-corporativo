@@ -43,8 +43,8 @@
             placeholder="00.000.000/0000-00">
           </div>
 
-          <button *ngIf="identificacao == 'cpf' " (click)="changeIdentificacao('cnpj')" @onEnter>Usar RG</button>
-          <button *ngIf="identificacao == 'cnpj' " (click)="changeIdentificacao('cpf')" @onEnter>Usar CNPJ</button>
+          <button *ngIf="identificacao == 'cpf' " (click)="changeIdentificacao('cnpj')" @onEnter>Usar CNPJ</button>
+          <button *ngIf="identificacao == 'cnpj' " (click)="changeIdentificacao('cpf')" @onEnter>Usar CPF</button>
 
         </div>
 
