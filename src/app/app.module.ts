@@ -52,7 +52,6 @@ import { PesquisaRelatorioComponent } from './relatorio/pesquisa-relatorio/pesqu
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { FormGeneratorComponent } from './components/form-generator/form-generator.component';
 
-
 defineLocale("pt-br", ptBrLocale);
 registerLocaleData(localePt);
 
@@ -103,7 +102,7 @@ registerLocaleData(localePt);
 		NgMultiSelectDropDownModule.forRoot(),
     FullCalendarModule,
     CurrencyMaskModule,
-    CommonModule
+    CommonModule,
   ],
   providers: [
     {

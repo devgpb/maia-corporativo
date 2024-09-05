@@ -56,8 +56,214 @@
   animation: spin 2s linear infinite;
 }
 
+.proposta-container {
+  background-color: #f9f9f9;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.kit-details, .material-details, .payment-details {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.logo-img {
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+
+h3, h4, h5 {
+  text-align: left;
+}
+
+h2{
+  text-align: center;
+}
+
+.kit-details-wrapper {
+  background-color: #f0f9f0;
+  padding: 26px 120px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  p{
+    font-size: 24px;
+    margin-bottom: 3px !important;
+  }
+  strong{
+    font-size: 20px;
+  }
+}
+
+.kit-details p {
+  font-size: 18px;
+}
+
+h4{
+  margin-bottom: 23px;
+}
+
+h3 {
+  font-size: 24px;
+  margin-bottom: 23px;
+}
+
+.material-details h4, .payment-details h3 {
+  font-size: 22px;
+}
+
+.materials-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-around;
+}
+
+.card-proj {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card-proj, .kit-details-wrapper, .payment-details {
+  page-break-inside: avoid;
+}
+
+.card-proj:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.inversor-card-proj {
+  border-left: 5px solid #ffc107; /* Amarelo */
+}
+
+.placas-card-proj {
+  border-left: 5px solid #28a745; /* Verde */
+}
+
+
+
+.highlight {
+  font-weight: bold;
+  font-size: 20px;
+  color: #28a745;
+}
+
+.payment-details {
+  padding: 20px;
+  border: 2px solid #28a745;
+  background-color: #eaf7ea;
+}
+
+.payment-options p {
+  font-size: 18px;
+}
+
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+  font-size: 18px;
+  padding: 10px 20px;
+}
+
+.call-to-action {
+  padding: 20px;
+  background-color: #f0f9f0;
+  border-radius: 15px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.call-to-action h4 {
+  color: #28a745;
+}
+
+.call-to-action p {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.text-success {
+  color: #28a745;
+}
+
+.text-primary {
+  color: #007bff;
+}
+
+.text-secondary {
+  color: #6c757d;
+}
+
+.text-warning {
+  color: #ffc107;
+}
+
+
+
+@media (max-width: 768px) {
+  .materials-card-projs {
+    flex-direction: column;
+  }
+
+  .card-proj {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
 
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .proposta-container {
+    // padding: 10px;
+    margin: 0;
+  }
+
+  .card, .kit-details-wrapper {
+    page-break-inside: avoid;
+    background-color: #fff !important; /* Garante que o fundo fique branco no PDF */
+    box-shadow: none; /* Remove as sombras que podem ser problemáticas */
+  }
+
+  h2, h3, h4, h5, p {
+    color: black !important; /* Garante a legibilidade no PDF */
+  }
+
+  .btn, .no-print {
+    display: none; /* Esconde botões e elementos desnecessários na versão PDF */
+  }
+
+  .highlight {
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  /* Estilos específicos para evitar quebras de página desnecessárias */
+  .container {
+    page-break-inside: avoid;
+  }
+
+  /* Remove animações no PDF */
+  .animate__animated {
+    animation: none;
+  }
 }

@@ -28,19 +28,21 @@ export class AutomacoesService {
       );
   }
 
-  public getPropostaWord(proposta: any): Observable<HttpResponse<Blob>> {
+  // public getPropostaWord(proposta: any): Observable<HttpResponse<Blob>> {
 
-    return this.http.post(`${environment.apiURL}/templates/proposta`, proposta, { observe: 'response', responseType: 'blob' })
-      .pipe(
-        tap((response: HttpResponse<Blob>) => {
-          let filename = this.extractFilename(response);
-          if (response.body) {
-            this.triggerDownload(response.body, filename);
-          } else {
-            // Lidar com o erro ou situação em que não há corpo na resposta.
-          }
-        })
-      );
+  //   return this.http.post(`${environment.apiURL}/templates/proposta`, proposta, { observe: 'response', responseType: 'blob' })
+  //     .pipe(
+  //       tap((response: HttpResponse<Blob>) => {
+  //         let filename = this.extractFilename(response);
+  //         if (response.body) {
+  //           this.triggerDownload(response.body, filename);
+  //         } else {
+  //         }
+  //       })
+  //     );
+  // }
+  public getPropostaWord(proposta: any): Observable<any> {
+    return this.http.post(`${environment.apiURL}/automacao/`, proposta)
   }
 
   public getProcuracaoWord(info: any): Observable<HttpResponse<Blob>> {

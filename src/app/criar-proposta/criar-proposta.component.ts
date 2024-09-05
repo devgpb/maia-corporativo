@@ -2,17 +2,37 @@ import { Component, OnInit } from '@angular/core';
 import { AutomacoesService } from '../services/automacoes/automacoes.service';
 import { ModalService } from '../services/modal/modal.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import * as html2pdf from 'html2pdf.js';
 
 interface Proposta {
   nomeCliente: string;
   cidadeCliente: string;
   endereco: string;
   tipoConta: string;
-  consumoEnergia: string | number;
+  consumoCliente: string | number;
   custoProjeto: string | number;
   tipoInversor: string;
-  tipoEstrutura: string;
+  telhadoCliente: string;
   valorEntrada: number;
+}
+
+export interface Projeto {
+  inversor: string;
+  quantPlacas: number;
+  geracao: number;
+  geracaoKit: number;
+  kitSugerido: string;
+  valorKit: string;
+  valorTotal: string;
+  valorCartao: string;
+  valorFinanciado: string;
+  prasoEntrega: number;
+  potenciaPlaca: number;
+  potInversor: number;
+  mensagemSolo: string;
+  mensagemCidade: string;
+  primeiroAVista: string;
+  segundoAVista: string;
 }
 
 
@@ -39,10 +59,10 @@ export class CriarPropostaComponent implements OnInit{
 
     tipoConta: "Residencial",
     tipoInversor: "Microinversor",
-    consumoEnergia: '',
+    consumoCliente: '',
 
     custoProjeto: 0,
-    tipoEstrutura: "Fibrocimento",
+    telhadoCliente: "Solo",
     valorEntrada: 0,
   }
 
@@ -53,6 +73,8 @@ export class CriarPropostaComponent implements OnInit{
     telefoneCliente: "",
     estadoCliente: ""
   }
+
+  public propostaCliente: Projeto;
 
   comDetalhesPessoais = false
 
@@ -78,7 +100,7 @@ export class CriarPropostaComponent implements OnInit{
     this.modalService.toggle();
 
     let propostaFinal = {...this.proposta};
-    propostaFinal.consumoEnergia = this.formatCurrencyToNumber(propostaFinal.consumoEnergia.toString());
+    propostaFinal.consumoCliente = this.formatCurrencyToNumber(propostaFinal.consumoCliente.toString());
     propostaFinal.custoProjeto = this.formatCurrencyToNumber(propostaFinal.custoProjeto.toString());
     propostaFinal.valorEntrada = this.formatCurrencyToNumber(propostaFinal.valorEntrada.toString());
 
@@ -89,6 +111,8 @@ export class CriarPropostaComponent implements OnInit{
     this.automacoesService.getPropostaWord(propostaFinal).subscribe(resp => {
       this.loading = false;
       this.success = true;
+      this.propostaCliente = resp;
+      console.log(resp);
       this.saveProposta()
     }, error => {
       this.loading = false;
@@ -168,5 +192,23 @@ export class CriarPropostaComponent implements OnInit{
     value = value.replace(/^(\d{2})(\d)/g, '($1) $2'); // Coloca parênteses em volta dos dois primeiros dígitos
     value = value.replace(/(\d)(\d{4})$/, '$1-$2'); // Coloca hífen entre o quarto e o quinto dígitos
     event.target.value = value;
+  }
+
+  downloadPdf() {
+    const printContent = document.getElementById('printSection');
+    // dia atual em formato dd-mm-aaaa
+    const date = new Date().toLocaleDateString('pt-BR').split('/').reverse().join('-');
+
+    const name = `Proposta-${this.proposta.nomeCliente.split(" ")[0]}-${date}.pdf`
+    const options = {
+      margin: [0, 0, 0, 0],
+      filename: name,
+      image: { type: 'jpeg', quality: 0.98 },
+      optimizeText: true,
+      html2canvas: { scale: 1.5 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+
+    };
+    html2pdf().from(printContent).set(options).save();
   }
 }
