@@ -207,17 +207,6 @@ h3 {
 
 
 
-@media (max-width: 768px) {
-  .materials-card-projs {
-    flex-direction: column;
-  }
-
-  .card-proj {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-}
-
 .promotion-icon {
   position: absolute;
   width: 120px;
@@ -262,6 +251,14 @@ h3 {
     font-size: 16px;
     flex: 1;
     min-width: 150px; /* Para garantir que os itens não fiquem muito pequenos */
+  }
+}
+
+
+@media (max-width: 768px) {
+  .card-proj {
+    width: 100%;
+    margin-bottom: 20px;
   }
 }
 
