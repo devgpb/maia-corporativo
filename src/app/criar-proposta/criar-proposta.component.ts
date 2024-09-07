@@ -14,6 +14,9 @@ interface Proposta {
   tipoInversor: string;
   telhadoCliente: string;
   valorEntrada: number;
+  desconto: string | number;
+  telefoneCliente: string;
+  emailCliente: string;
 }
 
 export interface Projeto {
@@ -53,8 +56,8 @@ export interface Projeto {
 export class CriarPropostaComponent implements OnInit{
 
   proposta: Proposta = {
-    nomeCliente: "Fulano de Tal",
-    cidadeCliente: "Cidade",
+    nomeCliente: null,
+    cidadeCliente: null,
     endereco: '',
 
     tipoConta: "Residencial",
@@ -62,15 +65,18 @@ export class CriarPropostaComponent implements OnInit{
     consumoCliente: '',
 
     custoProjeto: 0,
+    desconto: "0%",
     telhadoCliente: "Solo",
     valorEntrada: 0,
+    telefoneCliente: "",
+    emailCliente: "",
+
+
   }
 
   infoPessoal = {
     rgCliente: "",
     identidadeCliente: "",
-    emailCliente: "",
-    telefoneCliente: "",
     estadoCliente: ""
   }
 
@@ -97,12 +103,16 @@ export class CriarPropostaComponent implements OnInit{
     this.loading = true;
     this.success = false;
 
-    this.modalService.toggle();
+    // this.modalService.toggle();
 
     let propostaFinal = {...this.proposta};
     propostaFinal.consumoCliente = this.formatCurrencyToNumber(propostaFinal.consumoCliente.toString());
     propostaFinal.custoProjeto = this.formatCurrencyToNumber(propostaFinal.custoProjeto.toString());
     propostaFinal.valorEntrada = this.formatCurrencyToNumber(propostaFinal.valorEntrada.toString());
+    // Tratar o valor do desconto
+    const descontoInput = this.proposta.desconto.toString().replace('%', '');
+    const desconto = descontoInput !== '' ? descontoInput : '0';
+    propostaFinal.desconto = 1 - parseFloat(desconto) / 100;
 
     propostaFinal = this.comDetalhesPessoais ? {
       ...this.proposta, ...this.infoPessoal
@@ -182,6 +192,19 @@ export class CriarPropostaComponent implements OnInit{
     event.target.value = value;
   }
 
+  applyPercentMask(event: any): void {
+    let value = event.target.value;
+    value = value.replace(/\D/g, ''); // Remove tudo o que não for dígito
+
+    // Limita a 3 dígitos para a porcentagem
+    value = value.substring(0, 3);
+
+    // Adiciona o símbolo de porcentagem no final
+    value = value + '%';
+
+    event.target.value = value;
+  }
+
   applyCelularMask(event: any): void {
     let value = event.target.value;
     value = value.replace(/\D/g, ''); // Remove tudo o que não for dígito
@@ -196,19 +219,22 @@ export class CriarPropostaComponent implements OnInit{
 
   downloadPdf() {
     const printContent = document.getElementById('printSection');
-    // dia atual em formato dd-mm-aaaa
     const date = new Date().toLocaleDateString('pt-BR').split('/').reverse().join('-');
+    const name = `Proposta-${this.proposta.nomeCliente.split(" ")[0]}-${date}.pdf`;
 
-    const name = `Proposta-${this.proposta.nomeCliente.split(" ")[0]}-${date}.pdf`
     const options = {
       margin: [0, 0, 0, 0],
       filename: name,
-      image: { type: 'jpeg', quality: 0.98 },
+      image: { type: 'jpeg', quality: 1 },
       optimizeText: true,
-      html2canvas: { scale: 1.5 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-
+      html2canvas: {
+        scale: 4,
+        useCORS: true
+      },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
+
     html2pdf().from(printContent).set(options).save();
-  }
+}
+
 }
