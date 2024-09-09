@@ -21,7 +21,7 @@
       </li> -->
 
 
-      <li class="nav-item" *ngIf="userCargo=='ADMINISTRADOR'">
+      <li class="nav-item">
         <a class="nav-link" (click)="toggleSubmenu('automacoes')" role="button"
           [class.sub-active]="menuSelected == 'automacoes' && isOpen">
           <i class="fa-solid fa-robot"></i> Automações</a>
@@ -162,7 +162,7 @@
 
     <div class="w-100 sub-area" *ngIf="menuSelected == 'automacoes'">
       <a routerLink="contrato/gerar" [routerLinkActive]="['active-link']" [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('contratos/gerar') ? true : null">Gerar Contrato
+        [attr.disabled]="isActive('contratos/gerar') ? true : null" *ngIf="userCargo=='ADMINISTRADOR'">Gerar Contrato
       </a>
 
       <a routerLink="proposta/gerar" [routerLinkActive]="['active-link']" [routerLinkActiveOptions]="{exact: true}"
@@ -176,7 +176,7 @@
       </a> -->
 
       <a routerLink="procuracao/gerar" [routerLinkActive]="['active-link']" [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('procuracao/gerar') ? true : null">Gerar Procuração
+        [attr.disabled]="isActive('procuracao/gerar') ? true : null" *ngIf="userCargo=='ADMINISTRADOR'">Gerar Procuração
       </a>
     </div>
   </div>

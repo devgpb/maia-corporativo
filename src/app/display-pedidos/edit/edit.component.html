@@ -169,7 +169,7 @@
         </select>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" *ngIf="userCargo != 'COLABORADOR'">
         <label for="faturamento">Faturamento (R$):</label>
         <input type="text" class="form-control" id="faturamento" formControlName="faturamento" appNumericOnly>
       </div>
