@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, tap } from 'rxjs';
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 
 @Injectable({
@@ -16,7 +16,12 @@ export class EquipamentosService {
   }
 
   public getTiposEquipamentos(tipo: string): Observable<any>{
-		return this.http.get(`${environment.apiURL}/equipamentos/listar/${tipo}`);
+    const headers = new HttpHeaders({
+      'Cache-Control': 'no-cache',  
+      'Pragma': 'no-cache'
+    });
+
+		return this.http.get(`${environment.apiURL}/equipamentos/listar/${tipo}`, { headers });
   }
 
   public putEquipamentos(equipamento: any): Observable<any>{

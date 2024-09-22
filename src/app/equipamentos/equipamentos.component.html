@@ -16,6 +16,13 @@
         >
          <p [class.chosen]="tipo == 'inversor'">Inversor</p>
         </div>
+
+        <div class="radio animate__animated animate__infinite"
+        [class.animate__pulse]="tipo == 'kits'"
+        (click)="mudarTipo('kits')"
+        >
+         <p [class.chosen]="tipo == 'kits'">Kits</p>
+        </div>
       </div>
 
       <form class="d-flex flex-column justify-content-end ">
@@ -44,7 +51,6 @@
         </div>
 
         <div *ngIf="tipo == 'inversor'">
-
           <div class="form-group">
             <label for="marca">Marca</label>
             <input [(ngModel)]="equip.inversor.marca" type="text" class="form-control" id="marca" name="marca" placeholder="Marca">
@@ -70,12 +76,12 @@
             <input [(ngModel)]="equip.inversor.garantiaFabricacao" type="text" class="form-control" id="garantia" name="garantia" placeholder="Garantia" (keydown)="validarNumero($event)">
           </div>
         </div>
-
-        <button type="button" class="btn btn-primary add-equip" (click)="adicionarEquipamento()">Adicionar Equipamento</button>
+        <button type="button" *ngIf="tipo == 'placa' || tipo == 'inversor'"
+        class="btn btn-primary add-equip" (click)="adicionarEquipamento()"
+        >Adicionar Equipamento</button>
 
         <div class="alert animate__animated animate__bounceIn" [class.animate__bounceOut]="alertHandler"
         >
-
           <div class="error text-center alert alert-danger" *ngIf="cadastrado==false">
             Equipamento não cadastrado!
           </div>
@@ -85,10 +91,14 @@
           </div>
 
         </div>
+
       </form>
     </div>
+      <div class="w-100" [class.hidden]="tipo != 'kits'">
+        <app-kits-solares></app-kits-solares>
+      </div>
 
-      <div >
+      <div  [class.hidden]="tipo != 'inversor' && tipo != 'placa'">
         <h2 class="w-100 text-center "> Listagem </h2>
 
         <table datatable #equips [dtOptions]="dtOptionsEquips" [dtTrigger]="dtTriggerEquips"

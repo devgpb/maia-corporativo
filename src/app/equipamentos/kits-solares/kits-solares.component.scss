@@ -1,0 +1,51 @@
+/* kits-solares.component.scss */
+
+/* Estilos para a tabela */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+
+  thead {
+    background-color: #000;
+
+    th {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+  }
+
+  tbody {
+    tr {
+      &:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      &:hover {
+        background-color: #f1f1f1;
+      }
+    }
+
+    td {
+      padding: 10px;
+    }
+  }
+}
+
+/* Estilos adicionais */
+input[type="number"],
+input[type="text"] {
+  padding: 5px;
+  font-size: 14px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  margin-left: 5px;
+}
