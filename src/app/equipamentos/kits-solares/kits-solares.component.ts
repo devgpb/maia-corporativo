@@ -12,7 +12,7 @@ export class KitsSolaresComponent implements OnInit {
   listaKitsSolares = [];
   inputRows = [];
 
-  constructor(private kitsSolaresService: KitsSolaresService) {}
+  constructor(private kitsSolaresService: KitsSolaresService) { }
 
   ngOnInit(): void {
     this.carregarTabela();
@@ -21,11 +21,14 @@ export class KitsSolaresComponent implements OnInit {
   carregarTabela() {
     this.kitsSolaresService.getAllKitsSolares().subscribe(kits => {
 
-      // ordenar kits por geracao
-      kits.sort((a, b) => {
-        return a.geracao - b.geracao;
-      });
       this.listaKitsSolares = kits;
+      this.ordenarKits();
+    });
+  }
+
+  ordenarKits() {
+    this.listaKitsSolares.sort((a, b) => {
+      return a.geracao - b.geracao;
     });
   }
 
@@ -46,6 +49,7 @@ export class KitsSolaresComponent implements OnInit {
         this.inputRows.splice(index, 1);
       }
       this.listaKitsSolares.push(resp);
+      this.ordenarKits();
     });
   }
 
@@ -57,11 +61,34 @@ export class KitsSolaresComponent implements OnInit {
   }
 
   iniciarEdicao(kit: any) {
+    // formatar valor para numero br
+    kit.valorKit = this.formatToBRL(kit.valorKit);
     kit.isEditing = true;
     kit.editState = { ...kit };
   }
 
+  formatToBRL(value) {
+    // Converte o número para string com duas casas decimais
+    value = parseFloat(value);
+    let numeroStr = value.toFixed(2);
+
+    // Usa expressão regular para adicionar as vírgulas como separador de milhares
+    return numeroStr.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  formatToUSD(value) {
+    // Remove os separadores de milhares (vírgulas)
+    let numeroSemVirgula = value.replace(/,/g, '');
+
+    // Transforma a string em float
+    let numeroFloat = parseFloat(numeroSemVirgula);
+
+    return numeroFloat;
+  }
+
   salvarEdicao(kit: any) {
+    // formatar valor para numero en
+    kit.valorKit = this.formatToUSD(kit.valorKit);
     this.kitsSolaresService.updateKitSolar(kit.idKit, kit).subscribe(resp => {
       kit.isEditing = false;
     });
@@ -93,23 +120,33 @@ export class KitsSolaresComponent implements OnInit {
       event.preventDefault();
     }
   }
-
   applyNumberMask(event: any): void {
     let value = event.target.value;
-    // Remove tudo o que não é dígito
-    value = value.replace(/\D/g, '');
 
-    // Converte para número para remover zeros à esquerda, depois volta para string
-    value = parseInt(value, 10).toString();
+    // Remove tudo que não é número, ponto ou vírgula
+    value = value.replace(/[^0-9.]/g, '');
 
-    // Reaplica a formatação de milhares
-    // Esta expressão regular insere pontos como separadores de milhar
-    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    // Divide a parte inteira e a parte decimal pelo ponto
+    const parts = value.split('.');
 
-    // se for Nan, seta vazio
-    if (isNaN(parseInt(value, 10))) {
-      value = '';
+    // Mantém apenas a primeira parte como decimal (caso tenha mais de um ponto)
+    if (parts.length > 2) {
+      parts.splice(2);
     }
+
+    // Formata a parte inteira com vírgulas para separar os milhares
+    let integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    // Se existir uma parte decimal, junta com a parte inteira
+    if (parts.length > 1) {
+      value = `${integerPart}.${parts[1]}`;
+    } else {
+      value = integerPart;
+    }
+
+    // Aplica o valor formatado de volta ao campo de input
     event.target.value = value;
   }
+
+
 }
