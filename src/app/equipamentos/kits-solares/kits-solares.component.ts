@@ -20,6 +20,11 @@ export class KitsSolaresComponent implements OnInit {
 
   carregarTabela() {
     this.kitsSolaresService.getAllKitsSolares().subscribe(kits => {
+
+      // ordenar kits por geracao
+      kits.sort((a, b) => {
+        return a.geracao - b.geracao;
+      });
       this.listaKitsSolares = kits;
     });
   }
