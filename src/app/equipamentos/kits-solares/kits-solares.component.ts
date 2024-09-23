@@ -95,7 +95,8 @@ export class KitsSolaresComponent implements OnInit {
   }
 
   cancelarEdicaoExistente(kit: any) {
-    Object.assign(kit, kit.editState);
+    Object.assign(kit, kit.editState)
+    kit.valorKit = this.formatToUSD(kit.valorKit);
     kit.isEditing = false;
   }
 
