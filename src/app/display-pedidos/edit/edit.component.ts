@@ -125,6 +125,9 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     return false
   }
 
+  goToDrive(){
+    window.open(this.pedidoEmEdicao.linkDrive, "_blank")
+  }
 
   gerarFormEdicao(pedido: IPedido) {
     const data = new Date(pedido.dataPedido)
