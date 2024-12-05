@@ -8,9 +8,7 @@ export interface IPedido{
   formaPagamento?: string;
 
   celular : string;
-  cep : string;
-  rua : string;
-  cidade: string;
+  endereco: string;
   email : string;
   horario: string;
   ref: string;

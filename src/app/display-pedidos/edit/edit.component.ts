@@ -137,9 +137,7 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
       nomeCompleto: pedido.nomeCompleto,
       celular: pedido.celular,
       email: pedido.email,
-      cidade: pedido.cidade,
-      rua: pedido.rua,
-      cep: pedido.cep,
+      endereco: pedido.endereco,
       status: pedido.status,
       consumoDeEnergiaMensal: pedido.consumoDeEnergiaMensal,
       faturamento: pedido.faturamento,
@@ -280,10 +278,7 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     return this.fb.group({
       nomeCompleto: ['', Validators.required],
       celular: ['', [Validators.required, Validators.minLength(12)]],
-      email: [''],
-      cidade: [''],
-      rua: [''],
-      cep: [''],
+      endereco: [''],
       status: ['', Validators.required],
       consumoDeEnergiaMensal: [''],
       faturamento: [0],
@@ -328,9 +323,7 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     return formValues.nomeCompleto === this.pedidoEmEdicao?.nomeCompleto &&
       formValues.celular === this.pedidoEmEdicao?.celular &&
       formValues.email === this.pedidoEmEdicao?.email &&
-      formValues.cidade === this.pedidoEmEdicao?.cidade &&
-      formValues.rua === this.pedidoEmEdicao?.rua &&
-      formValues.cep === this.pedidoEmEdicao?.cep &&
+      formValues.endereco === this.pedidoEmEdicao?.endereco &&
       formValues.consumoDeEnergiaMensal === this.pedidoEmEdicao?.consumoDeEnergiaMensal &&
       formValues.faturamento === this.pedidoEmEdicao?.faturamento &&
       formValues.dataPedido === new Date(this.pedidoEmEdicao?.dataPedido) &&

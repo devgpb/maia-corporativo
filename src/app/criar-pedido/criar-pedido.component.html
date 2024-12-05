@@ -25,23 +25,11 @@
         <input type="text" formControlName="celular" class="form-control" id="celular" placeholder="(00)-0000-0000" (input)="applyCelularMask($event)">
       </div>
       <div class="form-group ">
-        <label for="cep">CEP</label>
-        <input type="text" formControlName="cep" class="form-control" id="cep" placeholder="00000-000" (input)="applyCepMask($event); onCepChange()" >
+        <label for="endereco">Endereço</label>
+        <input type="text" class="form-control" id="endereco" placeholder="Informe o Endereço"
+        formControlName="endereco">
       </div>
 
-    </div>
-
-    <div class="form-row d-flex justify-content-center align-items-center ">
-
-      <div class="form-group ">
-        <label for="cidade">Cidade</label>
-        <input type="text" class="form-control" id="cidade" placeholder="Informe a cidade"
-        formControlName="cidade">
-      </div>
-      <div class="form-group ">
-        <label for="rua">Rua</label>
-        <input type="text" class="form-control" id="rua" placeholder="Informe a rua"  formControlName="rua">
-      </div>
     </div>
 
     <div class="form-row d-flex justify-content-center align-items-center">

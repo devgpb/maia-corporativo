@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.carregarPedidoInicial();
     this.pedidosService.getPedidosRecentes().subscribe(pedidos => {
       pedidos.forEach(pedido => {
-        this.notifications.push({nomeCompleto: pedido.nomeCompleto, cidade: pedido.cidade});
+        this.notifications.push({nomeCompleto: pedido.nomeCompleto, endereco: pedido.endereco});
       });
     });
     this.observarMudancasNoPedido();

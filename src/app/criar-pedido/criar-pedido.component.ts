@@ -31,23 +31,10 @@ export class CriarPedidoComponent {
 
   fields = [
     {
-      label: 'Cidade',
+      label: 'Endereco',
       type: 'text',
-      placeholder: 'Informe a cidade',
-      formControlName: 'cidade'
-    },
-    {
-      label: 'CEP',
-      type: 'text',
-      placeholder: 'Informe o CEP',
-      formControlName: 'cep',
-      maskFunction: 'applyCepMask'
-    },
-    {
-      label: 'Rua',
-      type: 'text',
-      placeholder: 'Informe a rua',
-      formControlName: 'rua'
+      placeholder: 'Informe o endereco',
+      formControlName: 'endereco'
     },
     {
       label: 'Email',
@@ -82,7 +69,7 @@ export class CriarPedidoComponent {
     group['horario'] = ["tarde"];
     group['ref'] = [''];
     group['observacao'] = [''];
-    group['email'] = ['', [this.emailValidator()]];
+    group['email'] = [''];
 
     return this.fb.group(group);
   }
@@ -94,7 +81,7 @@ export class CriarPedidoComponent {
     this.form.get("consumo")?.setValue('')
     this.form.get("cep")?.setValue('')
     this.form.get("rua")?.setValue('')
-    this.form.get("cidade")?.setValue('')
+    this.form.get("endereco")?.setValue('')
     this.form.get("email")?.setValue('')
     this.form.get("horario")?.setValue('tarde')
     this.form.get("observacao")?.setValue('')
@@ -113,9 +100,7 @@ export class CriarPedidoComponent {
         nomeCompleto: this.form.get("nome")?.value,
         celular: this.form.get("celular")?.value,
         consumoDeEnergiaMensal: this.form.get("consumo")?.value,
-        cep: this.form.get("cep")?.value,
-        rua: this.form.get("rua")?.value,
-        cidade:this.form.get("cidade")?.value,
+        endereco: this.form.get("endereco")?.value,
         email: this.form.get("email")?.value,
         horario: this.form.get("horario")?.value,
         observacao: this.form.get("observacao")?.value,

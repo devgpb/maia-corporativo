@@ -4,9 +4,7 @@ export interface INovoPedido{
   nomeCompleto: string;
   consumoDeEnergiaMensal: number;
   celular : string;
-  cep : string;
-  rua : string;
-  cidade: string;
+  endereco: string;
   email : string;
   horario: string;
   referencia: string;
