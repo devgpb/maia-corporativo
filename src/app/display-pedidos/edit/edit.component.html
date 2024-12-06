@@ -12,8 +12,10 @@
       <i class="fa-solid fa-angles-left text-info" (click)="voltarPedido(detalhes,true)" *ngIf="indiceDetalhe > 0"></i>
     </div>
 
+    <div class="w-100">
+      {{ detalhes?.nomeCompleto }}
+    </div>
 
-    {{ detalhes?.nomeCompleto }}
 
     <div class="holder">
       <i class="fa-solid fa-angles-right text-info" *ngIf="indiceDetalhe < indiceLimiteDetalhe - 1"
