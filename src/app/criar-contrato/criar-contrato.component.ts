@@ -126,7 +126,7 @@ export class CriarContratoComponent implements OnInit {
       this.contrato.garantiaFabricacaoPlaca = "";
       this.contrato.cnpjContratante = "";
       this.contrato.distribuidora = pedido.distribuidora;
-      this.contrato.enderecoInstalacao = `${pedido.rua} ${pedido.cep}`;
+      this.contrato.enderecoInstalacao = `${pedido.endereco}`;
       this.contrato.cpfContratante = pedido.cpfCliente;
       this.contrato.cnpjContratante = pedido.rgCliente;
     }
