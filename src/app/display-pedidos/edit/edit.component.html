@@ -71,7 +71,7 @@
     <!-- Marcar Datas -->
     <!-- <h3 class="w-100 mt-3 mb-3">Marcação de Eventos:</h3>
 
-    <div class="form-group w-100 d-flex eventos justify-content-between" formGroupName="datas">
+    <div class="form-group col-12 col-lg-4 w-100 d-flex eventos justify-content-between" formGroupName="datas">
 
       <div class="visita" formGroupName="dataVisita">
         <label for="datas">Data Visita:</label>
@@ -107,53 +107,55 @@
       </div>
 
     </div> -->
+    <!-- Pessoal -->
+    <h3 class="w-100 mt-4">Pessoal:</h3>
     <div class="w100 d-flex flex-wrap justify-content-center">
 
-      <!-- Pessoal -->
-      <h3 class="w-100">Pessoal:</h3>
-
-      <div class="form-group">
+      <div class="form-group col-12 col-lg-4">
         <label for="nomeCompleto">Nome:</label>
         <input type="text" class="form-control" id="nomeCompleto" formControlName="nomeCompleto">
       </div>
 
-      <div class="form-group">
+      <div class="form-group col-12 col-lg-4">
         <label for="nomeCompleto">CPF:</label>
         <input type="text" class="form-control" id="cpfCliente" formControlName="cpfCliente" (input)="appyCPFMask($event)">
       </div>
 
-      <div class="form-group">
+      <div class="form-group col-12 col-lg-4">
         <label for="celular">Celular:</label>
         <input type="tel" class="form-control" id="celular" formControlName="celular" placeholder="(00)-0000-0000"
           (input)="applyCelularMask($event)">
       </div>
 
-      <div class="form-group">
+      <div class="form-group col-12 col-lg-4">
         <label for="email">Email:</label>
         <input type="email" class="form-control" id="email" formControlName="email">
       </div>
 
-      <div class="form-group">
+      <div class="form-group col-12 col-lg-4">
         <label for="endereco">Endereço:</label>
         <input type="text" class="form-control" id="endereco" formControlName="endereco">
       </div>
 
-      <!-- Gerencial -->
-      <h3 class="w-100">Gerencial:</h3>
+    </div>
 
-      <div class="form-group">
+    <!-- Gerencial -->
+    <h3 class="w-100 mt-4">Gerencial:</h3>
+    <div class="w-100 d-flex flex-wrap justify-content-center">
+
+      <div class="form-group col-12 col-lg-4">
         <label for="status">Status:</label>
         <input type="text" class="form-control" id="status" formControlName="status">
       </div>
 
-      <div class="form-group">
-        <label for="consumoDeEnergiaMensal">Consumo Mensal de Energia:</label>
-        <input type="text" class="form-control" id="consumoDeEnergiaMensal" formControlName="consumoDeEnergiaMensal"
+      <div class="form-group col-12 col-lg-4">
+        <label for="consumo">Consumo Mensal de Energia:</label>
+        <input type="text" class="form-control" id="consumo" formControlName="consumo"
           appNumericOnly>
       </div>
 
       <!-- Lista de formas de pagamento select -->
-      <div class="form-group" *ngIf="canShowFormaPagamento">
+      <div class="form-group col-12 col-lg-4" *ngIf="canShowFormaPagamento">
         <label for="formaPagamento">Forma de Pagamento:</label>
         <select class="form-control select" id="formaPagamento" formControlName="formaPagamento">
           <option value="0">Selecione</option>
@@ -161,40 +163,139 @@
         </select>
       </div>
 
-      <div class="form-group" *ngIf="userCargo != 'COLABORADOR'">
+      <div class="form-group col-12 col-lg-4" *ngIf="userCargo != 'COLABORADOR'">
         <label for="faturamento">Faturamento (R$):</label>
         <input type="text" class="form-control" id="faturamento" formControlName="faturamento" appNumericOnly>
       </div>
 
-      <div class="form-group">
+      <div class="form-group col-12 col-lg-4">
         <label for="dataPedido">Mudança Mais Recente:</label>
         <input type="date" class="form-control" id="dataPedido" formControlName="dataPedido">
       </div>
 
-      <div class="form-group">
+      <div class="form-group col-12 col-lg-4">
         <label for="ref">Referência:</label>
         <input type="text" class="form-control" id="ref" formControlName="ref">
       </div>
 
-      <div class="form-group">
+      <div class="form-group col-12 col-lg-4">
         <label for="indicacao">Indicação:</label>
         <input type="text" class="form-control" id="indicacao" formControlName="indicacao">
       </div>
 
-      <div class="form-group w-100 mb-3">
+      <div class="form-group col-12 col-lg-4 w-100 mb-3">
         <label for="cidade">Observação:</label>
         <textarea type="text" class="form-control " id="observacao" formControlName="observacao">
       </textarea>
       </div>
+    </div>
 
+    <!-- Instalacao -->
+    <!-- Instalação -->
+    <h3 class="w-100 mt-4">Instalação:</h3>
+    <div class="w-100 container " formGroupName="instalacao">
+      <!-- Contexto Geral -->
+      <div class="row">
+        <div class="form-group col-12 col-lg-6">
+          <label for="potenciaGerador">Potência Gerador:</label>
+          <input type="text" class="form-control" id="potenciaGerador"
+            placeholder="Potência do Gerador"
+            formControlName="potenciaGerador">
+        </div>
+        <div class="form-group col-12 col-lg-6">
+          <label for="distribuidora">Distribuidora:</label>
+          <input type="text" class="form-control" id="distribuidora"
+            placeholder="Nome da Distribuidora"
+            formControlName="distribuidora">
+        </div>
+      </div>
 
+      <!-- Contexto Inversores -->
+      <div class="row">
+        <div class="form-group col-12 col-lg-6">
+          <label for="inversores">Inversores:</label>
+          <input type="text" class="form-control" id="inversores"
+            placeholder="Inversores"
+            formControlName="inversores">
+        </div>
+        <div class="form-group col-12 col-lg-3">
+          <label for="quantidadeInversores">Quantidade de Inversores:</label>
+          <input type="number" class="form-control" id="quantidadeInversores"
+            placeholder="Quantidade de Inversores"
+            formControlName="quantidadeInversores">
+        </div>
+        <div class="form-group col-12 col-lg-3">
+          <label for="garantiaFabricacaoInversor">Garantia Fabricação (Anos):</label>
+          <input type="number" class="form-control" id="garantiaFabricacaoInversor"
+            placeholder="Garantia (Anos)"
+            formControlName="garantiaFabricacaoInversor">
+        </div>
+      </div>
+
+      <!-- Contexto Placas -->
+      <div class="row">
+        <div class="form-group col-12 col-lg-6">
+          <label for="placas">Placas:</label>
+          <input type="text" class="form-control" id="placas"
+            placeholder="Placas"
+            formControlName="placas">
+        </div>
+        <div class="form-group col-12 col-lg-3">
+          <label for="quantidadePlacas">Quantidade de Placas:</label>
+          <input type="number" class="form-control" id="quantidadePlacas"
+            placeholder="Quantidade"
+            formControlName="quantidadePlacas">
+        </div>
+        <div class="form-group col-12 col-lg-3">
+          <label for="garantiaFabricacaoPlaca">Garantia Fabricação (Anos):</label>
+          <input type="number" class="form-control" id="garantiaFabricacaoPlaca"
+            placeholder="Garantia (Anos)"
+            formControlName="garantiaFabricacaoPlaca">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-12 col-lg-4">
+          <label for="garantiaPerformancePlaca">Garantia Performance (Anos):</label>
+          <input type="number" class="form-control" id="garantiaPerformancePlaca"
+            placeholder="Garantia Performance"
+            formControlName="garantiaPerformancePlaca">
+        </div>
+      </div>
+
+      <!-- Contexto Suporte -->
+      <div class="row">
+        <div class="form-group col-12 col-lg-6">
+          <label for="suporte">Suporte:</label>
+          <input type="text" class="form-control" id="suporte"
+            placeholder="Tipo de Suporte"
+            formControlName="suporte">
+        </div>
+        <div class="form-group col-12 col-lg-3">
+          <label for="quantidadeSuportes">Quantidade de Suportes:</label>
+          <input type="number" class="form-control" id="quantidadeSuportes"
+            placeholder="Quantidade"
+            formControlName="quantidadeSuportes">
+        </div>
+      </div>
+
+      <!-- Contexto Data -->
+      <div class="row">
+        <div class="form-group col-12 col-lg-4">
+          <label for="data">Data de Instalação:</label>
+          <input type="date" class="form-control" id="data"
+            placeholder="Data de Instalação"
+            formControlName="data">
+        </div>
+      </div>
     </div>
 
 
 
 
 
-    <div class="form-group w-100 btn-area ">
+
+    <div class="form-group col-12 col-lg-4 w-100 btn-area ">
       <div class="specials">
         <button class="btn btn-warning" (click)="marcarStandby()" *ngIf="!rotaEspecial"><i
             class="fa-regular fa-hourglass text-dark"></i>STANDBY</button>

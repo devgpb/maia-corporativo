@@ -2,7 +2,7 @@ export interface IPedido{
   [key: string]: any;
   idPedido?: string | number;
   nomeCompleto: string;
-  consumoDeEnergiaMensal: number;
+  consumo: number;
   faturamento?: number;
   cpfCliente?: string;
   formaPagamento?: string;
@@ -12,7 +12,7 @@ export interface IPedido{
   email : string;
   horario: string;
   ref: string;
-  dataPedido: string;
+  dataPedido: string | Date;
   observacao?: string;
   status: string;
   indicacao: string;
@@ -20,6 +20,8 @@ export interface IPedido{
   datas: any;
 
   detalhes:any;
+  instalacao: any;
+  pagamento: any;
 
   selected?: boolean;
 }

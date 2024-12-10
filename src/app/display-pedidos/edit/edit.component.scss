@@ -35,7 +35,7 @@
   display: flex;
   flex-wrap: wrap;
   div.form-group{
-    width: 50%;
+    // width: 50%;
     padding-left: 5px;
   }
 
@@ -294,6 +294,9 @@ select {
   }
 }
 
+.form-group{
+  margin: 12px 0;
+}
 
 
 @keyframes spin {
@@ -327,7 +330,7 @@ select {
 
   .edit-form{
     div.form-group{
-      width: 90%;
+      // width: 90%;
       padding-left: 5px;
     }
   }

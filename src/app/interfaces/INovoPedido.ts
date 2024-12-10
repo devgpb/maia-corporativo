@@ -2,7 +2,7 @@ export interface INovoPedido{
   [key: string]: any;
   idPedido?: string | number;
   nomeCompleto: string;
-  consumoDeEnergiaMensal: number;
+  consumo: number;
   celular : string;
   endereco: string;
   email : string;

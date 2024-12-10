@@ -1,5 +1,5 @@
 import { Component, Input, EventEmitter, Output, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { IPedido } from 'src/app/interfaces/IPedido';
 import { IUser } from 'src/app/interfaces/IUser';
@@ -77,6 +77,51 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     window.addEventListener('popstate', this.handlePopStateBound);
   }
 
+  initializeForm() {
+    // Inicialização do formulário
+    return this.fb.group({
+      nomeCompleto: [null, Validators.required],
+      celular: [null, [Validators.required, Validators.minLength(12)]],
+      endereco: [null],
+      status: [null, Validators.required],
+      consumo: [null],
+      faturamento: [0],
+      dataPedido: [null, Validators.required],
+      observacao: [null],
+      detalhes: [{}],
+      cpfCliente: [null],
+      formaPagamento: [null],
+      ref: [null],
+      indicacao: [null],
+      instalacao: this.fb.group({
+        potenciaGerador: [null],
+        distribuidora: [null],
+        inversores: [null],
+        quantidadeInversores: [null],
+        garantiaFabricacaoInversor: [null],
+        placas: [null],
+        quantidadePlacas: [null],
+        garantiaFabricacaoPlaca: [null],
+        garantiaPerformancePlaca: [null],
+        suporte: [null],
+        quantidadeSuportes: [null],
+        data: [null]
+      }),
+      datas: this.fb.group({
+        dataVisita: this.fb.group({
+          data: [null],
+          hora: [0],
+          minuto: [0]
+        }),
+        dataInstalacao: this.fb.group({
+          data: [null],
+          hora: [0],
+          minuto: [0]
+        }),
+      }),
+    });
+  }
+
   handlePopState(event: PopStateEvent) {
     // Ação desejada
     console.log('Botão de voltar pressionado (popstate)');
@@ -130,37 +175,9 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   gerarFormEdicao(pedido: IPedido) {
-    const data = new Date(pedido.dataPedido)
-
+    pedido.dataPedido = new Date(pedido.dataPedido)
     // const dataPedido =
-    this.editForm.patchValue({
-      nomeCompleto: pedido.nomeCompleto,
-      celular: pedido.celular,
-      email: pedido.email,
-      endereco: pedido.endereco,
-      status: pedido.status,
-      consumoDeEnergiaMensal: pedido.consumoDeEnergiaMensal,
-      faturamento: pedido.faturamento,
-      dataPedido: data,
-      cpfCliente: pedido.cpfCliente,
-      formaPagamento: pedido.formaPagamento,
-      ref: pedido.ref,
-      indicacao: pedido.indicacao,
-      observacao: pedido.observacao,
-      detalhes: pedido.detalhes,
-      datas: {
-        dataVisita: {
-          data: null,
-          hora: 0,
-          minuto: 0
-        },
-        dataInstalacao: {
-          data: null,
-          hora: 0,
-          minuto: 0
-        },
-      }
-    });
+    this.patchForm(this.editForm, pedido);
 
     if (pedido['datasPedidos'].dataVisita) {
       const visita = new Date(pedido['datasPedidos'].dataVisita)
@@ -202,6 +219,25 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     this.pedidoEmEdicao = pedido
+  }
+
+  patchForm(formGroup: FormGroup, data: any) {
+    Object.keys(formGroup.controls).forEach(key => {
+      if (formGroup.get(key) instanceof FormGroup && data[key]) {
+        // Se o controle for um FormGroup e o dado também existir, recursivamente preenche os campos aninhados
+        this.patchForm(formGroup.get(key) as FormGroup, data[key]);
+      } else if (formGroup.get(key) instanceof FormArray && Array.isArray(data[key])) {
+        // Para arrays, mapeia os valores
+        const formArray = formGroup.get(key) as FormArray;
+        formArray.clear(); // Remove quaisquer itens anteriores
+        data[key].forEach((item: any) => {
+          formArray.push(this.fb.group(item));
+        });
+      } else if (data[key] !== undefined) {
+        // Preenche o valor para controles simples
+        formGroup.get(key)?.patchValue(data[key]);
+      }
+    });
   }
 
   marcarStandby() {
@@ -273,36 +309,7 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     this.modalService.toggle();
   }
 
-  initializeForm() {
-    // Inicialização do formulário
-    return this.fb.group({
-      nomeCompleto: ['', Validators.required],
-      celular: ['', [Validators.required, Validators.minLength(12)]],
-      endereco: [''],
-      status: ['', Validators.required],
-      consumoDeEnergiaMensal: [''],
-      faturamento: [0],
-      dataPedido: ['', Validators.required],
-      observacao: [''],
-      detalhes: [{}],
-      cpfCliente: [''],
-      formaPagamento: [null],
-      ref: [''],
-      indicacao: [''],
-      datas: this.fb.group({
-        dataVisita: this.fb.group({
-          data: [''],
-          hora: [0],
-          minuto: [0]
-        }),
-        dataInstalacao: this.fb.group({
-          data: [''],
-          hora: [0],
-          minuto: [0]
-        }),
-      }),
-    });
-  }
+
 
   formatarDataEvento(dataString: any) {
     if (dataString.data == null || dataString.data == undefined) {
@@ -324,7 +331,7 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
       formValues.celular === this.pedidoEmEdicao?.celular &&
       formValues.email === this.pedidoEmEdicao?.email &&
       formValues.endereco === this.pedidoEmEdicao?.endereco &&
-      formValues.consumoDeEnergiaMensal === this.pedidoEmEdicao?.consumoDeEnergiaMensal &&
+      formValues.consumo === this.pedidoEmEdicao?.consumo &&
       formValues.faturamento === this.pedidoEmEdicao?.faturamento &&
       formValues.dataPedido === new Date(this.pedidoEmEdicao?.dataPedido) &&
       formValues.indicacao === this.pedidoEmEdicao?.indicacao &&

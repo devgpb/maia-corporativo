@@ -99,7 +99,7 @@ export class CriarPedidoComponent {
       const formContato: INovoPedido = {
         nomeCompleto: this.form.get("nome")?.value,
         celular: this.form.get("celular")?.value,
-        consumoDeEnergiaMensal: this.form.get("consumo")?.value,
+        consumo: this.form.get("consumo")?.value,
         endereco: this.form.get("endereco")?.value,
         email: this.form.get("email")?.value,
         horario: this.form.get("horario")?.value,
