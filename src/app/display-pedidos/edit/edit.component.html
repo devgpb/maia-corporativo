@@ -1,10 +1,17 @@
 <div class="w-100">
-  <i class="fa solid fa-circle-xmark icon bg-danger text-white" (click)="toggleModal()"></i>
 
+  <div class="opts w-100 d-flex">
+    <i class="fa solid fa-circle-xmark icon cursor-pointer " (click)="toggleModal()"></i>
 
-  <div class="id">
-    {{ detalhes?.idPedido }}
+    <div class="actions">
+      <button>Gerar Contrato</button>
+    </div>
+
+    <div class="id">
+      {{ detalhes?.idPedido }}
+    </div>
   </div>
+
 
   <!-- Navegação -->
   <h2 class="navegacao">
@@ -214,9 +221,11 @@
       <div class="row">
         <div class="form-group col-12 col-lg-6">
           <label for="inversores">Inversores:</label>
-          <input type="text" class="form-control" id="inversores"
+          <!-- <input type="text" class="form-control" id="inversores"
             placeholder="Inversores"
-            formControlName="inversores">
+            formControlName="inversores"> -->
+            <ng-select class=" selecter" formControlName="inversores" [items]="equipamentos.inversores" bindLabel="nome" bindValue="nome" [placeholder]="'Selecione um Inversor'" (change)="onInversorChange($event)">
+            </ng-select>
         </div>
         <div class="form-group col-12 col-lg-3">
           <label for="quantidadeInversores">Quantidade de Inversores:</label>
@@ -236,9 +245,10 @@
       <div class="row">
         <div class="form-group col-12 col-lg-6">
           <label for="placas">Placas:</label>
-          <input type="text" class="form-control" id="placas"
+          <!-- <input type="text" class="form-control" id="placas"
             placeholder="Placas"
-            formControlName="placas">
+            formControlName="placas"> -->
+            <ng-select class=" selecter" formControlName="placas" [items]="equipamentos.placas" bindLabel="nome" bindValue="nome" [placeholder]="'Selecione um Modulo'" name="modulos" (change)="onModuloChange($event)" ></ng-select>
         </div>
         <div class="form-group col-12 col-lg-3">
           <label for="quantidadePlacas">Quantidade de Placas:</label>
@@ -267,9 +277,8 @@
       <div class="row">
         <div class="form-group col-12 col-lg-6">
           <label for="suporte">Suporte:</label>
-          <input type="text" class="form-control" id="suporte"
-            placeholder="Tipo de Suporte"
-            formControlName="suporte">
+            <ng-select class=" selecter" formControlName="suporte" [items]="tiposSuportes" bindLabel="nome" bindValue="nome" [placeholder]="'Selecione um Modulo'" name="suportes" >
+            </ng-select>
         </div>
         <div class="form-group col-12 col-lg-3">
           <label for="quantidadeSuportes">Quantidade de Suportes:</label>

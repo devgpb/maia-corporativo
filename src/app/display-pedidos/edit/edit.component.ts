@@ -3,9 +3,11 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { IPedido } from 'src/app/interfaces/IPedido';
 import { IUser } from 'src/app/interfaces/IUser';
+import { mapaEquipamentos, tiposSuportes } from '../../constants';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ModalService } from 'src/app/services/modal/modal.service';
 import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
+import { EquipamentosService } from '../../services/equipamentos/equipamento.service';
 import { Location } from '@angular/common';
 import { Router, NavigationStart } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -35,6 +37,12 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
   public bsConfig: Partial<BsDatepickerConfig>;
   private handlePopStateBound: () => void;
   public tiposPagamentos = Constantes.tiposPagamentos;
+  public mapaEquipamentos = mapaEquipamentos
+  public equipamentos: any = {
+    inversores: [],
+    placas: []
+  };
+  tiposSuportes = tiposSuportes
 
   constructor(
     private modalService: ModalService,
@@ -43,7 +51,8 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     private localeService: BsLocaleService,
     private authService: AuthService,
     private location: Location,
-    private router: Router
+    private router: Router,
+    private equipamentosService: EquipamentosService
   ) {
     this.handlePopStateBound = this.handlePopState.bind(this);
   }
@@ -56,6 +65,10 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     this.editForm.get('ref')?.disable();
     this.editForm.get('status')?.disable();
     this.localeService.use('pt-br');
+    this.equipamentosService.getEquipamentos().subscribe(equip =>{
+      this.equipamentos = equip
+    })
+
     this.indiceDetalhe = this.list.indexOf(this.detalhes)
     this.indiceLimiteDetalhe = this.list.length
     this.bsConfig = {
@@ -175,8 +188,10 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   gerarFormEdicao(pedido: IPedido) {
+    const bkpDataPedido = pedido.dataPedido
     pedido.dataPedido = new Date(pedido.dataPedido)
     // const dataPedido =
+    this.editForm.reset();
     this.patchForm(this.editForm, pedido);
 
     if (pedido['datasPedidos'].dataVisita) {
@@ -219,6 +234,8 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     this.pedidoEmEdicao = pedido
+    pedido.dataPedido = bkpDataPedido
+
   }
 
   patchForm(formGroup: FormGroup, data: any) {
@@ -238,6 +255,15 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
         formGroup.get(key)?.patchValue(data[key]);
       }
     });
+  }
+
+  onInversorChange(event: any) {
+    this.editForm.get("garantiaFabricacaoInversor").setValue(event.garantiaFabricacao)
+  }
+
+  onModuloChange(event: any) {
+    this.editForm.get("garantiaPerformancePlaca").setValue(event.garantiaPerformance)
+    this.editForm.get("garantiaFabricacaoPlaca").setValue(event.garantiaFabricacao)
   }
 
   marcarStandby() {

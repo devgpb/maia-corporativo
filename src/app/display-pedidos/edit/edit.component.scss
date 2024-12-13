@@ -55,12 +55,15 @@ h2{
 
 }
 
-.icon {
-  position: absolute !important;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  /* Outros estilos para o ícone, se necessário */
+
+.opts{
+  align-content: center;
+  justify-content: space-between;
+
+  .icon{
+    color: red;
+    transform: scale(2);
+  }
 }
 
 .details{
