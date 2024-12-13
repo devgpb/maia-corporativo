@@ -52,6 +52,7 @@ import { PesquisaRelatorioComponent } from './relatorio/pesquisa-relatorio/pesqu
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { FormGeneratorComponent } from './components/form-generator/form-generator.component';
 import { KitsSolaresComponent } from './equipamentos/kits-solares/kits-solares.component';
+import { FormulariosComponent } from './formularios/formularios.component';
 
 defineLocale("pt-br", ptBrLocale);
 registerLocaleData(localePt);
@@ -89,6 +90,7 @@ registerLocaleData(localePt);
     PesquisaRelatorioComponent,
     FormGeneratorComponent,
     KitsSolaresComponent,
+    FormulariosComponent,
   ],
   imports: [
     BrowserModule,

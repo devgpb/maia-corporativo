@@ -1,0 +1,38 @@
+.card{
+
+  width: 180px;
+  height: 220px;
+  border: 1px solid green;
+  color: green;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  padding: 12px;
+
+  .fa-solid{
+    font-size: 50px;
+    text-align: center;
+  }
+
+  .titulo{
+    font-size: 1.5rem;
+    text-align: center;
+    text-transform: uppercase;
+    word-wrap: normal;
+  }
+
+  .desc{
+    font-size: 1rem;
+    text-align: center;
+
+  }
+
+  &:hover {
+    background-color: green;
+    color: white;
+
+    .fa-solid,
+    .titulo {
+      color: white;
+    }
+  }
+}

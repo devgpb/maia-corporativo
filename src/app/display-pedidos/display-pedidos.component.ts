@@ -66,7 +66,7 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
   ngOnInit(){
     this.dtOptionsPedidos = {
       language: Constantes.dtlanguage,
-      responsive: true,
+      // responsive: true,
 			// stateSave: true,
       pagingType: 'full_numbers',
       pageLength: 25,

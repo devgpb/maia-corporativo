@@ -10,8 +10,11 @@
 }
 
 .table-responsive {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  // overflow-x: auto;
+  // -webkit-overflow-scrolling: touch;
+  overflow-x: auto; /* Mantém a rolagem horizontal */
+  min-width: 100%;  /* Permite que a tabela seja maior */
+  width: auto;
 }
 
 .checkbox-case{
@@ -19,10 +22,12 @@
 }
 
 .check{
-  transform: scale(1.7);
+  transform: scale(2);
 }
 
-
+tr{
+  max-height: 90px !important;
+}
 
 
 .loading-container {
@@ -88,6 +93,20 @@
 @media (max-width: 600px) {
   .col-status{
     width: 60px;
+  }
+
+  table tbody tr{
+    max-height: 90px;
+  }
+
+  .col-acoes { width: 100px !important; }
+
+  .col-obs{
+    display: none;
+  }
+
+  .tippy-obs{
+    display: none;
   }
 
   .icons{

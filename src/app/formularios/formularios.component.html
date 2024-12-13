@@ -1,0 +1,18 @@
+<div class="container">
+
+  <div class="w-100 d-flex flex-wrap">
+
+    <div *ngFor="let form of dadosFormulario" class="">
+
+      <a class="card d-flex justify-content-center text-decoration-none"
+      [href]="form.link" target="_blank"
+
+      >
+        <i [class]="form.icon" class="fa-solid"></i>
+        <span class="titulo"> {{ form.titulo }} </span>
+        <span class="desc"> {{ form.desc }} </span>
+      </a>
+    </div>
+  </div>
+
+</div>

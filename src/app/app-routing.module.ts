@@ -20,6 +20,7 @@ import { EquipamentosComponent } from './equipamentos/equipamentos.component';
 import { DimencionarProjetoComponent } from './dimencionar-projeto/dimencionar-projeto.component';
 import { CriarPropostaComponent } from './criar-proposta/criar-proposta.component';
 import { RelatorioComponent } from './relatorio/relatorio.component';
+import { FormulariosComponent } from './formularios/formularios.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -39,6 +40,8 @@ const routes: Routes = [
   { path: "procuracao/gerar", component: CriarProcuracaoComponent, canActivate: [AuthGuard]  },
   { path: "proposta/gerar", component: CriarPropostaComponent, canActivate: [AuthGuard]  },
   { path: "relatorio", component: RelatorioComponent, canActivate: [AuthGuard]  },
+  { path: "formularios", component: FormulariosComponent, canActivate: [AuthGuard]  },
+
 
   { path: "equipamentos", component: EquipamentosComponent, canActivate: [AuthGuard]  },
   { path: "projetos/dimencionar", component: DimencionarProjetoComponent, canActivate: [AuthGuard]  },
