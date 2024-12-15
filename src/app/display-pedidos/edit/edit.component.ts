@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Component, Input, EventEmitter, Output, OnInit, OnChanges, SimpleChanges, OnDestroy, HostListener  } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { IPedido } from 'src/app/interfaces/IPedido';
@@ -12,6 +12,8 @@ import { Location } from '@angular/common';
 import { Router, NavigationStart } from '@angular/router';
 import Swal from 'sweetalert2';
 import * as Constantes from "../../constants";
+import { ActivatedRoute } from '@angular/router';
+import { StorageService } from '../../services/storage/storage.service';
 
 
 
@@ -52,9 +54,34 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     private authService: AuthService,
     private location: Location,
     private router: Router,
-    private equipamentosService: EquipamentosService
+    private equipamentosService: EquipamentosService,
+    private route: ActivatedRoute,
+    private storageService: StorageService,
+
   ) {
     this.handlePopStateBound = this.handlePopState.bind(this);
+  }
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (!this.isInputFocused()) {
+      switch (event.key) {
+        case 'ArrowLeft':
+          this.voltarPedido(this.detalhes,true);
+          break;
+        case 'ArrowRight':
+          this.proximoPedido(this.detalhes,true);
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
+  isInputFocused(): boolean {
+      const activeElement = document.activeElement as HTMLElement;
+      return activeElement instanceof HTMLInputElement ||
+             activeElement instanceof HTMLTextAreaElement ||
+             activeElement.isContentEditable;
   }
 
 
@@ -133,6 +160,12 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
         }),
       }),
     });
+  }
+
+  irGerarContrato() {
+    this.toggleModal();
+    this.storageService.setItem('pedido', JSON.stringify(this.pedidoEmEdicao))
+    this.router.navigate([`/contrato/gerar/${this.pedidoEmEdicao.idPedido}`])
   }
 
   handlePopState(event: PopStateEvent) {

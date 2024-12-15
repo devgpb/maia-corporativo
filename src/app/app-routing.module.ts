@@ -36,7 +36,7 @@ const routes: Routes = [
   { path: "ref", component: ReferenciasComponent, canActivate: [AuthGuard]  },
   { path: "calendario", component: CalendarioCorporativoComponent, canActivate: [AuthGuard]  },
   { path: "eventos/novo", component: NovoEventoComponent, canActivate: [AuthGuard]  },
-  { path: "contrato/gerar", component: CriarContratoComponent, canActivate: [AuthGuard]  },
+  { path: "contrato/gerar/:id", component: CriarContratoComponent, canActivate: [AuthGuard]  },
   { path: "procuracao/gerar", component: CriarProcuracaoComponent, canActivate: [AuthGuard]  },
   { path: "proposta/gerar", component: CriarPropostaComponent, canActivate: [AuthGuard]  },
   { path: "relatorio", component: RelatorioComponent, canActivate: [AuthGuard]  },

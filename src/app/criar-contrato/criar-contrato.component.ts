@@ -10,6 +10,7 @@ import * as moment from 'moment';
 // Importar o locale em português
 import 'moment/locale/pt-br';
 import { toInt } from 'ngx-bootstrap/chronos/utils/type-checks';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-criar-contrato',
@@ -48,7 +49,8 @@ export class CriarContratoComponent implements OnInit {
 
   constructor(
     private automacoesService: AutomacoesService,
-    private equipamentosService: EquipamentosService
+    private equipamentosService: EquipamentosService,
+    private route: ActivatedRoute,
   ){
 
   }
@@ -56,6 +58,7 @@ export class CriarContratoComponent implements OnInit {
   contrato = {
     numeroContrato : "",
     celular: "",
+    idCliente: null,
     email: "",
     cidade: "",
     data: "",
@@ -89,6 +92,14 @@ export class CriarContratoComponent implements OnInit {
       this.loadContrato()
     })
 
+    this.route.paramMap.subscribe(params => {
+      const idCliente = params.get('id');
+      if (idCliente) {
+        this.contrato.idCliente = idCliente;
+        console.log(this.contrato.idCliente)
+      }
+    });
+
     moment.locale('pt-br');
 
     this.contrato.data = moment().format('LL');
@@ -102,9 +113,9 @@ export class CriarContratoComponent implements OnInit {
     const savedPedido = localStorage.getItem('pedido');
 
     if (savedContrato) {
-      this.contrato = JSON.parse(savedContrato);
+      const saved = JSON.parse(savedContrato);
+      this.contrato = {...this.contrato, ...saved}
       this.pesquisarGarantiasEquipamentos();
-
     }
 
     if (savedTipoContrato) {
@@ -135,7 +146,6 @@ export class CriarContratoComponent implements OnInit {
   pesquisarGarantiasEquipamentos() {
     const inversor = this.equipamentos.inversores.find(inversor => inversor.nome == this.contrato.inversores);
     const placa = this.equipamentos.placas.find(placa => placa.nome == this.contrato.modulos);
-    console.log(this.equipamentos.inversores)
     this.contrato.garantiaFabricacaoInversor = inversor.garantiaFabricacao;
     this.contrato.garantiaPerformancePlaca = placa.garantiaPerformance;
     this.contrato.garantiaFabricacaoPlaca = placa.garantiaFabricacao;

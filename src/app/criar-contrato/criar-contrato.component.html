@@ -16,6 +16,13 @@
 
       <div class="d-flex w-100 justify-content-center flex-wrap  ">
         <div class="line">
+          <div class=""  style="width: 100px;">
+          <label for="idCliente" class="form-label">Id Cliente</label>
+          <input type="text" class="form-control" id="idCliente" name="idCliente" [(ngModel)]="contrato.idCliente" placeholder="id do cliente" disabled>
+          </div>
+        </div>
+
+        <div class="line">
           <div class="" style="width: 150px;">
           <label for="numeroContrato" class="form-label">Número do Contrato</label>
           <input type="text" class="form-control" id="numeroContrato" name="numeroContrato" [(ngModel)]="contrato.numeroContrato" placeholder="Numero" required>
