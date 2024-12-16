@@ -25,6 +25,9 @@ export class PedidosService {
 		return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos/recentes`)
 	}
 
+  public getPedido(idPedido: any): Observable<any>{
+		return this.http.get<any>(`${environment.apiURL}/pedidos/individual/${idPedido}`)
+	}
 
   public getPedidosByStatus(status: string, id: string | undefined = undefined, cargo: string | undefined = undefined): Observable<IPedido[]>{
     let getuser = ''
@@ -112,5 +115,5 @@ export class PedidosService {
   public baixarListaPedidos(config:IConfigExcel): Observable<any>{
     return this.http.post(`${environment.apiURL}/templates/excel`, config, {responseType: 'blob'})
   }
-  
+
 }

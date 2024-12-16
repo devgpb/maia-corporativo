@@ -289,10 +289,12 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   refazerTabela(){
-    this.dataTablePedidos.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.destroy();
-      this.getPedidos()
-    });
+    if(this.dataTablePedidos?.dtInstance){
+      this.dataTablePedidos.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy();
+        this.getPedidos()
+      });
+    }
   }
 
   apagarTabela(){

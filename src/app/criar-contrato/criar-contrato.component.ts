@@ -4,6 +4,7 @@ import { EquipamentosService } from '../services/equipamentos/equipamento.servic
 import Swal from 'sweetalert2';
 import { mapaEquipamentos, tiposSuportes } from '../constants';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
 
 
 import * as moment from 'moment';
@@ -51,37 +52,38 @@ export class CriarContratoComponent implements OnInit {
     private automacoesService: AutomacoesService,
     private equipamentosService: EquipamentosService,
     private route: ActivatedRoute,
+    private pedidosService: PedidosService,
   ){
 
   }
 
   contrato = {
-    numeroContrato : "",
-    celular: "",
+    numeroContrato : null,
+    celular: null,
     idCliente: null,
-    email: "",
-    cidade: "",
-    data: "",
-    potenciaGerador: "",
-    nomeContratante: "",
-    cpfContratante: "",
-    cnpjContratante: "",
-    garantiaFabricacaoInversor: "",
-    garantiaPerformancePlaca: "",
-    garantiaFabricacaoPlaca: "",
-    identificacao: "",
-    enderecoInstalacao: "",
+    email: null,
+    cidade: null,
+    data: null,
+    potenciaGerador: null,
+    nomeContratante: null,
+    cpfContratante: null,
+    cnpjContratante: null,
+    garantiaFabricacaoInversor: null,
+    garantiaPerformancePlaca: null,
+    garantiaFabricacaoPlaca: null,
+    identificacao: null,
+    enderecoInstalacao: null,
     inversores: null,
     modulos: null,
     suporte: null,
-    pagamentoTotal: "",
-    pagamentoP1: "",
-    pagamentoP2: "",
-    pagamentoP3: "",
-    quantInversores: "",
-    quantModulos: "",
-    quantSuporte: "",
-    distribuidora:""
+    pagamentoTotal: null,
+    pagamentoP1: null,
+    pagamentoP2: null,
+    pagamentoP3: null,
+    quantInversores: null,
+    quantModulos: null,
+    quantSuporte: null,
+    distribuidora:null
   };
 
 
@@ -107,39 +109,44 @@ export class CriarContratoComponent implements OnInit {
 
 
   loadContrato() {
-    const savedContrato = localStorage.getItem('contrato');
+    var savedPedido = null;
     const savedTipoContrato = localStorage.getItem('tipoContrato');
     const nivelPagamentoVista = localStorage.getItem('nivelPagamentoVista');
-    const savedPedido = localStorage.getItem('pedido');
+    const savedContrato = localStorage.getItem('contrato');
 
-    if (savedContrato) {
-      const saved = JSON.parse(savedContrato);
-      this.contrato = {...this.contrato, ...saved}
-      this.pesquisarGarantiasEquipamentos();
-    }
-
-    if (savedTipoContrato) {
-      this.tipoContrato = JSON.parse(savedTipoContrato);
-      this.nivelPagamentoVista = JSON.parse(nivelPagamentoVista);
-
-    }
-
-    if (savedPedido) {
-      const pedido = JSON.parse(savedPedido);
+    this.pedidosService.getPedido(this.contrato.idCliente).subscribe(pedidos => {
+      const pedido = pedidos[0];
       this.contrato.nomeContratante = pedido.nomeCompleto;
       this.contrato.celular = pedido.celular;
       this.contrato.email = pedido.email;
       this.contrato.cidade = pedido.cidade;
       this.contrato.enderecoInstalacao = pedido.endereco;
-      this.contrato.cpfContratante = "";
-      this.contrato.garantiaFabricacaoInversor = "";
-      this.contrato.garantiaPerformancePlaca = "";
-      this.contrato.garantiaFabricacaoPlaca = "";
-      this.contrato.cnpjContratante = "";
+      this.contrato.cpfContratante = null;
+      this.contrato.garantiaFabricacaoInversor = null;
+      this.contrato.garantiaPerformancePlaca = null;
+      this.contrato.garantiaFabricacaoPlaca = null;
+      this.contrato.cnpjContratante = null;
       this.contrato.distribuidora = pedido.distribuidora;
       this.contrato.enderecoInstalacao = `${pedido.endereco}`;
       this.contrato.cpfContratante = pedido.cpfCliente;
       this.contrato.cnpjContratante = pedido.rgCliente;
+      if (savedContrato) {
+        const saved = JSON.parse(savedContrato);
+        this.contrato.numeroContrato = saved.numeroContrato;
+        this.pesquisarGarantiasEquipamentos();
+      }
+    }, error => {
+      if (savedContrato) {
+        const saved = JSON.parse(savedContrato);
+        this.contrato = {...this.contrato, ...saved}
+        this.pesquisarGarantiasEquipamentos();
+      }
+    })
+
+
+    if (savedTipoContrato) {
+      this.tipoContrato = JSON.parse(savedTipoContrato);
+      this.nivelPagamentoVista = JSON.parse(nivelPagamentoVista);
     }
   }
 
@@ -202,7 +209,7 @@ export class CriarContratoComponent implements OnInit {
     }, error => {
       Swal.fire({
         icon: "error",
-        title: "Há algum campo faltando!",
+        title: "Há algo errado!",
         text: "Por favor, revise os campos ou entre em contato!",
         confirmButtonColor: "#3C58BF"
       });
