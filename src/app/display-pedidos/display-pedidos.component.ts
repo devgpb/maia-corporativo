@@ -306,13 +306,24 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-
-    if (changes['status'] && changes['status'].currentValue != 'criar') {
-      this.refazerTabela()
-      this.allSelected = false
-      this.listaPedidosId = [];
+  handleStatusChange(changes: SimpleChanges) {
+    try {
+      if (changes['status'] && changes['status'].currentValue != 'criar') {
+        this.refazerTabela()
+        this.allSelected = false
+        this.listaPedidosId = [];
+      }
+    } catch (error) {
+      // Espera 1s
+      timer(1000).subscribe(() => {
+        this.handleStatusChange(changes);
+      });
     }
+  }
+
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.handleStatusChange(changes);
   }
 
   ngOnDestroy(): void {

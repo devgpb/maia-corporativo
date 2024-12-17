@@ -182,27 +182,31 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     window.removeEventListener('popstate', this.handlePopStateBound);
   }
 
-  onSubmit() {
-    if (this.editForm.valid) {
+  enviaFormulario() {
+    if(this.editForm.valid) {
 
       if (this.editForm.value.faturamento <= 0) {
         this.editForm.value.faturamento = null
       }
 
-      this.editForm.get('datas').get('dataVisita').get("data")
-        .setValue(this.formatarDataEvento(this.editForm.value.datas.dataVisita))
+      // this.editForm.get('datas').get('dataVisita').get("data")
+      //   .setValue(this.formatarDataEvento(this.editForm.value.datas.dataVisita))
 
-      this.editForm.get('datas').get('dataInstalacao').get("data")
-        .setValue(this.formatarDataEvento(this.editForm.value.datas.dataInstalacao))
+      // this.editForm.get('datas').get('dataInstalacao').get("data")
+      //   .setValue(this.formatarDataEvento(this.editForm.value.datas.dataInstalacao))
 
       this.pedidosService.updatePedido(this.pedidoEmEdicao.idPedido, this.editForm.value).subscribe(resp => {
         this.atualizarPedidos.emit()
       })
 
-      this.toggleModal()
+      // this.toggleModal()
     } else {
-      console.log('cep é inválido devido a:', this.editForm.errors);
+      console.log('formulário é inválido devido a:', this.editForm.errors);
     }
+  }
+
+  onSubmit() {
+    this.enviaFormulario()
   }
 
   get getShowDrive() {
@@ -222,9 +226,6 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   gerarFormEdicao(pedido: IPedido) {
-    const bkpDataPedido = pedido.dataPedido
-    pedido.dataPedido = new Date(pedido.dataPedido)
-    // const dataPedido =
     this.editForm.reset();
     this.patchForm(this.editForm, pedido);
 
@@ -268,8 +269,6 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     this.pedidoEmEdicao = pedido
-    pedido.dataPedido = bkpDataPedido
-
   }
 
   patchForm(formGroup: FormGroup, data: any) {
@@ -352,6 +351,8 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
 
   voltarPedido(pedido: IPedido, edit = false) {
     const indexAntigo = this.list.indexOf(pedido)
+    if(indexAntigo === 0)
+      return
     this.detalhes = this.list[indexAntigo - 1]
     this.indiceDetalhe = indexAntigo - 1
     this.gerarFormEdicao(this.detalhes)
@@ -359,6 +360,9 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
 
   proximoPedido(pedido: IPedido, edit = false) {
     const indexAntigo = this.list.indexOf(pedido)
+    if(indexAntigo + 1 == this.list.length)
+      return
+
     this.detalhes = this.list[indexAntigo + 1]
     this.indiceDetalhe = indexAntigo + 1
     this.gerarFormEdicao(this.detalhes)
@@ -460,4 +464,19 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
       this.indiceLimiteDetalhe = this.list.length
     }
   }
+
+  formatarDataInput(event: any) {
+    let valor = event.target.value;
+
+    // Remove caracteres não numéricos
+    valor = valor.replace(/\D/g, '');
+
+    // Aplica a máscara DD/MM/YYYY
+    if (valor.length >= 2) valor = valor.replace(/^(\d{2})/, '$1/');
+    if (valor.length >= 5) valor = valor.replace(/(\d{2})\/(\d{2})/, '$1/$2/');
+    if (valor.length > 10) valor = valor.slice(0, 10); // Limita ao tamanho correto
+
+    event.target.value = valor;
+  }
+
 }

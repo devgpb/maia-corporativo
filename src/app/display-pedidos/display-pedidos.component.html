@@ -67,7 +67,7 @@
         </td>
         <td>{{pedido.idPedido}}</td>
         <td>{{pedido.nomeCompleto}}</td>
-        <td class="text-center">{{ pedido.dataPedido }}</td>
+        <td class="text-center">{{ pedido.dataPedido | date: 'dd/MM/yyyy' }}</td>
         <td class="tippy-obs">
           <span title="{{ pedido.observacao }}">
             {{ pedido.observacao | truncate:50:true }}
