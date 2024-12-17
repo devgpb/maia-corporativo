@@ -79,8 +79,7 @@
   <div class="submenu" *ngIf="isOpen">
     <div class="w-100 sub-area" *ngIf="menuSelected == 'pedidos'">
 
-      <a routerLink="pedido/criar" [routerLinkActive]="['active-link']" [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('pedidos/criar') ? true : null">
+      <a href="https://forms.gle/AR3d5nJVD5S1QkZ48" target="_blank" rel="noopener noreferrer">
         <i class="fa-solid fa-circle-plus"></i>Novo Pedido
       </a>
 
@@ -94,40 +93,31 @@
       [routerLinkActiveOptions]="{exact: true}"
       [attr.disabled]="isActive('/todos') ? true : null">Todos</a>
 
-      <a routerLink="/pedidos/prospectados"
-      [routerLinkActive]="['active-link']"
-      [routerLinkActiveOptions]="{exact: true}"
-      [attr.disabled]="isActive('/prospectados') ? true : null">Prospectado</a>
-
-      <a routerLink="/pedidos/apresentacao"
-      [routerLinkActive]="['active-link']"
-      [routerLinkActiveOptions]="{exact: true}"
-      [attr.disabled]="isActive('/processo') ? true : null">Apresentação</a>
-
-      <a routerLink="/pedidos/interessado"
-      [routerLinkActive]="['active-link']"
-      [routerLinkActiveOptions]="{exact: true}"
-      [attr.disabled]="isActive('/instalar') ? true : null">Interessado</a>
-
-      <a routerLink="/pedidos/engatilhado"
-      [routerLinkActive]="['active-link']"
-      [routerLinkActiveOptions]="{exact: true}"
-      [attr.disabled]="isActive('/engatilhado') ? true : null">Engatilhado</a>
 
       <a routerLink="/pedidos/fechado"
       [routerLinkActive]="['active-link']"
       [routerLinkActiveOptions]="{exact: true}"
-      [attr.disabled]="isActive('/fechado') ? true : null">Fechado</a>
+      [attr.disabled]="isActive('/fechado') ? true : null">Fechados</a>
+
+      <a routerLink="/pedidos/art"
+      [routerLinkActive]="['active-link']"
+      [routerLinkActiveOptions]="{exact: true}"
+      [attr.disabled]="isActive('/art') ? true : null">ART</a>
+
+      <a routerLink="/pedidos/homologado"
+      [routerLinkActive]="['active-link']"
+      [routerLinkActiveOptions]="{exact: true}"
+      [attr.disabled]="isActive('/homologado') ? true : null">Homologação</a>
 
       <a routerLink="/pedidos/instalacao"
       [routerLinkActive]="['active-link']"
       [routerLinkActiveOptions]="{exact: true}"
       [attr.disabled]="isActive('/instalacao') ? true : null">Instalação</a>
 
-      <a routerLink="/pedidos/finalizados"
+      <a routerLink="/pedidos/finalizado"
       [routerLinkActive]="['active-link']"
       [routerLinkActiveOptions]="{exact: true}"
-      [attr.disabled]="isActive('/finalizados') ? true : null">Finalizados</a>
+      [attr.disabled]="isActive('/finalizado') ? true : null">Finalizados</a>
 
       <div class="d-flex align-items-center">
         <div class="separator"></div>
@@ -137,8 +127,8 @@
         [attr.disabled]="isActive('/standby') ? true : null">
         <i class="fa-regular fa-hourglass text-warning"></i>StandBy</a>
 
-      <a routerLink="/pedidos/perdidos" [routerLinkActive]="['active-link']" [routerLinkActiveOptions]="{exact: true}"
-        [attr.disabled]="isActive('/perdidos') ? true : null">
+      <a routerLink="/pedidos/perdido" [routerLinkActive]="['active-link']" [routerLinkActiveOptions]="{exact: true}"
+        [attr.disabled]="isActive('/perdido') ? true : null">
         <i class="fa-regular fa-triangle-exclamation  text-danger"></i>Perdidos</a>
     </div>
 

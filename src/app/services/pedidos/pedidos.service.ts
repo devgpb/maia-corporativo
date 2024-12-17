@@ -18,7 +18,7 @@ export class PedidosService {
     if(id){
       getuser = "/"+id
     }
-		return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos${getuser}`)
+		return this.http.get<IPedido[]>(`${environment.apiURL}/listar/pedidos${getuser}`)
 	}
 
   public getPedidosRecentes (): Observable<IPedido[]>{
@@ -26,7 +26,7 @@ export class PedidosService {
 	}
 
   public getPedido(idPedido: any): Observable<any>{
-		return this.http.get<any>(`${environment.apiURL}/pedidos/individual/${idPedido}`)
+		return this.http.get<any>(`${environment.apiURL}/pedidos/listar/individual/${idPedido}`)
 	}
 
   public getPedidosByStatus(status: string, id: string | undefined = undefined, cargo: string | undefined = undefined): Observable<IPedido[]>{
@@ -35,7 +35,7 @@ export class PedidosService {
       getuser = "/"+id
     }
     // enviar cargo
-		return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos/${status}${getuser}`, {params: {cargo: cargo}})
+		return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos/listar/${status}${getuser}`, {params: {cargo: cargo}})
   }
 
   public getProcessando (id: string | undefined = undefined): Observable<IPedido[]>{

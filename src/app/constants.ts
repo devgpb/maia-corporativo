@@ -1,15 +1,16 @@
-export const pedidos = ["PROSPECTADO", "APRESENTACAO", "INTERESSADO", "ENGATILHADO", "FECHADO", "INSTALACAO", "FINALIZADO"];
+export const pedidos = ["FECHADO", "ART", "HOMOLOGADO", "INSTALACAO", "FINALIZADO"];
 
-
-export const titulos: { [key: string]: string } = {
-  "prospectados":"Prospectados",
-  "apresentacao":"Em Apresentação",
-  "acompanhamento": "Acompanhamento",
-  "interessado":"Clientes Interessados",
-  "engatilhado":"Venda Engatilhada",
-  "fechado":"Pedidos Fechados",
-  "instalacao": "Etapada De Instalação",
-  "finalizados":"Finalizados"}
+// titulos = pedidos com primeira letra maiuscula
+// export const titulos: { [key: string]: string } = {
+//   "prospectados":"Prospectados",
+//   "apresentacao":"Em Apresentação",
+//   "acompanhamento": "Acompanhamento",
+//   "interessado":"Clientes Interessados",
+//   "engatilhado":"Venda Engatilhada",
+//   "fechado":"Pedidos Fechados",
+//   "instalacao": "Etapada De Instalação",
+//   "finalizados":"Finalizados"}
+const titulos = pedidos.map(pedido => pedido.charAt(0).toUpperCase() + pedido.slice(1).toLowerCase())
 
 export const descricoesStatus: { [key: string]: string } = {
     "prospectados":"Um cliente prospectado acabou de chegar, ainda não foi estabelecido uma ligação com ele. É a nossa primeira etapa de funil.",
@@ -21,8 +22,7 @@ export const descricoesStatus: { [key: string]: string } = {
     "instalacao": "Compreende as etapas de instalação, FALTA INSTALAR, INSTALANDO e INSTALADO",
     "finalizados":"Todos os pedidos finalizados com sucesso"}
 
-export const rotasPedidos =
-["prospectados","apresentacao","interessado","engatilhado","fechado","instalacao","finalizados"]
+export const rotasPedidos = pedidos.map((estado) => estado.toLowerCase());
 
 export const rotasEspeciais =
 ["standby","perdidos"]
