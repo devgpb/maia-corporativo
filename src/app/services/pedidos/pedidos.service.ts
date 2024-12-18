@@ -25,6 +25,11 @@ export class PedidosService {
 		return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos/recentes`)
 	}
 
+  public addDrive (idPedido: any): Observable<any>{
+		return this.http.post<any>(`${environment.apiURL}/pedidos/adicionarDrive`, {idPedido: idPedido})
+	}
+
+
   public getPedido(idPedido: any): Observable<any>{
 		return this.http.get<any>(`${environment.apiURL}/pedidos/listar/individual/${idPedido}`)
 	}

@@ -39,7 +39,7 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
   public bsConfig: Partial<BsDatepickerConfig>;
   private handlePopStateBound: () => void;
   public tiposPagamentos = Constantes.tiposPagamentos;
-  public mapaEquipamentos = mapaEquipamentos
+  public mapaEquipamentos = mapaEquipamentos;
   public equipamentos: any = {
     inversores: [],
     placas: []
@@ -465,18 +465,10 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  formatarDataInput(event: any) {
-    let valor = event.target.value;
-
-    // Remove caracteres não numéricos
-    valor = valor.replace(/\D/g, '');
-
-    // Aplica a máscara DD/MM/YYYY
-    if (valor.length >= 2) valor = valor.replace(/^(\d{2})/, '$1/');
-    if (valor.length >= 5) valor = valor.replace(/(\d{2})\/(\d{2})/, '$1/$2/');
-    if (valor.length > 10) valor = valor.slice(0, 10); // Limita ao tamanho correto
-
-    event.target.value = valor;
+  adicionarDrive() {
+    this.pedidosService.addDrive(this.pedidoEmEdicao.idPedido).subscribe(dados => {
+      this.pedidoEmEdicao.linkDrive = dados.linkDrive
+    })
   }
 
 }
