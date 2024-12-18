@@ -47,7 +47,7 @@ const routes: Routes = [
   { path: "projetos/dimencionar", component: DimencionarProjetoComponent, canActivate: [AuthGuard]  },
 
 
-  { path: '**', redirectTo: 'pedidos/prospectados', pathMatch: 'full'  }
+  { path: '**', redirectTo: 'pedidos/todos', pathMatch: 'full'  }
 ];
 
 

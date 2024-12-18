@@ -5,7 +5,8 @@
 export const environment = {
 	production: false,
 	apiURL: "http://localhost:3000/api",
-	socketURL: "http://localhost:3000"
+	socketURL: "http://localhost:3000",
+  linkFormFechado: "https://forms.gle/d2vSAvyqAMU1xS7v5",
 };
 
 /*

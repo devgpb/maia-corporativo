@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: 'app-menu',
@@ -14,7 +15,7 @@ export class MenuComponent implements OnInit {
     public userCargo = "";
     private _isOpen = false; // para controlar a visibilidade do submenu
     private _menuSelected = "";
-
+    public linkFormFechado = environment.linkFormFechado;
     constructor(
       private authService: AuthService,
       private router: Router

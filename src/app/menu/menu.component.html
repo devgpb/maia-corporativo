@@ -79,7 +79,7 @@
   <div class="submenu" *ngIf="isOpen">
     <div class="w-100 sub-area" *ngIf="menuSelected == 'pedidos'">
 
-      <a href="https://forms.gle/AR3d5nJVD5S1QkZ48" target="_blank" rel="noopener noreferrer">
+      <a [href]="linkFormFechado" target="_blank" rel="noopener noreferrer">
         <i class="fa-solid fa-circle-plus"></i>Novo Pedido
       </a>
 

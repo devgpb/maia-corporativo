@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: 'app-formularios',
@@ -9,7 +10,7 @@ export class FormulariosComponent {
 
   public dadosFormulario = [
     {
-      link: "https://forms.gle/AR3d5nJVD5S1QkZ48",
+      link: environment.linkFormFechado,
       titulo: "Fechamento de Pedido",
       icon: "fa-check-circle",
       desc: 'Formulário para fechamento de pedido'
