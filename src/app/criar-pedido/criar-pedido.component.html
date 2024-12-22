@@ -1,15 +1,15 @@
 <div class="form-case">
 
-  <div class="text-center w-100">
+  <!-- <div class="text-center w-100">
     <h1>Formulário de Fechamento de Pedido</h1>
-  </div>
+  </div> -->
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
     <div class="card my-3">
       <div class="card-header">
         <span>Cliente</span>
       </div>
-      <div class="form-row my-4 d-flex justify-content-left align-items-center">
+      <div class="form-row flex-wrap my-4 d-flex justify-content-left align-items-center">
         <div class="form-group" style="max-width: 300px;">
           <label for="nome">Nome Completo</label>
           <input
@@ -54,7 +54,7 @@
         <span>Projeto</span>
       </div>
 
-      <div class="form-row my-4 d-flex justify-content-left align-items-center">
+      <div class="form-row flex-wrap my-4 d-flex justify-content-left align-items-center">
 
         <div class="form-group" style="max-width: 350px;">
           <label for="endereco">Endereço</label>
@@ -86,8 +86,8 @@
       <div class="card-header">
         <span>Documentação</span>
       </div>
-      <div class="form-row my-4 d-flex flex-wrap justify-content-left align-items-center">
-        <div class="form-group " style="flex: 1 1 30%; max-width: 30%;">
+      <div class="form-row flex-wrap my-4 d-flex flex-wrap justify-content-left align-items-center">
+        <div class="form-group upload">
           <label>Comprovante de Residência:</label>
           <app-file-upload  formControlName="comprovanteResidencia" [invalid]="form.get('comprovanteResidencia').invalid" ></app-file-upload>
           <div *ngIf="form.get('comprovanteResidencia').hasError('fileSize')">
@@ -95,7 +95,7 @@
           </div>
         </div>
 
-        <div class="form-group " style="flex: 1 1 30%; max-width: 30%;">
+        <div class="form-group upload">
           <label>RG + CPF ou CNH</label>
           <span> (Você pode mandar mais de um arquivo):</span>
           <app-file-upload  formControlName="identidade" [invalid]="form.get('identidade').invalid" ></app-file-upload>
@@ -104,7 +104,7 @@
           </div>
         </div>
 
-        <div class="form-group " style="flex: 1 1 30%; max-width: 30%;">
+        <div class="form-group upload">
           <label>Comprovante(s) de Residência Opcional:</label>
           <app-file-upload  formControlName="comprovanteResidenciaOpt" [invalid]="form.get('comprovanteResidenciaOpt').invalid"
           [multiple]="true"
@@ -121,7 +121,7 @@
       <div class="card-header">
         <span>Detalhes</span>
       </div>
-      <div class="form-row my-4 d-flex justify-content-left align-items-center">
+      <div class="form-row flex-wrap my-4 d-flex justify-content-left align-items-center">
         <div class="form-group ">
             <label for="observacao">Observação</label>
             <input type="text" class="form-control" id="observacao" placeholder="Observação Não Obrigatória"

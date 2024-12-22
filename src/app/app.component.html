@@ -1,10 +1,10 @@
 <div class="everything">
-  <app-header *ngIf="!isLogin"></app-header>
+  <app-header *ngIf="!isLogin && !isExternal"></app-header>
 
-  <app-menu *ngIf="!isLogin" class="animate__animated animate__fadeIn"></app-menu>
+  <app-menu *ngIf="!isLogin && !isExternal" class="animate__animated animate__fadeIn"></app-menu>
 
   <div class="app-content animate__animated animate__fadeIn" [class.menu-collapsed]="menuCollapsed" [class.is-login]="isLogin" >
     <router-outlet ></router-outlet>
-    <div class="space"></div>
+    <div *ngIf="!isLogin && !isExternal" class="space"></div>
   </div>
 </div>

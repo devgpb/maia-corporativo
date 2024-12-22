@@ -79,7 +79,9 @@
   <div class="submenu" *ngIf="isOpen">
     <div class="w-100 sub-area" *ngIf="menuSelected == 'pedidos'">
 
-      <a [href]="linkFormFechado" target="_blank" rel="noopener noreferrer">
+      <a routerLink="pedido/criar"
+      [routerLinkActive]="['active-link']" title="Novo Pedido"
+      [routerLinkActiveOptions]="{exact: true}">
         <i class="fa-solid fa-circle-plus"></i>Novo Pedido
       </a>
 

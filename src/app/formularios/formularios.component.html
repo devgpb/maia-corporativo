@@ -2,6 +2,17 @@
 
   <div class="w-100 d-flex flex-wrap">
 
+    <div>
+      <a class="card d-flex justify-content-center text-decoration-none"
+      [routerLink]="['/pedido/criar/externo']" target="_blank"
+      title="Novo Pedido"
+      >
+        <i  class="fa-solid fa-check-circle"></i>
+        <span class="titulo">Fechamento de Pedido</span>
+        <span class="desc"> Formulário para fechamento de pedido </span>
+      </a>
+    </div>
+
     <div *ngFor="let form of dadosFormulario" class="">
 
       <a class="card d-flex justify-content-center text-decoration-none"

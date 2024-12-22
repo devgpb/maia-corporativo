@@ -8,6 +8,11 @@
   padding: 0 10%;
 }
 
+.upload{
+  flex: 1 1 30%;
+  max-width: 30%;
+}
+
 
 // Responsive
 @media (max-width: 768px) {
@@ -22,6 +27,11 @@
 
   .line{
     width: 100%;
+  }
+
+  .upload{
+    flex: auto;
+    max-width: 100%;
   }
 
   .pagamento-area{

@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
   title = 'Sistema Corporativo';
   public menuCollapsed: boolean = false;
   public isLogin: boolean = false;
+  public isExternal: boolean = false;
 
   constructor(private router: Router) {
     this.router.events.subscribe(_ => {
@@ -31,6 +32,10 @@ export class AppComponent implements OnInit {
     if (!this.isLogin) {
       this.checkNotificationPermission();
     }
+    const fullUrl = window.location.href
+    this.isExternal = fullUrl.endsWith('externo');
+    console.log('isExternal', this.isExternal);
+    console.log("fullUrl", fullUrl)
   }
 
   private checkNotificationPermission() {

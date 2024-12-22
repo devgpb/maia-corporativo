@@ -1,0 +1,51 @@
+.global{
+  height: 100%;
+  min-height: calc(100vh + 200px);
+  background: linear-gradient(135deg, #abffba, #188f2e, #53d76b, #104017,#abffba  );
+  overflow: auto;
+
+  // Para um efeito extra (opcional):
+  background-size: 150% 150%; // Deixa o degradê parecer mais dinâmico
+  animation: gradientAnimation 8s ease infinite;
+}
+
+.title{
+  color: white;
+  padding: 0 10%;
+  text-align: center;
+}
+
+.img{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+  img{
+    width: 300px;
+  }
+}
+
+.card{
+  // sombra
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.space{
+  width: 1px;
+  height: 50px;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    // background: linear-gradient(135deg, #104017, #188f2e, #188f2e, #53d76b);
+    background-position: 0% 50%;
+  }
+  50% {
+    // background: linear-gradient(225deg, #53d76b, #188f2e, #188f2e, #104017);
+    background-position: 100% 50%;
+  }
+  100% {
+    // background: linear-gradient(135deg, #104017, #188f2e, #188f2e, #53d76b);
+    background-position: 0% 50%;
+  }
+}

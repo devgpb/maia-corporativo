@@ -21,7 +21,7 @@ import { DimencionarProjetoComponent } from './dimencionar-projeto/dimencionar-p
 import { CriarPropostaComponent } from './criar-proposta/criar-proposta.component';
 import { RelatorioComponent } from './relatorio/relatorio.component';
 import { FormulariosComponent } from './formularios/formularios.component';
-
+import { FormPedidoComponent } from './form-pedido/form-pedido.component';
 const routes: Routes = [
   { path: "login", component: LoginComponent },
 
@@ -31,6 +31,8 @@ const routes: Routes = [
   { path: "conta/editar/:id", component: ContaComponent, canActivate: [AuthGuard] },
   { path: "usuarios/novo", component: NovoUserComponent, canActivate: [AuthGuard] },
   { path: "pedido/criar", component: CriarPedidoComponent, canActivate: [AuthGuard] },
+  { path: "pedido/criar/externo", component: FormPedidoComponent },
+
   { path: "setores", component: SetoresComponent, canActivate: [AuthGuard] },
   { path: "relatorios/meus", component: MeusRelatoriosComponent, canActivate: [AuthGuard] },
   { path: "ref", component: ReferenciasComponent, canActivate: [AuthGuard]  },

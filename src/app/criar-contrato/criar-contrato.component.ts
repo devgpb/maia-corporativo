@@ -115,6 +115,7 @@ export class CriarContratoComponent implements OnInit {
     const savedContrato = localStorage.getItem('contrato');
 
     this.pedidosService.getPedido(this.contrato.idCliente).subscribe(pedidos => {
+      console.log(pedidos)
       const pedido = pedidos[0];
       this.contrato.nomeContratante = pedido.nomeCompleto;
       this.contrato.celular = pedido.celular;
@@ -196,7 +197,7 @@ export class CriarContratoComponent implements OnInit {
     this.contrato.identificacao = this.identificacao == 'cpf' ?
     "Pessoa Física, CPF n° " + this.contrato.cpfContratante :
     "Pessoa Jurídica, CNPJ n° " + this.contrato.cnpjContratante;
-
+    const contrato = {...this.contrato, idPedido: this.contrato.idCliente};
     this.automacoesService.getContratoWord(this.tipoContrato,this.contrato).subscribe(response => {
       Swal.fire({
         icon: "success",
