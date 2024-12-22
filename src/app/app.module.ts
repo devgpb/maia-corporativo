@@ -53,6 +53,8 @@ import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { FormGeneratorComponent } from './components/form-generator/form-generator.component';
 import { KitsSolaresComponent } from './equipamentos/kits-solares/kits-solares.component';
 import { FormulariosComponent } from './formularios/formularios.component';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { MaskDirective } from './directives/mask.directive';
 
 defineLocale("pt-br", ptBrLocale);
 registerLocaleData(localePt);
@@ -91,6 +93,8 @@ registerLocaleData(localePt);
     FormGeneratorComponent,
     KitsSolaresComponent,
     FormulariosComponent,
+    FileUploadComponent,
+    MaskDirective,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,3 @@
+<div (drop)="onDrop($event)" (dragover)="onDragOver($event)" [class.invalid]="invalid" [class.valid]="!invalid" class="file-upload-container">
+  <input class="form-control" type="file" [id]="id" (change)="emitFiles($event)" [attr.multiple]="multiple ? '' : null">
+</div>

@@ -1,64 +1,139 @@
 <div class="form-case">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="form-row d-flex justify-content-center align-items-center">
-      <div class="form-group ">
-        <label for="nome">Nome Completo</label>
-        <input
-        type="text"
-        class="form-control"
-        id="nome"
-        (input)="applyNomeMask($event)"
-        placeholder="Informe o nome"
-        formControlName="nome">
+
+  <div class="text-center w-100">
+    <h1>Formulário de Fechamento de Pedido</h1>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+    <div class="card my-3">
+      <div class="card-header">
+        <span>Cliente</span>
       </div>
+      <div class="form-row my-4 d-flex justify-content-left align-items-center">
+        <div class="form-group" style="max-width: 300px;">
+          <label for="nome">Nome Completo</label>
+          <input
+          type="text"
+          class="form-control"
+          id="nomeCompleto"
+          appMask="nome"
+          placeholder="Informe o nome"
+          formControlName="nomeCompleto">
+        </div>
 
-      <div class="form-group ">
-        <label for="consumo">Consumo de Energia Mensal (kWh)</label>
-        <input type="text" class="form-control" id="consumo" placeholder="Informe o consumo"
-        formControlName="consumo">
-      </div>
-    </div>
+        <div class="form-group" style="max-width: 300px;">
+          <label for="profissao">Profissão (Se financiamento)</label>
+          <input
+          type="text"
+          class="form-control"
+          id="profissao"
+          placeholder="Profissão"
+          formControlName="profissao">
+        </div>
+        <div class="form-group" style="max-width: 150px;">
+          <label for="celular">Celular</label>
+          <input type="text" formControlName="celular" class="form-control" id="celular" placeholder="(00)-0000-0000" appMask="celular">
+        </div>
+        <div class="form-group"  style="max-width: 200px;">
+          <label for="cpf">CPF</label>
+          <input type="text" class="form-control" id="cpf" formControlName="cpf"
+          placeholder="000.000.000-00"
+          appMask="cpf">
 
-    <div class="form-row d-flex justify-content-center align-items-center">
-      <div class="form-group ">
-        <label for="celular">Celular</label>
-        <input type="text" formControlName="celular" class="form-control" id="celular" placeholder="(00)-0000-0000" (input)="applyCelularMask($event)">
-      </div>
-      <div class="form-group ">
-        <label for="endereco">Endereço</label>
-        <input type="text" class="form-control" id="endereco" placeholder="Informe o Endereço"
-        formControlName="endereco">
-      </div>
-
-    </div>
-
-    <div class="form-row d-flex justify-content-center align-items-center">
-
-      <div class="form-group ">
-        <label for="email">Email</label>
-        <input type="text" class="form-control" id="email" placeholder="Informe o email"
-        formControlName="email">
-      </div>
-
-      <div class="form-group ">
-        <label for="numero">Horário Para Contato</label>
-
-        <select formControlName="horario" class="form-select form-control" aria-label=".form-select-lg">
-          <option value="" disabled selected>Escolha o horário</option>
-          <option *ngFor="let option of options" [value]="option.horario">
-              {{ option.label }}
-          </option>
-      </select>
+        </div>
+        <div class="form-group" style="max-width: 300px;">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" id="email" placeholder="Informe o email"
+          formControlName="email">
+        </div>
       </div>
     </div>
 
-    <div class="form-row d-flex justify-content-center align-items-center">
-      <div class="form-group ">
-          <label for="observacao">Observação</label>
-          <input type="text" class="form-control" id="observacao" placeholder="Observação Não Obrigatória"
-          formControlName="observacao">
+    <div class="card my-3">
+      <div class="card-header">
+        <span>Projeto</span>
+      </div>
+
+      <div class="form-row my-4 d-flex justify-content-left align-items-center">
+
+        <div class="form-group" style="max-width: 350px;">
+          <label for="endereco">Endereço</label>
+          <input type="text" class="form-control" id="endereco" placeholder="Informe o Endereço"
+          formControlName="endereco">
+        </div>
+
+        <div class="form-group " style="max-width: 200px;">
+          <label for="consumo">Consumo Mensal (kWh)</label>
+          <input type="text" class="form-control" id="consumo" placeholder="Informe o consumo"
+          formControlName="consumo" appMask="inteiro">
+        </div>
+
+        <div class="form-group " style="max-width: 200px;">
+          <label for="kit">Kit</label>
+          <input type="text" class="form-control" id="kit" placeholder="Informe o kit"
+          formControlName="kit" appMask="inteiro">
+        </div>
+
+        <div class="form-group " style="max-width: 200px;">
+          <label for="valorProjeto">Valor do Projeto</label>
+          <input type="text" class="form-control" id="valorProjeto" placeholder="Informe o valorProjeto"
+          formControlName="valorProjeto" appMask="decimal">
+        </div>
       </div>
     </div>
+
+    <div class="card my-3">
+      <div class="card-header">
+        <span>Documentação</span>
+      </div>
+      <div class="form-row my-4 d-flex flex-wrap justify-content-left align-items-center">
+        <div class="form-group " style="flex: 1 1 30%; max-width: 30%;">
+          <label>Comprovante de Residência:</label>
+          <app-file-upload  formControlName="comprovanteResidencia" [invalid]="form.get('comprovanteResidencia').invalid" ></app-file-upload>
+          <div *ngIf="form.get('comprovanteResidencia').hasError('fileSize')">
+            <span class="text-danger">O arquivo é muito grande. O tamanho máximo permitido é 5MB.</span>
+          </div>
+        </div>
+
+        <div class="form-group " style="flex: 1 1 30%; max-width: 30%;">
+          <label>RG + CPF ou CNH</label>
+          <span> (Você pode mandar mais de um arquivo):</span>
+          <app-file-upload  formControlName="identidade" [invalid]="form.get('identidade').invalid" ></app-file-upload>
+          <div *ngIf="form.get('identidade').hasError('fileSize')">
+            <span class="text-danger">O arquivo é muito grande. O tamanho máximo permitido é 5MB.</span>
+          </div>
+        </div>
+
+        <div class="form-group " style="flex: 1 1 30%; max-width: 30%;">
+          <label>Comprovante(s) de Residência Opcional:</label>
+          <app-file-upload  formControlName="comprovanteResidenciaOpt" [invalid]="form.get('comprovanteResidenciaOpt').invalid"
+          [multiple]="true"
+          ></app-file-upload>
+          <div *ngIf="form.get('comprovanteResidenciaOpt').hasError('fileSize')">
+            <span class="text-danger">O arquivo é muito grande. O tamanho máximo permitido é 5MB.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card my-3">
+      <div class="card-header">
+        <span>Detalhes</span>
+      </div>
+      <div class="form-row my-4 d-flex justify-content-left align-items-center">
+        <div class="form-group ">
+            <label for="observacao">Observação</label>
+            <input type="text" class="form-control" id="observacao" placeholder="Observação Não Obrigatória"
+            formControlName="observacao">
+        </div>
+      </div>
+    </div>
+
+
+
+
+
 
     <div class="d-flex justify-content-center align-items-center">
       <button type="submit" class="btn btn-light mt-3">Enviar</button>

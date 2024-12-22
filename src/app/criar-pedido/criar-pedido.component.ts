@@ -42,7 +42,7 @@ export class CriarPedidoComponent {
       placeholder: 'Informe o email',
       formControlName: 'email'
     },
-    ]
+  ]
 
   constructor(
     private fb: FormBuilder,
@@ -50,7 +50,7 @@ export class CriarPedidoComponent {
     private referenciasService: ReferenciasService,
     private pedidosService: PedidosService,
     private authService: AuthService
-  ){
+  ) {
     this.form = this.initializeForm();
     this.referenciasService.getReferencias().subscribe(ref => {
       this.referencias = ref
@@ -61,32 +61,32 @@ export class CriarPedidoComponent {
   private initializeForm(): FormGroup {
     let group: any = {};
     this.fields.forEach(field => {
-      group[field.formControlName] = [''];
+      group[field.formControlName] = [null];
     });
-    group['nome'] = ['', [Validators.required]];
-    group['celular'] = ['', [Validators.required, Validators.minLength(12)]];
+    group['nomeCompleto'] = [null, [Validators.required]];
+    group['celular'] = [null, [Validators.required, Validators.minLength(12)]];
     group['consumo'] = [null];
-    group['horario'] = ["tarde"];
-    group['ref'] = [''];
-    group['observacao'] = [''];
-    group['email'] = [''];
+    group['ref'] = [null];
+    group['ref'] = [null];
+    group['profissao'] = [null];
+    group['observacao'] = [null];
+    group['email'] = [null];
+    group['cpf'] = [null];
+    group['comprovanteResidencia'] = [null];
+    group['identidade'] = [null];
+    group['comprovanteResidenciaOpt'] = [null];
+
+
+    group['kit'] = [null];
+    group['valorProjeto'] = [null];
+
 
     return this.fb.group(group);
   }
 
 
   limparForm() {
-    this.form.get("nome")?.setValue('')
-    this.form.get("celular")?.setValue('')
-    this.form.get("consumo")?.setValue('')
-    this.form.get("cep")?.setValue('')
-    this.form.get("rua")?.setValue('')
-    this.form.get("endereco")?.setValue('')
-    this.form.get("email")?.setValue('')
-    this.form.get("horario")?.setValue('tarde')
-    this.form.get("observacao")?.setValue('')
-    this.form.get("ref")?.setValue('')
-
+    this.form.reset()
   }
 
 
@@ -96,27 +96,40 @@ export class CriarPedidoComponent {
 
       const ref = this.user.idUsuario;
 
-      const formContato: INovoPedido = {
-        nomeCompleto: this.form.get("nome")?.value,
-        celular: this.form.get("celular")?.value,
-        consumo: this.form.get("consumo")?.value,
-        endereco: this.form.get("endereco")?.value,
-        email: this.form.get("email")?.value,
-        horario: this.form.get("horario")?.value,
-        observacao: this.form.get("observacao")?.value,
-        referencia: ref,
-      }
+      const formData = new FormData();
+      Object.keys(this.form.value).forEach(key => {
+        const value = this.form.get(key)?.value;
 
+        // Se for array de File, faz um loop
+        if (Array.isArray(value) && value.length && value[0] instanceof File) {
+          value.forEach((file: File) => {
+            formData.append(key, file);
+          });
+        }
+        // Se for arquivo único
+        else if (value instanceof File) {
+          formData.append(key, value);
+        }
+        // Se for texto normal
+        else {
+          formData.append(key, value || '');
+        }
+      });
+      
+      console.log('FormData values:');
+      formData.forEach((value, key) => {
+        console.log(`${key}:`, value);
+      });
       this.formInvalid = false
-      this.pedidosService.setPedido(formContato).subscribe(_ =>{
+      this.pedidosService.setPedido(formData).subscribe(_ => {
         Swal.fire({
           icon: "success",
           title: "Seu Pedido foi efetuado!",
           text: "Entraremos em Contato em Breve!",
           confirmButtonColor: "#3C58BF"
         });
-        this.limparForm()
-      }, (error:any)=> {
+        // this.limparForm()
+      }, (error: any) => {
         Swal.fire({
           icon: "error",
           title: "Seu Pedido não efetuado!",
@@ -137,36 +150,6 @@ export class CriarPedidoComponent {
       this.formInvalid = true
     }
 
-  }
-
-  applyCelularMask(event: any): void {
-    let value = event.target.value;
-    value = value.replace(/\D/g, ''); // Remove tudo o que não for dígito
-
-    // Limita a 11 dígitos para o celular
-    value = value.substring(0, 11);
-
-    value = value.replace(/^(\d{2})(\d)/g, '($1) $2'); // Coloca parênteses em volta dos dois primeiros dígitos
-    value = value.replace(/(\d)(\d{4})$/, '$1-$2'); // Coloca hífen entre o quarto e o quinto dígitos
-    event.target.value = value;
-  }
-
-  applyCepMask(event: any): void {
-    let value = event.target.value;
-    value = value.replace(/\D/g, ''); // Remove tudo o que não for dígito
-
-    // Limita a 8 dígitos para o CEP
-    value = value.substring(0, 8);
-
-    value = value.replace(/^(\d{5})(\d)/, '$1-$2'); // Coloca hífen após o quinto dígito
-    event.target.value = value;
-  }
-
-  applyNomeMask(event: any): void {
-    let value = event.target.value;
-    value = value.replace(/\d/g, ''); // Remove tudo o que não for dígito
-
-    event.target.value = value;
   }
 
   emailValidator(): ValidatorFn {
@@ -196,5 +179,6 @@ export class CriarPedidoComponent {
       });
     }
   }
+
 
 }

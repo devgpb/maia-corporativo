@@ -97,9 +97,9 @@ export class PedidosService {
     return this.http.delete<boolean>(`${environment.apiURL}/pedidos/${idPedido}`)
 	}
 
-  public setPedido (pedido: INovoPedido): Observable<INovoPedido>{
-		return this.http.post<INovoPedido>(`${environment.apiURL}/pedidos`,  pedido )
-	}
+  public setPedido(formData: FormData): Observable<INovoPedido> {
+    return this.http.post<INovoPedido>(`${environment.apiURL}/pedidos`, formData);
+  }
 
   public marcarStandby(idPedido: any): Observable<IPedido[]>{
 		return this.http.put<IPedido[]>(`${environment.apiURL}/pedidos/marcarStandby/${idPedido}`, {})
