@@ -15,7 +15,6 @@ import { todasRotas } from '../constants';
 import { StorageService } from '../services/storage/storage.service';
 import { WebSocketService } from '../services/WebSocket/web-socket.service';
 import { IConfigExcel } from '../interfaces/IConfigExcel';
-
 defineLocale('pt-br', ptBrLocale);
 
 @Component({
@@ -105,7 +104,7 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
       this.indicePagina = Constantes.rotasPedidos.indexOf(this.status)
       this.totalPaginas = Constantes.rotasPedidos.length;
       this.canRetroceder = this.indicePagina !== 0
-      this.canAvancar = this.indicePagina !== this.totalPaginas  - 1
+      this.canAvancar = this.indicePagina !== this.totalPaginas - 1
       this.listaPedidos = pedidos
       this.loading = false
       this.dtTriggerPedidos.next(null);
@@ -128,16 +127,33 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
 
 
   avancarPedido(pedido: IPedido){
-    this.pedidosService.avancarPedido(pedido.idPedido).subscribe(avancado =>{
-      if(avancado){
-        this.carregarTabela()
-      }else{
-        Swal.fire({
-          icon: "error",
-          title: "Pedido Não Avançado!",
-        });
+
+    Swal.fire({
+      title: 'Você tem certeza?',
+      text: Constantes.AvisosAvanco[pedido.status.toUpperCase()],
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Não',
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.pedidosService.avancarPedido(pedido.idPedido).subscribe(avancado =>{
+          if(avancado){
+            this.carregarTabela()
+          }else{
+            Swal.fire({
+              icon: "error",
+              title: "Pedido Não Avançado!",
+            });
+          }
+        })
+
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire('Pedido não foi avançado.', '', 'info');
       }
-    })
+    });
+
   }
 
   handleMultiplosPedidos(action: string, isStatus: boolean = undefined){

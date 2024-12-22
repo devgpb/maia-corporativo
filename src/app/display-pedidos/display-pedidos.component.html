@@ -74,7 +74,7 @@
           </span>
         </td>
         <td class="text-center">{{pedido.status}}</td>
-        <td class="text-center" class="icons d-flex flex-wrap">
+        <td class="text-center" class="icons d-flex flex-wrap justify-content-center">
           <!-- Apenas para rotas especiais -->
           <i *ngIf="rotaEspecial" class="icon bg-dark text-white separar"
             (click)="stopPropagation($event); liberarPedido(pedido)">Reativar</i>

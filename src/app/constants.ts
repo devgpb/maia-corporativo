@@ -66,3 +66,10 @@ export const tiposSuportes = [
   "METÁLICO"
 ]
 
+export const AvisosAvanco = {
+  "FECHADO":"Você tem certeza que o contrato já foi gerado?",
+  "ART":"Você tem certeza que a ART já foi gerada e assinada?",
+  "HOMOLOGADO":"Você tem certeza que a homologação já foi realizada?",
+  "INSTALACAO":"Você tem certeza já preencheu o formulário de finalização de instalação?",
+}
+
