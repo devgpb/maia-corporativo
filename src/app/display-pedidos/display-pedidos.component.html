@@ -82,9 +82,9 @@
           <i *ngIf="canRetroceder && !rotaEspecial" class=" icon bg-primary text-white fa-solid fa-angles-left"
             (click)="stopPropagation($event); retrocederPedido(pedido)"></i>
 
-          <i class="icon fa-solid fa-pen mini-icon bg-success text-white separar" (click)="stopPropagation($event);
+          <!-- <i class="icon fa-solid fa-pen mini-icon bg-success text-white separar" (click)="stopPropagation($event);
            abrirEdicao(pedido)"
-            *ngIf="podeEditar"></i>
+            *ngIf="podeEditar"></i> -->
 
           <i class="icon bg-danger text-white separar fa-solid fa-trash-arrow-up"
             (click)="stopPropagation($event); deletarPedido(pedido)"></i>

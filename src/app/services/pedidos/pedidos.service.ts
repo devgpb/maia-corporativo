@@ -40,7 +40,12 @@ export class PedidosService {
       getuser = "/"+id
     }
     // enviar cargo
-		return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos/listar/${status}${getuser}`, {params: {cargo: cargo}})
+		return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos/listar/${getuser}`, {
+      params: {
+        cargo,
+        status
+      }
+    })
   }
 
   public getProcessando (id: string | undefined = undefined): Observable<IPedido[]>{
