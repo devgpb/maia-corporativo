@@ -35,6 +35,39 @@
   height: 50px;
 }
 
+.compartilhar{
+  background-color: white;
+  color: #104017;
+  border-radius: 66%;
+  height: 58px;
+  font-size: 31px;
+  width: 58px;
+  padding: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-right: 20px;
+  margin-top: 10px;
+  i{
+    margin-right: 3px;
+  }
+}
+
+
+::ng-deep .btn-custom-confirm {
+  background-color: #6C63FF;
+  color: #fff;
+  border-radius: 4px;
+  padding: 5px 15px;
+  font-size: 14px;
+}
+
+::ng-deep .btn-custom-cancel {
+  background-color: #ccc;
+  color: #333;
+  border-radius: 4px;
+  padding: 5px 15px;
+  font-size: 14px;
+}
+
 @keyframes gradientAnimation {
   0% {
     // background: linear-gradient(135deg, #104017, #188f2e, #188f2e, #53d76b);

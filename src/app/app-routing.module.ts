@@ -21,7 +21,7 @@ import { DimencionarProjetoComponent } from './dimencionar-projeto/dimencionar-p
 import { CriarPropostaComponent } from './criar-proposta/criar-proposta.component';
 import { RelatorioComponent } from './relatorio/relatorio.component';
 import { FormulariosComponent } from './formularios/formularios.component';
-import { FormPedidoComponent } from './form-pedido/form-pedido.component';
+import { FormPedidoComponent } from './forms/form-pedido/form-pedido.component';
 const routes: Routes = [
   { path: "login", component: LoginComponent },
 

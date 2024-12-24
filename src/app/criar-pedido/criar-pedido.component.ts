@@ -71,7 +71,7 @@ export class CriarPedidoComponent {
     group['profissao'] = [null];
     group['observacao'] = [null];
     group['email'] = [null];
-    group['cpf'] = [null];
+    group['cpfCliente'] = [null];
     group['comprovanteResidencia'] = [null];
     group['identidade'] = [null];
     group['comprovanteResidenciaOpt'] = [null];
@@ -115,7 +115,7 @@ export class CriarPedidoComponent {
           formData.append(key, value || '');
         }
       });
-      
+
       console.log('FormData values:');
       formData.forEach((value, key) => {
         console.log(`${key}:`, value);

@@ -55,7 +55,7 @@ import { KitsSolaresComponent } from './equipamentos/kits-solares/kits-solares.c
 import { FormulariosComponent } from './formularios/formularios.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { MaskDirective } from './directives/mask.directive';
-import { FormPedidoComponent } from './form-pedido/form-pedido.component';
+import { FormPedidoComponent } from './forms/form-pedido/form-pedido.component';
 
 defineLocale("pt-br", ptBrLocale);
 registerLocaleData(localePt);

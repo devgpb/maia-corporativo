@@ -1,4 +1,4 @@
-export const pedidos = ["FECHADO", "ART", "HOMOLOGADO", "INSTALACAO", "FINALIZADO"];
+export const pedidos = ["FECHADO", "ART", "HOMOLOGAR", "INSTALACAO", "FINALIZADO"];
 
 // titulos = pedidos com primeira letra maiuscula
 // export const titulos: { [key: string]: string } = {
@@ -69,7 +69,7 @@ export const tiposSuportes = [
 export const AvisosAvanco = {
   "FECHADO":"Você tem certeza que o contrato já foi gerado?",
   "ART":"Você tem certeza que a ART já foi gerada e assinada?",
-  "HOMOLOGADO":"Você tem certeza que a homologação já foi realizada?",
+  "HOMOLOGAR":"Você tem certeza que a homologação já foi realizada?",
   "INSTALACAO":"Você tem certeza já preencheu o formulário de finalização de instalação?",
 }
 

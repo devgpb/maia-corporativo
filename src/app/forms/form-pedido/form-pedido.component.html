@@ -1,0 +1,13 @@
+<div class="w-100 global">
+  <div class="w-100 d-flex justify-content-end">
+    <button class="compartilhar" (click)="abrirCompartilharForm()">
+      <i class="fas fa-share-alt"></i>
+    </button>
+  </div>
+  <div class="img">
+    <img src="../../assets/Logo.png" alt="engemaia">
+  </div>
+  <h1 class="title"> {{componentShow.titulo}} </h1>
+  <app-criar-pedido *ngIf="componentShow.id == 'PedidoFechado'"></app-criar-pedido>
+  <div class="space"></div>
+</div>
