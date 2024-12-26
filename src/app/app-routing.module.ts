@@ -32,6 +32,8 @@ const routes: Routes = [
   { path: "usuarios/novo", component: NovoUserComponent, canActivate: [AuthGuard] },
   { path: "pedido/criar", component: CriarPedidoComponent, canActivate: [AuthGuard] },
   { path: "pedido/criar/externo", component: FormPedidoComponent },
+  { path: "pedido/finalizar/externo", component: FormPedidoComponent },
+
 
   { path: "setores", component: SetoresComponent, canActivate: [AuthGuard] },
   { path: "relatorios/meus", component: MeusRelatoriosComponent, canActivate: [AuthGuard] },

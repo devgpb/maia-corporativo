@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
       this.checkNotificationPermission();
     }
     const fullUrl = window.location.href
-    this.isExternal = fullUrl.endsWith('externo');
+    this.isExternal = fullUrl.includes('externo');
     console.log('isExternal', this.isExternal);
     console.log("fullUrl", fullUrl)
   }

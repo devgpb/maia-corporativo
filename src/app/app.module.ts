@@ -56,6 +56,7 @@ import { FormulariosComponent } from './formularios/formularios.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { MaskDirective } from './directives/mask.directive';
 import { FormPedidoComponent } from './forms/form-pedido/form-pedido.component';
+import { FormFinalPedidoComponent } from './form-final-pedido/form-final-pedido.component';
 
 defineLocale("pt-br", ptBrLocale);
 registerLocaleData(localePt);
@@ -97,6 +98,7 @@ registerLocaleData(localePt);
     FileUploadComponent,
     MaskDirective,
     FormPedidoComponent,
+    FormFinalPedidoComponent,
   ],
   imports: [
     BrowserModule,

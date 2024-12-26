@@ -9,5 +9,7 @@
   </div>
   <h1 class="title"> {{componentShow.titulo}} </h1>
   <app-criar-pedido *ngIf="componentShow.id == 'PedidoFechado'"></app-criar-pedido>
+  <app-form-final-pedido *ngIf="componentShow.id == 'FinalizarPedido'"></app-form-final-pedido>
+
   <div class="space"></div>
 </div>
