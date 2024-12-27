@@ -6,6 +6,8 @@ import { ReferenciasService } from '../services/referenciasService/referencias.s
 import { PedidosService } from '../services/pedidos/pedidos.service';
 import { AuthService } from '../services/auth/auth.service';
 import { IUser } from '../interfaces/IUser';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-form-final-pedido',
@@ -20,28 +22,9 @@ export class FormFinalPedidoComponent {
   public ref = ''
   public user: IUser
   public referencias: any;
-  
+  public bsConfig: any;
 
-  public options = [
-    { horario: 'manhã', label: 'Manhã' },
-    { horario: 'tarde', label: 'Tarde' },
-    { horario: 'noite', label: 'Noite' },
-  ];
 
-  fields = [
-    {
-      label: 'Endereco',
-      type: 'text',
-      placeholder: 'Informe o endereco',
-      formControlName: 'endereco'
-    },
-    {
-      label: 'Email',
-      type: 'text',
-      placeholder: 'Informe o email',
-      formControlName: 'email'
-    },
-  ]
 
   constructor(
     private fb: FormBuilder,
@@ -54,30 +37,34 @@ export class FormFinalPedidoComponent {
     this.referenciasService.getReferencias().subscribe(ref => {
       this.referencias = ref
     })
+
+    this.bsConfig = {
+      isAnimated: true,
+      adaptivePosition: true,
+      dateInputFormat: 'DD/MM/YYYY',
+      rangeInputFormat: 'DD/MM/YYYY',
+      maxDate: new Date(),
+      locale: 'pt-br'
+    };
+
+
     this.user = this.authService.getUser()
   }
 
   private initializeForm(): FormGroup {
     let group: any = {};
-    this.fields.forEach(field => {
-      group[field.formControlName] = [null];
-    });
-    group['nomeCompleto'] = [null, [Validators.required]];
-    group['celular'] = [null, [Validators.required, Validators.minLength(12)]];
-    group['consumo'] = [null];
-    group['ref'] = [null];
-    group['ref'] = [null];
-    group['profissao'] = [null];
-    group['observacao'] = [null];
-    group['email'] = [null];
-    group['cpfCliente'] = [null];
-    group['comprovanteResidencia'] = [null];
-    group['identidade'] = [null];
-    group['comprovanteResidenciaOpt'] = [null];
+    // this.fields.forEach(field => {
+    //   group[field.formControlName] = [null];
+    // });
+    group['idPedido'] = [null, [Validators.required]];
+    group['dataInicioInstalacao'] = [null, [Validators.required]];
+    group['dataFimInstalacao'] = [null, [Validators.required]];
 
+    group['fotosPlacas'] = [null, [Validators.required]];
+    group['fotosInversor'] = [null, [Validators.required]];
+    group['fotosExtra'] = [null, [Validators.required]];
+    group['observacao'] = [null, [Validators.required]];
 
-    group['kit'] = [null];
-    group['valorProjeto'] = [null];
 
 
     return this.fb.group(group);
@@ -120,18 +107,17 @@ export class FormFinalPedidoComponent {
         console.log(`${key}:`, value);
       });
       this.formInvalid = false
-      this.pedidosService.setPedido(formData).subscribe(_ => {
+      this.pedidosService.finalizarPedido(formData).subscribe(_ => {
         Swal.fire({
           icon: "success",
-          title: "Seu Pedido foi efetuado!",
-          text: "Entraremos em Contato em Breve!",
+          title: "Seu Pedido foi Finalizado!",
           confirmButtonColor: "#3C58BF"
         });
         // this.limparForm()
       }, (error: any) => {
         Swal.fire({
           icon: "error",
-          title: "Seu Pedido não efetuado!",
+          title: "Seu Pedido não foi finalizado!",
           text: "Por favor, entre em contato com o suporte!",
           confirmButtonColor: "#3C58BF"
         });
@@ -142,7 +128,7 @@ export class FormFinalPedidoComponent {
       console.warn('Formulário inválido');
       Swal.fire({
         icon: "error",
-        title: "Seu Pedido não efetuado!",
+        title: "Seu Pedido não foi finalizado!",
         text: "Por favor, entre em contato com o suporte!",
         confirmButtonColor: "#3C58BF"
       });

@@ -82,7 +82,7 @@
       <div class="card-header">
         <span>Documentação</span>
       </div>
-      <div class="form-row flex-wrap my-4 d-flex flex-wrap justify-content-left align-items-center">
+      <div class="form-row flex-wrap my-4 d-flex flex-wrap justify-content-left align-items-bottom">
         <div class="form-group upload">
           <label>Comprovante de Residência:</label>
           <app-file-upload  formControlName="comprovanteResidencia" [invalid]="form.get('comprovanteResidencia').invalid" ></app-file-upload>
@@ -92,12 +92,12 @@
         </div>
 
         <div class="form-group upload">
-          <label>RG + CPF ou CNH</label>
-          <span> (Você pode mandar mais de um arquivo):</span>
+          <label>RG + CPF ou CNH:</label>
           <app-file-upload  formControlName="identidade" [invalid]="form.get('identidade').invalid" ></app-file-upload>
           <div *ngIf="form.get('identidade').hasError('fileSize')">
             <span class="text-danger">O arquivo é muito grande. O tamanho máximo permitido é 5MB.</span>
           </div>
+          <span>(Você pode mandar mais de um arquivo)</span>
         </div>
 
         <div class="form-group upload">

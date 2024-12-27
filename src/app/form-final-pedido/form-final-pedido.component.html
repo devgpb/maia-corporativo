@@ -5,42 +5,16 @@
       <div class="card-header">
         <span>Cliente</span>
       </div>
-      <div class="form-row flex-wrap my-4 d-flex justify-content-left align-items-center">
+      <div class="form-row flex-wrap my-4 d-flex justify-content-center align-items-center">
         <div class="form-group" style="max-width: 300px;">
-          <label for="nome">Nome Completo</label>
+          <label for="nome">*Id Cliente</label>
           <input
           type="text"
           class="form-control"
-          id="nomeCompleto"
-          appMask="nome"
-          placeholder="Informe o nome"
-          formControlName="nomeCompleto">
-        </div>
-
-        <div class="form-group" style="max-width: 300px;">
-          <label for="profissao">Profissão (Se financiamento)</label>
-          <input
-          type="text"
-          class="form-control"
-          id="profissao"
-          placeholder="Profissão"
-          formControlName="profissao">
-        </div>
-        <div class="form-group" style="max-width: 150px;">
-          <label for="celular">Celular</label>
-          <input type="text" formControlName="celular" class="form-control" id="celular" placeholder="(00)-0000-0000" appMask="celular">
-        </div>
-        <div class="form-group"  style="max-width: 200px;">
-          <label for="cpfCliente">CPF</label>
-          <input type="text" class="form-control" id="cpfCliente" formControlName="cpfCliente"
-          placeholder="000.000.000-00"
-          appMask="cpf">
-
-        </div>
-        <div class="form-group" style="max-width: 300px;">
-          <label for="email">Email</label>
-          <input type="text" class="form-control" id="email" placeholder="Informe o email"
-          formControlName="email">
+          id="idPedido"
+          appMask="inteiro"
+          placeholder="00000"
+          formControlName="idPedido">
         </div>
       </div>
     </div>
@@ -51,63 +25,44 @@
       </div>
 
       <div class="form-row flex-wrap my-4 d-flex justify-content-left align-items-center">
-
-        <div class="form-group" style="max-width: 350px;">
-          <label for="endereco">Endereço</label>
-          <input type="text" class="form-control" id="endereco" placeholder="Informe o Endereço"
-          formControlName="endereco">
+        <div class="form-group upload">
+          <label>*Data De Inicio da Instalação:</label>
+          <input formControlName="dataInicioInstalacao" type="text" id="datas" class="form-control"
+          placeholder="Data Inicio" bsDatepicker [bsConfig]="bsConfig" autocomplete="off">
         </div>
 
-        <div class="form-group " style="max-width: 200px;">
-          <label for="consumo">Consumo Mensal (kWh)</label>
-          <input type="text" class="form-control" id="consumo" placeholder="Informe o consumo"
-          formControlName="consumo" appMask="inteiro">
+        <div class="form-group upload">
+          <label>*Data De Término da Instalação:</label>
+          <input formControlName="dataFimInstalacao" type="text" id="datas" class="form-control"
+          placeholder="Data Final" bsDatepicker [bsConfig]="bsConfig" autocomplete="off">
         </div>
 
-        <div class="form-group " style="max-width: 200px;">
-          <label for="kit">Kit</label>
-          <input type="text" class="form-control" id="kit" placeholder="Informe o kit"
-          formControlName="kit" appMask="inteiro">
-        </div>
-
-        <div class="form-group " style="max-width: 200px;">
-          <label for="valorProjeto">Valor do Projeto</label>
-          <input type="text" class="form-control" id="valorProjeto" placeholder="Informe o valorProjeto"
-          formControlName="valorProjeto" appMask="decimal">
-        </div>
       </div>
     </div>
 
     <div class="card my-3">
       <div class="card-header">
-        <span>Documentação</span>
+        <span>Imagens da Instalação:</span>
       </div>
-      <div class="form-row flex-wrap my-4 d-flex flex-wrap justify-content-left align-items-center">
+      <div class="form-row flex-wrap my-4 d-flex flex-wrap justify-content-left align-items-bottom">
         <div class="form-group upload">
-          <label>Comprovante de Residência:</label>
-          <app-file-upload  formControlName="comprovanteResidencia" [invalid]="form.get('comprovanteResidencia').invalid" ></app-file-upload>
-          <div *ngIf="form.get('comprovanteResidencia').hasError('fileSize')">
-            <span class="text-danger">O arquivo é muito grande. O tamanho máximo permitido é 5MB.</span>
-          </div>
+          <label>*Fotos Placas Instaladas: </label>
+          <app-file-upload  formControlName="fotosPlacas" [invalid]="form.get('fotosPlacas').invalid" [multiple]="true"></app-file-upload>
         </div>
 
         <div class="form-group upload">
-          <label>RG + CPF ou CNH</label>
-          <span> (Você pode mandar mais de um arquivo):</span>
-          <app-file-upload  formControlName="identidade" [invalid]="form.get('identidade').invalid" ></app-file-upload>
-          <div *ngIf="form.get('identidade').hasError('fileSize')">
-            <span class="text-danger">O arquivo é muito grande. O tamanho máximo permitido é 5MB.</span>
-          </div>
+          <label>*Fotos Do Inversor: </label>
+          <app-file-upload  formControlName="fotosInversor" [invalid]="form.get('fotosInversor').invalid" [multiple]="true"></app-file-upload>
+          <span>*Optativa para inversores de difícil acesso</span>
         </div>
 
         <div class="form-group upload">
-          <label>Comprovante(s) de Residência Opcional:</label>
-          <app-file-upload  formControlName="comprovanteResidenciaOpt" [invalid]="form.get('comprovanteResidenciaOpt').invalid"
+          <label>*Extra:</label>
+          <app-file-upload  formControlName="fotosExtra" [invalid]="form.get('fotosExtra').invalid"
           [multiple]="true"
           ></app-file-upload>
-          <div *ngIf="form.get('comprovanteResidenciaOpt').hasError('fileSize')">
-            <span class="text-danger">O arquivo é muito grande. O tamanho máximo permitido é 5MB.</span>
-          </div>
+          <span>*Restante da instalação</span>
+
         </div>
       </div>
 
@@ -134,8 +89,8 @@
     <div class="d-flex justify-content-center align-items-center">
       <button type="submit" class="btn btn-light mt-3">Enviar</button>
     </div>
-    <div *ngIf="formInvalid" class="alert alert-warning form-invalid" role="alert">
-      <!-- Formulário Inválido, forneça ao menos o nome e o celular -->
-    </div>
+    <!-- <div *ngIf="formInvalid" class="alert alert-warning form-invalid" role="alert">
+      Formulário inválido. Preencha todos os campos obrigatórios.
+    </div> -->
   </form>
 </div>

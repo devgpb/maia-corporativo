@@ -10,11 +10,11 @@ import { Router } from '@angular/router';
 export class FormulariosComponent {
 
   public dadosFormulario = [
-    // {
-    //   link: environment.linkFormFechado,
-    //   titulo: "Fechamento de Pedido",
-    //   icon: "fa-check-circle",
-    //   desc: 'Formulário para fechamento de pedido'
-    // }
+    {
+      link: '/pedido/finalizar/externo',
+      titulo: "Filanização de Pedido",
+      icon: "fas fa-file-signature",
+      desc: 'Formulário para fechamento de pedido'
+    }
   ]
 }

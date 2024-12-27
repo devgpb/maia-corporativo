@@ -1,6 +1,6 @@
 <div class="container">
 
-  <div class="w-100 d-flex flex-wrap">
+  <div class="w-100 mt-5 d-flex flex-wrap">
 
     <div>
       <a class="card d-flex justify-content-center text-decoration-none"
@@ -16,7 +16,7 @@
     <div *ngFor="let form of dadosFormulario" class="">
 
       <a class="card d-flex justify-content-center text-decoration-none"
-      [href]="form.link" target="_blank"
+      [routerLink]="[form.link]" target="_blank"
 
       >
         <i [class]="form.icon" class="fa-solid"></i>
