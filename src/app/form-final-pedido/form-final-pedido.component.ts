@@ -137,7 +137,7 @@ export class FormFinalPedidoComponent {
         Swal.fire({
           icon: "error",
           title: "Seu Pedido não foi finalizado!",
-          text: "Erro:" + error.error.message,
+          text: "Erro: " + (error?.error?.message || error?.message || 'Erro de rede'),
           confirmButtonColor: "#3C58BF"
         });
       })
