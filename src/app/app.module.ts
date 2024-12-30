@@ -57,7 +57,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
 import { MaskDirective } from './directives/mask.directive';
 import { FormPedidoComponent } from './forms/form-pedido/form-pedido.component';
 import { FormFinalPedidoComponent } from './form-final-pedido/form-final-pedido.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
+// import { ServiceWorkerModule } from '@angular/service-worker';
 import { QrCodeModalComponent } from './components/qr-code-modal/qr-code-modal.component';
 
 defineLocale("pt-br", ptBrLocale);
@@ -118,12 +118,12 @@ registerLocaleData(localePt);
     FullCalendarModule,
     CurrencyMaskModule,
     CommonModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: !isDevMode(),
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    }),
+    // ServiceWorkerModule.register('ngsw-worker.js', {
+    //   enabled: !isDevMode(),
+    //   // Register the ServiceWorker as soon as the application is stable
+    //   // or after 30 seconds (whichever comes first).
+    //   registrationStrategy: 'registerWhenStable:30000'
+    // }),
   ],
   providers: [
     {
