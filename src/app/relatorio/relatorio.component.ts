@@ -72,11 +72,11 @@ export class RelatorioComponent implements OnInit {
       processing: true,
       // ordering: true,
       order: [[6, 'desc']],
-      columnDefs: [
-        { targets: [0, 1, 5, 6], orderable: false },
-        { targets: [6], visible: false },
-        { targets: [0, 1, 2, 3, 4, 5, 6], defaultContent: ''},
-      ],
+      // columnDefs: [
+      //   { targets: [0, 1, 5, 6], orderable: false },
+      //   { targets: [6], visible: false },
+      //   { targets: [0, 1, 2, 3, 4, 5, 6], defaultContent: ''},
+      // ],
 		};
   }
 

@@ -31,7 +31,7 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
   @ViewChild("pedidos", { read: DataTableDirective, static: true })
 
 	private dataTablePedidos: DataTableDirective;
-	public dtOptionsPedidos: DataTables.Settings;
+	public dtOptionsPedidos:  DataTables.Settings;
   public dtTriggerPedidos: Subject<any> = new Subject<any>();
   public user: IUser;
   public isAdm: boolean;
@@ -72,11 +72,11 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
       processing: true,
       // ordering: true,
       order: [[7, 'desc']],
-      columnDefs: [
-        { targets: [0, 1, 5, 6], orderable: false },
-        { targets: [7], visible: false },
-        { targets: [0, 1, 2, 3, 4, 5, 6, 7], defaultContent: ''},
-      ],
+      // columnDefs: [
+      //   { targets: [0, 1, 5, 6], orderable: false },
+      //   { targets: [7], visible: false },
+      //   { targets: [0, 1, 2, 3, 4, 5, 6, 7], defaultContent: ''},
+      // ],
 		};
     this.getPedidos()
     this.listenForNotifications()
