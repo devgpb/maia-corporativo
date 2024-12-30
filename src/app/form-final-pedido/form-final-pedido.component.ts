@@ -71,7 +71,7 @@ export class FormFinalPedidoComponent {
     group['fotosPlacas'] = [null, [Validators.required]];
     group['fotosInversor'] = [null, [Validators.required]];
     group['fotosExtra'] = [null, [Validators.required]];
-    group['observacao'] = [null, [Validators.required]];
+    group['observacao'] = [null];
 
 
 
@@ -137,7 +137,7 @@ export class FormFinalPedidoComponent {
         Swal.fire({
           icon: "error",
           title: "Seu Pedido não foi finalizado!",
-          text: "Por favor, entre em contato com o suporte!",
+          text: "Erro:" + error.error.message,
           confirmButtonColor: "#3C58BF"
         });
       })
