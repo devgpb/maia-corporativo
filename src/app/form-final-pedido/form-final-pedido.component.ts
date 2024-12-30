@@ -88,6 +88,15 @@ export class FormFinalPedidoComponent {
 
     if (this.form.valid) {
 
+      Swal.fire({
+        title: 'Carregando...',
+        text: 'Aguarde enquanto processamos sua requisição.',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
       const ref = this.user.idUsuario;
 
       const formData = new FormData();
@@ -110,12 +119,12 @@ export class FormFinalPedidoComponent {
         }
       });
 
-      console.log('FormData values:');
-      formData.forEach((value, key) => {
-        console.log(`${key}:`, value);
-      });
+
+
       this.formInvalid = false
       this.pedidosService.finalizarPedido(formData).subscribe(_ => {
+        Swal.close();
+
         Swal.fire({
           icon: "success",
           title: "Seu Pedido foi Finalizado!",
@@ -123,6 +132,8 @@ export class FormFinalPedidoComponent {
         });
         // this.limparForm()
       }, (error: any) => {
+        Swal.close();
+
         Swal.fire({
           icon: "error",
           title: "Seu Pedido não foi finalizado!",
@@ -133,11 +144,13 @@ export class FormFinalPedidoComponent {
 
 
     } else {
+      Swal.close();
+
       console.warn('Formulário inválido');
       Swal.fire({
         icon: "error",
         title: "Seu Pedido não foi finalizado!",
-        text: "Por favor, entre em contato com o suporte!",
+        text: "Formulário está inválido!",
         confirmButtonColor: "#3C58BF"
       });
       this.formInvalid = true
