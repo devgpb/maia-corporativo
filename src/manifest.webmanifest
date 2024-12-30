@@ -1,8 +1,8 @@
 {
-  "name": "maia-corporativo",
-  "short_name": "maia-corporativo",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "name": "Engemaia",
+  "short_name": "Engemaia",
+  "theme_color": "#104017",
+  "background_color": "#618c67",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
