@@ -1,17 +1,9 @@
 <div class="container">
+  <app-modal #modal>
+    <app-qr-code-modal [link]="qrLink"></app-qr-code-modal>
+  </app-modal>
 
   <div class="w-100 mt-5 d-flex flex-wrap">
-
-    <div>
-      <a class="card d-flex justify-content-center text-decoration-none"
-      [routerLink]="['/pedido/criar/externo']" target="_blank"
-      title="Novo Pedido"
-      >
-        <i  class="fa-solid fa-check-circle"></i>
-        <span class="titulo">Fechamento de Pedido</span>
-        <span class="desc"> Formulário para fechamento de pedido </span>
-      </a>
-    </div>
 
     <div *ngFor="let form of dadosFormulario" class="">
 
@@ -22,6 +14,7 @@
         <i [class]="form.icon" class="fa-solid"></i>
         <span class="titulo"> {{ form.titulo }} </span>
         <span class="desc"> {{ form.desc }} </span>
+        <button class="open-modal" (click)="abrirModal($event,form.linkQr)">Gerar Qr Code</button>
       </a>
     </div>
   </div>

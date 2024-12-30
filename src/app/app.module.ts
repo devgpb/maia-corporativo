@@ -58,6 +58,7 @@ import { MaskDirective } from './directives/mask.directive';
 import { FormPedidoComponent } from './forms/form-pedido/form-pedido.component';
 import { FormFinalPedidoComponent } from './form-final-pedido/form-final-pedido.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { QrCodeModalComponent } from './components/qr-code-modal/qr-code-modal.component';
 
 defineLocale("pt-br", ptBrLocale);
 registerLocaleData(localePt);
@@ -100,6 +101,7 @@ registerLocaleData(localePt);
     MaskDirective,
     FormPedidoComponent,
     FormFinalPedidoComponent,
+    QrCodeModalComponent,
   ],
   imports: [
     BrowserModule,

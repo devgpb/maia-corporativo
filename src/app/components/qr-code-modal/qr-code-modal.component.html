@@ -1,0 +1,8 @@
+<div class="qr-modal-content">
+  <h3>QR Code do Link</h3>
+  <div *ngIf="qrCodeUrl">
+    <img [src]="qrCodeUrl" alt="QR Code">
+  </div>
+  <span class="mb-3">{{link}}</span>
+  <button class="mt2" (click)="downloadQrCode()">Baixar QR Code</button>
+</div>
