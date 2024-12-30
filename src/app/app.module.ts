@@ -3,7 +3,7 @@ import localePt from "@angular/common/locales/pt";
 import { defineLocale } from "ngx-bootstrap/chronos";
 import { ptBrLocale } from "ngx-bootstrap/locale";
 
-import { NgModule,LOCALE_ID } from '@angular/core';
+import { NgModule,LOCALE_ID, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BlockUIModule } from "ng-block-ui";
 import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -57,6 +57,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
 import { MaskDirective } from './directives/mask.directive';
 import { FormPedidoComponent } from './forms/form-pedido/form-pedido.component';
 import { FormFinalPedidoComponent } from './form-final-pedido/form-final-pedido.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 defineLocale("pt-br", ptBrLocale);
 registerLocaleData(localePt);
@@ -115,6 +116,12 @@ registerLocaleData(localePt);
     FullCalendarModule,
     CurrencyMaskModule,
     CommonModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [
     {
