@@ -10,6 +10,7 @@ import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
 import { EquipamentosService } from '../../services/equipamentos/equipamento.service';
 import { Location } from '@angular/common';
 import { Router, NavigationStart } from '@angular/router';
+import { environment } from "src/environments/environment";
 import Swal from 'sweetalert2';
 import * as Constantes from "../../constants";
 import { ActivatedRoute } from '@angular/router';
@@ -44,6 +45,8 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     inversores: [],
     placas: []
   };
+  public show = 'none';
+  public qrLink = null;
   tiposSuportes = tiposSuportes
 
   constructor(
@@ -471,4 +474,13 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     })
   }
 
+  gerarQrCode(){
+    this.qrLink = environment.url + '/pedido/finalizar/externo?id=' + this.pedidoEmEdicao.idPedido;
+    this.show = 'code';
+  }
+
+  fecharCode(){
+    this.show = 'none';
+    this.qrLink = null;
+  }
 }

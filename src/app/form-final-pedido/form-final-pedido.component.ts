@@ -8,6 +8,7 @@ import { AuthService } from '../services/auth/auth.service';
 import { IUser } from '../interfaces/IUser';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-form-final-pedido',
@@ -23,7 +24,7 @@ export class FormFinalPedidoComponent {
   public user: IUser
   public referencias: any;
   public bsConfig: any;
-
+  public idCliente: any;
 
 
   constructor(
@@ -31,12 +32,19 @@ export class FormFinalPedidoComponent {
     private enderecoService: EnderecoService,
     private referenciasService: ReferenciasService,
     private pedidosService: PedidosService,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute
   ) {
+    this.route.queryParams.subscribe(params => {
+      this.idCliente = params['id'];
+    });
+
     this.form = this.initializeForm();
     this.referenciasService.getReferencias().subscribe(ref => {
       this.referencias = ref
     })
+
+    this.form.get('idPedido')?.setValue(this.idCliente)
 
     this.bsConfig = {
       isAnimated: true,
