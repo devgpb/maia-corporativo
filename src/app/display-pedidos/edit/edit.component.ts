@@ -102,8 +102,9 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     this.indiceDetalhe = this.list.indexOf(this.detalhes)
     this.indiceLimiteDetalhe = this.list.length
     this.bsConfig = {
-      containerClass: 'theme-default',
+      adaptivePosition: true,
     };
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         if (event.restoredState && event.restoredState.navigationId) {
@@ -149,7 +150,8 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
         garantiaPerformancePlaca: [null],
         suporte: [null],
         quantidadeSuportes: [null],
-        data: [null]
+        dataInicio: [null],
+        dataFim: [null],
       }),
       datas: this.fb.group({
         dataVisita: this.fb.group({
@@ -228,9 +230,21 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     window.open(this.pedidoEmEdicao.linkDrive, "_blank")
   }
 
+  tratarData(control: string) {
+    const form = this.editForm.get(control);
+    if (form?.value) {
+      const data = new Date(form.value);
+      data.setHours(0, 0, 0, 0);
+      form.setValue(data);
+    }
+  }
+
   gerarFormEdicao(pedido: IPedido) {
     this.editForm.reset();
+
     this.patchForm(this.editForm, pedido);
+    this.tratarData("instalacao.dataInicio");
+    this.tratarData("instalacao.dataFim");
 
     if (pedido['datasPedidos'].dataVisita) {
       const visita = new Date(pedido['datasPedidos'].dataVisita)
@@ -272,6 +286,7 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     this.pedidoEmEdicao = pedido
+    console.log(this.pedidoEmEdicao)
   }
 
   patchForm(formGroup: FormGroup, data: any) {
@@ -408,13 +423,11 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
       formValues.formaPagamento === this.pedidoEmEdicao?.formaPagamento &&
 
       //  formValues.detalhes.trafegoPago === this.pedidoEmEdicao?.detalhes.trafegoPago &&
-      formValues.detalhes.orcamentoGerado === this.pedidoEmEdicao?.detalhes.orcamentoGerado &&
+      formValues.detalhes.notaFiscalEnviada === this.pedidoEmEdicao?.detalhes.notaFiscalEnviada &&
       formValues.detalhes.contratoAssinado === this.pedidoEmEdicao?.detalhes.contratoAssinado &&
       formValues.detalhes.visitaRealizada === this.pedidoEmEdicao?.detalhes.visitaRealizada &&
       formValues.detalhes.equipamentoComprado === this.pedidoEmEdicao?.detalhes.equipamentoComprado &&
-      formValues.detalhes.sistemaHomologado === this.pedidoEmEdicao?.detalhes.sistemaHomologado &&
-      formValues.detalhes.documentacaoGerada === this.pedidoEmEdicao?.detalhes.documentacaoGerada
-
+      formValues.detalhes.pagamentoRealizado === this.pedidoEmEdicao?.detalhes.pagamentoRealizado
 
   }
 

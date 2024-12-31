@@ -47,10 +47,10 @@
 
       <div class="check-list">
 
-        <div class="check" (click)="toggleDetalhe('orcamentoGerado')">
+        <div class="check" (click)="toggleDetalhe('notaFiscalEnviada')">
           <i class="fa-solid"
-            [ngClass]="{'fa-check text-success': editForm.value.detalhes?.orcamentoGerado, 'fa-x text-danger': !editForm.value.detalhes?.orcamentoGerado}"></i>
-          Orçamento Gerado
+            [ngClass]="{'fa-check text-success': editForm.value.detalhes?.notaFiscalEnviada, 'fa-x text-danger': !editForm.value.detalhes?.notaFiscalEnviada}"></i>
+          Nota Fiscal Enviada
         </div>
 
         <div class="check" (click)="toggleDetalhe('visitaRealizada')">
@@ -71,17 +71,12 @@
           Equipamento Comprado
         </div>
 
-        <div class="check" (click)="toggleDetalhe('sistemaHomologado')">
+        <div class="check" (click)="toggleDetalhe('pagamentoRealizado')">
           <i class="fa-solid"
-            [ngClass]="{'fa-check text-success': editForm.value.detalhes?.sistemaHomologado, 'fa-x text-danger': !editForm.value.detalhes?.sistemaHomologado}"></i>
-          Sistema Homologado
+            [ngClass]="{'fa-check text-success': editForm.value.detalhes?.pagamentoRealizado, 'fa-x text-danger': !editForm.value.detalhes?.pagamentoRealizado}"></i>
+          Pagamento Realizado
         </div>
 
-        <div class="check" (click)="toggleDetalhe('documentacaoGerada')">
-          <i class="fa-solid"
-            [ngClass]="{'fa-check text-success': editForm.value.detalhes?.documentacaoGerada, 'fa-x text-danger': !editForm.value.detalhes?.documentacaoGerada}"></i>
-          Documentação Gerada
-        </div>
       </div>
       <span class="w-100 text-center text-primary infor">Clique em um detalhe para alterar seu valor</span>
 
@@ -302,10 +297,15 @@
         <!-- Contexto Data -->
         <div class="row">
           <div class="form-group col-12 col-lg-4">
-            <label for="data">Data de Instalação:</label>
-            <input type="date" class="form-control" id="data"
-              placeholder="Data de Instalação"
-              formControlName="data">
+            <label for="dataInicio">Data Inicio da Instalação:</label>
+              <input formControlName="dataInicio" type="text" id="dataInicio" class="form-control"
+          placeholder="Data Inicio" bsDatepicker [bsConfig]="bsConfig" autocomplete="off">
+          </div>
+
+          <div class="form-group col-12 col-lg-4">
+            <label for="dataFim">Data Finalização da Instalação:</label>
+            <input formControlName="dataFim" type="text" id="dataFim" class="form-control"
+          placeholder="Data Inicio" bsDatepicker [bsConfig]="bsConfig" autocomplete="off">
           </div>
         </div>
       </div>
