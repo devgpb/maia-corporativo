@@ -132,6 +132,7 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
       consumo: [null],
       faturamento: [0],
       dataPedido: [null, Validators.required],
+      linkMaps: [null],
       observacao: [null],
       detalhes: [{}],
       cpfCliente: [null],

@@ -196,6 +196,12 @@
           <input type="text" class="form-control" id="indicacao" formControlName="indicacao">
         </div>
 
+        <div class="form-group col-12 col-lg-4">
+          <label for="linkMaps">Link Maps:</label>
+          <input type="text" class="form-control" id="linkMaps" formControlName="linkMaps">
+          <a [href]="editForm.value.linkMaps" target="_blank" class="btn mt-2 btn-primary">Redirecionar</a>
+        </div>
+
         <div class="form-group col-12 col-lg-4 w-100 mb-3">
           <label for="cidade">Observação:</label>
           <textarea type="text" class="form-control " id="observacao" formControlName="observacao">
