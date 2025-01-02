@@ -63,7 +63,6 @@ export class CalendarioCorporativoComponent implements OnInit {
         data: clickInfo.event.extendedProps['data'],
         detalhes: clickInfo.event.extendedProps['detalhes']
       }
-      console.log(this.eventoModal.data.data)
       this.openModal()
     },
   };

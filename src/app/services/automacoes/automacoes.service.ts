@@ -62,15 +62,12 @@ export class AutomacoesService {
 
   private extractFilename(res: HttpResponse<Blob>): string {
     const contentDisposition = res.headers.get('Content-Disposition') || '';
-    console.log('Content-Disposition:', contentDisposition);
 
     // Regex atualizada para lidar com nomes de arquivo que incluem caracteres como '_'
     const matches = /filename="([^"]+)"/.exec(contentDisposition) || /filename=([^;]+)/.exec(contentDisposition);
     if (matches && matches[1]) {
-      console.log('Extracted filename:', matches[1]);
       return matches[1];
     } else {
-      console.log('Defaulting to contrato_default.docx');
       return 'contrato_default.docx';
     }
   }

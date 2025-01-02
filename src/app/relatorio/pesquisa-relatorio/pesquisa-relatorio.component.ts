@@ -76,7 +76,6 @@ export class PesquisaRelatorioComponent {
   iniciarPesquisa() {
     // converter as datas para br string
     // const formattedDateRange = this.pesquisa.rangeDatas.map(date => date.toLocaleDateString('pt-BR'));
-    // console.log(this.pesquisa);
     this.pesquisar.emit({...this.pesquisa});
   }
 }

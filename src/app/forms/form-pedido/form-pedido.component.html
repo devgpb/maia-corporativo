@@ -10,6 +10,8 @@
   <h1 class="title"> {{componentShow.titulo}} </h1>
   <app-criar-pedido *ngIf="componentShow.id == 'PedidoFechado'"></app-criar-pedido>
   <app-form-final-pedido *ngIf="componentShow.id == 'FinalizarPedido'"></app-form-final-pedido>
+  <app-pedido-externo *ngIf="componentShow.id == 'VisualizarPedido'"></app-pedido-externo>
+
 
   <div class="space"></div>
 </div>

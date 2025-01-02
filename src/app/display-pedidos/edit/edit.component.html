@@ -3,10 +3,12 @@
     <div class="w-100 d-flex justify-content-end">
       <button (click)="fecharCode()">Voltar</button>
     </div>
-    <app-qr-code-modal [link]="qrLink"></app-qr-code-modal>
+    <app-qr-code-modal [link]="qrLink" [label]="qrLabel"></app-qr-code-modal>
   </div>
 
-
+  <div class="loading-container" *ngIf="show == 'loading'">
+    <div class="loading-circle"></div>
+  </div>
 
   <div class="w-100" *ngIf="show == 'none'">
     <div class="opts w-100 d-flex">
@@ -14,7 +16,8 @@
 
       <div class="actions">
         <button (click)="irGerarContrato()">Gerar Contrato</button>
-        <button (click)="gerarQrCode()" class="btn-space">Gerar Qr Code</button>
+        <button (click)="gerarQrCode('finalizar')" class="btn-space">Finalização</button>
+        <button (click)="gerarQrCode('visualizar')" class="btn-space">Compartilhar</button>
 
       </div>
 

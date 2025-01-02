@@ -42,8 +42,6 @@ export class ContaComponent  implements OnInit {
 
         this.userService.getUser(this.userId).subscribe( user => {
           this.userInfo = user
-
-          console.log(user)
           this.atualizarForm()
         })
         return

@@ -1,0 +1,341 @@
+<div class="form-case" [formGroup]="editForm">
+
+  <div class="loading-container" *ngIf="loading">
+    <div class="loading-circle"></div>
+  </div>
+
+  <div class="form" *ngIf="!loading">
+    <!-- Detalhes do Pedido -->
+    <div class="card my-3">
+      <div class="card-header">
+        <h4 class="mb-0 destaque">Ficha do cliente</h4>
+      </div>
+      <div class="card-body d-flex flex-wrap justify-content-center">
+        <!-- 1) Nota Fiscal Enviada -->
+        <div class="list-group-item flex-item" style="width: 300px; text-align: center;">
+          <strong>Nota Fiscal Enviada:</strong>
+
+          <!-- Modo de VISUALIZAÇÃO -->
+          <span *ngIf="!isEditing">
+            <span class="ml-2 text-success" *ngIf="editForm.value.detalhes.notaFiscalEnviada">Sim</span>
+            <span class="ml-2 text-danger" *ngIf="!editForm.value.detalhes.notaFiscalEnviada">Não</span>
+          </span>
+
+          <!-- Modo de EDIÇÃO (botão que inverte valor) -->
+          <span *ngIf="isEditing">
+            <button class="btn" [ngClass]="editForm.value.detalhes?.notaFiscalEnviada ? 'btn-success' : 'btn-danger'"
+              (click)="editForm.patchValue({
+                detalhes: {
+                  notaFiscalEnviada: !editForm.value.detalhes.notaFiscalEnviada
+                }
+              })"
+              style="margin-left: 5px;">
+              {{ editForm.value.detalhes?.notaFiscalEnviada ? 'Sim' : 'Não' }}
+            </button>
+          </span>
+        </div>
+
+        <!-- 2) Visita Realizada -->
+        <div class="list-group-item flex-item" style="width: 300px; text-align: center;">
+          <strong>Visita Realizada:</strong>
+
+          <!-- Modo de VISUALIZAÇÃO -->
+          <span *ngIf="!isEditing">
+            <span class="ml-2 text-success" *ngIf="editForm.value.detalhes.visitaRealizada">Sim</span>
+            <span class="ml-2 text-danger" *ngIf="!editForm.value.detalhes.visitaRealizada">Não</span>
+          </span>
+
+          <!-- Modo de EDIÇÃO (botão que inverte valor) -->
+          <span *ngIf="isEditing">
+            <button class="btn" [ngClass]="editForm.value.detalhes?.visitaRealizada ? 'btn-success' : 'btn-danger'"
+              (click)="editForm.patchValue({
+                detalhes: {
+                  visitaRealizada: !editForm.value.detalhes.visitaRealizada
+                }
+              })"
+              style="margin-left: 5px;">
+              {{ editForm.value.detalhes?.visitaRealizada ? 'Sim' : 'Não' }}
+            </button>
+          </span>
+        </div>
+
+        <!-- 3) Contrato Assinado -->
+        <div class="list-group-item flex-item" style="width: 300px; text-align: center;">
+          <strong>Contrato Assinado:</strong>
+          <span *ngIf="!isEditing">
+            <span class="ml-2 text-success" *ngIf="editForm.value.detalhes.contratoAssinado">Sim</span>
+            <span class="ml-2 text-danger" *ngIf="!editForm.value.detalhes.contratoAssinado">Não</span>
+          </span>
+          <span *ngIf="isEditing">
+            <button class="btn" [ngClass]="editForm.value.detalhes?.contratoAssinado ? 'btn-success' : 'btn-danger'"
+              (click)="editForm.patchValue({
+                detalhes: {
+                  contratoAssinado: !editForm.value.detalhes.contratoAssinado
+                }
+              })"
+              style="margin-left: 5px;">
+              {{ editForm.value.detalhes?.contratoAssinado ? 'Sim' : 'Não' }}
+            </button>
+          </span>
+        </div>
+
+        <!-- 4) Equipamento Comprado -->
+        <div class="list-group-item flex-item" style="width: 340px; text-align: center;">
+          <strong>Equipamento Comprado:</strong>
+          <span *ngIf="!isEditing">
+            <span class="ml-2 text-success" *ngIf="editForm.value.detalhes.equipamentoComprado">Sim</span>
+            <span class="ml-2 text-danger" *ngIf="!editForm.value.detalhes.equipamentoComprado">Não</span>
+          </span>
+          <span *ngIf="isEditing">
+            <button class="btn" [ngClass]="editForm.value.detalhes?.equipamentoComprado ? 'btn-success' : 'btn-danger'"
+              (click)="editForm.patchValue({
+                detalhes: {
+                  equipamentoComprado: !editForm.value.detalhes.equipamentoComprado
+                }
+              })"
+
+              style="margin-left: 5px;">
+              {{ editForm.value.detalhes?.equipamentoComprado ? 'Sim' : 'Não' }}
+            </button>
+          </span>
+        </div>
+
+        <!-- 5) Pagamento Realizado -->
+        <div class="list-group-item flex-item" style="width: 300px; text-align: center;">
+          <strong>Pagamento Realizado:</strong>
+          <span *ngIf="!isEditing">
+            <span class="ml-2 text-success" *ngIf="editForm.value.detalhes.pagamentoRealizado">Sim</span>
+            <span class="ml-2 text-danger" *ngIf="!editForm.value.detalhes.pagamentoRealizado">Não</span>
+          </span>
+          <span *ngIf="isEditing">
+            <button class="btn" [ngClass]="editForm.value.detalhes?.pagamentoRealizado ? 'btn-success' : 'btn-danger'"
+            (click)="editForm.patchValue({
+              detalhes: {
+                pagamentoRealizado: !editForm.value.detalhes.pagamentoRealizado
+              }
+            })"
+            style="margin-left: 5px;">
+              {{ editForm.value.detalhes?.pagamentoRealizado ? 'Sim' : 'Não' }}
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Informações Pessoais -->
+    <div class="card my-3">
+      <div class="card-header">
+        <h4 class="mb-0 destaque">Informações Pessoais</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <!-- Nome -->
+          <div class="col-md-4">
+            <strong>Nome:</strong>
+            <span *ngIf="!isEditing">{{ detalhes?.nomeCompleto }}</span>
+            <input *ngIf="isEditing" type="text" class="form-control" formControlName="nomeCompleto" />
+          </div>
+          <!-- CPF -->
+          <div class="col-md-4">
+            <strong>CPF:</strong>
+            <span *ngIf="!isEditing">{{ detalhes?.cpfCliente }}</span>
+            <input *ngIf="isEditing" type="text" class="form-control" formControlName="cpfCliente" />
+          </div>
+          <!-- Celular -->
+          <div class="col-md-4">
+            <strong>Celular:</strong>
+            <span *ngIf="!isEditing">{{ detalhes?.celular }}</span>
+            <input *ngIf="isEditing" type="text" class="form-control" formControlName="celular" />
+          </div>
+          <!-- Email -->
+          <div class="col-md-4">
+            <strong>Email:</strong>
+            <span *ngIf="!isEditing">{{ detalhes?.email }}</span>
+            <input *ngIf="isEditing" type="email" class="form-control" formControlName="email" />
+          </div>
+          <!-- Endereço -->
+          <div class="col-md-4">
+            <strong>Endereço:</strong>
+            <span *ngIf="!isEditing">{{ detalhes?.endereco }}</span>
+            <input *ngIf="isEditing" type="text" class="form-control" formControlName="endereco" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Informações Gerenciais -->
+    <div class="card my-3">
+      <div class="card-header">
+        <h4 class="mb-0 destaque">Informações Gerenciais</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <!-- Status -->
+          <div class="col-md-4">
+            <strong>Status:</strong>
+            <span *ngIf="!isEditing">{{ detalhes?.status }}</span>
+            <input *ngIf="isEditing" type="text" class="form-control" formControlName="status" />
+          </div>
+          <!-- Consumo Mensal -->
+          <div class="col-md-4">
+            <strong>Consumo Mensal:</strong>
+            <span *ngIf="!isEditing">{{ detalhes?.consumoMensal }}</span>
+            <input *ngIf="isEditing" type="number" class="form-control" formControlName="consumoMensal" />
+          </div>
+          <!-- Forma de Pagamento -->
+          <div class="col-md-4">
+            <strong>Forma de Pagamento:</strong>
+            <span *ngIf="!isEditing">{{ detalhes?.formaPagamento }}</span>
+            <input *ngIf="isEditing" type="text" class="form-control" formControlName="formaPagamento" />
+          </div>
+          <!-- Mudança Mais Recente (dataPedido) -->
+          <div class="col-md-4">
+            <strong>Mudança Mais Recente:</strong>
+            <span *ngIf="!isEditing">{{ detalhes?.dataPedido | date: 'dd/MM/yyyy' }}</span>
+            <input *ngIf="isEditing" type="text" class="form-control" formControlName="dataPedido" />
+          </div>
+          <!-- Observação -->
+          <div class="col-md-4">
+            <strong>Observação:</strong>
+            <span *ngIf="!isEditing">{{ detalhes?.observacao }}</span>
+            <input *ngIf="isEditing" type="text" class="form-control" formControlName="observacao" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Informações de Instalação -->
+    <div class="card my-3">
+      <div class="card-header">
+        <h4 class="mb-0 destaque">Informações de Instalação</h4>
+      </div>
+      <div class="card-body">
+        <!-- Exibindo texto se !isEditing e exibindo inputs se isEditing -->
+        <div class="row" formGroupName="instalacao">
+          <!-- Potência Gerador -->
+          <div class="col-md-6">
+            <strong>Potência Gerador:</strong>
+            <span *ngIf="!isEditing">{{ detalhes?.instalacao?.potenciaGerador }}</span>
+            <input *ngIf="isEditing" type="text" class="form-control" formControlName="potenciaGerador" />
+          </div>
+          <!-- Distribuidora -->
+          <div class="col-md-6">
+            <strong>Distribuidora:</strong>
+            <span *ngIf="!isEditing">{{ detalhes?.instalacao?.distribuidora }}</span>
+            <input *ngIf="isEditing" type="text" class="form-control" formControlName="distribuidora" />
+          </div>
+
+          <!-- Exemplo dos inputs com ng-select (Inversores) -->
+          <div class="col-md-6 mt-3">
+            <strong>Inversores:</strong>
+            <!-- Texto -->
+            <span *ngIf="!isEditing">
+              {{ detalhes?.instalacao?.inversores }}
+            </span>
+            <!-- Input com ng-select -->
+            <ng-select *ngIf="isEditing" class="selecter" formControlName="inversores"
+              [items]="equipamentos?.inversores" bindLabel="nome" bindValue="nome" placeholder="Selecione um Inversor"
+              (change)="onInversorChange($event)">
+            </ng-select>
+          </div>
+
+          <div class="col-md-3 mt-3">
+            <strong>Quantidade de Inversores:</strong>
+            <span *ngIf="!isEditing">
+              {{ detalhes?.instalacao?.quantidadeInversores }}
+            </span>
+            <input *ngIf="isEditing" type="number" class="form-control" formControlName="quantidadeInversores" />
+          </div>
+
+          <div class="col-md-3 mt-3">
+            <strong>Garantia Fabricação (Anos):</strong>
+            <span *ngIf="!isEditing">
+              {{ detalhes?.instalacao?.garantiaFabricacaoInversor }}
+            </span>
+            <input *ngIf="isEditing" type="number" class="form-control" formControlName="garantiaFabricacaoInversor" />
+          </div>
+
+          <!-- Placas -->
+          <div class="col-md-6 mt-3">
+            <strong>Placas:</strong>
+            <span *ngIf="!isEditing">
+              {{ detalhes?.instalacao?.placas }}
+            </span>
+            <ng-select *ngIf="isEditing" class="selecter" formControlName="placas" [items]="equipamentos?.placas"
+              bindLabel="nome" bindValue="nome" placeholder="Selecione um Módulo" (change)="onModuloChange($event)">
+            </ng-select>
+          </div>
+
+          <div class="col-md-3 mt-3">
+            <strong>Quantidade de Placas:</strong>
+            <span *ngIf="!isEditing">
+              {{ detalhes?.instalacao?.quantidadePlacas }}
+            </span>
+            <input *ngIf="isEditing" type="number" class="form-control" formControlName="quantidadePlacas" />
+          </div>
+
+          <div class="col-md-3 mt-3">
+            <strong>Garantia Fabricação (Anos):</strong>
+            <span *ngIf="!isEditing">
+              {{ detalhes?.instalacao?.garantiaFabricacaoPlaca }}
+            </span>
+            <input *ngIf="isEditing" type="number" class="form-control" formControlName="garantiaFabricacaoPlaca" />
+          </div>
+
+          <div class="col-md-4 mt-3">
+            <strong>Garantia Performance (Anos):</strong>
+            <span *ngIf="!isEditing">
+              {{ detalhes?.instalacao?.garantiaPerformancePlaca }}
+            </span>
+            <input *ngIf="isEditing" type="number" class="form-control" formControlName="garantiaPerformancePlaca" />
+          </div>
+
+          <!-- Suporte -->
+          <div class="col-md-6 mt-3">
+            <strong>Suporte:</strong>
+            <span *ngIf="!isEditing">
+              {{ detalhes?.instalacao?.suporte }}
+            </span>
+            <ng-select *ngIf="isEditing" class="selecter" formControlName="suporte" [items]="tiposSuportes"
+              bindLabel="nome" bindValue="nome" placeholder="Selecione um Suporte">
+            </ng-select>
+          </div>
+
+          <div class="col-md-3 mt-3">
+            <strong>Quantidade de Suportes:</strong>
+            <span *ngIf="!isEditing">
+              {{ detalhes?.instalacao?.quantidadeSuportes }}
+            </span>
+            <input *ngIf="isEditing" type="number" class="form-control" formControlName="quantidadeSuportes" />
+          </div>
+
+          <!-- Datas de Início e Fim -->
+          <div class="col-md-6 mt-3">
+            <strong>Data de Início:</strong>
+            <span *ngIf="!isEditing">
+              {{ detalhes?.instalacao?.dataInicio | date: 'dd/MM/yyyy'}}
+            </span>
+            <input  *ngIf="isEditing" formControlName="dataInicio" type="text" id="dataInicio" class="form-control"
+            placeholder="Data Inicio" bsDatepicker [bsConfig]="bsConfig" autocomplete="off">
+          </div>
+
+          <div class="col-md-6 mt-3">
+            <strong>Data de Fim:</strong>
+            <span *ngIf="!isEditing">
+              {{ detalhes?.instalacao?.dataFim | date: 'dd/MM/yyyy'}}
+            </span>
+            <input  *ngIf="isEditing" formControlName="dataFim" type="text" id="dataFim" class="form-control"
+            placeholder="Data Inicio" bsDatepicker [bsConfig]="bsConfig" autocomplete="off">
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Se o usuário puder editar, exibimos o botão -->
+  <button *ngIf="canEdit && !loading" class="btn btn-primary mb-3" (click)="toggleEdit()">
+    {{ isEditing ? 'SALVAR' : 'EDITAR' }}
+  </button>
+
+</div>

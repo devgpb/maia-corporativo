@@ -49,10 +49,7 @@ export class DimencionarProjetoComponent implements OnInit {
       bitola : this.dimensionarBitola(disjuntor),
     }
 
-    console.log(
-      placaQ,inversorQ,disjuntor,this.dimensionamento,
-      {Ppotencia:this.extrairNumero(inversorQ.potencia)},{Ipotencia:this.extrairNumero(placaQ.potencia)}
-    )
+
   }
 
 
@@ -94,7 +91,6 @@ export class DimencionarProjetoComponent implements OnInit {
 
   dimensionarDisjuntor(valor) {
     const disjuntores = [16, 20, 25, 32, 40, 50, 63, 70, 80, 100];
-    console.log("\n\n\n\n" + valor)
     // Encontrar o menor disjuntor que é maior ou igual ao valor
     const disjuntorEscolhido = disjuntores.find(disjuntor => disjuntor >= valor);
 

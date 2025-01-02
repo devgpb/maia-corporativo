@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { toCanvas } from 'qrcode';
+import * as html2pdf from 'html2pdf.js';
 
 @Component({
   selector: 'app-qr-code-modal',
@@ -8,8 +9,9 @@ import { toCanvas } from 'qrcode';
 })
 export class QrCodeModalComponent {
   @Input() link: string = '';
-  qrCodeUrl: string = '';
+  @Input() label: string = '';
 
+  qrCodeUrl: string = '';
   ngOnChanges() {
     if (this.link) {
       this.generateQrCode();
@@ -30,5 +32,23 @@ export class QrCodeModalComponent {
     link.href = this.qrCodeUrl;
     link.download = 'qrcode.png';
     link.click();
+  }
+
+  downloadPdf() {
+    const element = document.querySelector('.qr-modal-content') as HTMLElement;
+
+
+    const options = {
+      margin: 1,
+      filename: 'QR_Code_Details.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    html2pdf().from(element).set(options).save().finally(() => {
+      // Remove a classe após gerar o PDF
+      element.classList.remove('no-buttons');
+    });
   }
 }

@@ -122,7 +122,6 @@ export class CriarPropostaComponent implements OnInit{
       this.loading = false;
       this.success = true;
       this.propostaCliente = resp;
-      console.log(resp);
       this.saveProposta()
     }, error => {
       this.loading = false;
@@ -160,7 +159,6 @@ export class CriarPropostaComponent implements OnInit{
   }
 
   formatCurrencyToNumber(value: string): number {
-    console.log(value);
     /// Remove os pontos de milhar
     value = value.replace(/\./g, '');
 

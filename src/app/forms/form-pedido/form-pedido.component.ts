@@ -8,7 +8,10 @@ import Swal from 'sweetalert2';
 })
 export class FormPedidoComponent implements OnInit {
 
-  public componentShow: any = null;
+  public componentShow: any = {
+    id: '',
+    titulo: ''
+  };
 
   ngOnInit() {
     // Obter o caminho da URL (sem o domínio)
@@ -28,6 +31,12 @@ export class FormPedidoComponent implements OnInit {
         id: "FinalizarPedido",
         titulo: "Formulário de Finalização de Instalação"
       };
+    }  else if(urlPath === '/pedido/visualizar/externo'){
+      this.componentShow = {
+        id: "VisualizarPedido",
+        titulo: "Visualização de Pedido"
+      };
+      console.log('Visualizar Pedido')
     }
   }
 

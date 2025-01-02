@@ -98,7 +98,6 @@ export class CriarContratoComponent implements OnInit {
       const idCliente = params.get('id');
       if (idCliente) {
         this.contrato.idCliente = idCliente;
-        console.log(this.contrato.idCliente)
       }
     });
 
@@ -115,7 +114,6 @@ export class CriarContratoComponent implements OnInit {
     const savedContrato = localStorage.getItem('contrato');
 
     this.pedidosService.getPedido(this.contrato.idCliente).subscribe(pedidos => {
-      console.log(pedidos)
       const pedido = pedidos[0];
       this.contrato.nomeContratante = pedido.nomeCompleto;
       this.contrato.celular = pedido.celular;

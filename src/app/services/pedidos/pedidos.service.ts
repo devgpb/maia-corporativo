@@ -31,8 +31,15 @@ export class PedidosService {
 
 
   public getPedido(idPedido: any): Observable<any>{
-		return this.http.get<any>(`${environment.apiURL}/pedidos/listar/individual/${idPedido}`)
+    const params = new HttpParams().set('idPedido', idPedido);
+		return this.http.get<any>(`${environment.apiURL}/pedidos/individual/`, {params})
 	}
+
+  public getPedidoHash(hash: any): Observable<any>{
+    const params = new HttpParams().set('hash', hash);
+		return this.http.get<any>(`${environment.apiURL}/pedidos/individual/externo`, {params})
+	}
+
 
   public getPedidosByStatus(status: string, id: string | undefined = undefined, cargo: string | undefined = undefined): Observable<IPedido[]>{
     let getuser = ''

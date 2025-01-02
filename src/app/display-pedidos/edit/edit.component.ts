@@ -47,6 +47,7 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
   };
   public show = 'none';
   public qrLink = null;
+  public qrLabel = '';
   tiposSuportes = tiposSuportes
 
   constructor(
@@ -73,6 +74,12 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
           break;
         case 'ArrowRight':
           this.proximoPedido(this.detalhes,true);
+          break;
+        case 'Enter':
+          this.enviaFormulario();
+          break;
+        case 'Escape':
+          this.toggleModal();
           break;
         default:
           break;
@@ -108,9 +115,6 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         if (event.restoredState && event.restoredState.navigationId) {
-          // Ação desejada
-          console.log('Botão de voltar pressionado');
-
           // Cancelar a navegação
           this.location.replaceState(this.location.path()); // Mantém a URL atual sem alterar
         }
@@ -176,9 +180,6 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   handlePopState(event: PopStateEvent) {
-    // Ação desejada
-    console.log('Botão de voltar pressionado (popstate)');
-
     // Cancelar a navegação
     this.location.replaceState(this.location.path()); // Mantém a URL atual sem alterar
   }
@@ -200,8 +201,14 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
 
       // this.editForm.get('datas').get('dataInstalacao').get("data")
       //   .setValue(this.formatarDataEvento(this.editForm.value.datas.dataInstalacao))
-
+      this.show = 'loading';
       this.pedidosService.updatePedido(this.pedidoEmEdicao.idPedido, this.editForm.value).subscribe(resp => {
+        this.show = 'none';
+        Swal.fire({
+          icon: "success",
+          title: "Pedido Atualizado!",
+          confirmButtonColor: "#3C58BF"
+        })
         this.atualizarPedidos.emit()
       })
 
@@ -247,47 +254,7 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     this.tratarData("instalacao.dataInicio");
     this.tratarData("instalacao.dataFim");
 
-    if (pedido['datasPedidos'].dataVisita) {
-      const visita = new Date(pedido['datasPedidos'].dataVisita)
-      visita.setHours(visita.getHours() - 3)
-      const dataVisita = visita.toISOString()
-
-      const tempoSeparado = dataVisita.split('T')
-      const datas = tempoSeparado[0].split("-");
-      //`${datas[2]}/${datas[1]}/${datas[0]}`
-      this.editForm.patchValue({
-        datas: {
-          dataVisita: {
-            data: `${datas[1]}/${datas[2]}/${datas[0]}`,
-            hora: tempoSeparado[1].split(":")[0],
-            minuto: tempoSeparado[1].split(":")[1]
-          },
-        }
-      })
-    }
-
-    if (pedido['datasPedidos'].dataInstalacao) {
-      const instalacao = new Date(pedido['datasPedidos'].dataInstalacao)
-      instalacao.setHours(instalacao.getHours() - 3)
-      const dataInstalacao = instalacao.toISOString()
-
-
-      const tempoSeparado = dataInstalacao.split('T')
-      const datas = tempoSeparado[0].split("-");
-
-      this.editForm.patchValue({
-        datas: {
-          dataInstalacao: {
-            data: `${datas[1]}/${datas[2]}/${datas[0]}`,
-            hora: tempoSeparado[1].split(":")[0],
-            minuto: tempoSeparado[1].split(":")[1]
-          }
-        }
-      })
-    }
-
     this.pedidoEmEdicao = pedido
-    console.log(this.pedidoEmEdicao)
   }
 
   patchForm(formGroup: FormGroup, data: any) {
@@ -488,8 +455,24 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     })
   }
 
-  gerarQrCode(){
-    this.qrLink = environment.url + '/pedido/finalizar/externo?id=' + this.pedidoEmEdicao.idPedido;
+  gerarQrCode(tipo: string){
+    switch(tipo){
+      case 'drive':
+        this.qrLink = this.pedidoEmEdicao.linkDrive;
+        this.qrLabel = 'Link do Google Drive';
+        break;
+      case 'finalizar':
+        this.qrLink = environment.url + '/pedido/finalizar/externo?hash=' + this.pedidoEmEdicao.hash;
+        this.qrLabel = 'Link para Finalizar Pedido - ' + this.pedidoEmEdicao.idPedido;
+        break;
+      case 'visualizar':
+        this.qrLink = environment.url + '/pedido/visualizar/externo?hash=' + this.pedidoEmEdicao.hash;
+        this.qrLabel = 'Link para Visualizar Pedido - ' + this.pedidoEmEdicao.idPedido;
+        break;
+      default:
+        this.qrLink = null;
+        break;
+    }
     this.show = 'code';
   }
 

@@ -29,13 +29,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.isLogin) {
-      this.checkNotificationPermission();
-    }
     const fullUrl = window.location.href
     this.isExternal = fullUrl.includes('externo');
-    console.log('isExternal', this.isExternal);
-    console.log("fullUrl", fullUrl)
+
+    if (!this.isLogin && !this.isExternal) {
+      this.checkNotificationPermission();
+    }
   }
 
   private checkNotificationPermission() {

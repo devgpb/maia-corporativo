@@ -159,7 +159,6 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
   handleMultiplosPedidos(action: string, isStatus: boolean = undefined){
 
     const status = isStatus ? this.statusSelecionado : undefined
-    console.log(status)
     this.pedidosService.handleMultiplePedidos(this.listaPedidosId, action, status).subscribe(checker =>{
       if(checker){
         Swal.fire({

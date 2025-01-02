@@ -116,10 +116,7 @@ export class CriarPedidoComponent {
         }
       });
 
-      console.log('FormData values:');
-      formData.forEach((value, key) => {
-        console.log(`${key}:`, value);
-      });
+     
       this.formInvalid = false
       this.pedidosService.setPedido(formData).subscribe(_ => {
         Swal.fire({

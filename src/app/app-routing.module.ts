@@ -22,6 +22,7 @@ import { CriarPropostaComponent } from './criar-proposta/criar-proposta.componen
 import { RelatorioComponent } from './relatorio/relatorio.component';
 import { FormulariosComponent } from './formularios/formularios.component';
 import { FormPedidoComponent } from './forms/form-pedido/form-pedido.component';
+import { PedidoExternoComponent } from './pedido-externo/pedido-externo.component';
 const routes: Routes = [
   { path: "login", component: LoginComponent },
 
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: "pedido/criar", component: CriarPedidoComponent, canActivate: [AuthGuard] },
   { path: "pedido/criar/externo", component: FormPedidoComponent },
   { path: "pedido/finalizar/externo", component: FormPedidoComponent },
+  { path: "pedido/visualizar/externo", component: FormPedidoComponent },
 
 
   { path: "setores", component: SetoresComponent, canActivate: [AuthGuard] },
