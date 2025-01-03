@@ -78,7 +78,8 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
       //   { targets: [0, 1, 2, 3, 4, 5, 6, 7], defaultContent: ''},
       // ],
 		};
-    this.getPedidos()
+    this.getPedidos();
+
     this.listenForNotifications()
   }
 
@@ -100,12 +101,25 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
     this.loading = true
     this.listaPedidos = []
     const idOrUndefined = this.isAdm ? undefined : this.user.idUsuario
+    const normalizeString = (str: string) =>
+      str
+        .normalize('NFD') // Decompõe os caracteres acentuados
+        .replace(/[\u0300-\u036f]/g, '') // Remove marcas diacríticas (acentos, til, etc.)
+        .toLowerCase();
+
+
     this.pedidosService.getPedidosByStatus(this.status,idOrUndefined, this.user.cargo).subscribe(pedidos =>{
       this.indicePagina = Constantes.rotasPedidos.indexOf(this.status)
       this.totalPaginas = Constantes.rotasPedidos.length;
       this.canRetroceder = this.indicePagina !== 0
       this.canAvancar = this.indicePagina !== this.totalPaginas - 1
-      this.listaPedidos = pedidos
+
+       // Apenas adicione um campo adicional normalizado para pesquisa
+      this.listaPedidos = pedidos.map(pedido => ({
+        ...pedido,
+        nomeNormalizado: normalizeString(pedido['nomeCompleto']),
+      }));
+
       this.loading = false
       this.dtTriggerPedidos.next(null);
     })

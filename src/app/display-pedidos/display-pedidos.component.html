@@ -57,6 +57,7 @@
         <th class="col-status">Status</th>
         <th class="col-acoes actions text-center">Ações</th>
         <th style="display:none;"></th>
+        <th style="display:none;"></th>
       </tr>
     </thead>
     <tbody>
@@ -95,6 +96,7 @@
             (click)="stopPropagation($event); avancarPedido(pedido)"></i>
         </td>
         <td style="display:none;">{{pedido['createdAt']}}</td>
+        <td style="display:none;">{{pedido['nomeNormalizado']}}</td>
       </tr>
     </tbody>
   </table>
