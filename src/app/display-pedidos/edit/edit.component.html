@@ -14,12 +14,21 @@
     <div class="opts w-100 d-flex">
       <i class="fa solid fa-circle-xmark icon cursor-pointer " (click)="toggleModal()"></i>
 
-      <div class="actions">
-        <button (click)="irGerarContrato()">Gerar Contrato</button>
-        <button (click)="gerarQrCode('finalizar')" class="btn-space">Finalização</button>
-        <button (click)="gerarQrCode('visualizar')" class="btn-space">Compartilhar</button>
-
+      <div class="actions d-flex gap-2">
+        <button class="btn btn-primary d-flex align-items-center gap-1" (click)="irGerarContrato()">
+          <i class="fas fa-file-contract"></i>
+          Gerar Contrato
+        </button>
+        <button class="btn btn-success d-flex align-items-center gap-1" (click)="gerarQrCode('finalizar')">
+          <i class="fas fa-check-circle"></i>
+          Finalização
+        </button>
+        <button class="btn btn-info d-flex align-items-center gap-1" (click)="gerarQrCode('visualizar')">
+          <i class="fas fa-share-alt"></i>
+          Compartilhar
+        </button>
       </div>
+
 
       <div class="id">
         {{ detalhes?.idPedido }}

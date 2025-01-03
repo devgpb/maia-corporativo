@@ -34,9 +34,8 @@ export class FormPedidoComponent implements OnInit {
     }  else if(urlPath === '/pedido/visualizar/externo'){
       this.componentShow = {
         id: "VisualizarPedido",
-        titulo: "Visualização de Pedido"
+        titulo: "Ficha do Cliente"
       };
-      console.log('Visualizar Pedido')
     }
   }
 
