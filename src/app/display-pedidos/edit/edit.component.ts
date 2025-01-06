@@ -474,7 +474,7 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
         this.qrLabel = 'Link para Vistoria Final Pedido - ' + this.pedidoEmEdicao.idPedido;
         break;
       case 'visualizar':
-        this.qrLink = environment.instaladorURL + '/pedido/visualizar/externo?hash=' + this.pedidoEmEdicao.hash;
+        this.qrLink = environment.instaladorURL + '/pedido/visualizar?hash=' + this.pedidoEmEdicao.hash;
         this.qrLabel = 'Link para Visualizar Pedido - ' + this.pedidoEmEdicao.idPedido;
         break;
       default:
