@@ -1,0 +1,115 @@
+<div class="form-case">
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+    <div class="card my-3">
+      <div class="card-header">
+        <span>Cliente</span>
+      </div>
+      <div class="form-row flex-wrap my-4 d-flex justify-content-center align-items-center">
+        <div class="text">
+          <span class="">Id Cliente: {{pedido.idPedido}}</span>
+          <span class="space">Nome: {{pedido.nomeCompleto}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card my-3">
+      <div class="card-header">
+        <span>Projeto</span>
+      </div>
+
+      <div class="form-row flex-wrap my-4 d-flex justify-content-center align-items-center">
+
+        <!-- quantidadeTubos - quantidadeConexoes - comprimentoAterramento - metragemCabeamento -->
+
+        <div class="form-group col-12 col-lg-2">
+          <label for="quantidadeTubos">Quantidade de Tubos:</label>
+          <input type="number" class="form-control" id="quantidadeTubos"
+            placeholder="Quantidade"
+            formControlName="quantidadeTubos">
+        </div>
+
+        <div class="form-group col-12 col-lg-2">
+          <label for="quantidadeConexoes">Quantidade de Conexões:</label>
+          <input type="number" class="form-control" id="quantidadeConexoes"
+            placeholder="Quantidade"
+            formControlName="quantidadeConexoes">
+        </div>
+
+        <div class="form-group col-12 col-lg-2">
+          <label for="comprimentoAterramento">Comprimento Aterramento:</label>
+          <input type="number" class="form-control" id="comprimentoAterramento"
+            placeholder="Comprimento"
+            formControlName="comprimentoAterramento">
+        </div>
+
+        <div class="form-group col-12 col-lg-2">
+          <label for="metragemCabeamento">Metragem Cabeamento:</label>
+          <input type="number" class="form-control" id="metragemCabeamento"
+            placeholder="Metragem"
+            formControlName="metragemCabeamento">
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card my-3">
+      <div class="card-header">
+        <span>Imagens da Instalação:</span>
+      </div>
+      <div class="form-row flex-wrap my-4 d-flex flex-wrap justify-content-left align-items-bottom">
+        <div class="form-group upload">
+          <label>*Fotos Do Telhado: </label>
+          <app-file-upload  formControlName="fotoTelhado" [invalid]="form.get('fotoTelhado').invalid" [multiple]="true"></app-file-upload>
+        </div>
+
+        <div class="form-group upload">
+          <label>*Foto Do Relógio: </label>
+          <app-file-upload  formControlName="fotoRelogio" [invalid]="form.get('fotoRelogio').invalid" [multiple]="false"></app-file-upload>
+        </div>
+
+        <div class="form-group upload">
+          <label>*Foto Do Disjuntor:</label>
+          <app-file-upload  formControlName="fotoDisjuntor" [invalid]="form.get('fotoDisjuntor').invalid"
+          [multiple]="false"
+          ></app-file-upload>
+        </div>
+
+        <div class="form-group upload">
+          <label>*Extra:</label>
+          <app-file-upload  formControlName="fotosExtra" [invalid]="form.get('fotosExtra').invalid"
+          [multiple]="true"
+          ></app-file-upload>
+          <span>Fotos Extras</span>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card my-3">
+      <div class="card-header">
+        <span>Detalhes</span>
+      </div>
+      <div class="form-row flex-wrap my-4 d-flex justify-content-left align-items-center">
+        <div class="form-group ">
+            <label for="observacao">Observação</label>
+            <input type="text" class="form-control" id="observacao" placeholder="Observação Não Obrigatória"
+            formControlName="observacao">
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+    <div class="d-flex justify-content-center align-items-center">
+      <button type="submit" class="btn btn-light mt-3 p-3">Enviar</button>
+    </div>
+    <!-- <div *ngIf="formInvalid" class="alert alert-warning form-invalid" role="alert">
+      Formulário inválido. Preencha todos os campos obrigatórios.
+    </div> -->
+  </form>
+</div>

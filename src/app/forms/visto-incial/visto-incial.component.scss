@@ -1,0 +1,65 @@
+.form-group{
+  margin: 5px 15px;
+  width: 25%;
+}
+
+.text{
+  span{
+    font-size: 1.5rem;
+  }
+  .space{
+    margin-left: 15px;
+  }
+}
+
+.form{
+  width: 100%;
+  padding: 0 10%;
+}
+
+.upload{
+  flex: 1 1 30%;
+  max-width: 30%;
+}
+
+
+// Responsive
+@media (max-width: 768px) {
+  .form-group{
+    margin: 5px 15px;
+    width: 90%;
+  }
+
+  .big-input{
+    max-width: 100% !important;
+  }
+
+  .line{
+    width: 100%;
+  }
+
+  .upload{
+    flex: auto;
+    max-width: 100%;
+  }
+
+  .pagamento-area{
+    position: relative;
+    width: 100%;
+    height: 500px;
+
+    >div{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .card{
+      margin: 6px 3px;
+      height: 140px;
+      width: 190px;
+    }
+  }
+}

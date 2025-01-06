@@ -26,10 +26,15 @@ export class FormPedidoComponent implements OnInit {
         id: "PedidoFechado",
         titulo: "Formulário de Fechamento de Pedido"
       };
+    } else if(urlPath === '/pedido/vistoria/externo'){
+      this.componentShow = {
+        id: "VistoIncial",
+        titulo: "Formulário de Vistoria Inicial de Instalação"
+      }
     } else if(urlPath === '/pedido/finalizar/externo'){
       this.componentShow = {
         id: "FinalizarPedido",
-        titulo: "Formulário de Finalização de Instalação"
+        titulo: "Formulário de Vistoria Final de Instalação"
       };
     }  else if(urlPath === '/pedido/visualizar/externo'){
       this.componentShow = {

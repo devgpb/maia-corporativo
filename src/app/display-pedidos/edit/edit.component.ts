@@ -157,6 +157,10 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
         quantidadeSuportes: [null],
         dataInicio: [null],
         dataFim: [null],
+        quantidadeTubos: [null],
+        quantidadeConexoes: [null],
+        comprimentoAterramento: [null],
+        metragemCabeamento: [null],
       }),
       datas: this.fb.group({
         dataVisita: this.fb.group({
@@ -461,9 +465,13 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
         this.qrLink = this.pedidoEmEdicao.linkDrive;
         this.qrLabel = 'Link do Google Drive';
         break;
+      case 'vistoInicial':
+        this.qrLink = environment.url + '/pedido/vistoria/externo?hash=' + this.pedidoEmEdicao.hash;
+        this.qrLabel = 'Link para Vistoria Inicial Pedido - ' + this.pedidoEmEdicao.idPedido;
+        break;
       case 'finalizar':
         this.qrLink = environment.url + '/pedido/finalizar/externo?hash=' + this.pedidoEmEdicao.hash;
-        this.qrLabel = 'Link para Finalizar Pedido - ' + this.pedidoEmEdicao.idPedido;
+        this.qrLabel = 'Link para Vistoria Final Pedido - ' + this.pedidoEmEdicao.idPedido;
         break;
       case 'visualizar':
         this.qrLink = environment.url + '/pedido/visualizar/externo?hash=' + this.pedidoEmEdicao.hash;

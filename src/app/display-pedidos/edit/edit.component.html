@@ -19,9 +19,13 @@
           <i class="fas fa-file-contract"></i>
           Gerar Contrato
         </button>
+        <button class="btn btn-secondary d-flex align-items-center gap-1" (click)="gerarQrCode('vistoInicial')">
+          <i class="fas fa-search"></i>
+          Vistoria Incial
+        </button>
         <button class="btn btn-success d-flex align-items-center gap-1" (click)="gerarQrCode('finalizar')">
           <i class="fas fa-check-circle"></i>
-          Finalização
+          Vistoria Final
         </button>
         <button class="btn btn-info d-flex align-items-center gap-1" (click)="gerarQrCode('visualizar')">
           <i class="fas fa-share-alt"></i>
@@ -208,10 +212,10 @@
           <input type="text" class="form-control" id="indicacao" formControlName="indicacao">
         </div>
 
-        <div class="form-group col-12 col-lg-4">
-          <label for="linkMaps">Link Maps:</label>
+        <div class="form-group col-12 col-lg-6 d-flex align-items-center">
+          <label for="linkMaps" style="width: 150px;">Link Maps:</label>
           <input type="text" class="form-control" id="linkMaps" formControlName="linkMaps">
-          <a [href]="editForm.value.linkMaps" target="_blank" class="btn mt-2 btn-primary">Redirecionar</a>
+          <a [href]="editForm.value.linkMaps" target="_blank" class="btn btn-primary" style="margin-left: 5px;">Redirecionar</a>
         </div>
 
         <div class="form-group col-12 col-lg-4 w-100 mb-3">
@@ -243,7 +247,7 @@
 
         <!-- Contexto Inversores -->
         <div class="row">
-          <div class="form-group col-12 col-lg-6">
+          <div class="form-group col-12 col-lg-5">
             <label for="inversores">Inversores:</label>
             <!-- <input type="text" class="form-control" id="inversores"
               placeholder="Inversores"
@@ -267,29 +271,27 @@
 
         <!-- Contexto Placas -->
         <div class="row">
-          <div class="form-group col-12 col-lg-6">
+          <div class="form-group col-12 col-lg-5">
             <label for="placas">Placas:</label>
             <!-- <input type="text" class="form-control" id="placas"
               placeholder="Placas"
               formControlName="placas"> -->
               <ng-select class=" selecter" formControlName="placas" [items]="equipamentos.placas" bindLabel="nome" bindValue="nome" [placeholder]="'Selecione um Modulo'" name="modulos" (change)="onModuloChange($event)" ></ng-select>
           </div>
-          <div class="form-group col-12 col-lg-3">
+          <div class="form-group col-12 col-lg-2">
             <label for="quantidadePlacas">Quantidade de Placas:</label>
             <input type="number" class="form-control" id="quantidadePlacas"
               placeholder="Quantidade"
               formControlName="quantidadePlacas">
           </div>
-          <div class="form-group col-12 col-lg-3">
+          <div class="form-group col-12 col-lg-2">
             <label for="garantiaFabricacaoPlaca">Garantia Fabricação (Anos):</label>
             <input type="number" class="form-control" id="garantiaFabricacaoPlaca"
               placeholder="Garantia (Anos)"
               formControlName="garantiaFabricacaoPlaca">
           </div>
-        </div>
 
-        <div class="row">
-          <div class="form-group col-12 col-lg-4">
+          <div class="form-group col-12 col-lg-3">
             <label for="garantiaPerformancePlaca">Garantia Performance (Anos):</label>
             <input type="number" class="form-control" id="garantiaPerformancePlaca"
               placeholder="Garantia Performance"
@@ -297,9 +299,10 @@
           </div>
         </div>
 
+
         <!-- Contexto Suporte -->
         <div class="row">
-          <div class="form-group col-12 col-lg-6">
+          <div class="form-group col-12 col-lg-3">
             <label for="suporte">Suporte:</label>
               <ng-select class=" selecter" formControlName="suporte" [items]="tiposSuportes" bindLabel="nome" bindValue="nome" [placeholder]="'Selecione um Modulo'" name="suportes" >
               </ng-select>
@@ -310,6 +313,40 @@
               placeholder="Quantidade"
               formControlName="quantidadeSuportes">
           </div>
+        </div>
+
+        <!-- Contexto Detalhes -->
+        <div class="row">
+          <!-- quantidadeTubos - quantidadeConexoes - comprimentoAterramento - metragemCabeamento -->
+
+          <div class="form-group col-12 col-lg-3">
+            <label for="quantidadeTubos">Quantidade de Tubos:</label>
+            <input type="number" class="form-control" id="quantidadeTubos"
+              placeholder="Quantidade"
+              formControlName="quantidadeTubos">
+          </div>
+
+          <div class="form-group col-12 col-lg-3">
+            <label for="quantidadeConexoes">Quantidade de Conexões:</label>
+            <input type="number" class="form-control" id="quantidadeConexoes"
+              placeholder="Quantidade"
+              formControlName="quantidadeConexoes">
+          </div>
+
+          <div class="form-group col-12 col-lg-3">
+            <label for="comprimentoAterramento">Comprimento Aterramento:</label>
+            <input type="number" class="form-control" id="comprimentoAterramento"
+              placeholder="Comprimento"
+              formControlName="comprimentoAterramento">
+          </div>
+
+          <div class="form-group col-12 col-lg-3">
+            <label for="metragemCabeamento">Metragem Cabeamento:</label>
+            <input type="number" class="form-control" id="metragemCabeamento"
+              placeholder="Metragem"
+              formControlName="metragemCabeamento">
+          </div>
+
         </div>
 
         <!-- Contexto Data -->

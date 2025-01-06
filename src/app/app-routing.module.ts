@@ -35,6 +35,7 @@ const routes: Routes = [
   { path: "pedido/criar/externo", component: FormPedidoComponent },
   { path: "pedido/finalizar/externo", component: FormPedidoComponent },
   { path: "pedido/visualizar/externo", component: FormPedidoComponent },
+  { path: "pedido/vistoria/externo", component: FormPedidoComponent },
 
 
   { path: "setores", component: SetoresComponent, canActivate: [AuthGuard] },

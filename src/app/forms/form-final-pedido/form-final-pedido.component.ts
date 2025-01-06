@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { EnderecoService } from '../services/enderecoService/endereco.service';
-import { ReferenciasService } from '../services/referenciasService/referencias.service';
-import { PedidosService } from '../services/pedidos/pedidos.service';
-import { AuthService } from '../services/auth/auth.service';
-import { IUser } from '../interfaces/IUser';
+import { EnderecoService } from '../../services/enderecoService/endereco.service';
+import { ReferenciasService } from '../../services/referenciasService/referencias.service';
+import { PedidosService } from '../../services/pedidos/pedidos.service';
+import { AuthService } from '../../services/auth/auth.service';
+import { IUser } from '../../interfaces/IUser';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { ActivatedRoute } from '@angular/router';
@@ -25,7 +25,8 @@ export class FormFinalPedidoComponent {
   public referencias: any;
   public bsConfig: any;
   public idCliente: any;
-
+  public hashCliente: string = null;
+  public pedido: any;
 
   constructor(
     private fb: FormBuilder,
@@ -36,7 +37,13 @@ export class FormFinalPedidoComponent {
     private route: ActivatedRoute
   ) {
     this.route.queryParams.subscribe(params => {
-      this.idCliente = params['id'];
+      this.hashCliente = params['hash'];
+      this.pedidosService.getPedidoHash(this.hashCliente).subscribe((pedido: any) => {
+        this.idCliente = pedido.idPedido
+        this.pedido = pedido
+        this.form.get('idPedido')?.setValue(this.idCliente)
+
+      });
     });
 
     this.form = this.initializeForm();
@@ -44,7 +51,6 @@ export class FormFinalPedidoComponent {
       this.referencias = ref
     })
 
-    this.form.get('idPedido')?.setValue(this.idCliente)
 
     this.bsConfig = {
       isAnimated: true,

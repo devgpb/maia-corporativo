@@ -117,6 +117,10 @@ export class PedidosService {
     return this.http.post<any>(`${environment.apiURL}/pedidos/finalizar`, formData);
   }
 
+  public vistoriaInicial(formData: FormData): Observable<INovoPedido> {
+    return this.http.post<any>(`${environment.apiURL}/pedidos/vistoria/incial`, formData);
+  }
+
   public marcarStandby(idPedido: any): Observable<IPedido[]>{
 		return this.http.put<IPedido[]>(`${environment.apiURL}/pedidos/marcarStandby/${idPedido}`, {})
 	}

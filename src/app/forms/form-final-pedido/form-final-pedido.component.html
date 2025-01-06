@@ -6,15 +6,9 @@
         <span>Cliente</span>
       </div>
       <div class="form-row flex-wrap my-4 d-flex justify-content-center align-items-center">
-        <div class="form-group" style="max-width: 300px;">
-          <label for="nome">*Id Cliente</label>
-          <input
-          type="text"
-          class="form-control"
-          id="idPedido"
-          appMask="inteiro"
-          placeholder="00000"
-          formControlName="idPedido">
+        <div class="text">
+          <span class="">Id Cliente: {{pedido.idPedido}}</span>
+          <span class="space">Nome: {{pedido.nomeCompleto}}</span>
         </div>
       </div>
     </div>
