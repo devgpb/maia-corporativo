@@ -90,14 +90,14 @@ export class CriarContratoComponent implements OnInit {
 
   ngOnInit(): void {
     this.equipamentosService.getEquipamentos().subscribe(equip =>{
-      this.equipamentos = equip,
-      this.loadContrato()
+      this.equipamentos = equip
     })
 
     this.route.paramMap.subscribe(params => {
       const idCliente = params.get('id');
       if (idCliente) {
         this.contrato.idCliente = idCliente;
+        this.loadContrato()
       }
     });
 
