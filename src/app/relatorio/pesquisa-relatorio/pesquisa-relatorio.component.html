@@ -8,6 +8,14 @@
         [(ngModel)]="pesquisa.rangeDatas" [bsConfig]="bsConfig">
     </div>
 
+    <div class="input d-flex align-items-center mr-2 nome">
+      <!-- Radio button bootstrap para pesquisaGlobal -->
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="isGlobal" [(ngModel)]="pesquisa.isGlobal">
+        <label class="form-check-label" for="isGlobal">Ignorar Data</label>
+      </div>
+    </div>
+
     <div class="input d-flex align-items-center mr-2">
       <label for="monthSelect" class="mr-1">Período:</label>
       <ng-select class="month" id="periodo" [items]="months" bindValue="value" bindLabel="label" dropdownPosition="bottom"
@@ -32,6 +40,9 @@
       <label for="nomeCliente" class="mr-1">Nome:</label>
       <input type="text" class="form-control" id="nomeCliente" [(ngModel)]="pesquisa.nomeCompleto">
     </div>
+
+
+
 
     <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="iniciarPesquisa()">
       <i class="fa-solid fa-search"></i>

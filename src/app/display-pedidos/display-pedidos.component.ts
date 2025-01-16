@@ -15,6 +15,7 @@ import { todasRotas } from '../constants';
 import { StorageService } from '../services/storage/storage.service';
 import { WebSocketService } from '../services/WebSocket/web-socket.service';
 import { IConfigExcel } from '../interfaces/IConfigExcel';
+import { data } from 'jquery';
 defineLocale('pt-br', ptBrLocale);
 
 @Component({
@@ -83,6 +84,36 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
     this.listenForNotifications()
   }
 
+  getTempoPedido(pedido: IPedido): any {
+    if (!pedido.datasPedido || !Array.isArray(pedido.datasPedido)) {
+      return 'Sem informações';
+    }
+
+    const resultado = pedido.datasPedido.find(item => item.nome === this.status);
+
+    if (!resultado || !resultado.data) {
+      return 'Sem informações';
+    }
+
+    // Converter a data de ISO string para Date
+    const dataPedido = new Date(resultado.data);
+    const dataAtual = new Date();
+
+    // Calcular a diferença em milissegundos
+    const diffMillis = dataAtual.getTime() - dataPedido.getTime();
+
+    // Converter para dias (1 dia = 24 * 60 * 60 * 1000 ms)
+    const diasPassados = Math.floor(diffMillis / (24 * 60 * 60 * 1000));
+
+    if (diasPassados === 0) {
+      return 'Hoje';
+    } else if (diasPassados === 1) {
+      return '1 dia';
+    } else {
+      return `${diasPassados} dias`;
+    }
+  }
+
   private listenForNotifications() {
     this.socketSub = this.webSocketService.getNovoPedido().subscribe((pedido: any) => {
       this.carregarTabela()
@@ -113,13 +144,11 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
       this.totalPaginas = Constantes.rotasPedidos.length;
       this.canRetroceder = this.indicePagina !== 0
       this.canAvancar = this.indicePagina !== this.totalPaginas - 1
-
-       // Apenas adicione um campo adicional normalizado para pesquisa
       this.listaPedidos = pedidos.map(pedido => ({
         ...pedido,
         nomeNormalizado: normalizeString(pedido['nomeCompleto']),
       }));
-
+      console.log(pedidos)
       this.loading = false
       this.dtTriggerPedidos.next(null);
     })
@@ -141,6 +170,24 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
 
 
   avancarPedido(pedido: IPedido){
+    function validarPedido(pedido: any): boolean {
+      // Obtém o status do pedido
+      const status = pedido.status;
+
+      // Encontra as condições obrigatórias para o status no validador
+      const validacao = Constantes.detalhesObrigatiorios.find(item => item[status]);
+
+      if (!validacao) {
+        // Se não houver condições definidas para o status, considerar válido
+        return true;
+      }
+
+      // Obtém a lista de campos obrigatórios
+      const camposObrigatorios = validacao[status];
+
+      // Verifica se todos os campos obrigatórios têm o valor "true" no pedido.detalhes
+      return camposObrigatorios.every(campo => pedido.detalhes[campo] === true);
+    }
 
     Swal.fire({
       title: 'Você tem certeza?',
@@ -151,6 +198,14 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
       cancelButtonText: 'Não',
     }).then((result) => {
       if (result.isConfirmed) {
+
+        if(!validarPedido(pedido)){
+          Swal.fire({
+            icon: "error",
+            title: `Falta preencher detalhes obrigatórios para avançar o pedido para ${pedido.status.toUpperCase()}!`,
+          });
+          return
+        }
 
         this.pedidosService.avancarPedido(pedido.idPedido).subscribe(avancado =>{
           if(avancado){

@@ -1,16 +1,12 @@
-export const pedidos = ["FECHADO", "ART", "HOMOLOGAR", "INSTALACAO", "FINALIZADO"];
+export const pedidos = ["FECHADO", "HOMOLOGAR", "INSTALACAO", "FINALIZADO"];
 
-// titulos = pedidos com primeira letra maiuscula
-// export const titulos: { [key: string]: string } = {
-//   "prospectados":"Prospectados",
-//   "apresentacao":"Em Apresentação",
-//   "acompanhamento": "Acompanhamento",
-//   "interessado":"Clientes Interessados",
-//   "engatilhado":"Venda Engatilhada",
-//   "fechado":"Pedidos Fechados",
-//   "instalacao": "Etapada De Instalação",
+export const detalhesObrigatiorios = [
+  { "FECHADO": ["contratoAssinado", "equipamentoComprado", "pagamentoRealizado"] },
+  { "INSTALACAO": ["notaFiscalEnviada"]}
+]
+
 //   "finalizados":"Finalizados"}
-const titulos = pedidos.map(pedido => pedido.charAt(0).toUpperCase() + pedido.slice(1).toLowerCase())
+export const titulos = pedidos.map(pedido => pedido.charAt(0).toUpperCase() + pedido.slice(1).toLowerCase())
 
 export const descricoesStatus: { [key: string]: string } = {
     "prospectados":"Um cliente prospectado acabou de chegar, ainda não foi estabelecido uma ligação com ele. É a nossa primeira etapa de funil.",
@@ -41,7 +37,7 @@ export const dtlanguage = {
   infoPostFix: "",
   loadingRecords: "Carregando registros...",
   zeroRecords: "Nenhum registro encontrado",
-  emptyTable: "Nenhuma dado disponível na tabela",
+  emptyTable: "Nenhum dado disponível na tabela",
   paginate: {
     first: "Primeiro",
     previous: "Anterior",
@@ -67,8 +63,7 @@ export const tiposSuportes = [
 ]
 
 export const AvisosAvanco = {
-  "FECHADO":"Você tem certeza que o contrato já foi gerado?",
-  "ART":"Você tem certeza que a ART já foi gerada e assinada?",
+  "FECHADO":"Você deve primeiro ter o contrato assinado, o equipamento comprado e o pagamento realizado",
   "HOMOLOGAR":"Você tem certeza que a homologação já foi realizada?",
   "INSTALACAO":"Você tem certeza já preencheu o formulário de finalização de instalação?",
 }

@@ -1,3 +1,8 @@
+interface datasPedido {
+  data: string | Date;
+  nome: string;
+}
+
 export interface IPedido{
   [key: string]: any;
   idPedido?: string | number;
@@ -13,6 +18,7 @@ export interface IPedido{
   horario: string;
   ref: string;
   dataPedido: string | Date;
+  datasPedido?: Array<datasPedido>;
   observacao?: string;
   status: string;
   indicacao: string;

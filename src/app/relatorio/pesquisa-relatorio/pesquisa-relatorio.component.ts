@@ -17,6 +17,7 @@ export class PesquisaRelatorioComponent {
   pesquisa = {
     rangeDatas: [new Date(new Date().getFullYear(), new Date().getMonth(), 1), new Date()],
     nomeCompleto: '',
+    isGlobal: false,
     status: null,
   }
 
@@ -44,15 +45,27 @@ export class PesquisaRelatorioComponent {
 
   generateMonths() {
     const now = new Date();
-    const months = [];
-    for (let i = 0; i <= now.getMonth(); i++) {
-      const date = new Date(now.getFullYear(), i, 1);
-      months.push({
-        value: i,
-        label: date.toLocaleString('pt-BR', { month: 'long' })
+    const monthsAndYears = [];
+
+    // Adicionar os últimos 6 meses (incluindo o mês atual)
+    for (let i = 0; i < 6; i++) {
+      const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      monthsAndYears.push({
+        value: `${date.getFullYear()}-${date.getMonth() + 1}`,
+        label: date.toLocaleString('pt-BR', { month: 'long', year: 'numeric' })
       });
     }
-    return months;
+
+    // Adicionar os últimos 5 anos como valores únicos
+    for (let yearsAgo = 1; yearsAgo <= 5; yearsAgo++) {
+      const year = now.getFullYear() - yearsAgo;
+      monthsAndYears.push({
+        value: `${year}`,
+        label: `${year}`
+      });
+    }
+
+    return monthsAndYears;
   }
 
 
