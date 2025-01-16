@@ -1,12 +1,12 @@
-export const pedidos = ["FECHADO", "HOMOLOGAR", "INSTALACAO", "FINALIZADO"];
+export const pedidos = ["FECHADO", "HOMOLOGAR", "INSTALACAO", "NOTA",  "FINALIZADO"];
+
+//   "finalizados":"Finalizados"}
+export const titulos = pedidos.map(pedido => pedido.charAt(0).toUpperCase() + pedido.slice(1).toLowerCase())
 
 export const detalhesObrigatiorios = [
   { "FECHADO": ["contratoAssinado", "equipamentoComprado", "pagamentoRealizado"] },
   { "INSTALACAO": ["notaFiscalEnviada"]}
 ]
-
-//   "finalizados":"Finalizados"}
-export const titulos = pedidos.map(pedido => pedido.charAt(0).toUpperCase() + pedido.slice(1).toLowerCase())
 
 export const descricoesStatus: { [key: string]: string } = {
     "prospectados":"Um cliente prospectado acabou de chegar, ainda não foi estabelecido uma ligação com ele. É a nossa primeira etapa de funil.",

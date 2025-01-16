@@ -3,6 +3,9 @@ import { AuthService } from '../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { environment } from "src/environments/environment";
+import * as Constantes from "../constants";
+
+
 
 @Component({
   selector: 'app-menu',
@@ -11,7 +14,7 @@ import { environment } from "src/environments/environment";
 })
 
 export class MenuComponent implements OnInit {
-
+    public Constantes = Constantes;
     public userCargo = "";
     private _isOpen = false; // para controlar a visibilidade do submenu
     private _menuSelected = "";
