@@ -40,6 +40,7 @@ export class VistoIncialComponent {
     this.route.queryParams.subscribe(params => {
       this.hashCliente = params['hash'];
       this.pedidosService.getPedidoHash(this.hashCliente).subscribe((pedido: any) => {
+        pedido = pedido[0]
         this.idCliente = pedido.idPedido
         this.pedido = pedido
         this.form.patchValue(pedido.instalacao)

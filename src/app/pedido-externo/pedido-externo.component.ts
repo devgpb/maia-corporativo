@@ -56,6 +56,7 @@ export class PedidoExternoComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.hashCliente = params['hash'];
       this.pedidosService.getPedidoHash(this.hashCliente).subscribe((pedido) => {
+        pedido = pedido[0]
         this.loading = false;
         this.detalhes = pedido;
         this.patchForm(pedido);
