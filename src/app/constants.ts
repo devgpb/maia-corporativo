@@ -5,7 +5,7 @@ export const titulos = pedidos.map(pedido => pedido.charAt(0).toUpperCase() + pe
 
 export const detalhesObrigatiorios = [
   { "FECHADO": ["contratoAssinado", "equipamentoComprado", "pagamentoRealizado"] },
-  { "INSTALACAO": ["notaFiscalEnviada", "ART"]}
+  { "INSTALACAO": ["ART"]}
 ]
 
 export const descricoesStatus: { [key: string]: string } = {

@@ -63,12 +63,6 @@
 
       <div class="check-list">
 
-        <div class="check" (click)="toggleDetalhe('notaFiscalEnviada')">
-          <i class="fa-solid"
-            [ngClass]="{'fa-check text-success': editForm.value.detalhes?.notaFiscalEnviada, 'fa-x text-danger': !editForm.value.detalhes?.notaFiscalEnviada}"></i>
-          Nota Fiscal Enviada
-        </div>
-
         <div class="check" (click)="toggleDetalhe('visitaRealizada')">
           <i class="fa-solid"
             [ngClass]="{'fa-check text-success': editForm.value.detalhes?.visitaRealizada, 'fa-x text-danger': !editForm.value.detalhes?.visitaRealizada}"></i>
