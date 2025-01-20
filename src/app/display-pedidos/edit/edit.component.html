@@ -87,6 +87,12 @@
           Equipamento Comprado
         </div>
 
+        <div class="check" (click)="toggleDetalhe('ART')">
+          <i class="fa-solid"
+            [ngClass]="{'fa-check text-success': editForm.value.detalhes?.ART, 'fa-x text-danger': !editForm.value.detalhes?.ART}"></i>
+          ART
+        </div>
+
         <div class="check" (click)="toggleDetalhe('pagamentoRealizado')">
           <i class="fa-solid"
             [ngClass]="{'fa-check text-success': editForm.value.detalhes?.pagamentoRealizado, 'fa-x text-danger': !editForm.value.detalhes?.pagamentoRealizado}"></i>

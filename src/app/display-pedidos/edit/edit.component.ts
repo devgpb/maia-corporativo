@@ -399,7 +399,9 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
       formValues.detalhes.contratoAssinado === this.pedidoEmEdicao?.detalhes.contratoAssinado &&
       formValues.detalhes.visitaRealizada === this.pedidoEmEdicao?.detalhes.visitaRealizada &&
       formValues.detalhes.equipamentoComprado === this.pedidoEmEdicao?.detalhes.equipamentoComprado &&
+      formValues.detalhes.ART === this.pedidoEmEdicao?.detalhes.ART &&
       formValues.detalhes.pagamentoRealizado === this.pedidoEmEdicao?.detalhes.pagamentoRealizado
+
 
   }
 
