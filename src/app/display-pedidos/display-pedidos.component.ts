@@ -139,7 +139,7 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
         .toLowerCase();
 
 
-    this.pedidosService.getPedidosByStatus(this.status,idOrUndefined, this.user.cargo).subscribe(pedidos =>{
+    this.pedidosService.getPedidosByStatus(this.status,undefined, this.user.cargo).subscribe(pedidos =>{
       this.indicePagina = Constantes.rotasPedidos.indexOf(this.status)
       this.totalPaginas = Constantes.rotasPedidos.length;
       this.canRetroceder = this.indicePagina !== 0

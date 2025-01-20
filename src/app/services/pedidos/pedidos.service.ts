@@ -44,7 +44,7 @@ export class PedidosService {
   public getPedidosByStatus(status: string, id: string | undefined = undefined, cargo: string | undefined = undefined): Observable<IPedido[]>{
     let getuser = ''
     if(id){
-      getuser = "/"+id
+      getuser = id
     }
     // enviar cargo
 		return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos/listar/${getuser}`, {
