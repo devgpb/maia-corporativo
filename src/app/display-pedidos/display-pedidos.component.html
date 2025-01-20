@@ -77,25 +77,29 @@
         </td>
         <td class="text-center"> {{ getTempoPedido(pedido) }}</td>
         <td class="text-center">{{pedido.status}}</td>
-        <td class="text-center" class="icons d-flex flex-wrap justify-content-center">
-          <!-- Apenas para rotas especiais -->
-          <i *ngIf="rotaEspecial" class="icon bg-dark text-white separar"
-            (click)="stopPropagation($event); liberarPedido(pedido)">Reativar</i>
-          <!-- Apenas para rotas especiais -->
-          <i *ngIf="canRetroceder && !rotaEspecial" class=" icon bg-primary text-white fa-solid fa-angles-left"
-            (click)="stopPropagation($event); retrocederPedido(pedido)"></i>
+        <td class="text-center"
+        class="icons d-flex flex-wrap justify-content-center"
+        >
+          <div class="w-100 d-flex justify-content-center" >
+            <!-- Apenas para rotas especiais -->
+            <i *ngIf="rotaEspecial" class="icon bg-dark text-white separar"
+              (click)="stopPropagation($event); liberarPedido(pedido)">Reativar</i>
+            <!-- Apenas para rotas especiais -->
+            <i *ngIf="canRetroceder && !rotaEspecial" class=" icon bg-primary text-white fa-solid fa-angles-left"
+              (click)="stopPropagation($event); retrocederPedido(pedido)"></i>
 
-          <!-- <i class="icon fa-solid fa-pen mini-icon bg-success text-white separar" (click)="stopPropagation($event);
-           abrirEdicao(pedido)"
-            *ngIf="podeEditar"></i> -->
+            <!-- <i class="icon fa-solid fa-pen mini-icon bg-success text-white separar" (click)="stopPropagation($event);
+             abrirEdicao(pedido)"
+              *ngIf="podeEditar"></i> -->
 
-          <i class="icon bg-danger text-white separar fa-solid fa-trash-arrow-up"
-            (click)="stopPropagation($event); deletarPedido(pedido)"></i>
+            <i class="icon bg-danger text-white separar fa-solid fa-trash-arrow-up"
+              (click)="stopPropagation($event); deletarPedido(pedido)"></i>
 
-          <i class="icon bg-warning text-white separar fa-solid fa-cube"
-            (click)="stopPropagation($event); salvarPedidoStorage(pedido)"></i>
-          <i *ngIf="canAvancar && !rotaEspecial" class="icon bg-primary text-white fa-solid fa-angles-right separar"
-            (click)="stopPropagation($event); avancarPedido(pedido)"></i>
+            <i class="icon bg-warning text-white separar fa-solid fa-cube"
+              (click)="stopPropagation($event); salvarPedidoStorage(pedido)"></i>
+            <i *ngIf="canAvancar && !rotaEspecial" class="icon bg-primary text-white fa-solid fa-angles-right separar"
+              (click)="stopPropagation($event); avancarPedido(pedido)"></i>
+          </div>
         </td>
         <td style="display:none;">{{pedido['createdAt']}}</td>
         <td style="display:none;">{{pedido['nomeNormalizado']}}</td>

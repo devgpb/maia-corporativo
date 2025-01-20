@@ -81,10 +81,22 @@
           Equipamento Comprado
         </div>
 
+        <div class="check" (click)="toggleDetalhe('espelho')">
+          <i class="fa-solid"
+            [ngClass]="{'fa-check text-success': editForm.value.detalhes?.espelho, 'fa-x text-danger': !editForm.value.detalhes?.espelho}"></i>
+          Espelho no Drive
+        </div>
+
         <div class="check" (click)="toggleDetalhe('ART')">
           <i class="fa-solid"
             [ngClass]="{'fa-check text-success': editForm.value.detalhes?.ART, 'fa-x text-danger': !editForm.value.detalhes?.ART}"></i>
           ART
+        </div>
+
+        <div class="check" (click)="toggleDetalhe('homologado')">
+          <i class="fa-solid"
+            [ngClass]="{'fa-check text-success': editForm.value.detalhes?.homologado, 'fa-x text-danger': !editForm.value.detalhes?.homologado}"></i>
+          Homologado
         </div>
 
         <div class="check" (click)="toggleDetalhe('pagamentoRealizado')">

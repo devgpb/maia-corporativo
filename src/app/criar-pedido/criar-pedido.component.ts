@@ -75,6 +75,8 @@ export class CriarPedidoComponent {
     group['comprovanteResidencia'] = [null];
     group['identidade'] = [null];
     group['comprovanteResidenciaOpt'] = [null];
+    group['beneficiario'] = [null];
+    group['espelho'] = [null];
 
 
     group['kit'] = [null];
@@ -116,7 +118,7 @@ export class CriarPedidoComponent {
         }
       });
 
-     
+
       this.formInvalid = false
       this.pedidosService.setPedido(formData).subscribe(_ => {
         Swal.fire({
