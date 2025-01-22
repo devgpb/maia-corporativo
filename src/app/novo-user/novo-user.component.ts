@@ -48,6 +48,9 @@ export class NovoUserComponent implements OnInit {
     });
 
     this.userService.getCargos().subscribe(cargos =>{
+      if(this.authService.getCargo() != Cargos.ADMINISTRADOR){
+        cargos = cargos.filter(cargo => cargo != "ADMINISTRADOR")
+      }
       this.listCargos = cargos
     })
   }

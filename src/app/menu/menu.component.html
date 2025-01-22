@@ -56,7 +56,7 @@
           Clientes</a>
       </li>
 
-      <li class="nav-item active" *ngIf="userCargo=='ADMINISTRADOR'">
+      <li class="nav-item active" *ngIf="userCargo=='ADMINISTRADOR' || userCargo=='GESTOR'">
         <a class="nav-link" routerLink="usuarios/novo" [routerLinkActive]="['active-link']"
           [routerLinkActiveOptions]="{exact: true}" [attr.disabled]="isActive('usuarios/novo') ? true : null"><i
             class="fa-solid fa-user-plus"></i> Novo Usuario</a>
