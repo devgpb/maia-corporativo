@@ -2,7 +2,7 @@
   <div class="form">
     <div class="form-group">
       <label for="nomeCompleto">Nome Completo</label>
-      <input type="text" class="form-control" id="nomeCompleto" formControlName="nomeCompleto">
+      <input type="text" class="form-control" id="nomeCompleto" formControlName="nomeCompleto" placeholder="Informe o nome completo">
     </div>
 
     <div class="form-group">
@@ -13,13 +13,14 @@
     <div class="form-group min">
       <label for="setor">Setor</label>
       <select class="form-control" id="setor" formControlName="idSetor">
+        <option value="" disabled selected>Selecione um setor</option>
         <option *ngFor="let setor of list" [value]="setor.idSetor">{{setor.nome}}</option>
       </select>
     </div>
 
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" formControlName="email">
+      <input type="email" class="form-control" id="email" formControlName="email" placeholder="Informe o email">
     </div>
 
     <div class="form-group ">
@@ -29,13 +30,23 @@
 
     <div class="form-group">
       <label for="senha">Senha</label>
-      <input type="password" class="form-control" id="senha" formControlName="senha">
+      <input type="password" class="form-control" id="senha" formControlName="senha" placeholder="Informe a senha">
     </div>
 
     <div class="form-group">
       <label for="cargo">Cargo</label>
       <select class="form-control" id="cargo" formControlName="cargo">
+        <option value="" disabled selected>Selecione um cargo</option>
         <option *ngFor="let cargo of listCargos" [value]="cargo">{{cargo}}</option>
+      </select>
+    </div>
+
+    <!-- Select de cidade -->
+    <div class="form-group">
+      <label for="cidade">Cidade</label>
+      <select class="form-control" id="cidade" formControlName="cidade">
+        <option value="" disabled selected>Selecione uma cidade</option>
+        <option *ngFor="let cidade of listCidades" [value]="cidade">{{cidade}}</option>
       </select>
     </div>
 

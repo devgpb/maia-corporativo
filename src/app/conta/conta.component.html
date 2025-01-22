@@ -3,7 +3,8 @@
   <div class="form">
     <div class="form-group ">
       <label for="nomeCompleto">Nome Completo</label>
-      <input type="text" class="form-control" id="nomeCompleto" formControlName="nomeCompleto">
+      <input type="text" class="form-control" id="nomeCompleto" formControlName="nomeCompleto"
+      placeholder="Informe o nome completo">
     </div>
 
     <!-- <div class="form-group ">
@@ -34,6 +35,7 @@
     <div class="form-group">
       <label for="idSetor">Setor</label>
       <select class="form-control" id="setor" formControlName="idSetor">
+        <option value="" disabled selected>Selecione um setor</option>
         <option *ngFor="let setor of list" [value]="setor.idSetor">{{setor.nome}}</option>
       </select>
     </div>
@@ -68,36 +70,22 @@
 
     <div class="form-group">
       <label for="cargo">Cargo</label>
-      <input type="text" class="form-control" id="cargo" formControlName="cargo" >
+      <select class="form-control" id="cargo" formControlName="cargo">
+        <option value="" disabled selected>Selecione um cargo</option>
+        <option *ngFor="let cargo of listCargos" [value]="cargo">{{cargo}}</option>
+      </select>
     </div>
 
-    <h2 class="text-uppercase text-center w-100">endereço</h2>
-
-    <div class="form-group ">
-      <label for="cep">CEP</label>
-      <input type="text" formControlName="cep" class="form-control" id="cep" placeholder="00000-000" (input)="applyCepMask($event); onCepChange()" >
-    </div>
-
-    <div class="form-row d-flex justify-content-center align-items-center ">
-
-      <div class="form-group ">
-        <label for="cidade">Cidade</label>
-        <input type="text" class="form-control" id="cidade" placeholder="Informe a cidade"
-        formControlName="cidade">
-      </div>
-      <div class="form-group ">
-        <label for="rua">Rua</label>
-        <input type="text" class="form-control" id="rua" placeholder="Informe a rua"  formControlName="rua">
-      </div>
-
-      <div class="form-group ">
-        <label for="numero">Numero</label>
-        <input type="text" class="form-control" id="numero" placeholder="Informe a numero"  formControlName="rua">
-      </div>
+    <div class="form-group">
+      <label for="cidade">Cidade</label>
+      <select class="form-control" id="cidade" formControlName="cidade">
+        <option value="" disabled selected>Selecione uma cidade</option>
+        <option *ngFor="let cidade of listCidades" [value]="cidade">{{cidade}}</option>
+      </select>
     </div>
 
     <div class="w-100 d-flex justify-content-end">
-      <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid || !nothingChanged()">Atualizar</button>
+      <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Atualizar</button>
     </div>
 
   </div>

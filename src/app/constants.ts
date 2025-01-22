@@ -1,5 +1,7 @@
 export const pedidos = ["FECHADO", "HOMOLOGAR", "INSTALACAO", "NOTA",  "FINALIZADO"];
 
+export const cidades = ["Arcoverde", "Surubim"]
+
 //   "finalizados":"Finalizados"}
 export const titulos = pedidos.map(pedido => pedido.charAt(0).toUpperCase() + pedido.slice(1).toLowerCase())
 

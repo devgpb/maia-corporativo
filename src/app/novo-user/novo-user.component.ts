@@ -6,6 +6,7 @@ import { UserService } from '../services/user/user.service';
 import { SetoresService } from '../services/setores/setores.service';
 import Swal from 'sweetalert2';
 import { ISetor } from '../interfaces/ISetor';
+import * as Constantes from "../constants";
 
 @Component({
   selector: 'app-novo-user',
@@ -16,7 +17,9 @@ export class NovoUserComponent implements OnInit {
 
   registerForm: FormGroup = new FormGroup({});
   list: ISetor[] = [];
-  listCargos: any[] = []
+  listCargos: any[] = [];
+
+  public listCidades: any[] = Constantes.cidades;
 
   constructor(
     private fb: FormBuilder,
@@ -30,13 +33,14 @@ export class NovoUserComponent implements OnInit {
     this.authService.cargosPermitidos([Cargos.ADMINISTRADOR,Cargos.GESTOR])
 
     this.registerForm = this.fb.group({
-      nomeCompleto: ['', Validators.required],
-      dataNascimento: ['', Validators.required],
-      idSetor: ['', Validators.required],
-      celular: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      senha: ['', [Validators.required, Validators.minLength(6)]],
-      cargo: ['', [Validators.required]],
+      nomeCompleto: [null, Validators.required],
+      dataNascimento: [null, Validators.required],
+      cidade: ["", Validators.required],
+      idSetor: ["", Validators.required],
+      celular: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email]],
+      senha: [null, [Validators.required, Validators.minLength(6)]],
+      cargo: ["", [Validators.required]],
     });
 
     this.setoresService.getSetores().subscribe(ref => {

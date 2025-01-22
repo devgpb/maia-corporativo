@@ -101,6 +101,8 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     this.editForm = this.initializeForm();
     this.editForm.get('ref')?.disable();
     this.editForm.get('status')?.disable();
+    this.editForm.get('regiao')?.disable();
+
     this.localeService.use('pt-br');
     this.equipamentosService.getEquipamentos().subscribe(equip =>{
       this.equipamentos = equip
@@ -141,6 +143,7 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
       detalhes: [{}],
       cpfCliente: [null],
       formaPagamento: [null],
+      regiao: [null],
       ref: [null],
       indicacao: [null],
       instalacao: this.fb.group({
@@ -238,7 +241,8 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     return false
   }
 
-  goToDrive(){
+  goToDrive(event: any) {
+    event.preventDefault()
     window.open(this.pedidoEmEdicao.linkDrive, "_blank")
   }
 

@@ -8,6 +8,8 @@ import { EnderecoService } from '../services/enderecoService/endereco.service';
 import { SetoresService } from '../services/setores/setores.service';
 import { ActivatedRoute } from '@angular/router';
 import { ISetor } from '../interfaces/ISetor';
+import * as Constantes from "../constants";
+
 
 @Component({
   selector: 'app-conta',
@@ -23,7 +25,9 @@ export class ContaComponent  implements OnInit {
   editando: boolean = false;
   userId: number | null = null;
   list: ISetor[] = [];
-  listCargos: any[] = []
+  listCargos: any[] = [];
+
+  public listCidades: any[] = Constantes.cidades;
 
 
   constructor(
@@ -69,26 +73,27 @@ export class ContaComponent  implements OnInit {
 
   inicializarForm(){
     this.userForm = this.fb.group({
-      nomeCompleto: ["", Validators.required],
-      dataNascimento: ["", Validators.required],
+      nomeCompleto: [null, Validators.required],
+      dataNascimento: [null, Validators.required],
       senhaAtual: [''],
-      cpf: [""],
-      cnpj: [""],
-      celular: [""],
+      cpf: [null],
+      cnpj: [null],
+      celular: [null],
       novaSenha: ['', [ Validators.minLength(8)]],
-      idSetor: ["", Validators.required],
-      setor: ["", Validators.required],
-      email: ["", [Validators.required, Validators.email]],
-      cargo: ["", [Validators.required]],
-      rua: [""],
-      cidade: [""],
-      bairro: [""],
-      numero: [""],
-      cep: [""],
+      idSetor: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email]],
+      cargo: [null, [Validators.required]],
+      rua: [null],
+      cidade: [null],
+      bairro: [null],
+      numero: [null],
+      cep: [null],
 
     }, {validator: this.checkPasswords });
-    this.userForm.get('cargo')?.disable();
-    this.userForm.get('setor')?.disable();
+    if(this.authService.getCargo() !== "ADMINISTRADOR"){
+      this.userForm.get('cargo')?.disable();
+      this.userForm.get('setor')?.disable();
+    }
     this.initialFormValue = this.userForm.value;
   }
 
@@ -97,7 +102,7 @@ export class ContaComponent  implements OnInit {
     this.userForm.patchValue({
       nomeCompleto: this.userInfo.nomeCompleto,
       dataNascimento: nascmentoUser,
-      senhaAtual: '',
+      senhaAtual: null,
       cpf: this.userInfo.cpf,
       cnpj: this.userInfo.cnpj,
       idSetor: this.userInfo.idSetor,
@@ -112,8 +117,10 @@ export class ContaComponent  implements OnInit {
       cep: this.userInfo.cep,
 
     });
-    this.userForm.get('cargo')?.disable();
-    this.userForm.get('setor')?.disable();
+    if(this.authService.getCargo() !== "ADMINISTRADOR"){
+      this.userForm.get('cargo')?.disable();
+      this.userForm.get('setor')?.disable();
+    }
     this.initialFormValue = this.userForm.value;
   }
 
@@ -140,7 +147,6 @@ export class ContaComponent  implements OnInit {
 
       this.userService.atualizarUser(this.userForm.value, id as string).subscribe(res =>{
         if(res){
-          this.authService.updateUserData(this.userForm.value)
           this.userInfo = this.authService.getUser()
           this.userForm.get('senhaAtual')?.setValue('');
           this.userForm.get('novaSenha')?.setValue('');

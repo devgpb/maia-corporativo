@@ -42,7 +42,7 @@
       </li>
 
 
-      <li class="nav-item" *ngIf="userCargo=='ADMINISTRADOR'">
+      <li class="nav-item" *ngIf="userCargo=='ADMINISTRADOR' || userCargo=='GESTOR'">
         <a class="nav-link" routerLink="/equipamentos" [routerLinkActive]="['active-link']"
           [routerLinkActiveOptions]="{exact: true}" [attr.disabled]="isActive('/equipamentos') ? true : null"> <i
             class="fa-solid fa-wrench"></i> Equipamentos</a>

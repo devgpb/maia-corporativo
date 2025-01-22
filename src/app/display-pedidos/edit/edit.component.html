@@ -190,6 +190,16 @@
         </div>
 
         <div class="form-group col-12 col-lg-4">
+          <label for="status">Região:</label>
+          <input type="text" class="form-control" id="regiao" formControlName="regiao" [disabled]="true">
+        </div>
+        
+        <div class="form-group col-12 col-lg-4">
+          <label for="ref">Referência:</label>
+          <input type="text" class="form-control" id="ref" formControlName="ref">
+        </div>
+
+        <div class="form-group col-12 col-lg-4">
           <label for="consumo">Consumo Mensal de Energia:</label>
           <input type="text" class="form-control" id="consumo" formControlName="consumo"
             appNumericOnly>
@@ -214,10 +224,7 @@
           <input type="date" class="form-control" id="dataPedido" formControlName="dataPedido">
         </div>
 
-        <div class="form-group col-12 col-lg-4">
-          <label for="ref">Referência:</label>
-          <input type="text" class="form-control" id="ref" formControlName="ref">
-        </div>
+
 
         <div class="form-group col-12 col-lg-4">
           <label for="indicacao">Indicação:</label>
@@ -394,7 +401,7 @@
         </div>
 
         <div class="save modal-footer">
-          <button  *ngIf="getShowDrive" (click)="goToDrive()" type="submit" class="btn btn-info drive">DRIVE</button>
+          <button  *ngIf="getShowDrive" (click)="goToDrive($event)" type="submit" class="btn btn-info drive">DRIVE</button>
           <button  *ngIf="!getShowDrive" (click)="adicionarDrive()" type="submit" class="btn btn-info drive">Adicionar Drive</button>
 
 
