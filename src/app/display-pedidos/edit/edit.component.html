@@ -403,7 +403,7 @@
           <button  *ngIf="!getShowDrive" (click)="adicionarDrive()" type="submit" class="btn btn-info drive">Adicionar Drive</button>
 
 
-          <button [disabled]="nothingChanged()" type="submit" class="btn btn-primary">Salvar</button>
+          <button [disabled]="nothingChanged()" type="submit" class="btn btn-primary" *ngIf="canEdit">Salvar</button>
         </div>
 
       </div>

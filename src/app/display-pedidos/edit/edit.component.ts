@@ -28,6 +28,8 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
   @Input() detalhes: IPedido;
   @Input() rotaEspecial: boolean = false;
   @Input() list: IPedido[];
+  @Input() canEdit: boolean = true;
+
 
   @Output() atualizarPedidos = new EventEmitter<any>();
 
@@ -76,9 +78,11 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
           this.proximoPedido(this.detalhes,true);
           break;
         case 'Enter':
-          this.enviaFormulario();
+          if(this.canEdit)
+            this.enviaFormulario();
           break;
         case 'Escape':
+          event.preventDefault();
           this.toggleModal();
           break;
         default:

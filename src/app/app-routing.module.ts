@@ -23,6 +23,7 @@ import { RelatorioComponent } from './relatorio/relatorio.component';
 import { FormulariosComponent } from './formularios/formularios.component';
 import { FormPedidoComponent } from './forms/form-pedido/form-pedido.component';
 import { PedidoExternoComponent } from './pedido-externo/pedido-externo.component';
+import { HomologacoesComponent } from './homologacoes/homologacoes.component';
 const routes: Routes = [
   { path: "login", component: LoginComponent },
 
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: "pedido/vistoria/externo", component: FormPedidoComponent },
 
 
+  { path: "homologacoes", component: HomologacoesComponent, canActivate: [AuthGuard] },
   { path: "setores", component: SetoresComponent, canActivate: [AuthGuard] },
   { path: "relatorios/meus", component: MeusRelatoriosComponent, canActivate: [AuthGuard] },
   { path: "ref", component: ReferenciasComponent, canActivate: [AuthGuard]  },

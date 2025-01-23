@@ -1,0 +1,53 @@
+.card{
+  margin: 12px;
+  width: 300px;
+  height: 150px;
+  border: 1px solid green;
+  color: green;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  padding: 12px;
+  transition: background-color 0.3s, color 0.3s, transform 0.5s, opacity 0.5s; // Adiciona transição
+
+  .fa-solid{
+    font-size: 50px;
+    text-align: center;
+  }
+
+  .fa-file-signature{
+    margin-left: 15px;
+  }
+
+  .titulo{
+    font-size: 1.5rem;
+    text-align: center;
+    text-transform: uppercase;
+    word-wrap: normal;
+  }
+
+  .desc{
+    font-size: 1rem;
+    text-align: center;
+
+  }
+
+  &:hover {
+    background-color: green;
+    color: white;
+
+    .fa-solid,
+    .titulo {
+      color: white;
+    }
+
+    .btn-success{
+      background-color: white !important;
+      color: green !important;
+    }
+  }
+
+  &.animating {
+    transform: scale(1.2); // Aumenta o tamanho
+    opacity: 0; // Fade out
+  }
+}

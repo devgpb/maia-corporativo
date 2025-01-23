@@ -1,4 +1,4 @@
-export const pedidos = ["FECHADO", "HOMOLOGAR", "INSTALACAO", "NOTA",  "FINALIZADO"];
+export const pedidos = ["FECHADO", "INSTALACAO", "NOTA",  "FINALIZADO"];
 
 export const cidades = ["Arcoverde", "Surubim"]
 

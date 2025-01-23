@@ -61,6 +61,7 @@ import { FormFinalPedidoComponent } from './forms/form-final-pedido/form-final-p
 import { QrCodeModalComponent } from './components/qr-code-modal/qr-code-modal.component';
 import { PedidoExternoComponent } from './pedido-externo/pedido-externo.component';
 import { VistoIncialComponent } from './forms/visto-incial/visto-incial.component';
+import { HomologacoesComponent } from './homologacoes/homologacoes.component';
 
 defineLocale("pt-br", ptBrLocale);
 registerLocaleData(localePt);
@@ -106,6 +107,7 @@ registerLocaleData(localePt);
     QrCodeModalComponent,
     PedidoExternoComponent,
     VistoIncialComponent,
+    HomologacoesComponent,
   ],
   imports: [
     BrowserModule,

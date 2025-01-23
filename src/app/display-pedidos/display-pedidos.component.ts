@@ -71,7 +71,7 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
       pageLength: 25,
       processing: true,
       // ordering: true,
-      order: [[7, 'desc']],
+      order: [[8, 'desc']],
       // columnDefs: [
       //   { targets: [0, 1, 5, 6], orderable: false },
       //   { targets: [7], visible: false },
