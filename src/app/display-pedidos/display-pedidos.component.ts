@@ -15,7 +15,6 @@ import { todasRotas } from '../constants';
 import { StorageService } from '../services/storage/storage.service';
 import { WebSocketService } from '../services/WebSocket/web-socket.service';
 import { IConfigExcel } from '../interfaces/IConfigExcel';
-import { data } from 'jquery';
 defineLocale('pt-br', ptBrLocale);
 
 @Component({

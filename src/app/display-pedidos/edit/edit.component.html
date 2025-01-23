@@ -193,7 +193,7 @@
           <label for="status">Região:</label>
           <input type="text" class="form-control" id="regiao" formControlName="regiao" [disabled]="true">
         </div>
-        
+
         <div class="form-group col-12 col-lg-4">
           <label for="ref">Referência:</label>
           <input type="text" class="form-control" id="ref" formControlName="ref">
@@ -390,15 +390,13 @@
 
 
       <div class="form-group col-12 col-lg-4 w-100 btn-area ">
-        <div class="specials">
+        <!-- <div class="specials">
           <button class="btn btn-warning" (click)="marcarStandby()" *ngIf="!rotaEspecial"><i
               class="fa-regular fa-hourglass text-dark"></i>STANDBY</button>
 
           <button class="btn btn-danger" (click)="marcarPerdido()" style="margin-left: 5px;" *ngIf="!rotaEspecial"><i
-              class="fa-regular fa-triangle-exclamation "></i>PERDIDO</button>
-          <!-- <button class="btn btn-primary">Salvar</button> -->
-
-        </div>
+            class="fa-regular fa-triangle-exclamation "></i>PERDIDO</button>
+          </div> -->
 
         <div class="save modal-footer">
           <button  *ngIf="getShowDrive" (click)="goToDrive($event)" type="submit" class="btn btn-info drive">DRIVE</button>

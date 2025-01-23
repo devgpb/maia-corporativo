@@ -122,11 +122,11 @@ export class PedidosService {
   }
 
   public marcarStandby(idPedido: any): Observable<IPedido[]>{
-		return this.http.put<IPedido[]>(`${environment.apiURL}/pedidos/marcarStandby/${idPedido}`, {})
+		return this.http.put<IPedido[]>(`${environment.apiURL}/pedidos/marcarStandby/`, {idPedido})
 	}
 
   public removerStandby(idPedido: any): Observable<string>{
-		return this.http.put<string>(`${environment.apiURL}/pedidos/removerStandby/${idPedido}`, {})
+		return this.http.post<string>(`${environment.apiURL}/pedidos/removerStandby/`, {idPedido})
 	}
 
   public marcarPerdido(idPedido: any): Observable<IPedido[]>{
@@ -134,7 +134,7 @@ export class PedidosService {
 	}
 
   public removerPerdido(idPedido: any): Observable<string>{
-		return this.http.put<string>(`${environment.apiURL}/pedidos/removerPerdido/${idPedido}`, {})
+		return this.http.post<string>(`${environment.apiURL}/pedidos/removerPerdido/${idPedido}`, {})
 	}
 
   public baixarListaPedidos(config:IConfigExcel): Observable<any>{

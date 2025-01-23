@@ -95,8 +95,9 @@
             <i class="icon bg-danger text-white separar fa-solid fa-trash-arrow-up"
               (click)="stopPropagation($event); deletarPedido(pedido)"></i>
 
-            <i class="icon bg-warning text-white separar fa-solid fa-cube"
-              (click)="stopPropagation($event); salvarPedidoStorage(pedido)"></i>
+            <!-- <i class="icon bg-warning text-white separar fa-solid fa-cube"
+              (click)="stopPropagation($event); salvarPedidoStorage(pedido)"></i> -->
+
             <i *ngIf="canAvancar && !rotaEspecial" class="icon bg-primary text-white fa-solid fa-angles-right separar"
               (click)="stopPropagation($event); avancarPedido(pedido)"></i>
           </div>
