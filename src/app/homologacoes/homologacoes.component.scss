@@ -1,10 +1,15 @@
 .card{
   margin: 12px;
-  width: 300px;
-  height: 150px;
+  width: 500px;
+  min-height: 150px;
   border: 1px solid green;
   color: green;
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
   transition: background-color 0.3s, color 0.3s;
   padding: 12px;
   transition: background-color 0.3s, color 0.3s, transform 0.5s, opacity 0.5s; // Adiciona transição
@@ -25,6 +30,26 @@
     word-wrap: normal;
   }
 
+  .data{
+    width: 70%;
+    .obs{
+      background-color: green;
+      margin: 12px;
+      padding: 12px;
+      color: white;
+    }
+  }
+
+  .actions{
+    width: 30%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+
   .desc{
     font-size: 1rem;
     text-align: center;
@@ -39,7 +64,12 @@
     .titulo {
       color: white;
     }
-
+    .data{
+      .obs{
+        color: green;
+        background-color: white;
+      }
+    }
     .btn-success{
       background-color: white !important;
       color: green !important;

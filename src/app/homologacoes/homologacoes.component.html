@@ -4,13 +4,27 @@
 </app-modal>
 
 <div class="w-100 d-flex">
-  <div class="card d-flex justify-content-center text-decoration-none" [ngClass]="{ animating: pedido.animating }"
+  <div class="w-100 card  text-decoration-none"
+  [ngClass]="{ animating: pedido.animating }"
   *ngFor="let pedido of pedidos"  (click)="abrirEdicao(pedido)">
+
+    <div class="data">
+      <div class="user ">
         <span class="w-100 text-center mb-1 font-weight-bold">{{ pedido.nomeCompleto }}</span>
-        <span class="w-100 text-center mb-1">{{ getTempoPedido(pedido) }}</span>
-        <button class="btn btn-success mb-2" (click)="$event.stopPropagation(); marcarHomologado(pedido)">Marcar Homologado</button>
-        <a *ngIf="pedido.linkDrive" class="btn btn-primary" [href]="pedido.linkDrive" target="_blank" (click)="$event.stopPropagation()">Drive</a>
-        <span *ngIf="!pedido.linkDrive" class="w-100 text-center">Cadastrar DRIVE!</span>
+        <span> - </span>
+        <span class="w-100 text-center mb-1">({{ getTempoPedido(pedido) }})</span>
+      </div>
+
+      <div class="obs" *ngIf="pedido.observacao.length > 0">
+        <span >OBS: {{pedido.observacao}}</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-success mb-2" (click)="$event.stopPropagation(); marcarHomologado(pedido)">Marcar Homologado</button>
+      <a *ngIf="pedido.linkDrive" class="btn btn-primary" [href]="pedido.linkDrive" target="_blank" (click)="$event.stopPropagation()">Drive</a>
+      <span *ngIf="!pedido.linkDrive" class="w-100 text-center">Cadastrar DRIVE!</span>
+    </div>
 </div>
 
 </div>
