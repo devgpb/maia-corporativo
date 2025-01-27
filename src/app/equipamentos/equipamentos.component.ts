@@ -5,6 +5,7 @@ import { eq } from '@fullcalendar/core/internal-common';
 import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import * as Constantes from "../constants";
+import { AuthService } from '../services/auth/auth.service';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class EquipamentosComponent implements OnInit{
 	private dataTableEquips: DataTableDirective;
 	public dtOptionsEquips: DataTables.Settings = { };
   public dtTriggerEquips: Subject<any> = new Subject();
-
+  public user: any;
 
   cadastrado = undefined;
   alertHandler = undefined;
@@ -50,7 +51,10 @@ export class EquipamentosComponent implements OnInit{
 
   private _tipo = "placa";
 
-  constructor(private equipamentoService: EquipamentosService){
+  constructor(
+    private equipamentoService: EquipamentosService,
+    private authService: AuthService
+  ){
     this.dtOptionsEquips = {
       language: Constantes.dtlanguage,
 			lengthMenu: [60, 30],
@@ -59,6 +63,8 @@ export class EquipamentosComponent implements OnInit{
       processing: true,
       searching: true,
 		};
+
+    this.user = this.authService.getUser()
   }
 
   ngOnInit(): void {
