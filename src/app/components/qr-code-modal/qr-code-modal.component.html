@@ -1,22 +1,30 @@
-<div class="qr-modal-content">
-  <div class="w-100 qr-code">
-    <h3>{{label}}</h3>
-    <div *ngIf="qrCodeUrl">
-      <img [src]="qrCodeUrl" alt="QR Code">
-    </div>
-    <span class="mb-3">{{ link }}</span>
-  </div>
-</div>
+<div class="w-100 d-flex flex-column align-items-center justify-content-center">
+  <h1>{{ label }}</h1>
+  <div #qrTemplate class="qr-modal-content">
+    <img src="assets/qr-template.jpeg" class="background-template" alt="Template">
 
-  <!-- Botões com ícones e estilos -->
+    <!-- QR Code dentro da área branca superior -->
+    <div class="qr-container">
+      <img *ngIf="qrCodeUrl" [src]="qrCodeUrl" alt="QR Code">
+    </div>
+
+    <!-- Label na parte branca inferior -->
+    <div class="label-container">{{ text }}</div>
+  </div>
+
+  <!-- Link acima dos botões -->
+  <div class="link-display">{{ link }}</div>
+
+  <!-- Botões -->
   <div class="no-pdf d-flex w-100 justify-content-center mt-3">
-    <button class="btn btn-primary  mt-2" (click)="downloadQrCode()" >
+    <button class="btn btn-primary mt-2 mr-2" (click)="downloadQrCode()">
       <i class="fas fa-download"></i> Baixar QR Code
     </button>
-    <button class="btn btn-success mt-2" (click)="downloadPdf()" style="margin-left: 10px;">
+    <button class="btn btn-success mt-2 mr-2" (click)="downloadPdf()">
       <i class="fas fa-file-pdf"></i> Baixar PDF
     </button>
-    <a [href]="link" class="btn btn-info mt-2" style="margin-left: 10px;">
+    <a [href]="link" class="btn btn-info mt-2">
       <i class="fas fa-link"></i> Acessar
     </a>
   </div>
+</div>

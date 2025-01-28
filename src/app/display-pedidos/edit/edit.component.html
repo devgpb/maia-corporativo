@@ -3,7 +3,7 @@
     <div class="w-100 d-flex justify-content-end">
       <button (click)="fecharCode()">Voltar</button>
     </div>
-    <app-qr-code-modal [link]="qrLink" [label]="qrLabel"></app-qr-code-modal>
+    <app-qr-code-modal [link]="qrLink" [label]="qrLabel" [text]="qrText"></app-qr-code-modal>
   </div>
 
   <div class="loading-container" *ngIf="show == 'loading'">

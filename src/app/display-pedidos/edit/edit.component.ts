@@ -50,6 +50,7 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
   public show = 'none';
   public qrLink = null;
   public qrLabel = '';
+  public qrText = '';
   tiposSuportes = tiposSuportes
 
   constructor(
@@ -474,18 +475,22 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
       case 'drive':
         this.qrLink = this.pedidoEmEdicao.linkDrive;
         this.qrLabel = 'Link do Google Drive';
+        this.qrText = this.pedidoEmEdicao.nomeCompleto
         break;
       case 'vistoInicial':
         this.qrLink = environment.url + '/pedido/vistoria/externo?hash=' + this.pedidoEmEdicao.hash;
         this.qrLabel = 'Link para Vistoria Inicial Pedido - ' + this.pedidoEmEdicao.idPedido;
+        this.qrText = this.pedidoEmEdicao.nomeCompleto
         break;
       case 'finalizar':
         this.qrLink = environment.url + '/pedido/finalizar/externo?hash=' + this.pedidoEmEdicao.hash;
         this.qrLabel = 'Link para Vistoria Final Pedido - ' + this.pedidoEmEdicao.idPedido;
+        this.qrText = this.pedidoEmEdicao.nomeCompleto
         break;
       case 'visualizar':
         this.qrLink = environment.instaladorURL + '/pedido/visualizar?hash=' + this.pedidoEmEdicao.hash;
         this.qrLabel = 'Link para Visualizar Pedido - ' + this.pedidoEmEdicao.idPedido;
+        this.qrText = this.pedidoEmEdicao.nomeCompleto
         break;
       default:
         this.qrLink = null;
