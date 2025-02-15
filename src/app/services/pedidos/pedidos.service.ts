@@ -55,6 +55,23 @@ export class PedidosService {
     })
   }
 
+  public getPedidosFilter(filter: any): Observable<IPedido[]> {
+    let params = new HttpParams();
+
+    Object.keys(filter).forEach(key => {
+      if (typeof filter[key] === 'object' && filter[key] !== null) {
+        Object.keys(filter[key]).forEach(subKey => {
+          params = params.append(`detalhes[${subKey}]`, filter[key][subKey]);
+        });
+      } else {
+        params = params.append(key, filter[key]);
+      }
+    });
+
+    return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos/listar/`, { params });
+}
+
+
   public getProcessando (id: string | undefined = undefined): Observable<IPedido[]>{
     let getuser = ''
     if(id){

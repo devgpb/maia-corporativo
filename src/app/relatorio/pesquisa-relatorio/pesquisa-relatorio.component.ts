@@ -17,7 +17,7 @@ export class PesquisaRelatorioComponent {
   pesquisa = {
     rangeDatas: [new Date(new Date().getFullYear(), new Date().getMonth(), 1), new Date()],
     nomeCompleto: '',
-    isGlobal: false,
+    isGlobal: true,
     status: null,
   }
 

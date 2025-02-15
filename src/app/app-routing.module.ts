@@ -24,11 +24,17 @@ import { FormulariosComponent } from './formularios/formularios.component';
 import { FormPedidoComponent } from './forms/form-pedido/form-pedido.component';
 import { PedidoExternoComponent } from './pedido-externo/pedido-externo.component';
 import { HomologacoesComponent } from './homologacoes/homologacoes.component';
+import { NovoMenuComponent } from './novo-menu/novo-menu.component';
+import { ListaPedidosComponent } from './lista-pedidos/lista-pedidos.component';
+
+
 const routes: Routes = [
   { path: "login", component: LoginComponent },
 
   // { path: "pedidos", component: PedidosComponent, canActivate: [AuthGuard] },
-  { path: "pedidos/:status", component: PedidosComponent, canActivate: [AuthGuard] },
+  { path: "pedidos/status/:status", component: PedidosComponent, canActivate: [AuthGuard] },
+  { path: "pedidos/detalhes/:detalhe", component: ListaPedidosComponent, canActivate: [AuthGuard] },
+
   { path: "conta", component: ContaComponent, canActivate: [AuthGuard] },
   { path: "conta/editar/:id", component: ContaComponent, canActivate: [AuthGuard] },
   { path: "usuarios/novo", component: NovoUserComponent, canActivate: [AuthGuard] },
@@ -40,6 +46,8 @@ const routes: Routes = [
 
 
   { path: "homologacoes", component: HomologacoesComponent, canActivate: [AuthGuard] },
+  { path: "menu", component: NovoMenuComponent, canActivate: [AuthGuard] },
+
   { path: "setores", component: SetoresComponent, canActivate: [AuthGuard] },
   { path: "relatorios/meus", component: MeusRelatoriosComponent, canActivate: [AuthGuard] },
   { path: "ref", component: ReferenciasComponent, canActivate: [AuthGuard]  },
@@ -56,7 +64,7 @@ const routes: Routes = [
   { path: "projetos/dimencionar", component: DimencionarProjetoComponent, canActivate: [AuthGuard]  },
 
 
-  { path: '**', redirectTo: 'pedidos/fechado', pathMatch: 'full'  }
+  { path: '**', redirectTo: 'menu', pathMatch: 'full'  }
 ];
 
 

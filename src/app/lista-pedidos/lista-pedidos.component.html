@@ -1,0 +1,116 @@
+<div class="w-100 my-3">
+  <div class="w-100 title">
+    {{ configuracao.title }}
+    <i [class]="configuracao.icon"></i>
+  </div>
+  <!-- Área de Pesquisa e Seleção de Itens por Página -->
+  <div class="w-100 d-flex align-items-center justify-content-center mb-3">
+    <!-- Pesquisa -->
+    <div  style="width: 300px; margin-right: 20px;">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Pesquisar..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearch()">
+    </div>
+
+
+    <!-- Seleção de Itens por Página -->
+    <div class="" style="width: 200px;margin-right: 20px;">
+      <select
+        class="form-control"
+        [(ngModel)]="pageSize"
+        (change)="onPageSizeChange(pageSize)">
+        <option [value]="10">10 por página</option>
+        <option [value]="20">20 por página</option>
+        <option [value]="30">30 por página</option>
+        <option [value]="50">50 por página</option>
+        <option [value]="100">100 por página</option>
+      </select>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <nav aria-label="Paginação">
+        <ul class="pagination">
+          <!-- Botão Página Anterior -->
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" (click)="prevPage()" aria-label="Anterior">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+
+          <!-- Itera e exibe todas as páginas -->
+          <li
+            class="page-item"
+            *ngFor="let page of pages"
+            [class.active]="page === currentPage">
+            <a class="page-link" (click)="goToPage(page)">{{ page }}</a>
+          </li>
+
+          <!-- Botão Próxima Página -->
+          <li class="page-item" [class.disabled]="currentPage === totalPages || totalPages === 0">
+            <a class="page-link" (click)="nextPage()" aria-label="Próximo">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Listagem dos Cards -->
+   <div class="w-100 d-flex flex-wrap justify-content-center align-content-center">
+     <ng-container   *ngFor="let pedido of paginatedPedidos">
+       <card-cliente  [pedido]="pedido" (cardClick)="abrirEdicao(pedido)">
+
+              <ng-container cardActions>
+
+                 <button *ngIf="detalhe ==='arts'"
+                 class="btn btn-success "
+                 (click)="$event.stopPropagation(); atualizaDetalhes(pedido)">
+                 ART Finalizada</button>
+
+                 <button *ngIf="detalhe ==='pagamentos'"
+                 class="btn btn-success "
+                 (click)="$event.stopPropagation(); atualizaDetalhes(pedido)">
+                 Pagamento Realizado</button>
+
+                 <div *ngIf="detalhe ==='equipamentos'">
+                   <button
+                   class="btn btn-success mb-2"
+                   (click)="$event.stopPropagation(); atualizaDetalhes(pedido)">
+                   Equipamento Comprado</button>
+                  <a *ngIf="pedido['linkDrive']" class="btn btn-primary  w-100" [href]="pedido['linkDrive']" target="_blank" (click)="$event.stopPropagation()">Drive</a>
+                  <span *ngIf="!pedido['linkDrive']" class="w-100 text-center">Cadastrar DRIVE!</span>
+                 </div>
+
+                 <div *ngIf="detalhe ==='homologacoes'">
+                  <button class="btn btn-success mb-2" (click)="$event.stopPropagation(); atualizaDetalhes(pedido)">Marcar Homologado</button>
+                  <a *ngIf="pedido['linkDrive']" class="btn btn-primary w-100" [href]="pedido['linkDrive']" target="_blank" (click)="$event.stopPropagation()">Drive</a>
+                  <span *ngIf="!pedido['linkDrive']" class="w-100 text-center">Cadastrar DRIVE!</span>
+                 </div>
+
+              </ng-container>
+
+       </card-cliente>
+     </ng-container>
+
+    <div *ngIf="paginatedPedidos.length === 0" class="alert alert-warning  text-center" role="alert">
+      Não há pedidos disponíveis nesse filtro.
+    </div>
+   </div>
+
+
+
+  <!-- Modal para Edição do Pedido -->
+  <app-modal #modal class="info">
+    <app-edit
+      [detalhes]="pedidoSelecionado"
+      [rotaEspecial]="false"
+      [list]="pedidos"
+      (atualizarPedidos)="carregarPedidos()"
+      [canEdit]="true">
+    </app-edit>
+  </app-modal>
+</div>

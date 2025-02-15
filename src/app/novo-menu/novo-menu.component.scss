@@ -1,0 +1,84 @@
+.menu-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Alterado para display flex e centralização dos itens */
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Mantém o mesmo estilo e define tamanho fixo para os cards */
+.menu-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  flex: 0 0 180px; /* Garante que cada card tenha 180px de largura */
+}
+
+.menu-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  background-color: green;
+  color: white;
+}
+
+.menu-card.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.card-content i {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.card-content h4 {
+  font-size: 1.2em;
+  margin: 0;
+}
+
+.back-button {
+  background: green;
+  color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 0px 45px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.back-button:hover {
+  background: #fff;
+  color: black;
+}
+
+.separator {
+  width: 100%;             /* Ocupa toda a largura */
+  text-align: center;      /* Centraliza o texto */
+  font-weight: bold;       /* Destaca o título */
+  border-bottom: 1px solid #ccc;  /* Linha inferior para separação */
+  padding: 10px 0;         /* Espaçamento interno */
+  margin: 20px 0;          /* Espaçamento externo */
+}
+
+/* Container dos cards dentro do submenu "Recém Fechados" */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}

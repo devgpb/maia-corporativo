@@ -1,0 +1,20 @@
+<div class="card text-decoration-none"
+     [ngClass]="{ animating: pedido?.['animating'] }"
+     (click)="onCardClick($event)">
+  <!-- Seção de dados do pedido -->
+  <div class="data">
+    <div class="user">
+      <span class="w-100 text-center mb-1 font-weight-bold">{{ pedido?.nomeCompleto }}</span>
+      <span> - </span>
+      <span class="w-100 text-center mb-1">({{ getTempoPedido() }})</span>
+    </div>
+    <div class="obs" *ngIf="pedido?.observacao?.length > 0">
+      <span>OBS: {{ pedido?.observacao }}</span>
+    </div>
+  </div>
+
+  <!-- Seção de ações (conteúdo injetado) -->
+  <div class="actions">
+    <ng-content select="[cardActions]"></ng-content>
+  </div>
+</div>

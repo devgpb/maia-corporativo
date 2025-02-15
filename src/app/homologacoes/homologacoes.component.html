@@ -4,6 +4,11 @@
 </app-modal>
 
 <div class="w-100 d-flex flex-wrap justify-content-center align-content-center">
+  <div class="w-100 title">
+    Homologações Pendentes
+    <i class="fa-solid  fa-folder-open"></i>
+  </div>
+
   <div class="w-100 card  text-decoration-none"
   [ngClass]="{ animating: pedido.animating }"
   *ngFor="let pedido of pedidos"  (click)="abrirEdicao(pedido)">
@@ -25,6 +30,9 @@
       <a *ngIf="pedido.linkDrive" class="btn btn-primary" [href]="pedido.linkDrive" target="_blank" (click)="$event.stopPropagation()">Drive</a>
       <span *ngIf="!pedido.linkDrive" class="w-100 text-center">Cadastrar DRIVE!</span>
     </div>
-</div>
+  </div>
+  <div *ngIf="pedidos.length === 0" class="alert alert-warning  text-center" role="alert">
+    Sem Homologações para exibir.
+  </div>
 
 </div>

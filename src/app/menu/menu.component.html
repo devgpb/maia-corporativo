@@ -106,7 +106,7 @@
 
 
       <a *ngFor="let pedido of Constantes.pedidos; let i = index"
-        [routerLink]="'/pedidos/' + pedido.toLowerCase()"
+        [routerLink]="'/pedidos/status/' + pedido.toLowerCase()"
         [routerLinkActive]="['active-link']"
         [routerLinkActiveOptions]="{exact: true}"
         [attr.disabled]="isActive('/' + pedido.toLowerCase()) ? true : null">

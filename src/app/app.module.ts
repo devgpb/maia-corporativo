@@ -62,6 +62,9 @@ import { QrCodeModalComponent } from './components/qr-code-modal/qr-code-modal.c
 import { PedidoExternoComponent } from './pedido-externo/pedido-externo.component';
 import { VistoIncialComponent } from './forms/visto-incial/visto-incial.component';
 import { HomologacoesComponent } from './homologacoes/homologacoes.component';
+import { NovoMenuComponent } from './novo-menu/novo-menu.component';
+import { CardClienteComponent } from './components/card-cliente/card-cliente.component';
+import { ListaPedidosComponent } from './lista-pedidos/lista-pedidos.component';
 
 defineLocale("pt-br", ptBrLocale);
 registerLocaleData(localePt);
@@ -108,6 +111,9 @@ registerLocaleData(localePt);
     PedidoExternoComponent,
     VistoIncialComponent,
     HomologacoesComponent,
+    NovoMenuComponent,
+    CardClienteComponent,
+    ListaPedidosComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,12 +1,4 @@
-.title{
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.card{
+.card {
   margin: 12px;
   width: 500px;
   max-width: 600px;
@@ -19,30 +11,30 @@
   align-content: center;
   justify-content: center;
   align-items: center;
-  transition: background-color 0.3s, color 0.3s;
   padding: 12px;
-  transition: background-color 0.3s, color 0.3s, transform 0.5s, opacity 0.5s; // Adiciona transição
+  transition: background-color 0.3s, color 0.3s, transform 0.5s, opacity 0.5s;
   box-shadow: 0px 3px 6px 0 rgba(0, 0, 0, 0.2);
 
-  .fa-solid{
+  .fa-solid {
     font-size: 50px;
     text-align: center;
   }
 
-  .fa-file-signature{
+  .fa-file-signature {
     margin-left: 15px;
   }
 
-  .titulo{
+  .titulo {
     font-size: 1.5rem;
     text-align: center;
     text-transform: uppercase;
     word-wrap: normal;
   }
 
-  .data{
+  .data {
     width: 70%;
-    .obs{
+
+    .obs {
       background-color: green;
       margin: 12px;
       padding: 12px;
@@ -50,7 +42,7 @@
     }
   }
 
-  .actions{
+  .actions {
     width: 30%;
     display: flex;
     flex-wrap: wrap;
@@ -59,11 +51,13 @@
     align-items: stretch;
   }
 
-
-  .desc{
+  .desc {
     font-size: 1rem;
     text-align: center;
+  }
 
+  .actions{
+    padding: 5px;
   }
 
   &:hover {
@@ -74,20 +68,26 @@
     .titulo {
       color: white;
     }
-    .data{
-      .obs{
+    .data {
+      .obs {
         color: green;
         background-color: white;
       }
     }
-    .btn-success{
+
+    .actions{
+      background-color: white;
+    }
+
+    .btn-success {
       background-color: white !important;
       color: green !important;
     }
+
   }
 
   &.animating {
-    transform: scale(1.2); // Aumenta o tamanho
-    opacity: 0; // Fade out
+    transform: scale(1.2);
+    opacity: 0;
   }
 }
