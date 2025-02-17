@@ -60,37 +60,49 @@
   </div>
 
   <!-- Listagem dos Cards -->
-   <div class="w-100 d-flex flex-wrap justify-content-center align-content-center">
+   <div class="w-100 listagem d-flex flex-wrap justify-content-center align-content-center">
      <ng-container   *ngFor="let pedido of paginatedPedidos">
-       <card-cliente  [pedido]="pedido" (cardClick)="abrirEdicao(pedido)">
+
+      <card-cliente  [pedido]="pedido" (cardClick)="abrirEdicao(pedido)" class=""
+      [ngClass]="{ 'card-exploding': pedido['animating'] }"
+      >
 
               <ng-container cardActions>
 
-                 <button *ngIf="detalhe ==='arts'"
-                 class="btn btn-success "
-                 (click)="$event.stopPropagation(); atualizaDetalhes(pedido)">
-                 ART Finalizada</button>
+                <div *ngIf="detalhe ==='arts'" class="d-flex justify-content-center mb-2">
+                  <button
+                  class="bg-green-600 text-white hover:bg-green-700 "
+                  (click)="$event.stopPropagation(); atualizaDetalhes(pedido)">
+                  ART Finalizada</button>
+                </div>
 
-                 <button *ngIf="detalhe ==='pagamentos'"
-                 class="btn btn-success "
-                 (click)="$event.stopPropagation(); atualizaDetalhes(pedido)">
-                 Pagamento Realizado</button>
-
-                 <div *ngIf="detalhe ==='equipamentos'">
+                 <div *ngIf="detalhe ==='pagamentos'" class="d-flex justify-content-center mb-2">
                    <button
-                   class="btn btn-success mb-2"
+                   class="bg-green-600 text-white hover:bg-green-700 "
                    (click)="$event.stopPropagation(); atualizaDetalhes(pedido)">
-                   Equipamento Comprado</button>
-                  <a *ngIf="pedido['linkDrive']" class="btn btn-primary  w-100" [href]="pedido['linkDrive']" target="_blank" (click)="$event.stopPropagation()">Drive</a>
-                  <span *ngIf="!pedido['linkDrive']" class="w-100 text-center">Cadastrar DRIVE!</span>
+                   Pagamento Realizado</button>
                  </div>
 
-                 <div *ngIf="detalhe ==='homologacoes'">
-                  <button class="btn btn-success mb-2" (click)="$event.stopPropagation(); atualizaDetalhes(pedido)">Marcar Homologado</button>
-                  <a *ngIf="pedido['linkDrive']" class="btn btn-primary w-100" [href]="pedido['linkDrive']" target="_blank" (click)="$event.stopPropagation()">Drive</a>
-                  <span *ngIf="!pedido['linkDrive']" class="w-100 text-center">Cadastrar DRIVE!</span>
+                 <div *ngIf="detalhe ==='equipamentos'" class="d-flex justify-content-center mb-2">
+                   <button
+                   class="bg-green-600 text-white hover:bg-green-700"
+                   (click)="$event.stopPropagation(); atualizaDetalhes(pedido)">
+                   Equipamento Comprado  Espelho no Drive</button>
+                  <a *ngIf="pedido['linkDrive']" class="btn btn-primary  " [href]="pedido['linkDrive']" target="_blank" (click)="$event.stopPropagation()">Drive</a>
+                  <span *ngIf="!pedido['linkDrive']" class=" text-center ml-2 d-flex align-items-center">Adicionar DRIVE!</span>
                  </div>
 
+                 <div *ngIf="detalhe ==='homologacoes'" class="d-flex justify-content-center mb-2">
+                  <button class="btn btn-success " (click)="$event.stopPropagation(); atualizaDetalhes(pedido)">Marcar Homologado</button>
+                  <a *ngIf="pedido['linkDrive']" class="btn btn-primary ml-2" [href]="pedido['linkDrive']" target="_blank" (click)="$event.stopPropagation()">Drive</a>
+                  <span *ngIf="!pedido['linkDrive']" class=" text-center ml-2 ml-2 d-flex align-items-center">Adicionar DRIVE!</span>
+                 </div>
+
+                 <div *ngIf="detalhe ==='instalar'" class="d-flex justify-content-center mb-2">
+                  <button class="btn btn-success " (click)="$event.stopPropagation(); atualizaDetalhes(pedido)">Enviar Para Instalação</button>
+                  <a *ngIf="pedido['linkDrive']" class="btn btn-primary ml-2" [href]="pedido['linkDrive']" target="_blank" (click)="$event.stopPropagation()">Drive</a>
+                  <span *ngIf="!pedido['linkDrive']" class=" text-center ml-2 ml-2 d-flex align-items-center">Adicionar DRIVE!</span>
+                 </div>
               </ng-container>
 
        </card-cliente>

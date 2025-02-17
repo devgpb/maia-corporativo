@@ -1,152 +1,230 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth/auth.service';
 import { Router } from '@angular/router';
-import { trigger, state, style, animate, transition } from '@angular/animations';
-import { environment } from 'src/environments/environment';
-import * as Constantes from '../constants';
+import { AuthService } from '../services/auth/auth.service';
+import { PedidosService } from '../services/pedidos/pedidos.service';
+
+interface MenuItem {
+  icon: string;
+  title: string;
+  description?: string;
+  href?: string;
+  roles?: string[];
+  hasSubmenu?: boolean;
+}
+
+interface MenuSection {
+  title: string;
+  items: MenuItem[];
+}
 
 @Component({
   selector: 'app-novo-menu',
   templateUrl: './novo-menu.component.html',
-  styleUrls: ['./novo-menu.component.scss'],
-  animations: [
-    // Trigger para o menu principal (apenas fade in/out)
-    trigger('fadeAnimation', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'scale(0.9)' }),
-        animate('300ms ease-out', style({ opacity: 1, transform: 'scale(1)' }))
-      ]),
-      transition(':leave', [
-        animate('300ms ease-in', style({ opacity: 0, transform: 'scale(0.9)' }))
-      ])
-    ]),
-    // Trigger para o submenu – definindo a transição tanto na entrada quanto na saída
-    trigger('submenuFade', [
-      transition('void => visible', [
-        style({ opacity: 0, transform: 'scale(0.9)' }),
-        animate('300ms ease-out', style({ opacity: 1, transform: 'scale(1)' }))
-      ]),
-      transition('visible => hidden', [
-        animate('300ms ease-in', style({ opacity: 0, transform: 'scale(0.9)' }))
-      ])
-    ])
-  ]
+  styleUrls: ['./novo-menu.component.scss']
 })
 export class NovoMenuComponent implements OnInit {
-  public Constantes = Constantes;
-  public userCargo = '';
-  public linkFormFechado = environment.linkFormFechado;
+  public userCargo: string = '';
+  public showMainMenu: boolean = true;
+  public showSubmenu: boolean = false;
+  public hoveredCard: string | null = null;
+  public activeSubmenu: string = ''; // Armazena o título do item que possui submenu ativo
 
-  // Flags para controlar qual menu exibir
-  public showMainMenu = true;
-  public showSubmenu = false;
+  // Menu principal
+  public menuSections: MenuSection[] = [
+    {
+      title: 'Administração',
+      items: [
+        {
+          icon: 'users',
+          title: 'Usuários',
+          description: 'Gerencie todos os usuários do sistema',
+          href: '/ref',
+          roles: ['ADMINISTRADOR']
+        },
+        {
+          icon: 'user-cog',
+          title: 'Minha Conta',
+          description: 'Configure suas preferências pessoais',
+          href: '/conta'
+        },
+        {
+          icon: 'building-2',
+          title: 'Setores',
+          description: 'Organize os setores da empresa',
+          href: '/setores',
+          roles: ['ADMINISTRADOR']
+        },
+        {
+          icon: 'user-plus',
+          title: 'Novo Usuário',
+          description: 'Adicione novos membros ao sistema',
+          href: '/usuarios/novo',
+          roles: ['ADMINISTRADOR', 'GESTOR']
+        }
+      ]
+    },
+    {
+      title: 'Sistema',
+      items: [
+        {
+          icon: 'send',
+          title: 'Clientes',
+          description: 'Gerencie sua base de clientes',
+          hasSubmenu: true
+        },
+        {
+          icon: 'bot',
+          title: 'Automações',
+          description: 'Configure processos automáticos',
+          hasSubmenu: true
+        },
+        {
+          icon: 'table',
+          title: 'Relatório',
+          description: 'Visualize métricas e relatórios',
+          href: '/relatorio',
+          roles: ['ADMINISTRADOR']
+        },
+        {
+          icon: 'wrench',
+          title: 'Equipamentos',
+          description: 'Gerencie equipamentos do sistema',
+          href: '/equipamentos'
+        }
+      ]
+    }
+  ];
 
-  // Estado da animação do submenu: 'visible' ou 'hidden'
-  public submenuAnimationState: 'visible' | 'hidden' = 'visible';
+  // Itens do submenu para "Clientes"
+  public submenuClientesRecentItems = [
+    {
+      icon: 'dollar-sign',
+      title: 'Pagamentos Faltantes',
+      nome: 'pagamentosFaltantes',
+      count: 3,
+      route: '/pedidos/detalhes/pagamentos',
+      color: 'text-red-600 bg-red-100'
+    },
+    {
+      icon: 'box',
+      title: 'Equipamentos A Comprar',
+      nome: 'equipamentosFaltantes',
+      count: 5,
+      route: '/pedidos/detalhes/equipamentos',
+      color: 'text-orange-600 bg-orange-100'
+    },
+    {
+      icon: 'pen',
+      title: 'ART Faltantes',
+      nome: 'ARTFaltantes',
+      count: 2,
+      route: '/pedidos/detalhes/arts',
+      color: 'text-yellow-600 bg-yellow-100'
+    },
+    {
+      icon: 'folder-open',
+      title: 'Homologações Pendentes',
+      nome: 'homologacoesPendentes',
+      count: 4,
+      route: '/pedidos/detalhes/homologacoes',
+      color: 'text-blue-600 bg-blue-100'
+    },
+    {
+      icon: 'cog',
+      title: 'Aguardando Instalação',
+      nome: 'aguardandoInstalacao',
+      count: 7,
+      route: '/pedidos/detalhes/instalar',
+      color: 'text-purple-600 bg-purple-100'
+    }
+  ];
 
-  // Indica qual submenu está selecionado
-  public menuSelected: string = '';
+  public submenuClientesTableItems = [
+    {
+      icon: 'file',
+      title: 'Fechado',
+      count: false,
+      route: '/pedidos/status/fechado'
+    },
+    {
+      icon: 'cog',
+      title: 'Instalacao',
+      count: false,
+      route: '/pedidos/status/instalacao'
+    },
+    {
+      icon: 'file',
+      title: 'Nota',
+      count: false,
+      route: '/pedidos/status/nota'
+    },
+    {
+      icon: 'file',
+      title: 'Finalizado',
+      count: false,
+      route: '/pedidos/status/finalizado'
+    }
+  ];
 
-  // Definição dos submenus
-  public submenus = {
-    pedidos: [
-      { title: 'Novo Pedido', icon: 'fa-solid fa-circle-plus', route: 'pedido/criar' },
-    ],
-    automacoes: [
-      { title: 'Gerar Proposta', icon: 'fa-solid fa-file-alt', route: 'proposta/gerar' },
-      {
-        title: 'Gerar Procuração',
-        icon: 'fa-solid fa-file-alt',
-        route: 'procuracao/gerar',
-        condition: (userCargo: string) => userCargo === 'ADMINISTRADOR'
-      }
-    ]
-  };
+  // Itens do submenu para "Automações"
+  public submenuAutItems = [
+    {
+      icon: 'file',
+      title: 'Gerar Proposta',
+      route: '/proposta/gerar'
+    },
+    {
+      icon: 'file',
+      title: 'Gerar Procuração',
+      route: '/procuracao/gerar',
+      roles: ['ADMINISTRADOR']
+    }
+  ];
 
   constructor(
+    public router: Router,
     private authService: AuthService,
-    public router: Router
+    private pedidosService: PedidosService
   ) {
-    // Exemplo: definindo userCargo
     this.userCargo = this.authService.getUser().cargo;
   }
 
   ngOnInit(): void {
-    // Verifica se há um submenu salvo na memória (localStorage)
     const lastSubmenu = localStorage.getItem('lastVisitedSubmenu');
     if (lastSubmenu) {
-      // Se existir, carrega o submenu salvo e exibe-o imediatamente
-      this.menuSelected = lastSubmenu;
+      this.activeSubmenu = lastSubmenu;
       this.showMainMenu = false;
       this.showSubmenu = true;
-      this.submenuAnimationState = 'visible';
     }
+
+    this.pedidosService.getContadoresGerais().subscribe((contadores) => {
+      console.log(contadores)
+      this.submenuClientesRecentItems.forEach((item) => {
+        item.count = contadores[item.nome] || 0;
+      });
+    });
   }
 
-  /**
-   * Ao clicar num item que possui submenu:
-   * 1) Salva o submenu selecionado no localStorage.
-   * 2) Oculta o menu principal (inicia a animação de fade out).
-   * 3) No callback da animação do menu principal, o submenu é exibido (fade in).
-   */
-  toggleSubmenu(selected: string): void {
-    // Salva o submenu selecionado (último submenu visitado)
-    localStorage.setItem('lastVisitedSubmenu', selected);
-    this.menuSelected = selected;
-    // Inicia a animação para esconder o menu principal
-    this.showMainMenu = false;
-  }
+  onMenuItemClick(item: MenuItem): void {
+    // Verifica restrições de acesso (se houver)
+    if (item.roles && item.roles.length > 0 && !item.roles.includes(this.userCargo)) {
+      return;
+    }
 
-  /**
-   * Callback disparado quando a animação do menu principal termina (fade out).
-   * Se ele realmente saiu (toState === 'void'), mostramos o submenu.
-   */
-  onMainMenuAnimationDone(event: any): void {
-    if (event.toState === 'void') {
+    if (item.hasSubmenu) {
+      localStorage.setItem('lastVisitedSubmenu', item.title);
+      this.activeSubmenu = item.title;
+      this.showMainMenu = false;
       this.showSubmenu = true;
-      this.submenuAnimationState = 'visible';
+    } else if (item.href) {
+      this.router.navigate([item.href]);
     }
   }
 
-  /**
-   * Ao clicar no botão "Voltar" do submenu, dispara a animação de saída.
-   * Observação: nesse exemplo, o submenu salvo permanece em memória, ou seja,
-   * mesmo que o usuário volte para o menu principal, na próxima renderização
-   * o último submenu será exibido.
-   *
-   * Caso deseje limpar o submenu salvo ao voltar, descomente a linha:
-   * // localStorage.removeItem('lastVisitedSubmenu');
-   */
   goBack(): void {
-    this.submenuAnimationState = 'hidden';
+    this.showSubmenu = false;
+    this.showMainMenu = true;
     localStorage.removeItem('lastVisitedSubmenu');
-    // Se preferir limpar o submenu salvo, descomente a linha abaixo:
-    // localStorage.removeItem('lastVisitedSubmenu');
-  }
-
-  /**
-   * Callback disparado quando a animação do submenu termina.
-   * Se o submenu estiver saindo (toState === 'hidden'), esconde-o e volta a mostrar o menu principal.
-   */
-  onSubmenuAnimationDone(event: any): void {
-    if (event.toState === 'hidden') {
-      this.showSubmenu = false;
-      this.showMainMenu = true;
-    }
-  }
-
-  /**
-   * Verifica se a rota atual é igual à do item (para highlight, etc.)
-   */
-  isActive(route: string): boolean {
-    return this.router.url === route;
-  }
-
-  /**
-   * Verifica se o usuário possui algum dos cargos permitidos para o item.
-   */
-  hasRole(roles: string[]): boolean {
-    if (roles.length === 0) return true;
-    return roles.includes(this.userCargo);
+    this.activeSubmenu = '';
   }
 }

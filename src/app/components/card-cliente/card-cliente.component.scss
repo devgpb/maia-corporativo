@@ -1,93 +1,124 @@
-.card {
-  margin: 12px;
-  width: 500px;
-  max-width: 600px;
-  min-height: 150px;
-  border: 1px solid green;
-  color: green;
-  cursor: pointer;
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-  padding: 12px;
-  transition: background-color 0.3s, color 0.3s, transform 0.5s, opacity 0.5s;
-  box-shadow: 0px 3px 6px 0 rgba(0, 0, 0, 0.2);
-
-  .fa-solid {
-    font-size: 50px;
-    text-align: center;
-  }
-
-  .fa-file-signature {
-    margin-left: 15px;
-  }
-
-  .titulo {
-    font-size: 1.5rem;
-    text-align: center;
-    text-transform: uppercase;
-    word-wrap: normal;
-  }
-
-  .data {
-    width: 70%;
-
-    .obs {
-      background-color: green;
-      margin: 12px;
-      padding: 12px;
-      color: white;
-    }
-  }
-
-  .actions {
-    width: 30%;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: center;
-    align-items: stretch;
-  }
-
-  .desc {
-    font-size: 1rem;
-    text-align: center;
-  }
-
-  .actions{
-    padding: 5px;
-  }
-
-  &:hover {
-    background-color: green;
-    color: white;
-
-    .fa-solid,
-    .titulo {
-      color: white;
-    }
-    .data {
-      .obs {
-        color: green;
-        background-color: white;
-      }
-    }
-
-    .actions{
-      background-color: white;
-    }
-
-    .btn-success {
-      background-color: white !important;
-      color: green !important;
-    }
-
-  }
-
-  &.animating {
-    transform: scale(1.2);
-    opacity: 0;
-  }
+.p-8 {
+  padding: 2rem;
 }
+
+.bg-gray-100 {
+  background-color: #f7fafc; /* tom de cinza claro */
+}
+.min-h-screen {
+  min-height: 100vh;
+}
+.max-w-md {
+  max-width: 28rem; /* 448px */
+}
+
+
+.cardbreaker{
+  width: 380px;
+  max-width: 380px;
+  margin: 10px 5px;
+}
+
+/* Card e efeitos */
+.card {
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition-property: all;
+  transition-duration: 300ms;
+  border: 1px solid #d1fae5; /* green-100 */
+}
+.card:hover {
+  box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+  transform: scale(1.05);
+  border-color: #6ee7b7; /* green-300 */
+}
+
+/* Área interna do card */
+.card-body {
+  padding: 1.5rem; /* p-6 */
+}
+
+/* Rodapé do card */
+.card-footer {
+  background-color: #ecfdf5; /* green-50 */
+  padding: 1rem 1.5rem; /* px-6 py-4 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ver-detalhes {
+  font-size: 0.875rem; /* text-sm */
+  color: #047857;      /* text-green-700 */
+  font-weight: 500;    /* font-medium */
+  cursor: pointer;
+}
+
+/* Título e status */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.titulo {
+  font-size: 1.125rem; /* text-lg */
+  font-weight: 600;    /* font-semibold */
+  color: #065f46;      /* text-green-800 */
+  margin: 0;
+}
+.id-pedido{
+  font-size: 1rem; /* text-lg */
+  font-weight: 600;    /* font-semibold */
+  color: #077656;      /* text-green-800 */
+  margin: 0;
+}
+
+.status {
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500;    /* font-medium */
+  padding: 0.25rem 0.75rem; /* px-3 py-1 */
+  border-radius: 9999px;    /* rounded-full */
+  text-transform: capitalize;
+}
+.status-fechado {
+  background-color: #d1fae5; /* bg-green-100 */
+  color: #065f46;           /* text-green-800 */
+}
+.status-outro {
+  background-color: #fef9c3; /* bg-yellow-100 */
+  color: #92400e;           /* text-yellow-800 */
+}
+
+/* Linhas de informação (ícone + texto) */
+.linha-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  color: #065f46; /* text-green-600 (pouco mais escuro) */
+}
+.tempo-pedido {
+  color: #059669; /* text-green-600 */
+}
+.observacao {
+  color: #4b5563; /* text-gray-600 */
+  margin-bottom: 0; /* vamos ajustar para não empurrar tanto */
+}
+.texto-observacao {
+  font-size: 0.875rem; /* text-sm */
+  margin: 0;
+}
+
+/* Ícones (substituindo w-5 h-5, mr-2, etc.) */
+.icon {
+  width: 1.25rem;  /* w-5 => 1.25rem */
+  height: 1.25rem; /* h-5 => 1.25rem */
+  margin-right: 0.5rem; /* mr-2 => 0.5rem */
+  flex-shrink: 0;       /* flex-shrink-0 */
+}
+.footer-icon {
+  color: #059669;  /* text-green-600 */
+}
+

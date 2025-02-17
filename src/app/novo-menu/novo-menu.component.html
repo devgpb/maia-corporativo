@@ -1,236 +1,171 @@
-<div class="menu-container">
-
-  <!-- Menu Principal -->
-  <div
-    *ngIf="showMainMenu"
-    class="card-grid"
-    [@fadeAnimation]
-    (@fadeAnimation.done)="onMainMenuAnimationDone($event)"
-  >
-    <!-- Separador: Recém Fechados -->
-    <div class="separator">
-      Administração
-    </div>
-    <!-- Usuários (ADMINISTRADOR) -->
-    <div
-      class="menu-card"
-      *ngIf="hasRole(['ADMINISTRADOR'])"
-      (click)="router.navigate(['/ref'])"
-    >
-      <div class="card-content">
-        <i class="fa-solid fa-user"></i>
-        <h4>Usuários</h4>
-      </div>
-    </div>
-
-    <!-- Minha Conta -->
-    <div
-      class="menu-card"
-      (click)="router.navigate(['/conta'])"
-    >
-      <div class="card-content">
-        <i class="fa-solid fa-user-pen"></i>
-        <h4>Minha Conta</h4>
-      </div>
-    </div>
-
-    <!-- Setores (ADMINISTRADOR) -->
-    <div
-      class="menu-card"
-      *ngIf="hasRole(['ADMINISTRADOR'])"
-      (click)="router.navigate(['/setores'])"
-    >
-      <div class="card-content">
-        <i class="fa-solid fa-clipboard"></i>
-        <h4>Setores</h4>
-      </div>
-    </div>
-
-    <!-- Novo Usuário (ADMINISTRADOR, GESTOR) -->
-    <div
-      class="menu-card"
-      *ngIf="hasRole(['ADMINISTRADOR','GESTOR'])"
-      (click)="router.navigate(['/usuarios/novo'])"
-    >
-      <div class="card-content">
-        <i class="fa-solid fa-user-plus"></i>
-        <h4>Novo Usuário</h4>
-      </div>
-    </div>
-
-    <!-- Separador: Recém Fechados -->
-    <div class="separator">
-      Sistema
-    </div>
-
-    <!-- Clientes (abre submenu de Pedidos) -->
-    <div
-      class="menu-card"
-      (click)="toggleSubmenu('pedidos')"
-    >
-      <div class="card-content">
-        <i class="fa-solid fa-paper-plane"></i>
-        <h4>Clientes</h4>
-      </div>
-    </div>
-
-    <!-- Automações -->
-    <div
-      class="menu-card"
-      (click)="toggleSubmenu('automacoes')"
-    >
-      <div class="card-content">
-        <i class="fa-solid fa-robot"></i>
-        <h4>Automações</h4>
-      </div>
-    </div>
-
-    <!-- Relatório (ADMINISTRADOR) -->
-    <div
-      class="menu-card"
-      *ngIf="hasRole(['ADMINISTRADOR'])"
-      (click)="router.navigate(['/relatorio'])"
-    >
-      <div class="card-content">
-        <i class="fa-solid fa-chart-line"></i>
-        <h4>Relatório</h4>
-      </div>
-    </div>
-
-    <!-- Equipamentos -->
-    <div
-      class="menu-card"
-      (click)="router.navigate(['/equipamentos'])"
-    >
-      <div class="card-content">
-        <i class="fa-solid fa-wrench"></i>
-        <h4>Equipamentos</h4>
-      </div>
-    </div>
-
-    <!-- Homologações (ADMINISTRADOR, GESTOR) -->
-    <!-- <div
-      class="menu-card"
-      *ngIf="hasRole(['ADMINISTRADOR','GESTOR'])"
-      (click)="router.navigate(['/homologacoes'])"
-    >
-      <div class="card-content">
-        <i class="fa-solid fa-folder-open"></i>
-        <h4>Homologações</h4>
-      </div>
-    </div> -->
-
-
-
-
-
-
-  </div>
-
-  <!-- Submenu -->
-  <div
-    *ngIf="showSubmenu"
-    class="card-grid submenu-grid"
-    [@submenuFade]="submenuAnimationState"
-    (@submenuFade.done)="onSubmenuAnimationDone($event)"
-  >
-    <!-- Botão "Voltar" -->
-    <button class="back-button" (click)="goBack()">Voltar</button>
-
-    <ng-container [ngSwitch]="menuSelected">
-
-      <!-- Submenu de Pedidos -->
-      <ng-container *ngSwitchCase="'pedidos'">
-        <!-- Novo Pedido -->
-        <div class="menu-card" (click)="router.navigate(['pedido/criar'])">
-          <div class="card-content">
-            <i class="fa-solid fa-circle-plus"></i>
-            <h4>Novo Cliente</h4>
+<div class="min-h-screen bg-gray-50 p-8">
+  <div class="max-w-7xl mx-auto space-y-8">
+    <!-- MENU PRINCIPAL -->
+    <ng-container *ngIf="showMainMenu">
+      <ng-container *ngFor="let section of menuSections">
+        <div class="space-y-4">
+          <div class="flex items-center space-x-2">
+            <h2 class="text-2xl font-semibold text-gray-800">{{ section.title }}</h2>
+            <div class="flex-1 h-px bg-gray-200"></div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <ng-container *ngFor="let item of section.items">
+              <button
+                (click)="onMenuItemClick(item)"
+                class="group relative bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-6 border border-gray-100 hover:border-primary/10 text-left w-full"
+                (mouseenter)="hoveredCard = item.title"
+                (mouseleave)="hoveredCard = null"
+              >
+                <div class="flex flex-col h-full">
+                  <div
+                    class="p-3 rounded-lg w-fit transition-colors duration-300"
+                    [ngClass]="
+                      hoveredCard === item.title
+                        ? 'bg-primary text-white'
+                        : 'bg-primary/10 text-primary'
+                    "
+                  >
+                    <lucide-icon [name]="item.icon" class="w-6 h-6"></lucide-icon>
+                  </div>
+                  <h3
+                    class="mt-4 text-lg font-semibold text-gray-800 group-hover:text-primary transition-colors duration-300"
+                  >
+                    {{ item.title }}
+                  </h3>
+                  <p class="mt-2 text-sm text-gray-600">
+                    {{ item.description }}
+                  </p>
+                  <div
+                    class="mt-4 flex items-center text-sm font-medium transition-colors duration-300"
+                    [ngClass]="
+                      hoveredCard === item.title ? 'text-primary' : 'text-gray-600'
+                    "
+                  >
+                    {{ item.hasSubmenu ? 'Ver opções' : 'Acessar' }}
+                    <lucide-icon
+                      name="chevron-right"
+                      class="ml-1 w-4 h-4 transition-transform duration-300"
+                      [ngClass]="{ 'translate-x-1': hoveredCard === item.title }"
+                    ></lucide-icon>
+                  </div>
+                </div>
+              </button>
+            </ng-container>
           </div>
         </div>
+      </ng-container>
+    </ng-container>
 
-        <!-- Separador: Recém Fechados -->
-        <div class="separator">
-          Recém Fechados
-        </div>
-
-        <!-- Itens dos pedidos recém fechados -->
-        <div class="menu-card" (click)="router.navigate(['/pedidos/detalhes/pagamentos'])">
-          <div class="card-content">
-            <i class="fa-solid fa-money-bill"></i>
-            <h4>Pagamentos Faltantes</h4>
-          </div>
-        </div>
-
-        <div class="menu-card" (click)="router.navigate(['/pedidos/detalhes/equipamentos'])">
-          <div class="card-content">
-            <i class="fa-solid fa-box"></i>
-            <h4>Equipamentos A Comprar</h4>
-          </div>
-        </div>
-
-        <div class="menu-card" (click)="router.navigate(['/pedidos/detalhes/arts'])">
-          <div class="card-content">
-            <i class="fa-solid fa-pen"></i>
-            <h4>ART Faltantes</h4>
-          </div>
-        </div>
-
-        <div class="menu-card" (click)="router.navigate(['/pedidos/detalhes/homologacoes'])">
-          <div class="card-content">
-            <i class="fa-solid fa-folder-open"></i>
-            <h4>Homologações Pendentes</h4>
-          </div>
-        </div>
-
-        <div class="menu-card" (click)="router.navigate(['/pedidos/detalhes/instalar'])">
-          <div class="card-content">
-            <i class="fa-solid fa-cog"></i>
-            <h4>Aguardando Instalação</h4>
-          </div>
-        </div>
-
-        <!-- Separador: Tabelas -->
-        <div class="separator">
-          Tabelas
-        </div>
-
-        <!-- Itens dinâmicos (exemplo usando Constantes) -->
-        <ng-container *ngFor="let pedido of Constantes.pedidos; let i = index">
-          <div
-            class="menu-card"
-            (click)="router.navigate(['/pedidos/status/' + pedido.toLowerCase()])"
+    <!-- SUBMENU -->
+    <ng-container *ngIf="showSubmenu">
+      <div class="animate-in fade-in duration-500">
+        <div class="flex justify-between items-center">
+          <button
+            (click)="goBack()"
+            class="flex items-center gap-2 text-green-700 border border-green-600 hover:bg-green-50 px-4 py-2 rounded-md"
           >
-            <div class="card-content">
-              <i class="fa-solid fa-file-alt"></i>
-              <h4>{{ Constantes.titulos[i] }}</h4>
+            <lucide-icon name="arrow-left" class="w-4 h-4"></lucide-icon>
+            Voltar
+          </button>
+          <button class="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition" (click)="router.navigate(['pedido/criar'])">
+            <lucide-icon name="plus" class="w-5 h-5"></lucide-icon>
+            <span>Novo Cliente</span>
+          </button>
+
+        </div>
+
+        <!-- Renderização do submenu com base no item ativo -->
+        <ng-container [ngSwitch]="activeSubmenu">
+          <!-- Submenu para Clientes -->
+          <ng-container *ngSwitchCase="'Clientes'">
+            <div class="space-y-4 mt-8">
+              <div class="flex items-center space-x-2">
+                <h2 class="text-2xl font-semibold text-gray-800">Recém Fechados</h2>
+                <div class="flex-1 h-px bg-gray-200"></div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                <ng-container *ngFor="let item of submenuClientesRecentItems">
+                  <button
+                    (click)="router.navigate([item.route])"
+                    class="relative subcard bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-6 border border-gray-100 hover:border-primary/10 text-left w-full group"
+                  >
+                    <div class="flex flex-col h-full">
+                      <div
+                        class="p-3 rounded-lg w-fit transition-colors duration-300"
+                        [ngClass]="item.color"
+                      >
+                        <lucide-icon [name]="item.icon" class="w-6 h-6"></lucide-icon>
+                      </div>
+                      <h3 class="mt-4 text-base font-semibold text-gray-800 group-hover:text-primary transition-colors duration-300">
+                        {{ item.title }}
+                      </h3>
+                      <div class="mt-2 text-sm font-medium text-gray-600">
+                        {{ item.count }} pendentes
+                      </div>
+                    </div>
+                  </button>
+                </ng-container>
+              </div>
             </div>
-          </div>
+
+            <div class="space-y-4 mt-8">
+              <div class="flex items-center space-x-2">
+                <h2 class="text-2xl font-semibold text-gray-800">Tabelas</h2>
+                <div class="flex-1 h-px bg-gray-200"></div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <ng-container *ngFor="let item of submenuClientesTableItems">
+                  <button
+                    (click)="router.navigate([item.route])"
+                    class="relative subcard bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-6 border border-gray-100 hover:border-primary/10 text-left w-full group"
+                  >
+                    <div class="flex flex-col h-full">
+                      <div class="p-3 rounded-lg w-fit bg-gray-100 text-gray-600 transition-colors duration-300">
+                        <lucide-icon [name]="item.icon" class="w-6 h-6"></lucide-icon>
+                      </div>
+                      <h3 class="mt-4 text-base font-semibold text-gray-800 group-hover:text-primary transition-colors duration-300">
+                        {{ item.title }}
+                      </h3>
+                      <div class="mt-2 text-sm font-medium text-gray-600" *ngIf="item.count">
+                        {{ item.count }} registros
+                      </div>
+                    </div>
+                  </button>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- Submenu para Automações -->
+          <ng-container *ngSwitchCase="'Automações'">
+            <div class="space-y-4 mt-8">
+              <div class="flex items-center space-x-2">
+                <h2 class="text-2xl font-semibold text-gray-800">Opções de Automações</h2>
+                <div class="flex-1 h-px bg-gray-200"></div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <ng-container *ngFor="let item of submenuAutItems">
+                  <!-- Verifica se há restrição de acesso para o item -->
+                  <button
+                    *ngIf="!item.roles || item.roles.includes(userCargo)"
+                    (click)="router.navigate([item.route])"
+                    class="relative bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-6 border border-gray-100 hover:border-primary/10 text-left w-full group"
+                  >
+                    <div class="flex flex-col h-full">
+                      <div class="p-3 rounded-lg w-fit bg-gray-100 text-gray-600 transition-colors duration-300">
+                        <lucide-icon [name]="item.icon" class="w-6 h-6"></lucide-icon>
+                      </div>
+                      <h3 class="mt-4 text-base font-semibold text-gray-800 group-hover:text-primary transition-colors duration-300">
+                        {{ item.title }}
+                      </h3>
+                    </div>
+                  </button>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
         </ng-container>
-      </ng-container>
-
-      <!-- Submenu de Automações -->
-      <ng-container *ngSwitchCase="'automacoes'">
-        <div class="menu-card" (click)="router.navigate(['proposta/gerar'])">
-          <div class="card-content">
-            <i class="fa-solid fa-file-alt"></i>
-            <h4>Gerar Proposta</h4>
-          </div>
-        </div>
-
-        <div
-          class="menu-card"
-          *ngIf="userCargo === 'ADMINISTRADOR'"
-          (click)="router.navigate(['procuracao/gerar'])"
-        >
-          <div class="card-content">
-            <i class="fa-solid fa-file-alt"></i>
-            <h4>Gerar Procuração</h4>
-          </div>
-        </div>
-      </ng-container>
-
+      </div>
     </ng-container>
   </div>
-
 </div>

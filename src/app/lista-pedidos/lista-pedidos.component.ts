@@ -125,9 +125,7 @@ export class ListaPedidosComponent implements OnInit {
               }
             },
             updates: {
-              detalhes: {
-                status: "INSTALACAO"
-              }
+              status: "INSTALACAO"
             }
           };
           break;

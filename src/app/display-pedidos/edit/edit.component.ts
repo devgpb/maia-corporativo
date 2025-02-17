@@ -410,8 +410,6 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
       formValues.detalhes.equipamentoComprado === this.pedidoEmEdicao?.detalhes.equipamentoComprado &&
       formValues.detalhes.ART === this.pedidoEmEdicao?.detalhes.ART &&
       formValues.detalhes.pagamentoRealizado === this.pedidoEmEdicao?.detalhes.pagamentoRealizado
-
-
   }
 
   applyCelularMask(event: any): void {

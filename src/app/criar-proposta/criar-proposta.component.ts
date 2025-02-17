@@ -221,18 +221,21 @@ export class CriarPropostaComponent implements OnInit{
     const name = `Proposta-${this.proposta.nomeCliente.split(" ")[0]}-${date}.pdf`;
 
     const options = {
-      margin: [0, 0, 0, 0],
+      margin: [10, 10, 10, 10], // margens ajustadas
       filename: name,
       image: { type: 'jpeg', quality: 1 },
       optimizeText: true,
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }, // evita quebras indesejadas
       html2canvas: {
-        scale: 4,
-        useCORS: true
+        scale: 2, // ajuste a escala conforme necessário
+        useCORS: true,
+        scrollY: 0
       },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
     html2pdf().from(printContent).set(options).save();
-}
+  }
+
 
 }

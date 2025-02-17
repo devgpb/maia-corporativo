@@ -6,8 +6,36 @@
   text-transform: uppercase;
 }
 
+
+.listagem{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Espaçamento entre os cards */
+  align-items: stretch; /* Faz os cards terem a mesma altura */
+}
+
 .pagination{
   margin: 0;
 }
+
+@keyframes explode {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.card-exploding {
+  animation: explode 0.4s ease-out forwards;
+}
+
 
 

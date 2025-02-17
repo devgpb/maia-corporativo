@@ -68,8 +68,12 @@ export class PedidosService {
       }
     });
 
-    return this.http.get<IPedido[]>(`${environment.apiURL}/pedidos/listar/`, { params });
-}
+    return this.http.get<IPedido[]>(`${environment.apiURL}/menu/listagem`, { params });
+  }
+
+  public getContadoresGerais(): Observable<any>{
+    return this.http.get<any>(`${environment.apiURL}/menu/contagem`)
+  }
 
 
   public getProcessando (id: string | undefined = undefined): Observable<IPedido[]>{

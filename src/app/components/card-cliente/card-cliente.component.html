@@ -1,20 +1,43 @@
-<div class="card text-decoration-none"
-     [ngClass]="{ animating: pedido?.['animating'] }"
-     (click)="onCardClick($event)">
-  <!-- Seção de dados do pedido -->
-  <div class="data">
-    <div class="user">
-      <span class="w-100 text-center mb-1 font-weight-bold">{{ pedido?.nomeCompleto }}</span>
-      <span> - </span>
-      <span class="w-100 text-center mb-1">({{ getTempoPedido() }})</span>
-    </div>
-    <div class="obs" *ngIf="pedido?.observacao?.length > 0">
-      <span>OBS: {{ pedido?.observacao }}</span>
-    </div>
-  </div>
+<div class="cardbreaker">
+  <!-- Card do pedido -->
+  <div class="card">
+    <div class="card-body">
+      <div class="w-100">
+        <h3 class="id-pedido">#{{ pedido.idPedido }}</h3>
+      </div>
+      <div class="header">
+        <h3 class="titulo">{{ pedido.nomeCompleto }}</h3>
 
-  <!-- Seção de ações (conteúdo injetado) -->
-  <div class="actions">
-    <ng-content select="[cardActions]"></ng-content>
+        <span
+          class="status"
+          [ngClass]="{
+            'status-fechado': pedido.status?.toLowerCase() === 'fechado',
+            'status-outro': pedido.status?.toLowerCase() !== 'fechado'
+          }"
+        >
+          {{ pedido.status }}
+        </span>
+      </div>
+      <div class="linha-info tempo-pedido">
+        <!-- Ícone de calendário (CalendarDays) -->
+        <lucide-icon name="calendar-days" [attr.class]="'w-5 h-5 mr-2'"></lucide-icon>
+        <span>{{ getTempoPedido() }}</span>
+      </div>
+
+      <!-- Observação (caso exista) -->
+      <div class="linha-info observacao" *ngIf="pedido.observacao">
+        <lucide-icon name="badge-alert" [attr.class]="'w-5 h-5 mr-2'"></lucide-icon>
+        <p class="texto-observacao">{{ pedido.observacao }}</p>
+      </div>
+    </div>
+
+    <!-- Seção para ações personalizadas via content projection -->
+    <ng-content class="" select="[cardActions]"></ng-content>
+
+    <!-- Rodapé do card -->
+    <div class="card-footer cursor-pointer" (click)="onCardClick($event)">
+      <span class="ver-detalhes">Ver detalhes</span>
+      <lucide-icon name="check" [attr.class]="'w-5 h-5 mr-2'"></lucide-icon>
+    </div>
   </div>
 </div>

@@ -18,6 +18,9 @@ import { NumericOnlyDirective } from "./services/utils/numeric-only.directive";
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { DatePipe } from "@angular/common";
 import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { icons } from 'lucide-angular';
+import { LucideAngularModule } from 'lucide-angular';
+
 
 import { CommonModule } from "@angular/common";
 import { AppRoutingModule } from './app-routing.module';
@@ -117,6 +120,7 @@ registerLocaleData(localePt);
   ],
   imports: [
     BrowserModule,
+    LucideAngularModule.pick({ ...icons }),
     AppRoutingModule,
     BlockUIModule,
     HttpClientModule,

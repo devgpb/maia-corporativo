@@ -35,6 +35,13 @@
   color: white;
 }
 
+.subcard:hover {
+  transform: scale(1.10);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  color: white;
+  border-color: #6ee7b7 !important;
+}
+
 .menu-card.disabled {
   pointer-events: none;
   opacity: 0.5;

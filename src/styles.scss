@@ -6,6 +6,10 @@
 @import "~ngx-bootstrap/datepicker/bs-datepicker.css";
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import "./utils.scss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 
 .icon{
   padding: 9px;
