@@ -68,6 +68,8 @@ import { HomologacoesComponent } from './homologacoes/homologacoes.component';
 import { NovoMenuComponent } from './novo-menu/novo-menu.component';
 import { CardClienteComponent } from './components/card-cliente/card-cliente.component';
 import { ListaPedidosComponent } from './lista-pedidos/lista-pedidos.component';
+import { ListaContatosComponent } from './vendas/lista-contatos/lista-contatos.component';
+import { CardContatoComponent } from './vendas/lista-contatos/card-contato/card-contato.component';
 
 defineLocale("pt-br", ptBrLocale);
 registerLocaleData(localePt);
@@ -117,6 +119,8 @@ registerLocaleData(localePt);
     NovoMenuComponent,
     CardClienteComponent,
     ListaPedidosComponent,
+    ListaContatosComponent,
+    CardContatoComponent,
   ],
   imports: [
     BrowserModule,

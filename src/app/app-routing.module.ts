@@ -26,6 +26,7 @@ import { PedidoExternoComponent } from './pedido-externo/pedido-externo.componen
 import { HomologacoesComponent } from './homologacoes/homologacoes.component';
 import { NovoMenuComponent } from './novo-menu/novo-menu.component';
 import { ListaPedidosComponent } from './lista-pedidos/lista-pedidos.component';
+import { ListaContatosComponent } from './vendas/lista-contatos/lista-contatos.component';
 
 
 const routes: Routes = [
@@ -44,6 +45,7 @@ const routes: Routes = [
   { path: "pedido/visualizar/externo", component: FormPedidoComponent },
   { path: "pedido/vistoria/externo", component: FormPedidoComponent },
 
+  { path: "vendas/contatos", component: ListaContatosComponent, canActivate: [AuthGuard] },
 
   { path: "homologacoes", component: HomologacoesComponent, canActivate: [AuthGuard] },
   { path: "menu", component: NovoMenuComponent, canActivate: [AuthGuard] },

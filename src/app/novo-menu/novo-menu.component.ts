@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 import { PedidosService } from '../services/pedidos/pedidos.service';
 
+
 interface MenuItem {
   icon: string;
   title: string;
@@ -31,6 +32,50 @@ export class NovoMenuComponent implements OnInit {
 
   // Menu principal
   public menuSections: MenuSection[] = [
+
+    {
+      title: 'Vendas',
+      items: [
+        {
+          icon: 'phone',
+          title: 'Lista Contatos',
+          description: 'Todos os contatos disponíveis para abordagem',
+          href: '/vendas/contatos',
+          roles: ['ADMINISTRADOR']
+        },
+
+      ]
+    },
+    {
+      title: 'Sistema',
+      items: [
+        {
+          icon: 'send',
+          title: 'Clientes',
+          description: 'Gerencie sua base de clientes',
+          hasSubmenu: true
+        },
+        {
+          icon: 'bot',
+          title: 'Automações',
+          description: 'Configure processos automáticos',
+          hasSubmenu: true
+        },
+        {
+          icon: 'table',
+          title: 'Relatório',
+          description: 'Visualize métricas e relatórios',
+          href: '/relatorio',
+          roles: ['ADMINISTRADOR']
+        },
+        {
+          icon: 'wrench',
+          title: 'Equipamentos',
+          description: 'Gerencie equipamentos do sistema',
+          href: '/equipamentos'
+        }
+      ]
+    },
     {
       title: 'Administração',
       items: [
@@ -63,36 +108,6 @@ export class NovoMenuComponent implements OnInit {
         }
       ]
     },
-    {
-      title: 'Sistema',
-      items: [
-        {
-          icon: 'send',
-          title: 'Clientes',
-          description: 'Gerencie sua base de clientes',
-          hasSubmenu: true
-        },
-        {
-          icon: 'bot',
-          title: 'Automações',
-          description: 'Configure processos automáticos',
-          hasSubmenu: true
-        },
-        {
-          icon: 'table',
-          title: 'Relatório',
-          description: 'Visualize métricas e relatórios',
-          href: '/relatorio',
-          roles: ['ADMINISTRADOR']
-        },
-        {
-          icon: 'wrench',
-          title: 'Equipamentos',
-          description: 'Gerencie equipamentos do sistema',
-          href: '/equipamentos'
-        }
-      ]
-    }
   ];
 
   // Itens do submenu para "Clientes"
@@ -101,7 +116,7 @@ export class NovoMenuComponent implements OnInit {
       icon: 'dollar-sign',
       title: 'Pagamentos Faltantes',
       nome: 'pagamentosFaltantes',
-      count: 3,
+      count: 0,
       route: '/pedidos/detalhes/pagamentos',
       color: 'text-red-600 bg-red-100'
     },
@@ -109,7 +124,7 @@ export class NovoMenuComponent implements OnInit {
       icon: 'box',
       title: 'Equipamentos A Comprar',
       nome: 'equipamentosFaltantes',
-      count: 5,
+      count: 0,
       route: '/pedidos/detalhes/equipamentos',
       color: 'text-orange-600 bg-orange-100'
     },
@@ -117,7 +132,7 @@ export class NovoMenuComponent implements OnInit {
       icon: 'pen',
       title: 'ART Faltantes',
       nome: 'ARTFaltantes',
-      count: 2,
+      count: 0,
       route: '/pedidos/detalhes/arts',
       color: 'text-yellow-600 bg-yellow-100'
     },
@@ -125,7 +140,7 @@ export class NovoMenuComponent implements OnInit {
       icon: 'folder-open',
       title: 'Homologações Pendentes',
       nome: 'homologacoesPendentes',
-      count: 4,
+      count: 0,
       route: '/pedidos/detalhes/homologacoes',
       color: 'text-blue-600 bg-blue-100'
     },
@@ -133,7 +148,7 @@ export class NovoMenuComponent implements OnInit {
       icon: 'cog',
       title: 'Aguardando Instalação',
       nome: 'aguardandoInstalacao',
-      count: 7,
+      count: 0,
       route: '/pedidos/detalhes/instalar',
       color: 'text-purple-600 bg-purple-100'
     }
@@ -198,7 +213,6 @@ export class NovoMenuComponent implements OnInit {
     }
 
     this.pedidosService.getContadoresGerais().subscribe((contadores) => {
-      console.log(contadores)
       this.submenuClientesRecentItems.forEach((item) => {
         item.count = contadores[item.nome] || 0;
       });
