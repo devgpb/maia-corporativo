@@ -3,6 +3,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { VendasService } from 'src/app/services/vendas/vendas.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { IUser } from 'src/app/interfaces/IUser';
+import * as moment from 'moment';
 
 interface Contato {
   idSimulacao: string;
@@ -46,6 +47,9 @@ export class ListaContatosComponent implements OnInit{
     this.vendasService.getContatos().subscribe(contatos =>{
       console.log(contatos)
       this.contatos = contatos
+      this.contatos.forEach(contato => {
+        contato.hora = moment(contato.hora, 'HH:mm').toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      });
     })
   }
 
