@@ -12,6 +12,7 @@ interface Contato {
   custo: number;
   data: string;
   hora: string;
+  observacao?: string;
 }
 
 @Component({
