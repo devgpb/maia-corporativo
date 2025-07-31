@@ -1,0 +1,63 @@
+<form [formGroup]="clienteForm" (ngSubmit)="onSubmit()" class="p-3">
+
+  <div class="row g-3 " style="width: 90%; margin: 0 auto">
+
+    <!-- Nome -->
+    <div class="col-md-6">
+      <label class="form-label">Nome *</label>
+      <input type="text" class="form-control" formControlName="nome" placeholder="Nome do Cliente"
+        [ngClass]="{'is-invalid': clienteForm.get('nome')?.invalid && clienteForm.get('nome')?.touched}">
+      <div class="invalid-feedback">Nome é obrigatório.</div>
+    </div>
+
+    <!-- Celular -->
+    <div class="col-md-6">
+      <label class="form-label">Celular *</label>
+      <input type="text" class="form-control" formControlName="celular" appMask="celular" placeholder="(00) 00000-0000"
+        [ngClass]="{'is-invalid': clienteForm.get('celular')?.invalid && clienteForm.get('celular')?.touched}">
+      <div class="invalid-feedback">Celular é obrigatório.</div>
+    </div>
+
+    <!-- Cidade -->
+    <div class="col-md-6">
+      <label class="form-label">Cidade</label>
+      <select class="form-select" formControlName="cidade">
+        <option value="">Selecione</option>
+        <option *ngFor="let cidade of cidades" [value]="cidade">{{ cidade }}</option>
+      </select>
+    </div>
+
+    <!-- Status -->
+    <div class="col-md-6">
+      <label class="form-label">Status</label>
+      <select class="form-select" formControlName="status">
+        <option value="">Selecione</option>
+        <option *ngFor="let s of statusList" [value]="s">{{ s }}</option>
+      </select>
+    </div>
+
+    <!-- Indicação -->
+    <div class="col-md-6">
+      <label class="form-label">Indicação</label>
+      <input type="text" class="form-control" formControlName="indicacao">
+    </div>
+
+    <!-- Campanha -->
+    <div class="col-md-6">
+      <label class="form-label">Campanha</label>
+      <input type="text" class="form-control" formControlName="campanha">
+    </div>
+
+    <!-- Observação -->
+    <div class="col-12">
+      <label class="form-label">Observação</label>
+      <textarea class="form-control" rows="3" formControlName="observacao"></textarea>
+    </div>
+
+    <!-- Botão -->
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary mt-3">Salvar Cliente</button>
+    </div>
+
+  </div>
+</form>

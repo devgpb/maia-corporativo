@@ -70,6 +70,10 @@ import { CardClienteComponent } from './components/card-cliente/card-cliente.com
 import { ListaPedidosComponent } from './lista-pedidos/lista-pedidos.component';
 import { ListaContatosComponent } from './vendas/lista-contatos/lista-contatos.component';
 import { CardContatoComponent } from './vendas/lista-contatos/card-contato/card-contato.component';
+import { ClienteFormComponent } from "./vendas/cliente-form/cliente-form.component";
+import { ListaClientesComponent } from "./vendas/lista-clientes/lista-clientes.component";
+import { ClienteCardComponent } from "./vendas/lista-clientes/cliente-card/cliente-card.component";
+import { ClienteModalComponent } from "./vendas/cliente-modal/cliente-modal.component";
 
 defineLocale("pt-br", ptBrLocale);
 registerLocaleData(localePt);
@@ -121,6 +125,10 @@ registerLocaleData(localePt);
     ListaPedidosComponent,
     ListaContatosComponent,
     CardContatoComponent,
+    ClienteFormComponent,
+    ListaClientesComponent,
+    ClienteCardComponent,
+    ClienteModalComponent
   ],
   imports: [
     BrowserModule,

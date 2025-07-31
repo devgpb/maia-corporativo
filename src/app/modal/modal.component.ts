@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { ModalService } from '../services/modal/modal.service';
 import { Subscription } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -19,19 +19,34 @@ import { animate, style, transition, trigger } from '@angular/animations';
     ])
   ]
 })
-export class ModalComponent implements OnDestroy {
+export class ModalComponent implements OnDestroy, OnInit {
   mostrar: boolean = false;
   private subscription: Subscription;
+  private escListener: () => void;
 
-  constructor(private modalService: ModalService) {
+  constructor(
+    private modalService: ModalService,
+    private renderer: Renderer2
+  ) {
     this.subscription = this.modalService.modalVisibility$.subscribe(visible => {
       this.mostrar = visible;
+    });
+  }
+
+  ngOnInit(): void {
+    this.escListener = this.renderer.listen('document', 'keyup', (event: KeyboardEvent) => {
+      if ((event.key === 'Escape' || event.key === 'Esc') && this.mostrar) {
+        this.close();
+      }
     });
   }
 
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    if (this.escListener) {
+      this.escListener();
     }
   }
 

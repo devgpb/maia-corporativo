@@ -27,7 +27,8 @@ import { HomologacoesComponent } from './homologacoes/homologacoes.component';
 import { NovoMenuComponent } from './novo-menu/novo-menu.component';
 import { ListaPedidosComponent } from './lista-pedidos/lista-pedidos.component';
 import { ListaContatosComponent } from './vendas/lista-contatos/lista-contatos.component';
-
+import { ClienteFormComponent } from './vendas/cliente-form/cliente-form.component';
+import { ListaClientesComponent } from './vendas/lista-clientes/lista-clientes.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -46,6 +47,10 @@ const routes: Routes = [
   { path: "pedido/vistoria/externo", component: FormPedidoComponent },
 
   { path: "vendas/contatos", component: ListaContatosComponent, canActivate: [AuthGuard] },
+  { path: "vendas/leads", component: ClienteFormComponent, canActivate: [AuthGuard] },
+  { path: "vendas/lista/clientes", component: ListaClientesComponent, canActivate: [AuthGuard] },
+
+
 
   { path: "homologacoes", component: HomologacoesComponent, canActivate: [AuthGuard] },
   { path: "menu", component: NovoMenuComponent, canActivate: [AuthGuard] },

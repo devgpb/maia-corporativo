@@ -10,6 +10,7 @@ interface MenuItem {
   description?: string;
   href?: string;
   roles?: string[];
+  setores?: string[];
   hasSubmenu?: boolean;
 }
 
@@ -28,6 +29,7 @@ export class NovoMenuComponent implements OnInit {
   public showMainMenu: boolean = true;
   public showSubmenu: boolean = false;
   public hoveredCard: string | null = null;
+  public userSetor: string = '';
   public activeSubmenu: string = ''; // Armazena o título do item que possui submenu ativo
 
   // Menu principal
@@ -41,8 +43,25 @@ export class NovoMenuComponent implements OnInit {
           title: 'Lista Contatos',
           description: 'Todos os contatos disponíveis para abordagem',
           href: '/vendas/contatos',
-          roles: ['ADMINISTRADOR']
+          roles: ['GESTOR', 'COLABORADOR', 'ADMINISTRADOR'],
+          setores: ['Vendas', 'Marketing'],
         },
+        {
+          icon: "user-plus",
+          title: 'Cadastrar Clientes',
+          description: 'Cadastre seus clientes',
+          href: '/vendas/leads',
+          roles: ['GESTOR', 'COLABORADOR', 'ADMINISTRADOR'],
+          setores: ['Vendas', 'Marketing'],
+        },
+        {
+          icon: 'users',
+          title: 'Lista de Clientes',
+          description: 'Veja todos os clientes cadastrados',
+          href: '/vendas/lista/clientes',
+          roles: ['GESTOR', 'COLABORADOR', 'ADMINISTRADOR'],
+          setores: ['Vendas', 'Marketing'],
+        }
 
       ]
     },
@@ -50,26 +69,26 @@ export class NovoMenuComponent implements OnInit {
       title: 'Sistema',
       items: [
         {
-          icon: 'send',
-          title: 'Clientes',
-          description: 'Gerencie sua base de clientes',
+          icon: 'users', // Lucide: users para Clientes
+          title: 'Pedidos',
+          description: 'Gerencie sua base de pedidos fechados',
           hasSubmenu: true
         },
         {
-          icon: 'bot',
+          icon: 'bot', // Lucide: bot para Automações
           title: 'Automações',
           description: 'Configure processos automáticos',
           hasSubmenu: true
         },
         {
-          icon: 'table',
+          icon: 'bar-chart-2', // Lucide: bar-chart-2 para Relatório
           title: 'Relatório',
           description: 'Visualize métricas e relatórios',
           href: '/relatorio',
           roles: ['ADMINISTRADOR']
         },
         {
-          icon: 'wrench',
+          icon: 'server', // Lucide: server para Equipamentos
           title: 'Equipamentos',
           description: 'Gerencie equipamentos do sistema',
           href: '/equipamentos'
@@ -201,7 +220,9 @@ export class NovoMenuComponent implements OnInit {
     private authService: AuthService,
     private pedidosService: PedidosService
   ) {
-    this.userCargo = this.authService.getUser().cargo;
+    const user = this.authService.getUser();
+    this.userCargo = user.cargo;
+    this.userSetor = user.setor;
   }
 
   ngOnInit(): void {
@@ -211,6 +232,20 @@ export class NovoMenuComponent implements OnInit {
       this.showMainMenu = false;
       this.showSubmenu = true;
     }
+
+    this.menuSections = this.menuSections
+    .map(section => ({
+      ...section,
+      items: section.items.filter(item =>
+        this.userCargo === 'ADMINISTRADOR' || (
+          (!item.roles || item.roles.includes(this.userCargo)) &&
+          (!item.setores || item.setores.includes(this.userSetor))
+        )
+      )
+    }))
+    .filter(section => section.items.length > 0);
+
+
 
     this.pedidosService.getContadoresGerais().subscribe((contadores) => {
       this.submenuClientesRecentItems.forEach((item) => {

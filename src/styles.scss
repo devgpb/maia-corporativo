@@ -245,5 +245,9 @@ button:active {
   100% { transform: rotate(360deg); }
 }
 
-// html, body { height: 100%; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  overflow-y: auto;
+}
 // body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

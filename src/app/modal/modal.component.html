@@ -2,7 +2,7 @@
   <div>
     <div (click)="close()" class="overlay"></div>
 
-    <div class="modalt">
+    <div class="modalt" (click)="$event.stopPropagation()">
       <ng-content></ng-content>
     </div>
   </div>
