@@ -32,9 +32,9 @@
         {{ cliente.cidade }}
       </ng-container>
 
-      <span *ngIf="cliente.cidade && cliente.campanha">|</span>
+      <span *ngIf="cliente.cidade && cliente.campanha && cliente.campanha != 'Sem Campanha'">|</span>
 
-      <ng-container *ngIf="cliente.campanha">
+      <ng-container *ngIf="cliente.campanha && cliente.campanha != 'Sem Campanha'">
         <lucide-icon name="megaphone"></lucide-icon>
         <span>campanha: </span>
         <span class="text-primary">{{ cliente.campanha }}</span>

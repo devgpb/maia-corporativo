@@ -9,6 +9,10 @@ export interface Cliente {
   campanha?: string;
   observacao?: string;
   idPedido?: number;
+  responsavel? : {
+    nomeCompleto?: string,
+    idUsuario?: number
+  }
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;

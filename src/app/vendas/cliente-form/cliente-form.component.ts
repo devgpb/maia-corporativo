@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ClientesService } from 'src/app/services/clientes/clientes.service';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { IUser } from 'src/app/interfaces/IUser';
 
 @Component({
   selector: 'app-cliente-form',
@@ -11,6 +13,7 @@ import Swal from 'sweetalert2';
 export class ClienteFormComponent implements OnInit {
   clienteForm: FormGroup;
   cidades: string[] = [];
+  user: IUser;
   statusList: string[] = [
   'Aguardando',
   'Curioso',
@@ -29,8 +32,11 @@ export class ClienteFormComponent implements OnInit {
   ]
   constructor(
     private fb: FormBuilder, private http: HttpClient,
-    private clientesService: ClientesService
-  ) {}
+    private clientesService: ClientesService,
+    private authService: AuthService
+  ) {
+    this.user = this.authService.getUser()
+  }
 
   ngOnInit() {
     this.clienteForm = this.fb.group({
@@ -65,8 +71,12 @@ export class ClienteFormComponent implements OnInit {
 
   onSubmit() {
     if (this.clienteForm.valid) {
-      console.log(this.clienteForm.value);
-      this.clientesService.postCliente(this.clienteForm.value).subscribe(
+
+      const cliente = {
+        ...this.clienteForm.value,
+        idUsuario: this.user.idUsuario,
+      }
+      this.clientesService.postCliente(cliente).subscribe(
         {
           next: () => {
             // Sucesso
