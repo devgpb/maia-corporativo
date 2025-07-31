@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import {
   Component, Input, Output, EventEmitter,
-  OnChanges, SimpleChanges
+  OnChanges, SimpleChanges,
+  OnInit
 } from '@angular/core';
 import { Cliente } from 'src/app/interfaces/ICliente';
 import { ClientesService } from 'src/app/services/clientes/clientes.service';
@@ -12,16 +13,17 @@ import Swal from 'sweetalert2';
   templateUrl: './cliente-modal.component.html',
   styleUrls: ['./cliente-modal.component.css']
 })
-export class ClienteModalComponent implements OnChanges {
+export class ClienteModalComponent implements OnChanges, OnInit {
   @Input() cliente: Cliente;
   @Input() isOpen = false;
   @Output() onClose = new EventEmitter<void>();
   @Output() onSave  = new EventEmitter<Cliente>();
   @Output() onUpdate = new EventEmitter<void>();
   cidades: string[] = [];
+  listaCampanhas = [];
 
   constructor(
-    private ClientesService: ClientesService,
+    private clientesService: ClientesService,
     private http: HttpClient,
   ){
 
@@ -47,6 +49,10 @@ export class ClienteModalComponent implements OnChanges {
     }
   }
 
+  ngOnInit(){
+    this.listaCampanhas = this.clientesService.listaDeCampanhas
+  }
+
   close(): void {
     this.onClose.emit();
   }
@@ -55,7 +61,7 @@ export class ClienteModalComponent implements OnChanges {
     if (!this.validate()) return;
     this.isLoading = true;
     // simula chamada async
-    this.ClientesService.postCliente(this.formData).subscribe(
+    this.clientesService.postCliente(this.formData).subscribe(
        {
         next: () => {
           // Sucesso
@@ -89,7 +95,7 @@ export class ClienteModalComponent implements OnChanges {
     }).then((result) => {
       if (result.isConfirmed) {
         this.isLoading = true;
-        this.ClientesService.deleteClientes(this.cliente.idCliente).subscribe({
+        this.clientesService.deleteClientes(this.cliente.idCliente).subscribe({
           next: () => {
             // @ts-ignore
             Swal.fire('Sucesso!', 'Cliente apagado com sucesso.', 'success').then(() => {

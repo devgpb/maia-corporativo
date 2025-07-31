@@ -23,6 +23,8 @@ export class ClienteFormComponent implements OnInit {
   'Analisando Orçamento',
   ];
 
+  listaCampanhas = []
+
   fallbackCidades = ['Arcoverde', 'Buíque', 'Ibimirim', 'Tupanatinga', 'Custódia', 'Pesqueira', 'Venturosa', 'Manari', 'Inajá', 'Pedra'
   ]
   constructor(
@@ -41,10 +43,12 @@ export class ClienteFormComponent implements OnInit {
       observacao: [''],
     });
 
+    this.listaCampanhas = this.clientesService.listaDeCampanhas
+
     this.fetchCidades();
   }
 
-  
+
 
   fetchCidades() {
   this.http.get<any[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados/26/municipios')

@@ -45,7 +45,10 @@
     <!-- Campanha -->
     <div class="col-md-6">
       <label class="form-label">Campanha</label>
-      <input type="text" class="form-control" formControlName="campanha">
+      <select class="form-select" formControlName="campanha">
+        <option value="">Selecione</option>
+        <option *ngFor="let s of listaCampanhas" [value]="s">{{ s }}</option>
+      </select>
     </div>
 
     <!-- Observação -->

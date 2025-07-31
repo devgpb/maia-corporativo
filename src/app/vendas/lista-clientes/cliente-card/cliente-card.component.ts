@@ -17,7 +17,7 @@ export class ClienteCardComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.updateDias();
   }
-  
+
   onEdit(): void {
     this.edit.emit(this.cliente);
   }
@@ -27,6 +27,20 @@ export class ClienteCardComponent implements OnInit, OnChanges {
       this.updateDias();
     }
   }
+
+  abrirWhatsapp(event: Event) {
+    event.preventDefault();
+
+    const celularRaw = this.cliente?.celular || '';
+    const celularLimpo = celularRaw.replace(/\D/g, '');
+
+    const celularComDDI = celularLimpo.startsWith('55') ? celularLimpo : `55${celularLimpo}`;
+
+    const url = `https://wa.me/${celularComDDI}`;
+
+    window.open(url, '_blank');
+  }
+
 
   private updateDias(): void {
     this.dias = this.calcularDias(this.cliente.createdAt);

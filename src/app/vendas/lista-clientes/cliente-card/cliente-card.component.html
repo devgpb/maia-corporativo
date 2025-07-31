@@ -1,14 +1,20 @@
 <div class="card h-100 shadow-sm clickable cursor-pointer" (click)="onEdit()">
   <div class="card-body d-flex flex-column">
     <!-- Header -->
-    <div class="d-flex justify-content-between mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
       <span class="badge bg-light text-muted">ID: {{ cliente.idCliente }}</span>
+
+      <div class="text-center flex-fill">
+        <span class="badge bg-info text-white px-1 d-inline-block text-truncate"
+        style="max-width: 140px;">
+          {{ cliente.status || 'Sem status' }}
+        </span>
+      </div>
+
       <div class="d-flex align-items-center">
-        <span
-          class="rounded-circle me-2"
-          [ngClass]="corFundo"
-          style="display:inline-block; width:10px; height:10px;"
-        ></span>
+        <span class="rounded-circle me-2" [ngClass]="corFundo"
+          style="display:inline-block; width:10px; height:10px;">
+        </span>
         <small [ngClass]="corTexto" class="fw-semibold">
           {{ dias }} {{ dias === 1 ? 'dia' : 'dias' }}
         </small>
@@ -16,25 +22,32 @@
     </div>
 
     <!-- Nome -->
-    <h5 class="card-title text-truncate">{{ cliente.nome }}</h5>
+    <h3 class="card-title text-truncate">{{ cliente.nome }}</h3>
 
-    <!-- Informações -->
-    <div class="mt-2 mb-3">
-      <div *ngIf="cliente.cidade" class="mb-1">
-        <small class="text-muted">Cidade:</small>
-        <span>{{ cliente.cidade }}</span>
-      </div>
-      <div *ngIf="cliente.status" class="mb-1">
-        <small class="text-muted">Status:</small>
-        <span
-        >
-          {{ cliente.status }}
-        </span>
-      </div>
-      <div *ngIf="cliente.campanha" class="mb-1">
-        <small class="text-muted">Campanha:</small>
+    <!-- Informações com ícones e separador -->
+    <div class="d-flex align-items-center gap-1 text-muted small mb-3 flex-wrap">
+      <ng-container *ngIf="cliente.cidade">
+        <lucide-icon name="map-pin"></lucide-icon>
+        <span>cidade: </span>
+        {{ cliente.cidade }}
+      </ng-container>
+
+      <span *ngIf="cliente.cidade && cliente.campanha">|</span>
+
+      <ng-container *ngIf="cliente.campanha">
+        <lucide-icon name="megaphone"></lucide-icon>
+        <span>campanha: </span>
         <span class="text-primary">{{ cliente.campanha }}</span>
-      </div>
+      </ng-container>
+    </div>
+
+    <!-- Ações -->
+    <div class="d-flex gap-2 border-top pt-2 mb-2">
+      <button type="button" class="btn btn-success btn-sm d-flex align-items-center" (click)="abrirWhatsapp($event)">
+        <lucide-icon name="message-circle" class="me-1" size="16"></lucide-icon>
+        WhatsApp
+      </button>
+      <!-- você pode adicionar mais botões aqui -->
     </div>
 
     <!-- Footer -->

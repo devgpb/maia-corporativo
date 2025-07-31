@@ -15,6 +15,10 @@ export class ClientesService {
 
   constructor(private http: HttpClient) { }
 
+  public listaDeCampanhas = [
+    "Sem Campanha"
+  ]
+
   public postCliente(cliente){
     return this.http.post(`${environment.apiURL}/clientes`, cliente);
   }
