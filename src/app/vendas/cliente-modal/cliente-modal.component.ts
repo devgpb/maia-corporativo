@@ -47,6 +47,16 @@ export class ClienteModalComponent implements OnChanges, OnInit {
       this.errors = {};
       this.fetchCidades();
     }
+
+    // Garante que a campanha atual do cliente apareça no select
+    if (this.formData.campanha && !this.listaCampanhas.includes(this.formData.campanha)) {
+      this.listaCampanhas.push(this.formData.campanha);
+    }
+
+    // Garante que a cidade atual do cliente apareça no select
+    if (this.formData.cidade && !this.cidades.includes(this.formData.cidade)) {
+      this.cidades.push(this.formData.cidade);
+    }
   }
 
   ngOnInit(){

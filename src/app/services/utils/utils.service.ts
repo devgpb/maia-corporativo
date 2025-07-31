@@ -62,7 +62,9 @@ export class UtilsService {
 		};
 	}
 
-
+  public scrollToTop(): void {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
 	public telephoneMask (rawValue: string): Array<string | RegExp> {
 		rawValue = rawValue.replace(/[()_-\s]/g, "");

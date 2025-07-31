@@ -16,7 +16,10 @@ export class ClientesService {
   constructor(private http: HttpClient) { }
 
   public listaDeCampanhas = [
-    "Sem Campanha"
+    "Sem Campanha",
+    "Campanha de Rua",
+    "Feirão",
+    "Promoção do Mês"
   ]
 
   public postCliente(cliente){

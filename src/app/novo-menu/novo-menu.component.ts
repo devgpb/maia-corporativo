@@ -72,8 +72,8 @@ export class NovoMenuComponent implements OnInit {
           icon: 'users', // Lucide: users para Clientes
           title: 'Pedidos',
           description: 'Gerencie sua base de pedidos fechados',
-          roles: ['ADMINISTRADOR'],
-          setores:['Administrativo'],
+          roles: ['GESTOR', 'COLABORADOR', 'ADMINISTRADOR'],
+          setores:['Administrativo','Financeiro', 'Homologação'],
           hasSubmenu: true,
         },
         {

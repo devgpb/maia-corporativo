@@ -11,18 +11,9 @@
 
 .status{
   max-width: 140px;
-  font-size: 1.2rem;
 }
 
 .nome-cliente{
-  font-size: 1.3rem;
-}
-
-.id-card{
-  font-size: 1rem;
-}
-
-.dias-contador{
   font-size: 1.2rem;
 }
 
@@ -30,5 +21,17 @@
 
   .status{
     max-width: 180px;
+    font-size: 1.2rem;
+  }
+  .nome-cliente{
+    font-size: 1.3rem;
+  }
+
+  .id-card{
+    font-size: 1rem;
+  }
+
+  .dias-contador{
+    font-size: 1.2rem;
   }
 }

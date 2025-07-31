@@ -20,10 +20,9 @@
           <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ps-3 text-secondary"></i>
           <input
             type="text"
-            class="form-control ps-5"
+            class="form-control ps-3"
             placeholder="Pesquisar por nome, ID, celular, cidade, campanha ou status..."
             [(ngModel)]="searchTerm"
-            (ngModelChange)="atualizaFiltros()"
           />
         </div>
 
@@ -33,7 +32,7 @@
           <select
             class="form-select"
             [(ngModel)]="statusFilter"
-            (ngModelChange)="atualizaFiltros()"
+
           >
             <option value="todos">Todos os status</option>
             <option *ngFor="let s of statusUnicos" [value]="s.toLowerCase()">{{ s }}</option>
@@ -46,7 +45,7 @@
           <select
             class="form-select"
             [(ngModel)]="cidadeFilter"
-            (ngModelChange)="atualizaFiltros()">
+            >
             <option value="todas">Todas as cidades</option>
             <option *ngFor="let c of cidadesUnicas" [value]="c.toLowerCase()">{{ c }}</option>
           </select>
@@ -58,13 +57,19 @@
           <select
             class="form-select"
             [(ngModel)]="sortBy"
-            (ngModelChange)="atualizaFiltros()"
           >
             <option value="recente">Mais recente</option>
             <option value="antigo">Mais antigo</option>
             <option value="nome">Nome A-Z</option>
             <option value="id">ID crescente</option>
           </select>
+        </div>
+
+        <div class="form-check form-switch col-6 col-md-3 ">
+          <input class="form-check-input switch-grande ml-2" type="checkbox" [formControl]="meusClientes" id="meusClientes">
+          <label class="form-check-label" for="meusClientes">
+            Meus Clientes
+          </label>
         </div>
 
          <!-- Botão de busca avançada -->

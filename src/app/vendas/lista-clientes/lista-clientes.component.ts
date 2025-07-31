@@ -1,6 +1,9 @@
 // lista-clientes.component.ts
 import { Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Cliente } from 'src/app/interfaces/ICliente';
+import { IUser } from 'src/app/interfaces/IUser';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ClientesService } from 'src/app/services/clientes/clientes.service';
 import { ModalService } from 'src/app/services/modal/modal.service';
 
@@ -12,7 +15,7 @@ import { ModalService } from 'src/app/services/modal/modal.service';
 export class ListaClientesComponent implements OnInit {
   clientes: Cliente[] = [];
   clientesFiltrados: Cliente[] = [];
-
+  user: IUser;
   carregandoBusca = false;
   searchTerm = '';
   statusFilter = 'todos';
@@ -21,25 +24,24 @@ export class ListaClientesComponent implements OnInit {
   statusUnicos: string[] = [];
   cidadesUnicas: string[] = [];
 
+  meusClientes = new FormControl(false);
+
   selectedCliente: Cliente | null = null;
   isModalOpen = false;
 
   constructor(
     private clientesService: ClientesService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private authService: AuthService
   ) {
-
+    this.user = this.authService.getUser()
   }
 
+
+
   ngOnInit(): void {
-    this.clientesService.getClientes().subscribe(
-      (clientes) => {
-        this.clientes = clientes
-        this.atualizaFiltros();
-      }
-    )
+    this.carregarClientesRecentes()
     this.carregarFiltros();
-    this.carregarClientesRecentes();
   }
 
 
@@ -52,7 +54,12 @@ export class ListaClientesComponent implements OnInit {
   }
 
   carregarClientesRecentes() {
-    this.clientesService.getClientes().subscribe(clientes => {
+    let params: any = {}
+
+    if(this.meusClientes.value)
+      params.idUsuario = this.user.idUsuario
+
+    this.clientesService.getClientes(params).subscribe(clientes => {
       this.clientes = clientes;
       this.atualizaFiltros();
     });
@@ -138,7 +145,8 @@ export class ListaClientesComponent implements OnInit {
       search: this.searchTerm,
       status: this.statusFilter,
       cidade: this.cidadeFilter,
-      sortBy: this.sortBy
+      sortBy: this.sortBy,
+      idUsuario: this.meusClientes.value ? this.user.idUsuario : null
     }).subscribe(clientes => {
       this.clientesFiltrados = clientes;
       this.carregandoBusca = false;
