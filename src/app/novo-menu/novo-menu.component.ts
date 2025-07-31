@@ -72,7 +72,9 @@ export class NovoMenuComponent implements OnInit {
           icon: 'users', // Lucide: users para Clientes
           title: 'Pedidos',
           description: 'Gerencie sua base de pedidos fechados',
-          hasSubmenu: true
+          roles: ['ADMINISTRADOR'],
+          setores:['Administrativo'],
+          hasSubmenu: true,
         },
         {
           icon: 'bot', // Lucide: bot para Automações
@@ -81,7 +83,7 @@ export class NovoMenuComponent implements OnInit {
           hasSubmenu: true
         },
         {
-          icon: 'bar-chart-2', // Lucide: bar-chart-2 para Relatório
+          icon: 'bar-chart-2',
           title: 'Relatório',
           description: 'Visualize métricas e relatórios',
           href: '/relatorio',
