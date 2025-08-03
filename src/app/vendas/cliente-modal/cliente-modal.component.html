@@ -84,12 +84,20 @@
             </div>
           </div>
 
+
           <div class="col-md-6 mb-3">
             <label class="form-label">Cidade</label>
-            <select class="form-select"  [(ngModel)]="formData.cidade" name="cidade">
-              <option value="">Selecione</option>
-              <option *ngFor="let cidade of cidades" [value]="cidade">{{ cidade }}</option>
-            </select>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="formData.cidade"
+              name="cidade"
+              list="cidadesList"
+              placeholder="Digite ou selecione..."
+            />
+            <datalist id="cidadesList">
+              <option *ngFor="let cidade of cidades" [value]="cidade"></option>
+            </datalist>
           </div>
 
           <div class="col-md-6 mb-3">
