@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ClientesService } from 'src/app/services/clientes/clientes.service';
 import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -84,10 +84,10 @@ export class ClienteFormComponent implements OnInit {
             Swal.fire('Sucesso!', 'Cliente cadastrado com sucesso.', 'success');
             this.clienteForm.reset();
           },
-          error: () => {
-            // Erro
-            // @ts-ignore
-            Swal.fire('Erro!', 'Ocorreu um erro ao cadastrar o cliente.', 'error');
+          error: (err: HttpErrorResponse) => {
+            // pega a mensagem que o seu endpoint retornou em { error: "..." }
+            const mensagem = err.error?.error || 'Ocorreu um erro ao cadastrar o cliente.';
+            Swal.fire('Erro!', mensagem, 'error');
           }
         }
       )
