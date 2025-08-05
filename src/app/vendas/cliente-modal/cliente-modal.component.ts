@@ -38,7 +38,7 @@ export class ClienteModalComponent implements OnChanges, OnInit {
   statuses = [
     'Aguardando','Curioso','Financiamento Reprovado','Desistência',
     'Sem Retorno','Adiado','Fechou Com Outra Empresa',
-    'Fechado','Analisando Orçamento'
+    'Fechado','Analisando Orçamento', 'Visita marcada'
   ];
 
   ngOnChanges(ch: SimpleChanges): void {

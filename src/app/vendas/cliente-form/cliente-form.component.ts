@@ -24,6 +24,7 @@ export class ClienteFormComponent implements OnInit {
   'Fechou Com Outra Empresa',
   'Fechado',
   'Analisando Orçamento',
+  'Visita marcada'
   ];
 
   listaCampanhas = []
