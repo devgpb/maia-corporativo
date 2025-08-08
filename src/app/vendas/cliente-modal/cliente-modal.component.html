@@ -13,32 +13,45 @@
     </button>
 
     <div *ngIf="formData">
+      <!-- Nome de quem cadastrou -->
+      <div class="bg-light rounded p-3 mb-4 text-center">
+        <span class="fw-normal">Cadastrado por:</span>
+        <div class="fw-bold fs-5">{{ formData?.responsavel?.nomeCompleto }}</div>
+      </div>
 
-      <!-- Datas em destaque -->
-      <div class="bg-light rounded p-3 mb-4">
-        <!-- Seção de criação e atualização centralizada -->
-        <div class="d-flex flex-column align-items-center text-center">
-          <div>
-            <span class="fw-normal">Cadastrado por:</span>
-            <span class="fw-bold fs-5 ms-1">{{ formData?.responsavel?.nomeCompleto }}</span>
-            <br/>
-            <span class="text-muted ms-2">{{ formData.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
-          </div>
-          <div class="mt-1 text-muted">
-            Atualizado: {{ formData.updatedAt | date:'dd/MM/yyyy HH:mm' }}
-          </div>
+      <!-- Datas separadas -->
+      <div class="bg-white rounded p-3 shadow-sm">
+
+        <!-- Criado -->
+        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
+          <span class="fw-bold text-primary">Data de Criação</span>
+          <span>{{ formData.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
         </div>
 
-        <!-- Seção de métricas de tempo -->
-        <div class="mt-3 d-flex align-items-center justify-content-between">
-          <span>
-            Criado há {{ calcularDias(formData.createdAt) }} {{ calcularDias(formData.createdAt) === 1 ? 'dia' : 'dias' }}
-          </span>
-          <span class="badge" [ngClass]="getBadgeClass(calcularDias(formData.createdAt))">
-            {{ getBadgeText(calcularDias(formData.createdAt)) }}
-          </span>
+        <!-- Atualizado -->
+        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
+          <span class="fw-bold text-success">Última Atualização</span>
+          <span>{{ formData.updatedAt | date:'dd/MM/yyyy HH:mm' }}</span>
         </div>
-    </div>
+
+        <!-- Último Contato (opcional) -->
+        <div *ngIf="formData.ultimoContato" class="d-flex justify-content-between align-items-center">
+          <span class="fw-bold text-warning">Último Contato</span>
+          <span>{{ formData.ultimoContato | date:'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+
+      </div>
+
+      <!-- Métricas de tempo -->
+      <div class="mt-3 d-flex align-items-center justify-content-between">
+        <span>
+          Criado há {{ calcularDias(formData.createdAt) }} {{ calcularDias(formData.createdAt) === 1 ? 'dia' : 'dias' }}
+        </span>
+        <span class="badge" [ngClass]="getBadgeClass(calcularDias(formData.createdAt))">
+          {{ getBadgeText(calcularDias(formData.createdAt)) }}
+        </span>
+      </div>
+
 
 
       <!-- Cabeçalho -->
