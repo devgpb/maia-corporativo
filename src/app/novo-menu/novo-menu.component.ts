@@ -40,7 +40,7 @@ export class NovoMenuComponent implements OnInit {
       items: [
         {
           icon: 'layout-dashboard',
-          title: 'Dashboard',
+          title: 'Relatório de Vendas',
           description: 'Acompanhe as métricas de vendas',
           href: '/vendas/dashboard',
           roles: ['GESTOR', 'COLABORADOR', 'ADMINISTRADOR'],

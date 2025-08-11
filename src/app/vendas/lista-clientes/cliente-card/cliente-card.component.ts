@@ -43,7 +43,7 @@ export class ClienteCardComponent implements OnInit, OnChanges {
 
 
   private updateDias(): void {
-    this.dias = this.calcularDias(this.cliente.createdAt);
+    this.dias = this.calcularDias(this.cliente.updatedAt);
     this.corFundo = this.getCorDias(this.dias);
     this.corTexto = this.getCorTextoDias(this.dias);
   }
