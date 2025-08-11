@@ -6,9 +6,10 @@ import { ModalService } from '../services/modal/modal.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-homologacoes',
-  templateUrl: './homologacoes.component.html',
-  styleUrls: ['./homologacoes.component.scss']
+    selector: 'app-homologacoes',
+    templateUrl: './homologacoes.component.html',
+    styleUrls: ['./homologacoes.component.scss'],
+    standalone: false
 })
 export class HomologacoesComponent implements OnInit {
 

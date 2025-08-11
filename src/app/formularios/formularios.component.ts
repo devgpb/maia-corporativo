@@ -4,9 +4,10 @@ import { Router } from '@angular/router';
 import { ModalService } from '../services/modal/modal.service';
 
 @Component({
-  selector: 'app-formularios',
-  templateUrl: './formularios.component.html',
-  styleUrls: ['./formularios.component.scss']
+    selector: 'app-formularios',
+    templateUrl: './formularios.component.html',
+    styleUrls: ['./formularios.component.scss'],
+    standalone: false
 })
 export class FormulariosComponent {
 

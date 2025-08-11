@@ -10,9 +10,10 @@ import { AuthService } from '../services/auth/auth.service';
 import { IUser } from '../interfaces/IUser';
 
 @Component({
-  selector: 'app-criar-pedido',
-  templateUrl: './criar-pedido.component.html',
-  styleUrls: ['./criar-pedido.component.scss']
+    selector: 'app-criar-pedido',
+    templateUrl: './criar-pedido.component.html',
+    styleUrls: ['./criar-pedido.component.scss'],
+    standalone: false
 })
 export class CriarPedidoComponent {
   public form!: FormGroup;

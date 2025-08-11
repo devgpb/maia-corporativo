@@ -2,9 +2,10 @@ import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitte
 import { Cliente } from 'src/app/interfaces/ICliente';
 
 @Component({
-  selector: 'app-cliente-card',
-  templateUrl: './cliente-card.component.html',
-  styleUrls: ['./cliente-card.component.css']
+    selector: 'app-cliente-card',
+    templateUrl: './cliente-card.component.html',
+    styleUrls: ['./cliente-card.component.css'],
+    standalone: false
 })
 export class ClienteCardComponent implements OnInit, OnChanges {
   @Input() cliente!: Cliente;

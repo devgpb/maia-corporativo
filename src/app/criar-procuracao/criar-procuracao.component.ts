@@ -5,23 +5,24 @@ import Swal from 'sweetalert2';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
-  selector: 'app-criar-procuracao',
-  templateUrl: './criar-procuracao.component.html',
-  styleUrls: ['./criar-procuracao.component.scss'],
-  animations: [
-    trigger('onEnter', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms', style({ opacity: 1 }))
-      ])
-    ]),
-    trigger('onLeave', [
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate('300ms', style({ opacity: 0 }))
-      ])
-    ])
-  ]
+    selector: 'app-criar-procuracao',
+    templateUrl: './criar-procuracao.component.html',
+    styleUrls: ['./criar-procuracao.component.scss'],
+    animations: [
+        trigger('onEnter', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate('300ms', style({ opacity: 1 }))
+            ])
+        ]),
+        trigger('onLeave', [
+            transition(':leave', [
+                style({ opacity: 1 }),
+                animate('300ms', style({ opacity: 0 }))
+            ])
+        ])
+    ],
+    standalone: false
 })
 
 

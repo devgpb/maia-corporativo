@@ -7,9 +7,10 @@ import { WebSocketService } from '../services/WebSocket/web-socket.service';
 import { PedidosService } from '../services/pedidos/pedidos.service';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss'],
+    standalone: false
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   public currentPage: string = 'pedidos';

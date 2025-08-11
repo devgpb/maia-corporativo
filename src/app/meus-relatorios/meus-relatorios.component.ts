@@ -5,9 +5,10 @@ import { AuthService } from '../services/auth/auth.service';
 import { IUser } from '../interfaces/IUser';
 
 @Component({
-  selector: 'app-meus-relatorios',
-  templateUrl: './meus-relatorios.component.html',
-  styleUrls: ['./meus-relatorios.component.scss']
+    selector: 'app-meus-relatorios',
+    templateUrl: './meus-relatorios.component.html',
+    styleUrls: ['./meus-relatorios.component.scss'],
+    standalone: false
 })
 
 export class MeusRelatoriosComponent implements OnInit {

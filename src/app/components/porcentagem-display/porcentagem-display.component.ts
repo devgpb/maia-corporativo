@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'porcentagem-display',
-  templateUrl: './porcentagem-display.component.html',
-  styleUrls: ['./porcentagem-display.component.scss']
+    selector: 'porcentagem-display',
+    templateUrl: './porcentagem-display.component.html',
+    styleUrls: ['./porcentagem-display.component.scss'],
+    standalone: false
 })
 export class PorcentagemDisplayComponent {
 

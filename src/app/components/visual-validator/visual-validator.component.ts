@@ -12,9 +12,10 @@ export interface IValidations {
 }
 
 @Component({
-  selector: 'visual-validator',
-  templateUrl: './visual-validator.component.html',
-  styleUrls: ['./visual-validator.component.scss']
+    selector: 'visual-validator',
+    templateUrl: './visual-validator.component.html',
+    styleUrls: ['./visual-validator.component.scss'],
+    standalone: false
 })
 export class VisualValidatorComponent implements AfterContentInit {
   @Input() config: IValidations = {

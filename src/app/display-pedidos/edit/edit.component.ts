@@ -20,9 +20,10 @@ import { StorageService } from '../../services/storage/storage.service';
 
 
 @Component({
-  selector: 'app-edit',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss']
+    selector: 'app-edit',
+    templateUrl: './edit.component.html',
+    styleUrls: ['./edit.component.scss'],
+    standalone: false
 })
 export class EditComponent implements OnInit, OnChanges, OnDestroy {
   @Input() detalhes: IPedido;

@@ -9,9 +9,10 @@ import { ClientesService } from 'src/app/services/clientes/clientes.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-cliente-modal',
-  templateUrl: './cliente-modal.component.html',
-  styleUrls: ['./cliente-modal.component.css']
+    selector: 'app-cliente-modal',
+    templateUrl: './cliente-modal.component.html',
+    styleUrls: ['./cliente-modal.component.css'],
+    standalone: false
 })
 export class ClienteModalComponent implements OnChanges, OnInit {
   @Input() cliente: Cliente;

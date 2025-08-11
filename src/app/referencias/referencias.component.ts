@@ -9,9 +9,10 @@ import { ReferenciasService } from '../services/referenciasService/referencias.s
 import { IReferencia } from '../interfaces/IReferencia';
 import { UserService } from '../services/user/user.service';
 @Component({
-  selector: 'app-referencias',
-  templateUrl: './referencias.component.html',
-  styleUrls: ['./referencias.component.scss']
+    selector: 'app-referencias',
+    templateUrl: './referencias.component.html',
+    styleUrls: ['./referencias.component.scss'],
+    standalone: false
 })
 export class ReferenciasComponent implements OnInit {
 

@@ -3,9 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import * as Constantes from "../constants";
 
 @Component({
-  selector: 'app-pedidos',
-  templateUrl: './pedidos.component.html',
-  styleUrls: ['./pedidos.component.scss']
+    selector: 'app-pedidos',
+    templateUrl: './pedidos.component.html',
+    styleUrls: ['./pedidos.component.scss'],
+    standalone: false
 })
 export class PedidosComponent {
   status: string = '';

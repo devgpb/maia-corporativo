@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-datas',
-  templateUrl: './datas.component.html',
-  styleUrls: ['./datas.component.scss']
+    selector: 'app-datas',
+    templateUrl: './datas.component.html',
+    styleUrls: ['./datas.component.scss'],
+    standalone: false
 })
 export class DatasComponent {
 

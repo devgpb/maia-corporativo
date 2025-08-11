@@ -3,9 +3,10 @@ import { EquipamentosService } from '../services/equipamentos/equipamento.servic
 import { mapaEquipamentos } from '../constants';
 
 @Component({
-  selector: 'app-dimencionar-projeto',
-  templateUrl: './dimencionar-projeto.component.html',
-  styleUrls: ['./dimencionar-projeto.component.scss']
+    selector: 'app-dimencionar-projeto',
+    templateUrl: './dimencionar-projeto.component.html',
+    styleUrls: ['./dimencionar-projeto.component.scss'],
+    standalone: false
 })
 export class DimencionarProjetoComponent implements OnInit {
 

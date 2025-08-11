@@ -12,9 +12,10 @@ import * as Constantes from "../constants";
 
 
 @Component({
-  selector: 'app-conta',
-  templateUrl: './conta.component.html',
-  styleUrls: ['./conta.component.scss']
+    selector: 'app-conta',
+    templateUrl: './conta.component.html',
+    styleUrls: ['./conta.component.scss'],
+    standalone: false
 })
 export class ContaComponent  implements OnInit {
 

@@ -15,9 +15,10 @@ import { Cargos } from '../interfaces/IUser';
 defineLocale('pt-br', ptBrLocale);
 
 @Component({
-  selector: 'app-novo-evento',
-  templateUrl: './novo-evento.component.html',
-  styleUrls: ['./novo-evento.component.scss']
+    selector: 'app-novo-evento',
+    templateUrl: './novo-evento.component.html',
+    styleUrls: ['./novo-evento.component.scss'],
+    standalone: false
 })
 export class NovoEventoComponent {
 	public bsConfig: Partial<BsDatepickerConfig>;

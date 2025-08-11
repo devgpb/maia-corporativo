@@ -7,8 +7,9 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { IUser } from 'src/app/interfaces/IUser';
 
 @Component({
-  selector: 'app-cliente-form',
-  templateUrl: './cliente-form.component.html',
+    selector: 'app-cliente-form',
+    templateUrl: './cliente-form.component.html',
+    standalone: false
 })
 export class ClienteFormComponent implements OnInit {
   clienteForm: FormGroup;

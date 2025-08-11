@@ -2,14 +2,15 @@ import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 
 @Component({
-  selector: "app-file-upload",
-  templateUrl: "./file-upload.component.html",
-  styleUrls: ["./file-upload.component.scss"],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: FileUploadComponent,
-    multi: true
-  }]
+    selector: "app-file-upload",
+    templateUrl: "./file-upload.component.html",
+    styleUrls: ["./file-upload.component.scss"],
+    providers: [{
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: FileUploadComponent,
+            multi: true
+        }],
+    standalone: false
 })
 export class FileUploadComponent {
   @Input() id: string;

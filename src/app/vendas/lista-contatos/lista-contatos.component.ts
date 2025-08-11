@@ -16,20 +16,21 @@ interface Contato {
 }
 
 @Component({
-  selector: 'app-lista-contatos',
-  templateUrl: './lista-contatos.component.html',
-  styleUrls: ['./lista-contatos.component.scss'],
-  animations: [
-    trigger('cardAnimation', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'scale(0.8)' }),
-        animate('500ms ease-out', style({ opacity: 1, transform: 'scale(1)' }))
-      ]),
-      transition(':leave', [
-        animate('500ms ease-in', style({ opacity: 0, transform: 'scale(0.8) rotate(10deg)' }))
-      ])
-    ])
-  ]
+    selector: 'app-lista-contatos',
+    templateUrl: './lista-contatos.component.html',
+    styleUrls: ['./lista-contatos.component.scss'],
+    animations: [
+        trigger('cardAnimation', [
+            transition(':enter', [
+                style({ opacity: 0, transform: 'scale(0.8)' }),
+                animate('500ms ease-out', style({ opacity: 1, transform: 'scale(1)' }))
+            ]),
+            transition(':leave', [
+                animate('500ms ease-in', style({ opacity: 0, transform: 'scale(0.8) rotate(10deg)' }))
+            ])
+        ])
+    ],
+    standalone: false
 })
 export class ListaContatosComponent implements OnInit{
   contatos: Contato[] = [

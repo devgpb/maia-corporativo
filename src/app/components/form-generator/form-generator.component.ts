@@ -5,9 +5,10 @@ import { InputConfig } from 'src/app/interfaces/IFormGenerator';
 
 
 @Component({
-  selector: 'form-generator',
-  templateUrl: './form-generator.component.html',
-  styleUrls: ['./form-generator.component.scss']
+    selector: 'form-generator',
+    templateUrl: './form-generator.component.html',
+    styleUrls: ['./form-generator.component.scss'],
+    standalone: false
 })
 export class FormGeneratorComponent {
   @Input() configs: InputConfig[] = [];

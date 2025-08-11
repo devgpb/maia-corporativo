@@ -9,9 +9,10 @@ import { ISetor } from '../interfaces/ISetor';
 import * as Constantes from "../constants";
 
 @Component({
-  selector: 'app-novo-user',
-  templateUrl: './novo-user.component.html',
-  styleUrls: ['./novo-user.component.scss']
+    selector: 'app-novo-user',
+    templateUrl: './novo-user.component.html',
+    styleUrls: ['./novo-user.component.scss'],
+    standalone: false
 })
 export class NovoUserComponent implements OnInit {
 

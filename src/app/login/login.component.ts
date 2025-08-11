@@ -6,9 +6,10 @@ import { faL } from '@fortawesome/free-solid-svg-icons';
 
 declare var particlesJS: any;
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    standalone: false
 })
 export class LoginComponent implements OnInit{
   public loginForm: FormGroup; // Crie um FormGroup

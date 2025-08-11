@@ -8,9 +8,10 @@ import { LucideAngularModule, Users, UserPlus, Phone, TrendingUp, Clock, CheckCi
 
 
 @Component({
-  selector: 'app-dashboard-vendas',
-  templateUrl: './dashboard-vendas.component.html',
-  styleUrls: ['./dashboard-vendas.component.css']
+    selector: 'app-dashboard-vendas',
+    templateUrl: './dashboard-vendas.component.html',
+    styleUrls: ['./dashboard-vendas.component.css'],
+    standalone: false
 })
 export class DashboardVendas implements OnInit {
   data = signal<IDashboardVendas | null>(null);

@@ -18,9 +18,10 @@ import { IConfigExcel } from '../interfaces/IConfigExcel';
 defineLocale('pt-br', ptBrLocale);
 
 @Component({
-  selector: 'app-display-pedidos',
-  templateUrl: './display-pedidos.component.html',
-  styleUrls: ['./display-pedidos.component.scss']
+    selector: 'app-display-pedidos',
+    templateUrl: './display-pedidos.component.html',
+    styleUrls: ['./display-pedidos.component.scss'],
+    standalone: false
 })
 
 export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit{

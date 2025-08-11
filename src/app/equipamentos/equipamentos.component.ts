@@ -9,9 +9,10 @@ import { AuthService } from '../services/auth/auth.service';
 
 
 @Component({
-  selector: 'app-equipamentos',
-  templateUrl: './equipamentos.component.html',
-  styleUrls: ['./equipamentos.component.scss']
+    selector: 'app-equipamentos',
+    templateUrl: './equipamentos.component.html',
+    styleUrls: ['./equipamentos.component.scss'],
+    standalone: false
 })
 export class EquipamentosComponent implements OnInit{
 

@@ -14,23 +14,24 @@ import { toInt } from 'ngx-bootstrap/chronos/utils/type-checks';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-criar-contrato',
-  templateUrl: './criar-contrato.component.html',
-  styleUrls: ['./criar-contrato.component.scss'],
-  animations: [
-    trigger('onEnter', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms', style({ opacity: 1 }))
-      ])
-    ]),
-    trigger('onLeave', [
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate('300ms', style({ opacity: 0 }))
-      ])
-    ])
-  ]
+    selector: 'app-criar-contrato',
+    templateUrl: './criar-contrato.component.html',
+    styleUrls: ['./criar-contrato.component.scss'],
+    animations: [
+        trigger('onEnter', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate('300ms', style({ opacity: 1 }))
+            ])
+        ]),
+        trigger('onLeave', [
+            transition(':leave', [
+                style({ opacity: 1 }),
+                animate('300ms', style({ opacity: 0 }))
+            ])
+        ])
+    ],
+    standalone: false
 })
 
 export class CriarContratoComponent implements OnInit {

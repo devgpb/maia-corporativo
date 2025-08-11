@@ -8,9 +8,10 @@ import { ClientesService } from 'src/app/services/clientes/clientes.service';
 import { ModalService } from 'src/app/services/modal/modal.service';
 
 @Component({
-  selector: 'app-lista-clientes',
-  templateUrl: './lista-clientes.component.html',
-  styleUrls: ['./lista-clientes.component.css']
+    selector: 'app-lista-clientes',
+    templateUrl: './lista-clientes.component.html',
+    styleUrls: ['./lista-clientes.component.css'],
+    standalone: false
 })
 export class ListaClientesComponent implements OnInit {
   clientes: Cliente[] = [];

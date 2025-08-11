@@ -2,9 +2,10 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { IPedido } from 'src/app/interfaces/IPedido';
 
 @Component({
-  selector: 'card-cliente',
-  templateUrl: './card-cliente.component.html',
-  styleUrls: ['./card-cliente.component.scss']
+    selector: 'card-cliente',
+    templateUrl: './card-cliente.component.html',
+    styleUrls: ['./card-cliente.component.scss'],
+    standalone: false
 })
 export class CardClienteComponent {
   // Recebe o objeto de pedido

@@ -4,9 +4,10 @@ import Swal from 'sweetalert2';
 import * as Constantes from "../../constants";
 
 @Component({
-  selector: 'app-kits-solares',
-  templateUrl: './kits-solares.component.html',
-  styleUrls: ['./kits-solares.component.scss']
+    selector: 'app-kits-solares',
+    templateUrl: './kits-solares.component.html',
+    styleUrls: ['./kits-solares.component.scss'],
+    standalone: false
 })
 export class KitsSolaresComponent implements OnInit {
   listaKitsSolares: any[] = [];

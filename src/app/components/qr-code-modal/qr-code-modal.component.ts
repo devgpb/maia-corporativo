@@ -3,9 +3,10 @@ import { toCanvas } from 'qrcode';
 import * as html2pdf from 'html2pdf.js';
 
 @Component({
-  selector: 'app-qr-code-modal',
-  templateUrl: './qr-code-modal.component.html',
-  styleUrls: ['./qr-code-modal.component.scss']
+    selector: 'app-qr-code-modal',
+    templateUrl: './qr-code-modal.component.html',
+    styleUrls: ['./qr-code-modal.component.scss'],
+    standalone: false
 })
 export class QrCodeModalComponent {
   @Input() link: string = '';

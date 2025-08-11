@@ -4,17 +4,18 @@ import { NavigationStart, Router } from "@angular/router";
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  animations: [
-    trigger('fadeIn', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms', style({ opacity: 1 }))
-      ])
-    ]),
-  ]
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    animations: [
+        trigger('fadeIn', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate('300ms', style({ opacity: 1 }))
+            ])
+        ]),
+    ],
+    standalone: false
 })
 export class AppComponent implements OnInit {
   title = 'Sistema Corporativo';

@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-form-pedido',
-  templateUrl: './form-pedido.component.html',
-  styleUrls: ['./form-pedido.component.scss']
+    selector: 'app-form-pedido',
+    templateUrl: './form-pedido.component.html',
+    styleUrls: ['./form-pedido.component.scss'],
+    standalone: false
 })
 export class FormPedidoComponent implements OnInit {
 

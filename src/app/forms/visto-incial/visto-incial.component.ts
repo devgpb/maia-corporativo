@@ -12,9 +12,10 @@ import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
-  selector: 'app-visto-incial',
-  templateUrl: './visto-incial.component.html',
-  styleUrls: ['./visto-incial.component.scss']
+    selector: 'app-visto-incial',
+    templateUrl: './visto-incial.component.html',
+    styleUrls: ['./visto-incial.component.scss'],
+    standalone: false
 })
 export class VistoIncialComponent {
   public form!: FormGroup;

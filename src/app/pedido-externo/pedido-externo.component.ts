@@ -9,9 +9,10 @@ import { error } from 'jquery';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-pedido-externo',
-  templateUrl: './pedido-externo.component.html',
-  styleUrls: ['./pedido-externo.component.scss']
+    selector: 'app-pedido-externo',
+    templateUrl: './pedido-externo.component.html',
+    styleUrls: ['./pedido-externo.component.scss'],
+    standalone: false
 })
 export class PedidoExternoComponent implements OnInit {
 

@@ -9,9 +9,10 @@ import { SetoresService } from '../services/setores/setores.service';
 import { ISetor } from '../interfaces/ISetor';
 
 @Component({
-  selector: 'app-setores',
-  templateUrl: './setores.component.html',
-  styleUrls: ['./setores.component.scss']
+    selector: 'app-setores',
+    templateUrl: './setores.component.html',
+    styleUrls: ['./setores.component.scss'],
+    standalone: false
 })
 export class SetoresComponent implements OnInit {
 

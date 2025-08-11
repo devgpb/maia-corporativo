@@ -11,9 +11,10 @@ import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-form-final-pedido',
-  templateUrl: './form-final-pedido.component.html',
-  styleUrls: ['./form-final-pedido.component.scss']
+    selector: 'app-form-final-pedido',
+    templateUrl: './form-final-pedido.component.html',
+    styleUrls: ['./form-final-pedido.component.scss'],
+    standalone: false
 })
 export class FormFinalPedidoComponent {
   public form!: FormGroup;

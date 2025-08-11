@@ -20,9 +20,10 @@ interface MenuSection {
 }
 
 @Component({
-  selector: 'app-novo-menu',
-  templateUrl: './novo-menu.component.html',
-  styleUrls: ['./novo-menu.component.scss']
+    selector: 'app-novo-menu',
+    templateUrl: './novo-menu.component.html',
+    styleUrls: ['./novo-menu.component.scss'],
+    standalone: false
 })
 export class NovoMenuComponent implements OnInit {
   public userCargo: string = '';

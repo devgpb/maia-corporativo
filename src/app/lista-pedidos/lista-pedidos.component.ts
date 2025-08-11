@@ -7,9 +7,10 @@ import { ModalService } from '../services/modal/modal.service';
 import { Subscription, interval } from 'rxjs';
 
 @Component({
-  selector: 'app-lista-pedidos',
-  templateUrl: './lista-pedidos.component.html',
-  styleUrls: ['./lista-pedidos.component.scss']
+    selector: 'app-lista-pedidos',
+    templateUrl: './lista-pedidos.component.html',
+    styleUrls: ['./lista-pedidos.component.scss'],
+    standalone: false
 })
 export class ListaPedidosComponent implements OnInit {
   pedidos: IPedido[] = [];

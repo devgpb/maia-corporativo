@@ -4,20 +4,21 @@ import { Subscription } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
-  selector: 'app-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss'],
-  animations: [
-    trigger('modalAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('150ms', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        animate('150ms', style({ opacity: 0 })),
-      ])
-    ])
-  ]
+    selector: 'app-modal',
+    templateUrl: './modal.component.html',
+    styleUrls: ['./modal.component.scss'],
+    animations: [
+        trigger('modalAnimation', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate('150ms', style({ opacity: 1 })),
+            ]),
+            transition(':leave', [
+                animate('150ms', style({ opacity: 0 })),
+            ])
+        ])
+    ],
+    standalone: false
 })
 export class ModalComponent implements OnDestroy, OnInit {
   mostrar: boolean = false;

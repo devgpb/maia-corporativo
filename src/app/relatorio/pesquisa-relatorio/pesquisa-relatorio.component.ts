@@ -5,9 +5,10 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { UtilsService } from '../../services//utils/utils.service';
 
 @Component({
-  selector: 'app-pesquisa-relatorio',
-  templateUrl: './pesquisa-relatorio.component.html',
-  styleUrls: ['./pesquisa-relatorio.component.scss']
+    selector: 'app-pesquisa-relatorio',
+    templateUrl: './pesquisa-relatorio.component.html',
+    styleUrls: ['./pesquisa-relatorio.component.scss'],
+    standalone: false
 })
 export class PesquisaRelatorioComponent {
   @Output() pesquisar = new EventEmitter<any>();

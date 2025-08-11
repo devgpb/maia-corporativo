@@ -13,9 +13,10 @@ import { IConfigExcel } from '../interfaces/IConfigExcel';
 
 
 @Component({
-  selector: 'app-relatorio',
-  templateUrl: './relatorio.component.html',
-  styleUrls: ['./relatorio.component.scss']
+    selector: 'app-relatorio',
+    templateUrl: './relatorio.component.html',
+    styleUrls: ['./relatorio.component.scss'],
+    standalone: false
 })
 export class RelatorioComponent implements OnInit {
   public pedidosList = [];

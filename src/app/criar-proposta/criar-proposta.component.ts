@@ -40,17 +40,18 @@ export interface Projeto {
 
 
 @Component({
-  selector: 'app-criar-proposta',
-  templateUrl: './criar-proposta.component.html',
-  styleUrls: ['./criar-proposta.component.scss'],
-  animations: [
-    trigger('fadeIn', [
-      state('void', style({ opacity: 0 })),
-      transition('void => *', [
-        animate('0.6s ease-in', style({ opacity: 1 }))
-      ])
-    ])
-  ]
+    selector: 'app-criar-proposta',
+    templateUrl: './criar-proposta.component.html',
+    styleUrls: ['./criar-proposta.component.scss'],
+    animations: [
+        trigger('fadeIn', [
+            state('void', style({ opacity: 0 })),
+            transition('void => *', [
+                animate('0.6s ease-in', style({ opacity: 1 }))
+            ])
+        ])
+    ],
+    standalone: false
 })
 
 export class CriarPropostaComponent implements OnInit{

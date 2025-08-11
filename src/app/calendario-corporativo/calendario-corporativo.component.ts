@@ -9,9 +9,10 @@ import { CalendarioService } from '../services/calendario/calendario.service';
 
 
 @Component({
-  selector: 'app-calendario-corporativo',
-  templateUrl: './calendario-corporativo.component.html',
-  styleUrls: ['./calendario-corporativo.component.scss']
+    selector: 'app-calendario-corporativo',
+    templateUrl: './calendario-corporativo.component.html',
+    styleUrls: ['./calendario-corporativo.component.scss'],
+    standalone: false
 })
 export class CalendarioCorporativoComponent implements OnInit {
 
