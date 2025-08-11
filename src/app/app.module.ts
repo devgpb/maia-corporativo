@@ -6,7 +6,7 @@ import { ptBrLocale } from "ngx-bootstrap/locale";
 import { NgModule,LOCALE_ID, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BlockUIModule } from "ng-block-ui";
-import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './services/auth/auth.interceptor';
@@ -79,89 +79,77 @@ import { DashboardVendas } from "./vendas/dashboard-vendas/dashboard-vendas.comp
 defineLocale("pt-br", ptBrLocale);
 registerLocaleData(localePt);
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    MenuComponent,
-    ModalComponent,
-    ReferenciasComponent,
-    LoginComponent,
-    ContaComponent,
-    SetoresComponent,
-    NovoUserComponent,
-    CriarPedidoComponent,
-    MeusRelatoriosComponent,
-    PesquisaPipe,
-    PedidosComponent,
-    VisualValidatorComponent,
-    NumericOnlyDirective,
-    CalendarioCorporativoComponent,
-    NovoEventoComponent,
-    PorcentagemDisplayComponent,
-    CriarContratoComponent,
-    EquipamentosComponent,
-    DimencionarProjetoComponent,
-    DisplayPedidosComponent,
-    EditComponent,
-    DatasComponent,
-    CriarProcuracaoComponent,
-    CriarPropostaComponent,
-    TruncatePipe,
-    RelatorioComponent,
-    PesquisaRelatorioComponent,
-    FormGeneratorComponent,
-    KitsSolaresComponent,
-    FormulariosComponent,
-    FileUploadComponent,
-    MaskDirective,
-    FormPedidoComponent,
-    FormFinalPedidoComponent,
-    QrCodeModalComponent,
-    PedidoExternoComponent,
-    VistoIncialComponent,
-    HomologacoesComponent,
-    NovoMenuComponent,
-    CardClienteComponent,
-    ListaPedidosComponent,
-    ListaContatosComponent,
-    CardContatoComponent,
-    ClienteFormComponent,
-    ListaClientesComponent,
-    ClienteCardComponent,
-    ClienteModalComponent,
-    DashboardVendas
-  ],
-  imports: [
-    BrowserModule,
-    LucideAngularModule.pick({ ...icons }),
-    AppRoutingModule,
-    BlockUIModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    FormsModule,
-    BrowserAnimationsModule,
-		DataTablesModule,
-    BsDatepickerModule.forRoot(),
-    NgSelectModule,
-		NgMultiSelectDropDownModule.forRoot(),
-    FullCalendarModule,
-    CurrencyMaskModule,
-    CommonModule,
-    // ServiceWorkerModule.register('ngsw-worker.js', {
-    //   enabled: !isDevMode(),
-    //   // Register the ServiceWorker as soon as the application is stable
-    //   // or after 30 seconds (whichever comes first).
-    //   registrationStrategy: 'registerWhenStable:30000'
-    // }),
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    },DatePipe
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HeaderComponent,
+        MenuComponent,
+        ModalComponent,
+        ReferenciasComponent,
+        LoginComponent,
+        ContaComponent,
+        SetoresComponent,
+        NovoUserComponent,
+        CriarPedidoComponent,
+        MeusRelatoriosComponent,
+        PesquisaPipe,
+        PedidosComponent,
+        VisualValidatorComponent,
+        NumericOnlyDirective,
+        CalendarioCorporativoComponent,
+        NovoEventoComponent,
+        PorcentagemDisplayComponent,
+        CriarContratoComponent,
+        EquipamentosComponent,
+        DimencionarProjetoComponent,
+        DisplayPedidosComponent,
+        EditComponent,
+        DatasComponent,
+        CriarProcuracaoComponent,
+        CriarPropostaComponent,
+        TruncatePipe,
+        RelatorioComponent,
+        PesquisaRelatorioComponent,
+        FormGeneratorComponent,
+        KitsSolaresComponent,
+        FormulariosComponent,
+        FileUploadComponent,
+        MaskDirective,
+        FormPedidoComponent,
+        FormFinalPedidoComponent,
+        QrCodeModalComponent,
+        PedidoExternoComponent,
+        VistoIncialComponent,
+        HomologacoesComponent,
+        NovoMenuComponent,
+        CardClienteComponent,
+        ListaPedidosComponent,
+        ListaContatosComponent,
+        CardContatoComponent,
+        ClienteFormComponent,
+        ListaClientesComponent,
+        ClienteCardComponent,
+        ClienteModalComponent,
+        DashboardVendas
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        LucideAngularModule.pick({ ...icons }),
+        AppRoutingModule,
+        BlockUIModule,
+        ReactiveFormsModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        DataTablesModule,
+        BsDatepickerModule.forRoot(),
+        NgSelectModule,
+        NgMultiSelectDropDownModule.forRoot(),
+        FullCalendarModule,
+        CurrencyMaskModule,
+        CommonModule], providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        }, DatePipe,
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }
