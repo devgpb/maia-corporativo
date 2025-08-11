@@ -1,0 +1,191 @@
+<div class="p-6 space-y-6">
+  <!-- Loading -->
+  <div *ngIf="loading()" class="animate-pulse space-y-4">
+    <div class="h-8 bg-gray-200 rounded w-1/4"></div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="h-32 bg-gray-200 rounded" *ngFor="let _ of [1,2,3,4]"></div>
+    </div>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!loading() && error()" class="text-center text-gray-500">
+    {{ error() }}
+  </div>
+
+  <!-- Content -->
+  <ng-container *ngIf="!loading() && data() as d">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900">Dashboard de Atendimento</h1>
+        <p class="text-gray-600">Acompanhe o desempenho do atendimento ao cliente</p>
+      </div>
+      <div class="flex gap-2">
+        <button (click)="setPeriod('hoje')"
+                class="px-3 py-1.5 rounded border"
+                [class.bg-gray-900]="selectedPeriod()==='hoje'"
+                [class.text-white]="selectedPeriod()==='hoje'">Hoje</button>
+        <button (click)="setPeriod('semana')"
+                class="px-3 py-1.5 rounded border"
+                [class.bg-gray-900]="selectedPeriod()==='semana'"
+                [class.text-white]="selectedPeriod()==='semana'">Esta Semana</button>
+        <button (click)="setPeriod('mes')"
+                class="px-3 py-1.5 rounded border"
+                [class.bg-gray-900]="selectedPeriod()==='mes'"
+                [class.text-white]="selectedPeriod()==='mes'">Este Mês</button>
+      </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="border rounded-xl p-4">
+        <div class="flex items-center justify-between pb-2">
+          <div class="text-sm font-medium">Clientes Novos</div>
+          <lucide-icon [img]="icons.UserPlus" class="h-4 w-4 text-green-600"></lucide-icon>
+        </div>
+        <div class="text-2xl font-bold text-green-600">{{ d.clientesNovosHoje }}</div>
+        <p class="text-xs text-gray-600">{{ selectedPeriod()==='hoje' ? 'hoje' : ('neste ' + selectedPeriod()) }}</p>
+      </div>
+
+      <div class="border rounded-xl p-4">
+        <div class="flex items-center justify-between pb-2">
+          <div class="text-sm font-medium">Clientes Atendidos</div>
+          <lucide-icon [img]="icons.Phone" class="h-4 w-4 text-blue-600"></lucide-icon>
+        </div>
+        <div class="text-2xl font-bold text-blue-600">{{ d.clientesAtendidosHoje }}</div>
+        <p class="text-xs text-gray-600">{{ selectedPeriod()==='hoje' ? 'hoje' : ('neste ' + selectedPeriod()) }}</p>
+      </div>
+
+      <div class="border rounded-xl p-4">
+        <div class="flex items-center justify-between pb-2">
+          <div class="text-sm font-medium">Total Cadastrados</div>
+          <lucide-icon [img]="icons.Users" class="h-4 w-4 text-purple-600"></lucide-icon>
+        </div>
+        <div class="text-2xl font-bold text-purple-600">{{ d.totalClientesCadastrados }}</div>
+        <p class="text-xs text-gray-600">clientes ativos</p>
+      </div>
+
+      <div class="border rounded-xl p-4">
+        <div class="flex items-center justify-between pb-2">
+          <div class="text-sm font-medium">Pendentes</div>
+          <lucide-icon [img]="icons.Clock" class="h-4 w-4 text-orange-600"></lucide-icon>
+        </div>
+        <div class="text-2xl font-bold text-orange-600">{{ d.clientesPendentes }}</div>
+        <p class="text-xs text-gray-600">aguardando atendimento</p>
+      </div>
+    </div>
+
+    <!-- Secondary KPIs -->
+    <!-- <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="border rounded-xl p-4">
+        <div class="flex items-center justify-between pb-2">
+          <div class="text-sm font-medium">Orçamentos Enviados</div>
+          <lucide-icon [img]="icons.CheckCircle" class="h-4 w-4 text-green-600"></lucide-icon>
+        </div>
+        <div class="text-2xl font-bold text-green-600">{{ d.orcamentosEnviados }}</div>
+        <p class="text-xs text-gray-600">orçamentos pendentes</p>
+      </div>
+
+      <div class="border rounded-xl p-4">
+        <div class="flex items-center justify-between pb-2">
+          <div class="text-sm font-medium">Clientes Expansão</div>
+          <lucide-icon [img]="icons.TrendingUp" class="h-4 w-4 text-blue-600"></lucide-icon>
+        </div>
+        <div class="text-2xl font-bold text-blue-600">{{ d.clientesExpansao }}</div>
+        <p class="text-xs text-gray-600">oportunidades de crescimento</p>
+      </div>
+    </div> -->
+
+    <!-- Tabs -->
+    <div class="space-y-4">
+      <div class="inline-flex rounded-lg overflow-hidden border">
+        <button class="px-3 py-1.5" [class.bg-gray-900]="activeTab()==='recentes'" [class.text-white]="activeTab()==='recentes'" (click)="setTab('recentes')">Clientes Recentes</button>
+        <button class="px-3 py-1.5" [class.bg-gray-900]="activeTab()==='sem-contato'" [class.text-white]="activeTab()==='sem-contato'" (click)="setTab('sem-contato')">Sem Contato</button>
+        <button class="px-3 py-1.5" [class.bg-gray-900]="activeTab()==='status'" [class.text-white]="activeTab()==='status'" (click)="setTab('status')">Por Status</button>
+        <button class="px-3 py-1.5" [class.bg-gray-900]="activeTab()==='campanhas'" [class.text-white]="activeTab()==='campanhas'" (click)="setTab('campanhas')">Por Campanha</button>
+      </div>
+
+      <!-- Recentes -->
+      <div *ngIf="activeTab()==='recentes'" class="border rounded-xl">
+        <div class="p-4 border-b">
+          <div class="text-lg font-semibold">Clientes Recentes</div>
+          <div class="text-sm text-gray-600">Últimos clientes cadastrados no sistema</div>
+        </div>
+        <div class="p-4 space-y-4">
+          <div *ngFor="let c of d.clientesRecentes" class="flex items-center justify-between p-4 border rounded-lg">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <h4 class="font-medium">{{ c.nome }}</h4>
+                <span class="text-xs px-2 py-0.5 rounded border"
+                      [class.bg-gray-900]="c.status==='ativo'" [class.text-white]="c.status==='ativo'">
+                  {{ c.status || 'Sem status' }}
+                </span>
+                <span *ngIf="c.orcamentoEnviado" class="text-xs px-2 py-0.5 rounded border">Orçamento Enviado</span>
+              </div>
+              <div class="text-sm text-gray-600">{{ c.celular }} • {{ c.cidade }}</div>
+              <div class="text-xs text-gray-500">
+                Cadastrado: {{ formatDate(c.createdAt) }}
+                <span *ngIf="c.ultimoContato"> • Último contato: {{ formatDate(c.ultimoContato) }}</span>
+              </div>
+            </div>
+            <button class="px-3 py-1.5 border rounded-lg">Ver Detalhes</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sem contato -->
+      <div *ngIf="activeTab()==='sem-contato'" class="border rounded-xl">
+        <div class="p-4 border-b">
+          <div class="flex items-center gap-2 text-lg font-semibold">
+            <lucide-icon [img]="icons.AlertCircle" class="h-5 w-5 text-red-500"></lucide-icon>
+            Clientes Sem Contato
+          </div>
+          <div class="text-sm text-gray-600">Clientes que precisam de atenção urgente</div>
+        </div>
+        <div class="p-4 space-y-4">
+          <div *ngFor="let c of d.clientesSemContato"
+               class="flex items-center justify-between p-4 border rounded-lg border-red-200 bg-red-50">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <h4 class="font-medium">{{ c.nome }}</h4>
+                <span class="text-xs px-2 py-0.5 rounded bg-red-600 text-white">
+                  {{ c.diasSemContato }} dias sem contato
+                </span>
+              </div>
+              <div class="text-sm text-gray-600">{{ c.celular }} • Status: {{ c.status }}</div>
+            </div>
+            <button class="px-3 py-1.5 rounded-lg bg-gray-900 text-white">Entrar em Contato</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div *ngIf="activeTab()==='status'" class="border rounded-xl">
+        <div class="p-4 border-b">
+          <div class="text-lg font-semibold">Distribuição por Status</div>
+          <div class="text-sm text-gray-600">Quantidade de clientes por status</div>
+        </div>
+        <div class="p-4 space-y-4">
+          <div *ngFor="let s of d.statusDistribution" class="flex items-center justify-between p-3 border rounded">
+            <span class="font-medium capitalize">{{ s.status || 'Sem status' }}</span>
+            <span class="text-xs px-2 py-0.5 rounded border">{{ s.count }} clientes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Campanhas -->
+      <div *ngIf="activeTab()==='campanhas'" class="border rounded-xl">
+        <div class="p-4 border-b">
+          <div class="text-lg font-semibold">Distribuição por Campanha</div>
+          <div class="text-sm text-gray-600">Quantidade de clientes por campanha de origem</div>
+        </div>
+        <div class="p-4 space-y-4">
+          <div *ngFor="let c of d.campanhaDistribution" class="flex items-center justify-between p-3 border rounded">
+            <span class="font-medium">{{ c.campanha || 'Sem campanha' }}</span>
+            <span class="text-xs px-2 py-0.5 rounded border">{{ c.count }} clientes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

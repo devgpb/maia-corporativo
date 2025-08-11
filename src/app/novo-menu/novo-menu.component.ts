@@ -39,10 +39,10 @@ export class NovoMenuComponent implements OnInit {
       title: 'Vendas',
       items: [
         {
-          icon: 'phone',
-          title: 'Lista Contatos',
-          description: 'Todos os contatos disponíveis para abordagem',
-          href: '/vendas/contatos',
+          icon: 'layout-dashboard',
+          title: 'Dashboard',
+          description: 'Acompanhe as métricas de vendas',
+          href: '/vendas/dashboard',
           roles: ['GESTOR', 'COLABORADOR', 'ADMINISTRADOR'],
           setores: ['Vendas', 'Marketing'],
         },

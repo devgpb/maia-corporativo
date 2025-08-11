@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, map } from 'rxjs';
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { environment } from "src/environments/environment";
+import { IDashboardVendas } from 'src/app/interfaces/IDashboardVendas';
 
+type ApiResponse<T> = { success: boolean; data: T };
 
 @Injectable({
   providedIn: 'root'
@@ -21,4 +23,9 @@ export class VendasService {
 		return this.http.post<any[]>(`${environment.apiURL}/automacao/marcarContato`, dados)
 	}
 
+  getAtendimento(periodo: 'hoje'|'semana'|'mes'): Observable<IDashboardVendas> {
+    return this.http
+      .get<ApiResponse<IDashboardVendas>>(`${environment.apiURL}/clientes/dashboard?periodo=${periodo}`)
+      .pipe(map(res => res.data)); // << pega só o data
+  }
 }

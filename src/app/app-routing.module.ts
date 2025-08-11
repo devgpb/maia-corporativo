@@ -29,6 +29,7 @@ import { ListaPedidosComponent } from './lista-pedidos/lista-pedidos.component';
 import { ListaContatosComponent } from './vendas/lista-contatos/lista-contatos.component';
 import { ClienteFormComponent } from './vendas/cliente-form/cliente-form.component';
 import { ListaClientesComponent } from './vendas/lista-clientes/lista-clientes.component';
+import { DashboardVendas } from './vendas/dashboard-vendas/dashboard-vendas.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -49,6 +50,9 @@ const routes: Routes = [
   { path: "vendas/contatos", component: ListaContatosComponent, canActivate: [AuthGuard] },
   { path: "vendas/leads", component: ClienteFormComponent, canActivate: [AuthGuard] },
   { path: "vendas/lista/clientes", component: ListaClientesComponent, canActivate: [AuthGuard] },
+  { path: "vendas/dashboard", component: DashboardVendas, canActivate: [AuthGuard] },
+
+
 
 
 

@@ -74,6 +74,7 @@ import { ClienteFormComponent } from "./vendas/cliente-form/cliente-form.compone
 import { ListaClientesComponent } from "./vendas/lista-clientes/lista-clientes.component";
 import { ClienteCardComponent } from "./vendas/lista-clientes/cliente-card/cliente-card.component";
 import { ClienteModalComponent } from "./vendas/cliente-modal/cliente-modal.component";
+import { DashboardVendas } from "./vendas/dashboard-vendas/dashboard-vendas.component";
 
 defineLocale("pt-br", ptBrLocale);
 registerLocaleData(localePt);
@@ -128,7 +129,8 @@ registerLocaleData(localePt);
     ClienteFormComponent,
     ListaClientesComponent,
     ClienteCardComponent,
-    ClienteModalComponent
+    ClienteModalComponent,
+    DashboardVendas
   ],
   imports: [
     BrowserModule,
