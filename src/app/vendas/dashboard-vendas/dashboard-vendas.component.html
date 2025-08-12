@@ -163,18 +163,23 @@
           <!-- LISTA DE CLIENTES -->
           @if (isClientList()) {
             <div class="grid grid-cols-1 gap-3">
-              @for (c of modalItems(); track c['nome'] + c['updatedAt']) {
+                @for (c of modalItems(); track c['nome'] + c['updatedAt']) {
                 <div class="border rounded-xl p-3">
                   <div class="flex items-center justify-between">
-                    <div class="font-semibold text-gray-900">{{ c['nome'] }}</div>
-                    <span class="text-xs px-2 py-1 rounded-full" [class]="statusPillClass(c['status'])">
-                      {{ c['status'] || 'Sem status' }}
-                    </span>
+                  <div class="font-semibold text-gray-900">{{ c['nome'] }}</div>
+                  <span class="text-xs px-2 py-1 rounded-full" [class]="statusPillClass(c['status'])">
+                    {{ c['status'] || 'Sem status' }}
+                  </span>
                   </div>
-                  <div class="text-xs text-gray-500 mt-1">Atualizado em {{ formatDate(c['updatedAt']) }}</div>
+                  <div class="text-xs text-gray-500 mt-1">
+                  Atualizado em {{ formatDate(c['updatedAt']) }}
+                  @if (c['fechado']) {
+                    <span class="ml-2 text-green-700 font-semibold">fechado {{ formatDate(c['fechado']) }}</span>
+                  }
+                  </div>
                   <div class="text-sm text-gray-700 mt-2">{{ short(c['observacao']) }}</div>
                 </div>
-              }
+                }
             </div>
           } @else {
           <!-- LISTA DE EVENTOS -->
