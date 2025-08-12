@@ -12,7 +12,15 @@ import { Observable } from 'rxjs';
 import { ModalService } from 'src/app/services/modal/modal.service';
 
 
-
+type ChartOptionsLine = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  dataLabels: ApexDataLabels;
+  stroke: ApexStroke;
+  tooltip: ApexTooltip;
+  fill: ApexFill;
+};
 
 type ChartOptionsBar = {
   series: ApexAxisChartSeries;
@@ -51,6 +59,8 @@ export class DashboardVendas implements OnInit {
   activeTab = signal<'recentes'|'sem-contato'|'status'|'campanhas'>('recentes');
   statusChart = signal<ChartOptionsBar | null>(null);
   campanhaChart = signal<ChartOptionsDonut | null>(null);
+  contatosChart = signal<ChartOptionsLine | null>(null);
+
 
   modalKind = signal<ModalKind>(null);
   modalLoading = signal<boolean>(false);
@@ -166,6 +176,7 @@ export class DashboardVendas implements OnInit {
         this.data.set(res);
         this.buildStatusChart(res);
         this.buildCampanhaChart(res);
+        this.buildContatosChart(res);
         this.loading.set(false);
       },
       error: (err) => { console.error(err); this.error.set('Erro ao carregar dados do dashboard'); this.loading.set(false); }
@@ -260,6 +271,30 @@ export class DashboardVendas implements OnInit {
       responsive: [{ breakpoint: 1024, options: { legend: { position: 'bottom' } } }]
     });
   }
+
+  private buildContatosChart(d: IDashboardVendas) {
+  const items = (d.contatosPorDia ?? []).slice().sort((a, b) =>
+    a.date.localeCompare(b.date)
+  );
+
+  // rótulos dd/MM e valores
+  const labels = items.map(i =>
+    new Date(i.date + 'T00:00:00').toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })
+  );
+  const values = items.map(i => Number(i.count || 0));
+
+  this.contatosChart.set({
+    series: [{ name: 'Contatos/dia', data: values }],
+    chart: { type: 'area', height: 360, toolbar: { show: false } },
+    xaxis: { categories: labels, labels: { rotate: 0 } },
+    dataLabels: { enabled: false }, // evita poluir; ligue se quiser
+    stroke: { curve: 'smooth', width: 3 },
+    tooltip: {
+      y: { formatter: (val: number) => `${val} contato${val === 1 ? '' : 's'}` }
+    },
+    fill: { type: 'gradient', gradient: { shadeIntensity: 0.2, opacityFrom: 0.5, opacityTo: 0.1, stops: [0, 90, 100] } }
+  });
+}
 
   formatDate(d?: string | null) {
     if (!d) return '';

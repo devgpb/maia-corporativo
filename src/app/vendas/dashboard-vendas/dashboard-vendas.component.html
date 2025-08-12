@@ -136,6 +136,23 @@
           </apx-chart>
         </div>
       </div>
+
+      <div class="border rounded-xl p-4 lg:col-span-2">
+        <div class="flex items-center justify-between pb-2">
+          <div class="text-sm font-medium">Contatos por dia (último contato)</div>
+        </div>
+        <div *ngIf="contatosChart() as ct">
+          <apx-chart
+            [series]="ct.series"
+            [chart]="ct.chart"
+            [xaxis]="ct.xaxis"
+            [dataLabels]="ct.dataLabels"
+            [stroke]="ct.stroke"
+            [tooltip]="ct.tooltip"
+            [fill]="ct.fill">
+          </apx-chart>
+      </div>
+      </div>
     </div>
 
     <!-- MODAL -->
