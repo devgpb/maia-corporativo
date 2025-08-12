@@ -22,7 +22,8 @@ export type EventoItem = {
   data: string;
   evento: string | null;
   confirmado: boolean;
-  usuario?: { nome: string | null } | null;
+  usuario?: { nomeCompleto: string | null } | null;
+  cliente: { nome: string | null } | null;
 };
 
 @Injectable({
