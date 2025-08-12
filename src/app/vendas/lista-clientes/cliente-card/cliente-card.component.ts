@@ -31,6 +31,7 @@ export class ClienteCardComponent implements OnInit, OnChanges {
 
   abrirWhatsapp(event: Event) {
     event.preventDefault();
+    event.stopPropagation();
 
     const celularRaw = this.cliente?.celular || '';
     const celularLimpo = celularRaw.replace(/\D/g, '');
