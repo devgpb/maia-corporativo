@@ -8,6 +8,9 @@ import {
   ApexAxisChartSeries, ApexChart, ApexXAxis, ApexPlotOptions, ApexDataLabels, ApexStroke, ApexTooltip, ApexFill,
   ApexNonAxisChartSeries, ApexLegend, ApexResponsive
 } from 'ng-apexcharts';
+import { Observable } from 'rxjs';
+import { ModalService } from 'src/app/services/modal/modal.service';
+
 
 
 
@@ -26,11 +29,13 @@ type ChartOptionsDonut = {
   series: ApexNonAxisChartSeries;
   chart: ApexChart;
   labels: string[];
-  dataLabels: ApexDataLabels; 
+  dataLabels: ApexDataLabels;
   legend: ApexLegend;
   tooltip: ApexTooltip;
   responsive: ApexResponsive[];
 };
+
+type ModalKind = 'novos'|'atendidos'|'fechados'|'eventos'|null;
 
 @Component({
     selector: 'app-dashboard-vendas',
@@ -47,13 +52,99 @@ export class DashboardVendas implements OnInit {
   statusChart = signal<ChartOptionsBar | null>(null);
   campanhaChart = signal<ChartOptionsDonut | null>(null);
 
+  modalKind = signal<ModalKind>(null);
+  modalLoading = signal<boolean>(false);
+  modalError = signal<string|null>(null);
+  modalItems = signal<(any)[]>([]);
+  modalMeta = signal<any>(null);
+  modalPage = signal<number>(1);
+  readonly modalPerPage = 12;
+
+
   // ícones usados pelo lucide-angular
   icons = { Users, UserPlus, Phone, TrendingUp, Clock, CheckCircle, AlertCircle };
 
-  constructor(private api: VendasService) {}
+  constructor(
+    private api: VendasService,
+    private modalService: ModalService,
+  ) {}
+
+  toggleModal() {
+    this.modalService.toggle();
+  }
 
   ngOnInit(): void {
     this.fetch();
+  }
+
+  openModal(kind: Exclude<ModalKind, null>) {
+    this.modalKind.set(kind);
+    this.modalPage.set(1);
+    this.toggleModal();
+    this.fetchModal();
+  }
+
+  closeModal() {
+    this.fetchModal();
+  }
+
+  nextPage() {
+    const meta = this.modalMeta();
+    if (!meta) return;
+    if (meta.page < meta.totalPages) {
+      this.modalPage.set(meta.page + 1);
+      this.fetchModal();
+    }
+  }
+  prevPage() {
+    const meta = this.modalMeta();
+    if (!meta) return;
+    if (meta.page > 1) {
+      this.modalPage.set(meta.page - 1);
+      this.fetchModal();
+    }
+  }
+
+  private fetchModal() {
+    const kind = this.modalKind();
+    if (!kind) return;
+
+    this.modalLoading.set(true);
+    this.modalError.set(null);
+
+    const periodo = this.selectedPeriod();
+    const page = this.modalPage();
+    const perPage = this.modalPerPage;
+
+    let req$: Observable<any>;
+
+    switch (kind) {
+      case 'novos':
+        req$ = this.api.getClientesNovosList(periodo, page, perPage);
+        break;
+      case 'atendidos':
+        req$ = this.api.getClientesAtendidosList(periodo, page, perPage);
+        break;
+      case 'fechados':
+        req$ = this.api.getClientesFechadosList(periodo, page, perPage);
+        break;
+      case 'eventos':
+        req$ = this.api.getEventosMarcadosList(periodo, page, perPage);
+        break;
+    }
+
+    req$.subscribe({
+      next: (res: any) => {
+        this.modalItems.set(res.data ?? []);
+        this.modalMeta.set(res.meta ?? null);
+        this.modalLoading.set(false);
+      },
+      error: (err) => {
+        console.error(err);
+        this.modalError.set('Erro ao carregar a lista');
+        this.modalLoading.set(false);
+      }
+    });
   }
 
   setPeriod(p: 'hoje'|'semana'|'mes') {
@@ -173,5 +264,28 @@ export class DashboardVendas implements OnInit {
   formatDate(d?: string | null) {
     if (!d) return '';
     return new Date(d).toLocaleDateString('pt-BR');
+  }
+
+  // helpers de UI
+  modalTitle() {
+    const k = this.modalKind();
+    return k === 'novos' ? 'Clientes novos'
+      : k === 'atendidos' ? 'Clientes atendidos'
+      : k === 'fechados' ? 'Clientes fechados'
+      : k === 'eventos' ? 'Eventos marcados'
+      : '';
+  }
+  isClientList() { return this.modalKind() === 'novos' || this.modalKind() === 'atendidos' || this.modalKind() === 'fechados'; }
+
+  statusPillClass(status?: string|null) {
+    const s = (status ?? '').toLowerCase();
+    if (['fechado','vendido'].includes(s)) return 'bg-green-100 text-green-700';
+    if (['aguardando','pendente','novo'].includes(s)) return 'bg-orange-100 text-orange-700';
+    if (['em negociação','negociando','atendido'].includes(s)) return 'bg-blue-100 text-blue-700';
+    return 'bg-gray-100 text-gray-700';
+  }
+  short(t?: string|null, max=140) {
+    if (!t) return '';
+    return t.length > max ? t.slice(0, max - 1) + '…' : t;
   }
 }
