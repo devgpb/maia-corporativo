@@ -8,161 +8,155 @@
       (click)="delete()"
       [disabled]="isLoading"
       aria-label="Apagar Cliente"
-    >
+      >
       <lucide-icon name="Trash2" class="" size="18"></lucide-icon>
     </button>
 
-    <div *ngIf="formData">
-      <!-- Nome de quem cadastrou -->
-      <div class="bg-light rounded p-3 mb-4 text-center">
-        <span class="fw-normal">Cadastrado por:</span>
-        <div class="fw-bold fs-5">{{ formData?.responsavel?.nomeCompleto }}</div>
-      </div>
-
-      <!-- Datas separadas -->
-      <div class="bg-white rounded p-3 shadow-sm">
-
-        <!-- Criado -->
-        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
-          <span class="fw-bold text-primary">Data de Criação</span>
-          <span>{{ formData.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+    @if (formData) {
+      <div>
+        <!-- Nome de quem cadastrou -->
+        <div class="bg-light rounded p-3 mb-4 text-center">
+          <span class="fw-normal">Cadastrado por:</span>
+          <div class="fw-bold fs-5">{{ formData?.responsavel?.nomeCompleto }}</div>
         </div>
-
-        <!-- Atualizado -->
-        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
-          <span class="fw-bold text-success">Última Atualização</span>
-          <span>{{ formData.updatedAt | date:'dd/MM/yyyy HH:mm' }}</span>
-        </div>
-
-        <!-- Último Contato (opcional) -->
-        <div *ngIf="formData.ultimoContato" class="d-flex justify-content-between align-items-center">
-          <span class="fw-bold text-warning">Último Contato</span>
-          <span>{{ formData.ultimoContato | date:'dd/MM/yyyy HH:mm' }}</span>
-        </div>
-
-      </div>
-
-      <!-- Métricas de tempo -->
-      <div class="mt-3 d-flex align-items-center justify-content-between">
-        <span>
-          Criado há {{ calcularDias(formData.createdAt) }} {{ calcularDias(formData.createdAt) === 1 ? 'dia' : 'dias' }}
-        </span>
-        <span class="badge" [ngClass]="getBadgeClass(calcularDias(formData.createdAt))">
-          {{ getBadgeText(calcularDias(formData.createdAt)) }}
-        </span>
-      </div>
-
-
-
-      <!-- Cabeçalho -->
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="mb-0">Editar Cliente #{{ formData.idCliente }}</h5>
-        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="close()">
-          <lucide-icon name="X" size="18"></lucide-icon>
-        </button>
-      </div>
-
-      <!-- Formulário -->
-      <form>
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Nome *</label>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="formData.nome"
-              name="nome"
-              (ngModelChange)="clearError('nome')"
-              [class.is-invalid]="errors['nome']"
-            />
-            <div *ngIf="errors['nome']" class="invalid-feedback">
-              {{ errors['nome'] }}
+        <!-- Datas separadas -->
+        <div class="bg-white rounded p-3 shadow-sm">
+          <!-- Criado -->
+          <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
+            <span class="fw-bold text-primary">Data de Criação</span>
+            <span>{{ formData.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+          <!-- Atualizado -->
+          <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
+            <span class="fw-bold text-success">Última Atualização</span>
+            <span>{{ formData.updatedAt | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+          <!-- Último Contato (opcional) -->
+          @if (formData.ultimoContato) {
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-bold text-warning">Último Contato</span>
+              <span>{{ formData.ultimoContato | date:'dd/MM/yyyy HH:mm' }}</span>
             </div>
-          </div>
-
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Celular *</label>
-            <input
-              type="text"
-              class="form-control"
-              appMask="celular"
-              placeholder="(99) 99999-9999"
-              [(ngModel)]="formData.celular"
-              name="celular"
-              (ngModelChange)="clearError('celular')"
-              [class.is-invalid]="errors['celular']"
-            />
-            <div *ngIf="errors['celular']" class="invalid-feedback">
-              {{ errors['celular'] }}
-            </div>
-          </div>
-
-
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Cidade</label>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="formData.cidade"
-              name="cidade"
-              list="cidadesList"
-              placeholder="Digite ou selecione..."
-            />
-            <datalist id="cidadesList">
-              <option *ngFor="let cidade of cidades" [value]="cidade"></option>
-            </datalist>
-          </div>
-
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Status</label>
-            <select class="form-select" [(ngModel)]="formData.status" name="status">
-              <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
-            </select>
-          </div>
-
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Campanha</label>
-            <select class="form-select form-control" [(ngModel)]="formData.campanha" name="campanha">
-              <option value="">Selecione</option>
-              <option *ngFor="let s of listaCampanhas" [value]="s">{{ s }}</option>
-            </select>
-          </div>
-
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Indicação</label>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="formData.indicacao"
-              name="indicacao"
-            />
-          </div>
-
-          <div class="col-12 mb-3">
-            <label class="form-label">Observações</label>
-            <textarea
-              class="form-control"
-              rows="3"
-              [(ngModel)]="formData.observacao"
-              name="observacao">
-            </textarea>
-          </div>
+          }
         </div>
-      </form>
-
-      <!-- Rodapé -->
-      <div class="modal-footer d-flex flex-column flex-sm-row gap-2 justify-content-end mt-3">
-        <button class="btn btn-primary w-100 w-sm-auto" (click)="save()" [disabled]="isLoading">
-          <lucide-icon name="Save" class="me-2" size="18"></lucide-icon>
-          Salvar
-        </button>
-
-        <button class="btn btn-outline-secondary w-100 w-sm-auto" (click)="close()" [disabled]="isLoading">
-          <lucide-icon name="XCircle" class="me-2" size="18"></lucide-icon>
-          Cancelar
-        </button>
-      </div>
-
-    </div>
-  </div>
-</app-modal>
+        <!-- Métricas de tempo -->
+        <div class="mt-3 d-flex align-items-center justify-content-between">
+          <span>
+            Criado há {{ calcularDias(formData.createdAt) }} {{ calcularDias(formData.createdAt) === 1 ? 'dia' : 'dias' }}
+          </span>
+          <span class="badge" [ngClass]="getBadgeClass(calcularDias(formData.createdAt))">
+            {{ getBadgeText(calcularDias(formData.createdAt)) }}
+          </span>
+        </div>
+        <!-- Cabeçalho -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0">Editar Cliente #{{ formData.idCliente }}</h5>
+          <button type="button" class="btn btn-sm btn-outline-secondary" (click)="close()">
+            <lucide-icon name="X" size="18"></lucide-icon>
+          </button>
+        </div>
+        <!-- Formulário -->
+        <form>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Nome *</label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="formData.nome"
+                name="nome"
+                (ngModelChange)="clearError('nome')"
+                [class.is-invalid]="errors['nome']"
+                />
+                @if (errors['nome']) {
+                  <div class="invalid-feedback">
+                    {{ errors['nome'] }}
+                  </div>
+                }
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Celular *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  appMask="celular"
+                  placeholder="(99) 99999-9999"
+                  [(ngModel)]="formData.celular"
+                  name="celular"
+                  (ngModelChange)="clearError('celular')"
+                  [class.is-invalid]="errors['celular']"
+                  />
+                  @if (errors['celular']) {
+                    <div class="invalid-feedback">
+                      {{ errors['celular'] }}
+                    </div>
+                  }
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Cidade</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="formData.cidade"
+                    name="cidade"
+                    list="cidadesList"
+                    placeholder="Digite ou selecione..."
+                    />
+                    <datalist id="cidadesList">
+                      @for (cidade of cidades; track cidade) {
+                        <option [value]="cidade"></option>
+                      }
+                    </datalist>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" [(ngModel)]="formData.status" name="status">
+                      @for (s of statuses; track s) {
+                        <option [value]="s">{{ s }}</option>
+                      }
+                    </select>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Campanha</label>
+                    <select class="form-select form-control" [(ngModel)]="formData.campanha" name="campanha">
+                      <option value="">Selecione</option>
+                      @for (s of listaCampanhas; track s) {
+                        <option [value]="s">{{ s }}</option>
+                      }
+                    </select>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Indicação</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="formData.indicacao"
+                      name="indicacao"
+                      />
+                    </div>
+                    <div class="col-12 mb-3">
+                      <label class="form-label">Observações</label>
+                      <textarea
+                        class="form-control"
+                        rows="3"
+                        [(ngModel)]="formData.observacao"
+                        name="observacao">
+                      </textarea>
+                    </div>
+                  </div>
+                </form>
+                <!-- Rodapé -->
+                <div class="modal-footer d-flex flex-column flex-sm-row gap-2 justify-content-end mt-3">
+                  <button class="btn btn-primary w-100 w-sm-auto" (click)="save()" [disabled]="isLoading">
+                    <lucide-icon name="Save" class="me-2" size="18"></lucide-icon>
+                    Salvar
+                  </button>
+                  <button class="btn btn-outline-secondary w-100 w-sm-auto" (click)="close()" [disabled]="isLoading">
+                    <lucide-icon name="XCircle" class="me-2" size="18"></lucide-icon>
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        </app-modal>

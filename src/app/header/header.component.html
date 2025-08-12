@@ -4,12 +4,16 @@
 
     <div class="navbar-brand">
       <span class="text-uppercase text-center d-none d-sm-block">
-        <span *ngIf="!nomePedido"> {{ userName || 'Sistema Corporativo' }} </span>
-        <span *ngIf="nomePedido">
-          Trabalhando: {{nomePedido}}
-          <i class="icon arrow text-danger fa-solid fa-circle-minus separar"
-             (click)="deletePedido()"></i>
-        </span>
+        @if (!nomePedido) {
+          <span> {{ userName || 'Sistema Corporativo' }} </span>
+        }
+        @if (nomePedido) {
+          <span>
+            Trabalhando: {{nomePedido}}
+            <i class="icon arrow text-danger fa-solid fa-circle-minus separar"
+            (click)="deletePedido()"></i>
+          </span>
+        }
 
       </span>
     </div>
@@ -22,22 +26,28 @@
 
       <li class="mr-5 pedido">
         <a routerLink="pedido/criar"
-        [routerLinkActive]="['active-link']" title="Novo Pedido"
-        [routerLinkActiveOptions]="{exact: true}">
-        <i class="fa-solid fa-circle-plus"></i>
+          [routerLinkActive]="['active-link']" title="Novo Pedido"
+          [routerLinkActiveOptions]="{exact: true}">
+          <i class="fa-solid fa-circle-plus"></i>
         </a>
       </li>
 
 
       <li class="notification d-flex flex-row justify-content-center align-items-center" (click)="toggleNotifications($event)">
         <i class="fa fa-bell"></i>
-        <span *ngIf="hasNewNotifications" class="notification-badge"></span>
-        <div *ngIf="showNotifications" id="notifications-dropdown" class="notifications-dropdown">
-          <div *ngFor="let notification of notifications" class="notification-item">
-            <div class="notification-title">Nome: {{ notification.nomeCompleto || 'Sem Nome' }}</div>
-            <div class="notification-city">Endereço: {{ notification.endereco  || 'Sem endereco'}}</div>
+        @if (hasNewNotifications) {
+          <span class="notification-badge"></span>
+        }
+        @if (showNotifications) {
+          <div id="notifications-dropdown" class="notifications-dropdown">
+            @for (notification of notifications; track notification) {
+              <div class="notification-item">
+                <div class="notification-title">Nome: {{ notification.nomeCompleto || 'Sem Nome' }}</div>
+                <div class="notification-city">Endereço: {{ notification.endereco  || 'Sem endereco'}}</div>
+              </div>
+            }
           </div>
-        </div>
+        }
       </li>
 
       <li>

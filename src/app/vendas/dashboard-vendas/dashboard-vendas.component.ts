@@ -1,6 +1,6 @@
 // dashboard-vendas.component.ts
 import { Component, OnInit, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { VendasService } from 'src/app/services/vendas/vendas.service';
 import { IDashboardVendas } from 'src/app/interfaces/IDashboardVendas';
 import { LucideAngularModule, Users, UserPlus, Phone, TrendingUp, Clock, CheckCircle, AlertCircle } from 'lucide-angular';

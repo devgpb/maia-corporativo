@@ -5,18 +5,18 @@
 
   <div class="w-100 mt-5 d-flex flex-wrap">
 
-    <div *ngFor="let form of dadosFormulario" class="">
-
-      <a class="card d-flex justify-content-center text-decoration-none"
-      [routerLink]="[form.link]" target="_blank"
-
-      >
-        <i [class]="form.icon" class="fa-solid"></i>
-        <span class="titulo"> {{ form.titulo }} </span>
-        <span class="desc"> {{ form.desc }} </span>
-        <button class="open-modal" (click)="abrirModal($event,form.linkQr)">Gerar Qr Code</button>
-      </a>
-    </div>
+    @for (form of dadosFormulario; track form) {
+      <div class="">
+        <a class="card d-flex justify-content-center text-decoration-none"
+          [routerLink]="[form.link]" target="_blank"
+          >
+          <i [class]="form.icon" class="fa-solid"></i>
+          <span class="titulo"> {{ form.titulo }} </span>
+          <span class="desc"> {{ form.desc }} </span>
+          <button class="open-modal" (click)="abrirModal($event,form.linkQr)">Gerar Qr Code</button>
+        </a>
+      </div>
+    }
   </div>
 
 </div>

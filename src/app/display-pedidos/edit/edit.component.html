@@ -1,415 +1,365 @@
 <div class="w-100">
-  <div class="w-100" *ngIf="show == 'code'">
-    <div class="w-100 d-flex justify-content-end">
-      <button (click)="fecharCode()">Voltar</button>
+  @if (show == 'code') {
+    <div class="w-100">
+      <div class="w-100 d-flex justify-content-end">
+        <button (click)="fecharCode()">Voltar</button>
+      </div>
+      <app-qr-code-modal [link]="qrLink" [label]="qrLabel" [text]="qrText"></app-qr-code-modal>
     </div>
-    <app-qr-code-modal [link]="qrLink" [label]="qrLabel" [text]="qrText"></app-qr-code-modal>
-  </div>
+  }
 
-  <div class="loading-container" *ngIf="show == 'loading'">
-    <div class="loading-circle"></div>
-  </div>
-
-  <div class="w-100" *ngIf="show == 'none'">
-    <div class="opts w-100 d-flex">
-      <i class="fa solid fa-circle-xmark icon cursor-pointer " (click)="toggleModal()"></i>
-
-      <div class="actions d-flex gap-2">
-        <button class="btn btn-primary d-flex align-items-center gap-1" (click)="irGerarContrato()">
-          <i class="fas fa-file-contract"></i>
-          Gerar Contrato
-        </button>
-        <button class="btn btn-secondary d-flex align-items-center gap-1" (click)="gerarQrCode('vistoInicial')">
-          <i class="fas fa-search"></i>
-          Vistoria Incial
-        </button>
-        <button class="btn btn-success d-flex align-items-center gap-1" (click)="gerarQrCode('finalizar')">
-          <i class="fas fa-check-circle"></i>
-          Vistoria Final
-        </button>
-        <button class="btn btn-info d-flex align-items-center gap-1" (click)="gerarQrCode('visualizar')">
-          <i class="fas fa-share-alt"></i>
-          Compartilhar Instalador
-        </button>
-      </div>
-
-
-      <div class="id">
-        {{ detalhes?.idPedido }}
-      </div>
+  @if (show == 'loading') {
+    <div class="loading-container">
+      <div class="loading-circle"></div>
     </div>
+  }
 
-
-    <!-- Navegação -->
-    <h2 class="navegacao">
-      <div class="holder">
-        <i class="fa-solid fa-angles-left text-info" (click)="voltarPedido(detalhes,true)" *ngIf="indiceDetalhe > 0"></i>
+  @if (show == 'none') {
+    <div class="w-100">
+      <div class="opts w-100 d-flex">
+        <i class="fa solid fa-circle-xmark icon cursor-pointer " (click)="toggleModal()"></i>
+        <div class="actions d-flex gap-2">
+          <button class="btn btn-primary d-flex align-items-center gap-1" (click)="irGerarContrato()">
+            <i class="fas fa-file-contract"></i>
+            Gerar Contrato
+          </button>
+          <button class="btn btn-secondary d-flex align-items-center gap-1" (click)="gerarQrCode('vistoInicial')">
+            <i class="fas fa-search"></i>
+            Vistoria Incial
+          </button>
+          <button class="btn btn-success d-flex align-items-center gap-1" (click)="gerarQrCode('finalizar')">
+            <i class="fas fa-check-circle"></i>
+            Vistoria Final
+          </button>
+          <button class="btn btn-info d-flex align-items-center gap-1" (click)="gerarQrCode('visualizar')">
+            <i class="fas fa-share-alt"></i>
+            Compartilhar Instalador
+          </button>
+        </div>
+        <div class="id">
+          {{ detalhes?.idPedido }}
+        </div>
       </div>
-
-      <div class="w-100">
-        {{ detalhes?.nomeCompleto }}
-      </div>
-
-
-      <div class="holder">
-        <i class="fa-solid fa-angles-right text-info" *ngIf="indiceDetalhe < indiceLimiteDetalhe - 1"
-          (click)="proximoPedido(detalhes,true)"></i>
-      </div>
-    </h2>
-    <!-- Navegação -->
-
-    <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="edit-form">
-      <h3 class="w-100">Detalhes:</h3>
-
-      <div class="check-list">
-
-        <div class="check" (click)="toggleDetalhe('visitaRealizada')">
-          <i class="fa-solid"
+      <!-- Navegação -->
+      <h2 class="navegacao">
+        <div class="holder">
+          @if (indiceDetalhe > 0) {
+            <i class="fa-solid fa-angles-left text-info" (click)="voltarPedido(detalhes,true)"></i>
+          }
+        </div>
+        <div class="w-100">
+          {{ detalhes?.nomeCompleto }}
+        </div>
+        <div class="holder">
+          @if (indiceDetalhe < indiceLimiteDetalhe - 1) {
+            <i class="fa-solid fa-angles-right text-info"
+            (click)="proximoPedido(detalhes,true)"></i>
+          }
+        </div>
+      </h2>
+      <!-- Navegação -->
+      <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="edit-form">
+        <h3 class="w-100">Detalhes:</h3>
+        <div class="check-list">
+          <div class="check" (click)="toggleDetalhe('visitaRealizada')">
+            <i class="fa-solid"
             [ngClass]="{'fa-check text-success': editForm.value.detalhes?.visitaRealizada, 'fa-x text-danger': !editForm.value.detalhes?.visitaRealizada}"></i>
-          Visita Realizada
-        </div>
-
-        <div class="check" (click)="toggleDetalhe('contratoAssinado')">
-          <i class="fa-solid"
+            Visita Realizada
+          </div>
+          <div class="check" (click)="toggleDetalhe('contratoAssinado')">
+            <i class="fa-solid"
             [ngClass]="{'fa-check text-success': editForm.value.detalhes?.contratoAssinado, 'fa-x text-danger': !editForm.value.detalhes?.contratoAssinado}"></i>
-          Contrato Assinado
-        </div>
-
-        <div class="check" (click)="toggleDetalhe('equipamentoComprado')">
-          <i class="fa-solid"
+            Contrato Assinado
+          </div>
+          <div class="check" (click)="toggleDetalhe('equipamentoComprado')">
+            <i class="fa-solid"
             [ngClass]="{'fa-check text-success': editForm.value.detalhes?.equipamentoComprado, 'fa-x text-danger': !editForm.value.detalhes?.equipamentoComprado}"></i>
-          Equipamento Comprado
-        </div>
-
-        <div class="check" (click)="toggleDetalhe('espelho')">
-          <i class="fa-solid"
+            Equipamento Comprado
+          </div>
+          <div class="check" (click)="toggleDetalhe('espelho')">
+            <i class="fa-solid"
             [ngClass]="{'fa-check text-success': editForm.value.detalhes?.espelho, 'fa-x text-danger': !editForm.value.detalhes?.espelho}"></i>
-          Espelho no Drive
-        </div>
-
-        <div class="check" (click)="toggleDetalhe('ART')">
-          <i class="fa-solid"
+            Espelho no Drive
+          </div>
+          <div class="check" (click)="toggleDetalhe('ART')">
+            <i class="fa-solid"
             [ngClass]="{'fa-check text-success': editForm.value.detalhes?.ART, 'fa-x text-danger': !editForm.value.detalhes?.ART}"></i>
-          ART
-        </div>
-
-        <div class="check" (click)="toggleDetalhe('homologado')">
-          <i class="fa-solid"
+            ART
+          </div>
+          <div class="check" (click)="toggleDetalhe('homologado')">
+            <i class="fa-solid"
             [ngClass]="{'fa-check text-success': editForm.value.detalhes?.homologado, 'fa-x text-danger': !editForm.value.detalhes?.homologado}"></i>
-          Homologado
-        </div>
-
-        <div class="check" (click)="toggleDetalhe('pagamentoRealizado')">
-          <i class="fa-solid"
+            Homologado
+          </div>
+          <div class="check" (click)="toggleDetalhe('pagamentoRealizado')">
+            <i class="fa-solid"
             [ngClass]="{'fa-check text-success': editForm.value.detalhes?.pagamentoRealizado, 'fa-x text-danger': !editForm.value.detalhes?.pagamentoRealizado}"></i>
-          Pagamento Realizado
+            Pagamento Realizado
+          </div>
         </div>
-
-      </div>
-      <span class="w-100 text-center text-primary infor">Clique em um detalhe para alterar seu valor</span>
-
-
-      <!-- Marcar Datas -->
-      <!-- <h3 class="w-100 mt-3 mb-3">Marcação de Eventos:</h3>
-
-      <div class="form-group col-12 col-lg-4 w-100 d-flex eventos justify-content-between" formGroupName="datas">
-
-        <div class="visita" formGroupName="dataVisita">
-          <label for="datas">Data Visita:</label>
-          <input formControlName="data" type="text" id="datas" class="form-control"
-            placeholder="Data da visita" bsDatepicker [bsConfig]="bsConfig" autocomplete="off">
-
-            <div class="timepicker-container">
-              <div class="timepicker-inputs">
-                <span>h</span>
-                <input type="number" formControlName="hora" min="0" max="23">
-                <span>:</span>
-                <input type="number" formControlName="minuto" min="0" max="59">
-                <span>m</span>
+        <span class="w-100 text-center text-primary infor">Clique em um detalhe para alterar seu valor</span>
+        <!-- Marcar Datas -->
+        <!-- <h3 class="w-100 mt-3 mb-3">Marcação de Eventos:</h3>
+        <div class="form-group col-12 col-lg-4 w-100 d-flex eventos justify-content-between" formGroupName="datas">
+          <div class="visita" formGroupName="dataVisita">
+            <label for="datas">Data Visita:</label>
+            <input formControlName="data" type="text" id="datas" class="form-control"
+              placeholder="Data da visita" bsDatepicker [bsConfig]="bsConfig" autocomplete="off">
+              <div class="timepicker-container">
+                <div class="timepicker-inputs">
+                  <span>h</span>
+                  <input type="number" formControlName="hora" min="0" max="23">
+                  <span>:</span>
+                  <input type="number" formControlName="minuto" min="0" max="59">
+                  <span>m</span>
+                </div>
               </div>
             </div>
-        </div>
-
-        <div class="visita" formGroupName="dataInstalacao">
-          <label for="datas">Data Instalação:</label>
-          <input formControlName="data" type="text" id="datas" class="form-control"
-            placeholder="Data da Instalação" bsDatepicker [bsConfig]="bsConfig" autocomplete="off">
-
-            <div class="timepicker-container">
-              <div class="timepicker-inputs">
-                <span>h</span>
-                <input type="number" formControlName="hora" min="0" max="23">
-                <span>:</span>
-                <input type="number" formControlName="minuto" min="0" max="59">
-                <span>m</span>
-
+            <div class="visita" formGroupName="dataInstalacao">
+              <label for="datas">Data Instalação:</label>
+              <input formControlName="data" type="text" id="datas" class="form-control"
+                placeholder="Data da Instalação" bsDatepicker [bsConfig]="bsConfig" autocomplete="off">
+                <div class="timepicker-container">
+                  <div class="timepicker-inputs">
+                    <span>h</span>
+                    <input type="number" formControlName="hora" min="0" max="23">
+                    <span>:</span>
+                    <input type="number" formControlName="minuto" min="0" max="59">
+                    <span>m</span>
+                  </div>
+                </div>
               </div>
-            </div>
-        </div>
-
-      </div> -->
-      <!-- Pessoal -->
-      <h3 class="w-100 mt-4">Pessoal:</h3>
-      <div class="w-100 d-flex flex-wrap justify-content-center">
-
-        <div class="form-group col-12 col-lg-4">
-          <label for="nomeCompleto">Nome:</label>
-          <input type="text" class="form-control" id="nomeCompleto" formControlName="nomeCompleto">
-        </div>
-
-        <div class="form-group col-12 col-lg-4">
-          <label for="nomeCompleto">CPF:</label>
-          <input type="text" class="form-control" id="cpfCliente" formControlName="cpfCliente" (input)="appyCPFMask($event)">
-        </div>
-
-        <div class="form-group col-12 col-lg-4">
-          <label for="celular">Celular:</label>
-          <input type="tel" class="form-control" id="celular" formControlName="celular" placeholder="(00)-0000-0000"
-            (input)="applyCelularMask($event)">
-        </div>
-
-        <div class="form-group col-12 col-lg-4">
-          <label for="email">Email:</label>
-          <input type="email" class="form-control" id="email" formControlName="email">
-        </div>
-
-        <div class="form-group col-12 col-lg-4">
-          <label for="endereco">Endereço:</label>
-          <input type="text" class="form-control" id="endereco" formControlName="endereco">
-        </div>
-
-      </div>
-
-      <!-- Gerencial -->
-      <h3 class="w-100 mt-4">Gerencial:</h3>
-      <div class="w-100 d-flex flex-wrap justify-content-center">
-
-        <div class="form-group col-12 col-lg-4">
-          <label for="status">Status:</label>
-          <input type="text" class="form-control" id="status" formControlName="status">
-        </div>
-
-        <div class="form-group col-12 col-lg-4">
-          <label for="status">Região:</label>
-          <input type="text" class="form-control" id="regiao" formControlName="regiao" [disabled]="true">
-        </div>
-
-        <div class="form-group col-12 col-lg-4">
-          <label for="ref">Referência:</label>
-          <input type="text" class="form-control" id="ref" formControlName="ref">
-        </div>
-
-        <div class="form-group col-12 col-lg-4">
-          <label for="consumo">Consumo Mensal de Energia:</label>
-          <input type="text" class="form-control" id="consumo" formControlName="consumo"
-            appNumericOnly>
-        </div>
-
-        <!-- Lista de formas de pagamento select -->
-        <div class="form-group col-12 col-lg-4" *ngIf="canShowFormaPagamento">
-          <label for="formaPagamento">Forma de Pagamento:</label>
-          <select class="form-control select" id="formaPagamento" formControlName="formaPagamento">
-            <option value="0">Selecione</option>
-            <option *ngFor="let pagamento of tiposPagamentos" [value]="pagamento">{{ pagamento }}</option>
-          </select>
-        </div>
-
-        <div class="form-group col-12 col-lg-4" *ngIf="userCargo != 'COLABORADOR'">
-          <label for="faturamento">Faturamento (R$):</label>
-          <input type="text" class="form-control" id="faturamento" formControlName="faturamento" appNumericOnly>
-        </div>
-
-        <div class="form-group col-12 col-lg-4">
-          <label for="dataPedido">Mudança Mais Recente:</label>
-          <input type="date" class="form-control" id="dataPedido" formControlName="dataPedido">
-        </div>
-
-
-
-        <div class="form-group col-12 col-lg-4">
-          <label for="indicacao">Indicação:</label>
-          <input type="text" class="form-control" id="indicacao" formControlName="indicacao">
-        </div>
-
-        <div class="form-group col-12 col-lg-6 d-flex align-items-center">
-          <label for="linkMaps" style="width: 150px;">Link Maps:</label>
-          <input type="text" class="form-control" id="linkMaps" formControlName="linkMaps">
-          <a [href]="editForm.value.linkMaps" target="_blank" class="btn btn-primary" style="margin-left: 5px;">Redirecionar</a>
-        </div>
-
-        <div class="form-group col-12 col-lg-4 w-100 mb-3">
-          <label for="cidade">Observação:</label>
-          <textarea type="text" class="form-control " id="observacao" formControlName="observacao">
-        </textarea>
-        </div>
-      </div>
-
-      <!-- Instalacao -->
-      <!-- Instalação -->
-      <h3 class="w-100 mt-4">Instalação:</h3>
-      <div class="w-100 container " formGroupName="instalacao">
-        <!-- Contexto Geral -->
-        <div class="row">
-          <div class="form-group col-12 col-lg-6">
-            <label for="potenciaGerador">Potência Gerador:</label>
-            <input type="text" class="form-control" id="potenciaGerador"
-              placeholder="Potência do Gerador"
-              formControlName="potenciaGerador">
-          </div>
-          <div class="form-group col-12 col-lg-6">
-            <label for="distribuidora">Distribuidora:</label>
-            <input type="text" class="form-control" id="distribuidora"
-              placeholder="Nome da Distribuidora"
-              formControlName="distribuidora">
-          </div>
-        </div>
-
-        <!-- Contexto Inversores -->
-        <div class="row">
-          <div class="form-group col-12 col-lg-5">
-            <label for="inversores">Inversores:</label>
-            <!-- <input type="text" class="form-control" id="inversores"
-              placeholder="Inversores"
-              formControlName="inversores"> -->
-              <ng-select class=" selecter" formControlName="inversores" [items]="equipamentos.inversores" bindLabel="nome" bindValue="nome" [placeholder]="'Selecione um Inversor'" (change)="onInversorChange($event)">
-              </ng-select>
-          </div>
-          <div class="form-group col-12 col-lg-3">
-            <label for="quantidadeInversores">Quantidade de Inversores:</label>
-            <input type="number" class="form-control" id="quantidadeInversores"
-              placeholder="Quantidade de Inversores"
-              formControlName="quantidadeInversores">
-          </div>
-          <div class="form-group col-12 col-lg-3">
-            <label for="garantiaFabricacaoInversor">Garantia Fabricação (Anos):</label>
-            <input type="number" class="form-control" id="garantiaFabricacaoInversor"
-              placeholder="Garantia (Anos)"
-              formControlName="garantiaFabricacaoInversor">
-          </div>
-        </div>
-
-        <!-- Contexto Placas -->
-        <div class="row">
-          <div class="form-group col-12 col-lg-5">
-            <label for="placas">Placas:</label>
-            <!-- <input type="text" class="form-control" id="placas"
-              placeholder="Placas"
-              formControlName="placas"> -->
-              <ng-select class=" selecter" formControlName="placas" [items]="equipamentos.placas" bindLabel="nome" bindValue="nome" [placeholder]="'Selecione um Modulo'" name="modulos" (change)="onModuloChange($event)" ></ng-select>
-          </div>
-          <div class="form-group col-12 col-lg-2">
-            <label for="quantidadePlacas">Quantidade de Placas:</label>
-            <input type="number" class="form-control" id="quantidadePlacas"
-              placeholder="Quantidade"
-              formControlName="quantidadePlacas">
-          </div>
-          <div class="form-group col-12 col-lg-2">
-            <label for="garantiaFabricacaoPlaca">Garantia Fabricação (Anos):</label>
-            <input type="number" class="form-control" id="garantiaFabricacaoPlaca"
-              placeholder="Garantia (Anos)"
-              formControlName="garantiaFabricacaoPlaca">
-          </div>
-
-          <div class="form-group col-12 col-lg-3">
-            <label for="garantiaPerformancePlaca">Garantia Performance (Anos):</label>
-            <input type="number" class="form-control" id="garantiaPerformancePlaca"
-              placeholder="Garantia Performance"
-              formControlName="garantiaPerformancePlaca">
-          </div>
-        </div>
-
-
-        <!-- Contexto Suporte -->
-        <div class="row">
-          <div class="form-group col-12 col-lg-3">
-            <label for="suporte">Suporte:</label>
-              <ng-select class=" selecter" formControlName="suporte" [items]="tiposSuportes" bindLabel="nome" bindValue="nome" [placeholder]="'Selecione um Modulo'" name="suportes" >
-              </ng-select>
-          </div>
-          <div class="form-group col-12 col-lg-3">
-            <label for="quantidadeSuportes">Quantidade de Suportes:</label>
-            <input type="number" class="form-control" id="quantidadeSuportes"
-              placeholder="Quantidade"
-              formControlName="quantidadeSuportes">
-          </div>
-        </div>
-
-        <!-- Contexto Detalhes -->
-        <div class="row">
-          <!-- quantidadeTubos - quantidadeConexoes - comprimentoAterramento - metragemCabeamento -->
-
-          <div class="form-group col-12 col-lg-3">
-            <label for="quantidadeTubos">Quantidade de Tubos:</label>
-            <input type="number" class="form-control" id="quantidadeTubos"
-              placeholder="Quantidade"
-              formControlName="quantidadeTubos">
-          </div>
-
-          <div class="form-group col-12 col-lg-3">
-            <label for="quantidadeConexoes">Quantidade de Conexões:</label>
-            <input type="number" class="form-control" id="quantidadeConexoes"
-              placeholder="Quantidade"
-              formControlName="quantidadeConexoes">
-          </div>
-
-          <div class="form-group col-12 col-lg-3">
-            <label for="comprimentoAterramento">Comprimento Aterramento:</label>
-            <input type="number" class="form-control" id="comprimentoAterramento"
-              placeholder="Comprimento"
-              formControlName="comprimentoAterramento">
-          </div>
-
-          <div class="form-group col-12 col-lg-3">
-            <label for="metragemCabeamento">Metragem Cabeamento:</label>
-            <input type="number" class="form-control" id="metragemCabeamento"
-              placeholder="Metragem"
-              formControlName="metragemCabeamento">
-          </div>
-
-        </div>
-
-        <!-- Contexto Data -->
-        <div class="row">
-          <div class="form-group col-12 col-lg-4">
-            <label for="dataInicio">Data Inicio da Instalação:</label>
-              <input formControlName="dataInicio" type="text" id="dataInicio" class="form-control"
-          placeholder="Data Inicio" bsDatepicker [bsConfig]="bsConfig" autocomplete="off">
-          </div>
-
-          <div class="form-group col-12 col-lg-4">
-            <label for="dataFim">Data Finalização da Instalação:</label>
-            <input formControlName="dataFim" type="text" id="dataFim" class="form-control"
-          placeholder="Data Inicio" bsDatepicker [bsConfig]="bsConfig" autocomplete="off">
-          </div>
-        </div>
-      </div>
+            </div> -->
+            <!-- Pessoal -->
+            <h3 class="w-100 mt-4">Pessoal:</h3>
+            <div class="w-100 d-flex flex-wrap justify-content-center">
+              <div class="form-group col-12 col-lg-4">
+                <label for="nomeCompleto">Nome:</label>
+                <input type="text" class="form-control" id="nomeCompleto" formControlName="nomeCompleto">
+              </div>
+              <div class="form-group col-12 col-lg-4">
+                <label for="nomeCompleto">CPF:</label>
+                <input type="text" class="form-control" id="cpfCliente" formControlName="cpfCliente" (input)="appyCPFMask($event)">
+              </div>
+              <div class="form-group col-12 col-lg-4">
+                <label for="celular">Celular:</label>
+                <input type="tel" class="form-control" id="celular" formControlName="celular" placeholder="(00)-0000-0000"
+                  (input)="applyCelularMask($event)">
+                </div>
+                <div class="form-group col-12 col-lg-4">
+                  <label for="email">Email:</label>
+                  <input type="email" class="form-control" id="email" formControlName="email">
+                </div>
+                <div class="form-group col-12 col-lg-4">
+                  <label for="endereco">Endereço:</label>
+                  <input type="text" class="form-control" id="endereco" formControlName="endereco">
+                </div>
+              </div>
+              <!-- Gerencial -->
+              <h3 class="w-100 mt-4">Gerencial:</h3>
+              <div class="w-100 d-flex flex-wrap justify-content-center">
+                <div class="form-group col-12 col-lg-4">
+                  <label for="status">Status:</label>
+                  <input type="text" class="form-control" id="status" formControlName="status">
+                </div>
+                <div class="form-group col-12 col-lg-4">
+                  <label for="status">Região:</label>
+                  <input type="text" class="form-control" id="regiao" formControlName="regiao" [disabled]="true">
+                </div>
+                <div class="form-group col-12 col-lg-4">
+                  <label for="ref">Referência:</label>
+                  <input type="text" class="form-control" id="ref" formControlName="ref">
+                </div>
+                <div class="form-group col-12 col-lg-4">
+                  <label for="consumo">Consumo Mensal de Energia:</label>
+                  <input type="text" class="form-control" id="consumo" formControlName="consumo"
+                    appNumericOnly>
+                  </div>
+                  <!-- Lista de formas de pagamento select -->
+                  @if (canShowFormaPagamento) {
+                    <div class="form-group col-12 col-lg-4">
+                      <label for="formaPagamento">Forma de Pagamento:</label>
+                      <select class="form-control select" id="formaPagamento" formControlName="formaPagamento">
+                        <option value="0">Selecione</option>
+                        @for (pagamento of tiposPagamentos; track pagamento) {
+                          <option [value]="pagamento">{{ pagamento }}</option>
+                        }
+                      </select>
+                    </div>
+                  }
+                  @if (userCargo != 'COLABORADOR') {
+                    <div class="form-group col-12 col-lg-4">
+                      <label for="faturamento">Faturamento (R$):</label>
+                      <input type="text" class="form-control" id="faturamento" formControlName="faturamento" appNumericOnly>
+                    </div>
+                  }
+                  <div class="form-group col-12 col-lg-4">
+                    <label for="dataPedido">Mudança Mais Recente:</label>
+                    <input type="date" class="form-control" id="dataPedido" formControlName="dataPedido">
+                  </div>
+                  <div class="form-group col-12 col-lg-4">
+                    <label for="indicacao">Indicação:</label>
+                    <input type="text" class="form-control" id="indicacao" formControlName="indicacao">
+                  </div>
+                  <div class="form-group col-12 col-lg-6 d-flex align-items-center">
+                    <label for="linkMaps" style="width: 150px;">Link Maps:</label>
+                    <input type="text" class="form-control" id="linkMaps" formControlName="linkMaps">
+                    <a [href]="editForm.value.linkMaps" target="_blank" class="btn btn-primary" style="margin-left: 5px;">Redirecionar</a>
+                  </div>
+                  <div class="form-group col-12 col-lg-4 w-100 mb-3">
+                    <label for="cidade">Observação:</label>
+                    <textarea type="text" class="form-control " id="observacao" formControlName="observacao">
+                    </textarea>
+                  </div>
+                </div>
+                <!-- Instalacao -->
+                <!-- Instalação -->
+                <h3 class="w-100 mt-4">Instalação:</h3>
+                <div class="w-100 container " formGroupName="instalacao">
+                  <!-- Contexto Geral -->
+                  <div class="row">
+                    <div class="form-group col-12 col-lg-6">
+                      <label for="potenciaGerador">Potência Gerador:</label>
+                      <input type="text" class="form-control" id="potenciaGerador"
+                        placeholder="Potência do Gerador"
+                        formControlName="potenciaGerador">
+                      </div>
+                      <div class="form-group col-12 col-lg-6">
+                        <label for="distribuidora">Distribuidora:</label>
+                        <input type="text" class="form-control" id="distribuidora"
+                          placeholder="Nome da Distribuidora"
+                          formControlName="distribuidora">
+                        </div>
+                      </div>
+                      <!-- Contexto Inversores -->
+                      <div class="row">
+                        <div class="form-group col-12 col-lg-5">
+                          <label for="inversores">Inversores:</label>
+                          <!-- <input type="text" class="form-control" id="inversores"
+                          placeholder="Inversores"
+                          formControlName="inversores"> -->
+                          <ng-select class=" selecter" formControlName="inversores" [items]="equipamentos.inversores" bindLabel="nome" bindValue="nome" [placeholder]="'Selecione um Inversor'" (change)="onInversorChange($event)">
+                          </ng-select>
+                        </div>
+                        <div class="form-group col-12 col-lg-3">
+                          <label for="quantidadeInversores">Quantidade de Inversores:</label>
+                          <input type="number" class="form-control" id="quantidadeInversores"
+                            placeholder="Quantidade de Inversores"
+                            formControlName="quantidadeInversores">
+                          </div>
+                          <div class="form-group col-12 col-lg-3">
+                            <label for="garantiaFabricacaoInversor">Garantia Fabricação (Anos):</label>
+                            <input type="number" class="form-control" id="garantiaFabricacaoInversor"
+                              placeholder="Garantia (Anos)"
+                              formControlName="garantiaFabricacaoInversor">
+                            </div>
+                          </div>
+                          <!-- Contexto Placas -->
+                          <div class="row">
+                            <div class="form-group col-12 col-lg-5">
+                              <label for="placas">Placas:</label>
+                              <!-- <input type="text" class="form-control" id="placas"
+                              placeholder="Placas"
+                              formControlName="placas"> -->
+                              <ng-select class=" selecter" formControlName="placas" [items]="equipamentos.placas" bindLabel="nome" bindValue="nome" [placeholder]="'Selecione um Modulo'" name="modulos" (change)="onModuloChange($event)" ></ng-select>
+                            </div>
+                            <div class="form-group col-12 col-lg-2">
+                              <label for="quantidadePlacas">Quantidade de Placas:</label>
+                              <input type="number" class="form-control" id="quantidadePlacas"
+                                placeholder="Quantidade"
+                                formControlName="quantidadePlacas">
+                              </div>
+                              <div class="form-group col-12 col-lg-2">
+                                <label for="garantiaFabricacaoPlaca">Garantia Fabricação (Anos):</label>
+                                <input type="number" class="form-control" id="garantiaFabricacaoPlaca"
+                                  placeholder="Garantia (Anos)"
+                                  formControlName="garantiaFabricacaoPlaca">
+                                </div>
+                                <div class="form-group col-12 col-lg-3">
+                                  <label for="garantiaPerformancePlaca">Garantia Performance (Anos):</label>
+                                  <input type="number" class="form-control" id="garantiaPerformancePlaca"
+                                    placeholder="Garantia Performance"
+                                    formControlName="garantiaPerformancePlaca">
+                                  </div>
+                                </div>
+                                <!-- Contexto Suporte -->
+                                <div class="row">
+                                  <div class="form-group col-12 col-lg-3">
+                                    <label for="suporte">Suporte:</label>
+                                    <ng-select class=" selecter" formControlName="suporte" [items]="tiposSuportes" bindLabel="nome" bindValue="nome" [placeholder]="'Selecione um Modulo'" name="suportes" >
+                                    </ng-select>
+                                  </div>
+                                  <div class="form-group col-12 col-lg-3">
+                                    <label for="quantidadeSuportes">Quantidade de Suportes:</label>
+                                    <input type="number" class="form-control" id="quantidadeSuportes"
+                                      placeholder="Quantidade"
+                                      formControlName="quantidadeSuportes">
+                                    </div>
+                                  </div>
+                                  <!-- Contexto Detalhes -->
+                                  <div class="row">
+                                    <!-- quantidadeTubos - quantidadeConexoes - comprimentoAterramento - metragemCabeamento -->
+                                    <div class="form-group col-12 col-lg-3">
+                                      <label for="quantidadeTubos">Quantidade de Tubos:</label>
+                                      <input type="number" class="form-control" id="quantidadeTubos"
+                                        placeholder="Quantidade"
+                                        formControlName="quantidadeTubos">
+                                      </div>
+                                      <div class="form-group col-12 col-lg-3">
+                                        <label for="quantidadeConexoes">Quantidade de Conexões:</label>
+                                        <input type="number" class="form-control" id="quantidadeConexoes"
+                                          placeholder="Quantidade"
+                                          formControlName="quantidadeConexoes">
+                                        </div>
+                                        <div class="form-group col-12 col-lg-3">
+                                          <label for="comprimentoAterramento">Comprimento Aterramento:</label>
+                                          <input type="number" class="form-control" id="comprimentoAterramento"
+                                            placeholder="Comprimento"
+                                            formControlName="comprimentoAterramento">
+                                          </div>
+                                          <div class="form-group col-12 col-lg-3">
+                                            <label for="metragemCabeamento">Metragem Cabeamento:</label>
+                                            <input type="number" class="form-control" id="metragemCabeamento"
+                                              placeholder="Metragem"
+                                              formControlName="metragemCabeamento">
+                                            </div>
+                                          </div>
+                                          <!-- Contexto Data -->
+                                          <div class="row">
+                                            <div class="form-group col-12 col-lg-4">
+                                              <label for="dataInicio">Data Inicio da Instalação:</label>
+                                              <input formControlName="dataInicio" type="text" id="dataInicio" class="form-control"
+                                                placeholder="Data Inicio" bsDatepicker [bsConfig]="bsConfig" autocomplete="off">
+                                              </div>
+                                              <div class="form-group col-12 col-lg-4">
+                                                <label for="dataFim">Data Finalização da Instalação:</label>
+                                                <input formControlName="dataFim" type="text" id="dataFim" class="form-control"
+                                                  placeholder="Data Inicio" bsDatepicker [bsConfig]="bsConfig" autocomplete="off">
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="form-group col-12 col-lg-4 w-100 btn-area ">
+                                              <!-- <div class="specials">
+                                              <button class="btn btn-warning" (click)="marcarStandby()" *ngIf="!rotaEspecial"><i
+                                              class="fa-regular fa-hourglass text-dark"></i>STANDBY</button>
+                                              <button class="btn btn-danger" (click)="marcarPerdido()" style="margin-left: 5px;" *ngIf="!rotaEspecial"><i
+                                              class="fa-regular fa-triangle-exclamation "></i>PERDIDO</button>
+                                            </div> -->
+                                            <div class="save modal-footer">
+                                              @if (getShowDrive) {
+                                                <button  (click)="goToDrive($event)" type="submit" class="btn btn-info drive">DRIVE</button>
+                                              }
+                                              @if (!getShowDrive) {
+                                                <button  (click)="adicionarDrive()" type="submit" class="btn btn-info drive">Adicionar Drive</button>
+                                              }
+                                              @if (canEdit) {
+                                                <button [disabled]="nothingChanged()" type="submit" class="btn btn-primary">Salvar</button>
+                                              }
+                                            </div>
+                                          </div>
+                                        </form>
+                                      </div>
+                                    }
 
 
-
-
-
-
-      <div class="form-group col-12 col-lg-4 w-100 btn-area ">
-        <!-- <div class="specials">
-          <button class="btn btn-warning" (click)="marcarStandby()" *ngIf="!rotaEspecial"><i
-              class="fa-regular fa-hourglass text-dark"></i>STANDBY</button>
-
-          <button class="btn btn-danger" (click)="marcarPerdido()" style="margin-left: 5px;" *ngIf="!rotaEspecial"><i
-            class="fa-regular fa-triangle-exclamation "></i>PERDIDO</button>
-          </div> -->
-
-        <div class="save modal-footer">
-          <button  *ngIf="getShowDrive" (click)="goToDrive($event)" type="submit" class="btn btn-info drive">DRIVE</button>
-          <button  *ngIf="!getShowDrive" (click)="adicionarDrive()" type="submit" class="btn btn-info drive">Adicionar Drive</button>
-
-
-          <button [disabled]="nothingChanged()" type="submit" class="btn btn-primary" *ngIf="canEdit">Salvar</button>
-        </div>
-
-      </div>
-
-    </form>
-  </div>
-
-
-</div>
+                                  </div>

@@ -1,6 +1,6 @@
 <app-modal #modal class="info ">
   <app-edit [detalhes]="pedido" [rotaEspecial]="rotaEspecial" [list]="pedidosList"
-    (atualizarPedidos)="carregarTabela()"></app-edit>
+  (atualizarPedidos)="carregarTabela()"></app-edit>
 </app-modal>
 
 <div class="container mt-2 bg-light p-4 rounded d-flex justify-content-center flex-column">
@@ -28,47 +28,45 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let pedido of pedidosList"  (click)="abrirEdicao(pedido)" class=" hover ">
-          <td>{{pedido.idPedido}}</td>
-          <td>{{pedido.nomeCompleto}}</td>
-          <td class="text-center">{{ pedido.dataPedido }}</td>
-          <td class="tippy-obs">
-            <span title="{{ pedido.observacao }}">
-              {{ pedido.observacao | truncate:90:true }}
-            </span>
-          </td>
-          <td class="text-center">{{pedido.status}}</td>
-          <td class="text-center" class="icons d-flex justify-content-center flex-wrap">
-
-            <i class="icon fa-solid fa-pen mini-icon bg-success text-white separar" (click)="stopPropagation($event);
+        @for (pedido of pedidosList; track pedido) {
+          <tr  (click)="abrirEdicao(pedido)" class=" hover ">
+            <td>{{pedido.idPedido}}</td>
+            <td>{{pedido.nomeCompleto}}</td>
+            <td class="text-center">{{ pedido.dataPedido }}</td>
+            <td class="tippy-obs">
+              <span title="{{ pedido.observacao }}">
+                {{ pedido.observacao | truncate:90:true }}
+              </span>
+            </td>
+            <td class="text-center">{{pedido.status}}</td>
+            <td class="text-center" class="icons d-flex justify-content-center flex-wrap">
+              @if (podeEditar) {
+<i class="icon fa-solid fa-pen mini-icon bg-success text-white separar" (click)="stopPropagation($event);
             abrirEdicao(pedido)"
-             *ngIf="podeEditar"></i>
-
-            <!-- <i *ngIf="rotaEspecial" class="icon bg-dark text-white separar"
-              (click)="stopPropagation($event); liberarPedido(pedido)">Reativar</i>
+                ></i>
+              }
+              <!-- <i *ngIf="rotaEspecial" class="icon bg-dark text-white separar"
+            (click)="stopPropagation($event); liberarPedido(pedido)">Reativar</i>
             <i *ngIf="canRetroceder && !rotaEspecial" class=" icon bg-primary text-white fa-solid fa-angles-left"
-              (click)="stopPropagation($event); retrocederPedido(pedido)"></i>
-
-
-
+            (click)="stopPropagation($event); retrocederPedido(pedido)"></i>
             <i class="icon bg-danger text-white separar fa-solid fa-trash-arrow-up"
-              (click)="stopPropagation($event); deletarPedido(pedido)"></i>
-
+            (click)="stopPropagation($event); deletarPedido(pedido)"></i>
             <i class="icon bg-warning text-white separar fa-solid fa-cube"
-              (click)="stopPropagation($event); salvarPedidoStorage(pedido)"></i>
+            (click)="stopPropagation($event); salvarPedidoStorage(pedido)"></i>
             <i *ngIf="canAvancar && !rotaEspecial" class="icon bg-primary text-white fa-solid fa-angles-right separar"
-              (click)="stopPropagation($event); avancarPedido(pedido)"></i> -->
+            (click)="stopPropagation($event); avancarPedido(pedido)"></i> -->
           </td>
           <td style="display:none;">{{pedido.dataPedido}}</td>
         </tr>
-      </tbody>
-    </table>
-  </div>
+      }
+    </tbody>
+  </table>
+</div>
 
-  <div class="w-100" [hidden]="pedidosList.length != 0">
-    <div class="w-100 d-flex justify-content-center">
-      <h3>Nenhum pedido encontrado</h3>
-    </div>
+<div class="w-100" [hidden]="pedidosList.length != 0">
+  <div class="w-100 d-flex justify-content-center">
+    <h3>Nenhum pedido encontrado</h3>
   </div>
+</div>
 
 </div>

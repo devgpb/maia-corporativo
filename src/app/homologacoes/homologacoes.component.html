@@ -1,6 +1,6 @@
 <app-modal #modal class="info ">
   <app-edit [detalhes]="pedido" [rotaEspecial]="false" [list]="pedidos"
-    (atualizarPedidos)="carregarPedidos()" [canEdit]="true"></app-edit>
+  (atualizarPedidos)="carregarPedidos()" [canEdit]="true"></app-edit>
 </app-modal>
 
 <div class="w-100 d-flex flex-wrap justify-content-center align-content-center">
@@ -9,30 +9,37 @@
     <i class="fa-solid  fa-folder-open"></i>
   </div>
 
-  <div class="w-100 card  text-decoration-none"
-  [ngClass]="{ animating: pedido.animating }"
-  *ngFor="let pedido of pedidos"  (click)="abrirEdicao(pedido)">
-
-    <div class="data">
-      <div class="user ">
-        <span class="w-100 text-center mb-1 font-weight-bold">{{ pedido.nomeCompleto }}</span>
-        <span> - </span>
-        <span class="w-100 text-center mb-1">({{ getTempoPedido(pedido) }})</span>
+  @for (pedido of pedidos; track pedido) {
+    <div class="w-100 card  text-decoration-none"
+      [ngClass]="{ animating: pedido.animating }"
+      (click)="abrirEdicao(pedido)">
+      <div class="data">
+        <div class="user ">
+          <span class="w-100 text-center mb-1 font-weight-bold">{{ pedido.nomeCompleto }}</span>
+          <span> - </span>
+          <span class="w-100 text-center mb-1">({{ getTempoPedido(pedido) }})</span>
+        </div>
+        @if (pedido.observacao.length > 0) {
+          <div class="obs">
+            <span >OBS: {{pedido.observacao}}</span>
+          </div>
+        }
       </div>
-
-      <div class="obs" *ngIf="pedido.observacao.length > 0">
-        <span >OBS: {{pedido.observacao}}</span>
+      <div class="actions">
+        <button class="btn btn-success mb-2" (click)="$event.stopPropagation(); marcarHomologado(pedido)">Marcar Homologado</button>
+        @if (pedido.linkDrive) {
+          <a class="btn btn-primary" [href]="pedido.linkDrive" target="_blank" (click)="$event.stopPropagation()">Drive</a>
+        }
+        @if (!pedido.linkDrive) {
+          <span class="w-100 text-center">Cadastrar DRIVE!</span>
+        }
       </div>
     </div>
-
-    <div class="actions">
-      <button class="btn btn-success mb-2" (click)="$event.stopPropagation(); marcarHomologado(pedido)">Marcar Homologado</button>
-      <a *ngIf="pedido.linkDrive" class="btn btn-primary" [href]="pedido.linkDrive" target="_blank" (click)="$event.stopPropagation()">Drive</a>
-      <span *ngIf="!pedido.linkDrive" class="w-100 text-center">Cadastrar DRIVE!</span>
+  }
+  @if (pedidos.length === 0) {
+    <div class="alert alert-warning  text-center" role="alert">
+      Sem Homologações para exibir.
     </div>
-  </div>
-  <div *ngIf="pedidos.length === 0" class="alert alert-warning  text-center" role="alert">
-    Sem Homologações para exibir.
-  </div>
+  }
 
 </div>

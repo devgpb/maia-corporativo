@@ -1,9 +1,10 @@
-<ng-container *ngIf="mostrar" @modalAnimation class="container">
-  <div>
-    <div (click)="close()" class="overlay"></div>
-
-    <div class="modalt" (click)="$event.stopPropagation()">
-      <ng-content></ng-content>
+@if (mostrar) {
+  <ng-container @modalAnimation class="container">
+    <div>
+      <div (click)="close()" class="overlay"></div>
+      <div class="modalt" (click)="$event.stopPropagation()">
+        <ng-content></ng-content>
+      </div>
     </div>
-  </div>
-</ng-container>
+  </ng-container>
+}

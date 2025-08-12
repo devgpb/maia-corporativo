@@ -5,7 +5,9 @@
 
     <!-- QR Code dentro da área branca superior -->
     <div class="qr-container">
-      <img *ngIf="qrCodeUrl" [src]="qrCodeUrl" alt="QR Code">
+      @if (qrCodeUrl) {
+        <img [src]="qrCodeUrl" alt="QR Code">
+      }
     </div>
 
     <!-- Label na parte branca inferior -->

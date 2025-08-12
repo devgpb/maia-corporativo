@@ -4,31 +4,47 @@
 
     <div class="modal-content">
       <div class="modal-header w-100">
-        <h3 class="modal-title w-100 text-center text-warning" *ngIf="loading"  >Gerando Proposta...</h3>
+        @if (loading) {
+          <h3 class="modal-title w-100 text-center text-warning"  >Gerando Proposta...</h3>
+        }
 
-        <h3 class="modal-title w-100 text-center text-success" *ngIf="success" >Proposta Gerada</h3>
+        @if (success) {
+          <h3 class="modal-title w-100 text-center text-success" >Proposta Gerada</h3>
+        }
 
-        <h3 class="modal-title w-100 text-center text-danger" *ngIf="!loading && !success"  >Erro ao gerar proposta</h3>
+        @if (!loading && !success) {
+          <h3 class="modal-title w-100 text-center text-danger"  >Erro ao gerar proposta</h3>
+        }
 
       </div>
 
       <div class="w-100 d-flex justify-content-center">
 
-        <div class="loading-container" *ngIf="loading"  >
-          <div class="loading-circle"></div>
-        </div>
+        @if (loading) {
+          <div class="loading-container"  >
+            <div class="loading-circle"></div>
+          </div>
+        }
       </div>
 
       <div class="w-100 d-flex justify-content-center">
-        <i class="fa-regular fa-circle-check text-success big-icon"  *ngIf="success"  ></i>
+        @if (success) {
+          <i class="fa-regular fa-circle-check text-success big-icon"   ></i>
+        }
 
-        <i class="fa-solid fa-triangle-exclamation big-icon text-danger"  *ngIf="!loading && !success"  ></i>
+        @if (!loading && !success) {
+          <i class="fa-solid fa-triangle-exclamation big-icon text-danger"   ></i>
+        }
       </div>
 
-      <p class="text-danger text-center" *ngIf="!loading && !success"> Por favor, revise seus dados</p>
+      @if (!loading && !success) {
+        <p class="text-danger text-center"> Por favor, revise seus dados</p>
+      }
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="modal.close()" *ngIf="success || !loading && !success"  >Fechar</button>
+        @if (success || !loading && !success) {
+          <button type="button" class="btn btn-secondary" (click)="modal.close()"  >Fechar</button>
+        }
       </div>
     </div>
 
@@ -37,152 +53,127 @@
   </app-modal>
 
 
-  <form (ngSubmit)="submitForm()" #contratoForm="ngForm" class="d-flex flex-column justify-content-center" *ngIf="!success">
-    <div class="card">
-      <div class="card-header text-center ">
-        <h3>Gerar Proposta</h3>
-      </div>
-    </div>
-
-    <!-- Cliente -->
-    <div class="card">
-      <div class="card-header">
-        <span>Cliente</span>
-      </div>
-
-      <div class="d-flex w-100 justify-content-center flex-wrap ">
-        <div class="input line">
-          <label for="nomeCliente" class="form-label">Nome do Cliente</label>
-          <input type="text" class="form-control" id="nomeCliente" name="nomeCliente" [(ngModel)]="proposta.nomeCliente" style="width:350px" placeholder="Nome do cliente">
+  @if (!success) {
+    <form (ngSubmit)="submitForm()" #contratoForm="ngForm" class="d-flex flex-column justify-content-center">
+      <div class="card">
+        <div class="card-header text-center ">
+          <h3>Gerar Proposta</h3>
         </div>
-
-        <div class="input line">
-          <label for="cidadeCliente" class="form-label">Cidade do Cliente</label>
-          <input type="text" class="form-control" id="cidadeCliente" name="cidadeCliente" [(ngModel)]="proposta.cidadeCliente" style="width:350px" placeholder="Cidade do cliente">
+      </div>
+      <!-- Cliente -->
+      <div class="card">
+        <div class="card-header">
+          <span>Cliente</span>
         </div>
-
-        <!-- <div class="input line">
+        <div class="d-flex w-100 justify-content-center flex-wrap ">
+          <div class="input line">
+            <label for="nomeCliente" class="form-label">Nome do Cliente</label>
+            <input type="text" class="form-control" id="nomeCliente" name="nomeCliente" [(ngModel)]="proposta.nomeCliente" style="width:350px" placeholder="Nome do cliente">
+          </div>
+          <div class="input line">
+            <label for="cidadeCliente" class="form-label">Cidade do Cliente</label>
+            <input type="text" class="form-control" id="cidadeCliente" name="cidadeCliente" [(ngModel)]="proposta.cidadeCliente" style="width:350px" placeholder="Cidade do cliente">
+          </div>
+          <!-- <div class="input line">
           <label for="endereco" class="form-label">Endereço do cliente</label>
           <input type="text" class="form-control" id="endereco" name="endereco" [(ngModel)]="proposta.endereco" style="width:350px" placeholder="Endereço do cliente">
         </div> -->
-
         <!-- detalhes [ngClass]="{'animate__fadeInUp': !comDetalhesPessoais, 'animate__fadeOutDown': comDetalhesPessoais}"-->
         <div class="personal-details w-100">
-
-
           <div class="details-list d-flex flex-wrap  justify-content-center animate__animated">
             <!-- <div class="input line">
-              <label for="identidadeCliente" class="form-label">CPF/CNPJ</label>
-              <input type="text" class="form-control" id="identidadeCliente" name="identidadeCliente" [(ngModel)]="infoPessoal.identidadeCliente" style="width:350px" placeholder="CPF ou CNPJ do cliente">
-            </div> -->
-
-            <!-- <div class="input line">
-              <label for="rgCliente" class="form-label">RG</label>
-              <input type="text" class="form-control" id="rgCliente" name="rgCliente" [(ngModel)]="infoPessoal.rgCliente" style="width:350px" (input)="applyRgMask($event)"
-              placeholder="00.000.000-0">
-            </div> -->
-
-            <div class="input line">
-              <label for="emailCliente" class="form-label">Email do cliente</label>
-              <input type="text" class="form-control" id="emailCliente" name="emailCliente" [(ngModel)]="proposta.emailCliente" style="width:350px" placeholder="Email do cliente">
-            </div>
-
-            <div class="input line">
-              <label for="telefoneCliente" class="form-label">Telefone do cliente</label>
-              <input type="text" class="form-control" id="telefoneCliente" name="telefoneCliente" [(ngModel)]="proposta.telefoneCliente" style="width:350px" placeholder="(00)-0000-0000" (input)="applyCelularMask($event)">
-            </div>
-
-            <div class="input line">
-              <label for="endereco" class="form-label">Endereço do cliente</label>
-              <input type="text" class="form-control" id="endereco" name="endereco" [(ngModel)]="proposta.endereco" style="width:350px" placeholder="Endereço do cliente">
-
-            </div>
+            <label for="identidadeCliente" class="form-label">CPF/CNPJ</label>
+            <input type="text" class="form-control" id="identidadeCliente" name="identidadeCliente" [(ngModel)]="infoPessoal.identidadeCliente" style="width:350px" placeholder="CPF ou CNPJ do cliente">
+          </div> -->
+          <!-- <div class="input line">
+          <label for="rgCliente" class="form-label">RG</label>
+          <input type="text" class="form-control" id="rgCliente" name="rgCliente" [(ngModel)]="infoPessoal.rgCliente" style="width:350px" (input)="applyRgMask($event)"
+            placeholder="00.000.000-0">
+          </div> -->
+          <div class="input line">
+            <label for="emailCliente" class="form-label">Email do cliente</label>
+            <input type="text" class="form-control" id="emailCliente" name="emailCliente" [(ngModel)]="proposta.emailCliente" style="width:350px" placeholder="Email do cliente">
+          </div>
+          <div class="input line">
+            <label for="telefoneCliente" class="form-label">Telefone do cliente</label>
+            <input type="text" class="form-control" id="telefoneCliente" name="telefoneCliente" [(ngModel)]="proposta.telefoneCliente" style="width:350px" placeholder="(00)-0000-0000" (input)="applyCelularMask($event)">
+          </div>
+          <div class="input line">
+            <label for="endereco" class="form-label">Endereço do cliente</label>
+            <input type="text" class="form-control" id="endereco" name="endereco" [(ngModel)]="proposta.endereco" style="width:350px" placeholder="Endereço do cliente">
           </div>
         </div>
-
       </div>
     </div>
-
-
-    <!-- Instalação -->
-    <div class="card">
-      <div class="card-header">
-        <span>Conta de Energia</span>
-      </div>
-      <div class="d-flex w-100 justify-content-center overflow flex-wrap  ">
-
-        <!-- <div class="input line">
-          <label for="tipoConta" class="form-label">Tipo de Conta</label>
-          <select class="form-select" id="tipoConta" name="tipoConta" [(ngModel)]="proposta.tipoConta" style="width:350px">
-            <option value="Residencial">Residencial</option>
-            <option value="Comercial">Comercial</option>
-            <option value="Industrial">Industrial</option>
-          </select>
-        </div> -->
-
-        <div class="input line">
+  </div>
+  <!-- Instalação -->
+  <div class="card">
+    <div class="card-header">
+      <span>Conta de Energia</span>
+    </div>
+    <div class="d-flex w-100 justify-content-center overflow flex-wrap  ">
+      <!-- <div class="input line">
+      <label for="tipoConta" class="form-label">Tipo de Conta</label>
+      <select class="form-select" id="tipoConta" name="tipoConta" [(ngModel)]="proposta.tipoConta" style="width:350px">
+        <option value="Residencial">Residencial</option>
+        <option value="Comercial">Comercial</option>
+        <option value="Industrial">Industrial</option>
+      </select>
+    </div> -->
+    <div class="input line">
           <label for="consumoCliente" class="form-label
           ">Kit</label>
-          <input type="text" class="form-control" id="consumoCliente" name="consumoCliente" [(ngModel)]="proposta.consumoCliente" style="width:350px" placeholder="Consumo de Energia" currencyMask [options]="configMask">
-        </div>
-
-
-
-      </div>
+      <input type="text" class="form-control" id="consumoCliente" name="consumoCliente" [(ngModel)]="proposta.consumoCliente" style="width:350px" placeholder="Consumo de Energia" currencyMask [options]="configMask">
     </div>
-
-    <!-- Projetos -->
-    <div class="card">
-      <div class="card-header">
-        <span>Projeto</span>
-      </div>
-      <div class="d-flex w-100 justify-content-center flex-wrap  ">
-        <!-- <div class="input line">
+  </div>
+</div>
+<!-- Projetos -->
+<div class="card">
+  <div class="card-header">
+    <span>Projeto</span>
+  </div>
+  <div class="d-flex w-100 justify-content-center flex-wrap  ">
+    <!-- <div class="input line">
           <label for="custoProjeto" class="form-label
           ">Custo do Projeto</label>
-          <input type="text" class="form-control" id="custoProjeto" name="custoProjeto" [(ngModel)]="proposta.custoProjeto" style="width:350px" placeholder="Custo do Projeto" currencyMask [options]="configMask">
-        </div> -->
-
-        <!-- Valor de entrada -->
-        <!-- <div class="input line">
+    <input type="text" class="form-control" id="custoProjeto" name="custoProjeto" [(ngModel)]="proposta.custoProjeto" style="width:350px" placeholder="Custo do Projeto" currencyMask [options]="configMask">
+  </div> -->
+  <!-- Valor de entrada -->
+  <!-- <div class="input line">
           <label for="valorEntrada" class="form-label
           ">Valor de Entrada</label>
-          <input type="text" class="form-control" id="valorEntrada" name="valorEntrada" [(ngModel)]="proposta.valorEntrada" style="width:350px" placeholder="Valor de Entrada"  currencyMask [options]="configMask">
-        </div> -->
-
-        <div class="input line">
-          <label for="telhadoCliente" class="form-label">Tipo de Estrutura</label>
-          <select class="form-select" id="telhadoCliente" name="telhadoCliente" [(ngModel)]="proposta.telhadoCliente" style="width:350px">
-            <option value="Solo">Solo</option>
-            <option value="Telha Comum">Telha Comum</option>
-            <option value="Brasilit">Brasilit</option>
-            <option value="Laje">Laje</option>
-
-          </select>
-        </div>
-
-        <!-- select tipo inversor -->
-        <!-- <div class="input line">
+  <input type="text" class="form-control" id="valorEntrada" name="valorEntrada" [(ngModel)]="proposta.valorEntrada" style="width:350px" placeholder="Valor de Entrada"  currencyMask [options]="configMask">
+</div> -->
+<div class="input line">
+  <label for="telhadoCliente" class="form-label">Tipo de Estrutura</label>
+  <select class="form-select" id="telhadoCliente" name="telhadoCliente" [(ngModel)]="proposta.telhadoCliente" style="width:350px">
+    <option value="Solo">Solo</option>
+    <option value="Telha Comum">Telha Comum</option>
+    <option value="Brasilit">Brasilit</option>
+    <option value="Laje">Laje</option>
+  </select>
+</div>
+<!-- select tipo inversor -->
+<!-- <div class="input line">
           <label for="tipoInversor" class="form-label
           ">Tipo de Inversor</label>
-          <select class="form-select" id="tipoInversor" name="tipoInversor" [(ngModel)]="proposta.tipoInversor" style="width:350px">
-            <option value="String">String</option>
-            <option value="Microinversor">Microinversor</option>
-          </select>
-        </div> -->
+<select class="form-select" id="tipoInversor" name="tipoInversor" [(ngModel)]="proposta.tipoInversor" style="width:350px">
+  <option value="String">String</option>
+  <option value="Microinversor">Microinversor</option>
+</select>
+</div> -->
+<!-- Desconto em porcentagem -->
+<div class="input line">
+  <label for="desconto" class="form-label">Desconto</label>
+  <input type="text" class="form-control" id="desconto" name="desconto" [(ngModel)]="proposta.desconto" style="width:350px" placeholder="Desconto" (input)="applyPercentMask($event)">
+</div>
+</div>
+</div>
+</form>
+}
 
-        <!-- Desconto em porcentagem -->
-        <div class="input line">
-          <label for="desconto" class="form-label">Desconto</label>
-          <input type="text" class="form-control" id="desconto" name="desconto" [(ngModel)]="proposta.desconto" style="width:350px" placeholder="Desconto" (input)="applyPercentMask($event)">
-        </div>
-
-      </div>
-    </div>
-
-  </form>
-
-  <div class="bg-gradient-to-b from-blue-100 to-yellow-100 min-h-screen py-8" *ngIf="success">
+@if (success) {
+  <div class="bg-gradient-to-b from-blue-100 to-yellow-100 min-h-screen py-8">
     <div class="container mx-auto px-4 max-w-4xl">
       <div id="printSection" class="bg-white rounded-3xl shadow-2xl overflow-hidden">
         <!-- Header -->
@@ -192,7 +183,6 @@
             <h1 class="text-3xl font-bold">Proposta Solar</h1>
           </div>
         </div>
-
         <!-- Content -->
         <div class="p-8">
           <!-- Kit Details -->
@@ -214,13 +204,14 @@
                 <strong class="text-xl text-orange-600">7-12 anos Inversor<br>15-30 anos Placas</strong>
               </div>
             </div>
-            <div class="mt-4 text-center" *ngIf="proposta.desconto != '0%' && proposta.desconto != '%'">
-              <span class="inline-block bg-yellow-400 text-yellow-800 text-lg font-semibold px-4 py-2 rounded-full">
-                <i-lucide name="tag" class="w-5 h-5 inline mr-1"></i-lucide> Desconto de {{proposta.desconto}}
-              </span>
-            </div>
+            @if (proposta.desconto != '0%' && proposta.desconto != '%') {
+              <div class="mt-4 text-center">
+                <span class="inline-block bg-yellow-400 text-yellow-800 text-lg font-semibold px-4 py-2 rounded-full">
+                  <i-lucide name="tag" class="w-5 h-5 inline mr-1"></i-lucide> Desconto de {{proposta.desconto}}
+                </span>
+              </div>
+            }
           </section>
-
           <!-- Equipment Details -->
           <section class="mb-12">
             <h2 class="text-2xl font-semibold text-blue-600 mb-4 flex items-center">
@@ -250,7 +241,6 @@
               </div>
             </div>
           </section>
-
           <!-- Payment Details -->
           <section class="mb-12">
             <h2 class="text-2xl font-semibold text-green-600 mb-4 flex items-center">
@@ -261,7 +251,6 @@
               <p class="text-lg"><strong>Prazo de Entrega:</strong> <span class="text-green-600">{{ propostaCliente?.prasoEntrega }} dias</span></p>
             </div>
           </section>
-
           <!-- Client Details -->
           <section class="mb-12">
             <h2 class="text-2xl font-semibold text-purple-600 mb-4 flex items-center">
@@ -275,7 +264,6 @@
               <p><strong>Telefone:</strong> {{ proposta.telefoneCliente }}</p>
             </div>
           </section>
-
           <!-- Call to Action -->
           <section class="mb-12">
             <div class="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl p-6 text-white text-center">
@@ -283,19 +271,23 @@
               <p class="text-lg">Economize na conta de energia e contribua para um futuro sustentável. Entre em contato hoje e garanta o melhor investimento para o seu lar!</p>
             </div>
           </section>
-
           <!-- Additional Messages -->
-          <section *ngIf="propostaCliente?.mensagemSolo || propostaCliente?.mensagemCidade">
-            <h2 class="text-2xl font-semibold text-gray-600 mb-4 flex items-center">
-              <i-lucide name="info" class="w-8 h-8 mr-2"></i-lucide> Informações Adicionais
-            </h2>
-            <div class="bg-gray-100 rounded-xl p-6">
-              <p *ngIf="propostaCliente?.mensagemSolo"><strong>Solo:</strong> {{ propostaCliente?.mensagemSolo }}</p>
-              <p *ngIf="propostaCliente?.mensagemCidade"><strong>Cidade:</strong> {{ propostaCliente?.mensagemCidade }}</p>
-            </div>
-          </section>
+          @if (propostaCliente?.mensagemSolo || propostaCliente?.mensagemCidade) {
+            <section>
+              <h2 class="text-2xl font-semibold text-gray-600 mb-4 flex items-center">
+                <i-lucide name="info" class="w-8 h-8 mr-2"></i-lucide> Informações Adicionais
+              </h2>
+              <div class="bg-gray-100 rounded-xl p-6">
+                @if (propostaCliente?.mensagemSolo) {
+                  <p><strong>Solo:</strong> {{ propostaCliente?.mensagemSolo }}</p>
+                }
+                @if (propostaCliente?.mensagemCidade) {
+                  <p><strong>Cidade:</strong> {{ propostaCliente?.mensagemCidade }}</p>
+                }
+              </div>
+            </section>
+          }
         </div>
-
         <!-- Footer -->
         <div class="bg-gray-100 p-6 flex justify-between items-center">
           <button (click)="success = false" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out flex items-center">
@@ -308,11 +300,12 @@
       </div>
     </div>
   </div>
+}
 
 
-  <div class="w-100 d-flex justify-content-end">
-    <!-- <button type="submit" (click)="saveProposta()" class="btn btn-outline-secondary">Salvar Dados</button> -->
-    <div class="space"></div>
-    <button type="submit" (click)="submitForm()" class="btn btn-primary">Gerar Proposta</button>
-  </div>
+<div class="w-100 d-flex justify-content-end">
+  <!-- <button type="submit" (click)="saveProposta()" class="btn btn-outline-secondary">Salvar Dados</button> -->
+  <div class="space"></div>
+  <button type="submit" (click)="submitForm()" class="btn btn-primary">Gerar Proposta</button>
+</div>
 </div>

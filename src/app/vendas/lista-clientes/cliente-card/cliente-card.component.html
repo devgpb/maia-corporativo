@@ -6,7 +6,7 @@
 
       <div class="text-center flex-fill">
         <span class="badge status bg-info text-white px-2 d-inline-block text-truncate"
-        style="">
+          style="">
           {{ cliente.status || 'Sem status' }}
         </span>
       </div>
@@ -26,19 +26,21 @@
 
     <!-- Informações com ícones e separador -->
     <div class="d-flex align-items-center gap-1 text-muted small mb-3 flex-wrap">
-      <ng-container *ngIf="cliente.cidade">
+      @if (cliente.cidade) {
         <lucide-icon name="map-pin"></lucide-icon>
         <span>cidade: </span>
         {{ cliente.cidade }}
-      </ng-container>
+      }
 
-      <span *ngIf="cliente.cidade && cliente.campanha && cliente.campanha != 'Sem Campanha'">|</span>
+      @if (cliente.cidade && cliente.campanha && cliente.campanha != 'Sem Campanha') {
+        <span>|</span>
+      }
 
-      <ng-container *ngIf="cliente.campanha && cliente.campanha != 'Sem Campanha'">
+      @if (cliente.campanha && cliente.campanha != 'Sem Campanha') {
         <lucide-icon name="megaphone"></lucide-icon>
         <span>campanha: </span>
         <span class="text-primary">{{ cliente.campanha }}</span>
-      </ng-container>
+      }
     </div>
 
     <!-- Ações -->

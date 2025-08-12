@@ -1,115 +1,116 @@
 <app-modal #modal class="info ">
   <app-edit [detalhes]="pedido" [rotaEspecial]="rotaEspecial" [list]="listaPedidos"
-    (atualizarPedidos)="refazerTabela()"></app-edit>
+  (atualizarPedidos)="refazerTabela()"></app-edit>
 </app-modal>
 
 <div class="table-responsive">
 
   <div class="w-100 details d-flex flex-column  justify-content-center align-content-center ">
 
-    <div class="select-count d-flex flex-column  justify-content-center align-content-center"
-      *ngIf="listaPedidosId.length > 0">
-      <span class="w-100 text-center counter">
-        Pedidos Selecionados: {{listaPedidosId.length}}
-      </span>
-
-      <div class="choices d-flex w-100 justify-content-center">
-
-        <i class="icon  bg-primary  text-white fa-solid fa-angles-left separar"
-          (click)="handleMultiplosPedidos('retroceder')"><span>RETROCEDER PEDIDOS</span> </i>
-
-        <i class="icon bg-danger text-white fa-solid fa-trash-arrow-up separar"
-          (click)="handleMultiplosPedidos('apagar')"><span>APAGAR PEDIDOS</span></i>
-
-        <i class="icon bg-primary text-white fa-solid fa-angles-right separar"
-          (click)="handleMultiplosPedidos('avancar')"><span>AVANÇAR PEDIDOS</span></i>
-
-      </div>
-      <div class="choices d-flex w-100 justify-content-center align-items-center  ">
-        <span class="label">Mandar Para Status:</span>
-
-        <ng-select class="ml-2" [items]="rotas" bindLabel="label" bindValue="value" placeholder="Selecione uma rota"
-          [(ngModel)]="statusSelecionado">
-        </ng-select>
-
-        <i class="icon arrow text-primary  fa-solid fa-circle-arrow-right separar"
-          (click)="handleMultiplosPedidos('mudar', true)"></i>
-      </div>
-    </div>
-    <div class="w-100 d-flex justify-content-end mb-3">
-      <button id="downloadExcel" class="btn btn-success" (click)="baixarListaPedidos()">
-        <i class="fas fa-file-excel"></i> Baixar Excel
-      </button>
-    </div>
-  </div>
-
-  <table datatable #pedidos [dtOptions]="dtOptionsPedidos" [dtTrigger]="dtTriggerPedidos"
-    class="row-border table-striped table-bordered w-100">
-    <thead>
-      <tr>
-        <th class="col-check">
-          <input class="check" type="checkbox" [(ngModel)]="allSelected" (change)="selecionarTodos($event)">
-        </th>
-        <th class="col-id">Id</th>
-        <th class="col-nome">Nome</th>
-        <th class="col-data">Data</th>
-        <th class="col-obs">Obs</th>
-        <th class="col-tmp">Tempo</th>
-        <th class="col-status">Status</th>
-        <th class="col-acoes actions text-center">Ações</th>
-        <th style="display:none;"></th>
-        <th style="display:none;"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let pedido of listaPedidos" (click)="abrirEdicao(pedido)" class=" hover ">
-        <td class="text-center">
-          <input class="check" type="checkbox" [(ngModel)]="pedido.selected" (change)="atualizarSelecionados(pedido)"
-            (click)="stopPropagation($event)">
-        </td>
-        <td>{{pedido.idPedido}}</td>
-        <td>{{pedido.nomeCompleto}}</td>
-        <td class="text-center">{{ pedido.dataPedido | date: 'dd/MM/yyyy' }}</td>
-        <td class="tippy-obs">
-          <span title="{{ pedido.observacao }}">
-            {{ pedido.observacao | truncate:50:true }}
-          </span>
-        </td>
-        <td class="text-center"> {{ getTempoPedido(pedido) }}</td>
-        <td class="text-center">{{pedido.status}}</td>
-        <td class="text-center"
-        class="icons d-flex flex-wrap justify-content-center"
+    @if (listaPedidosId.length > 0) {
+      <div class="select-count d-flex flex-column  justify-content-center align-content-center"
         >
-          <div class="w-100 d-flex justify-content-center" >
-            <!-- Apenas para rotas especiais -->
-            <i *ngIf="rotaEspecial" class="icon bg-dark text-white separar"
-              (click)="stopPropagation($event); liberarPedido(pedido)">Reativar</i>
-            <!-- Apenas para rotas especiais -->
-            <i *ngIf="canRetroceder && !rotaEspecial" class=" icon bg-primary text-white fa-solid fa-angles-left"
-              (click)="stopPropagation($event); retrocederPedido(pedido)"></i>
+        <span class="w-100 text-center counter">
+          Pedidos Selecionados: {{listaPedidosId.length}}
+        </span>
+        <div class="choices d-flex w-100 justify-content-center">
+          <i class="icon  bg-primary  text-white fa-solid fa-angles-left separar"
+            (click)="handleMultiplosPedidos('retroceder')"><span>RETROCEDER PEDIDOS</span> </i>
+            <i class="icon bg-danger text-white fa-solid fa-trash-arrow-up separar"
+              (click)="handleMultiplosPedidos('apagar')"><span>APAGAR PEDIDOS</span></i>
+              <i class="icon bg-primary text-white fa-solid fa-angles-right separar"
+                (click)="handleMultiplosPedidos('avancar')"><span>AVANÇAR PEDIDOS</span></i>
+              </div>
+              <div class="choices d-flex w-100 justify-content-center align-items-center  ">
+                <span class="label">Mandar Para Status:</span>
+                <ng-select class="ml-2" [items]="rotas" bindLabel="label" bindValue="value" placeholder="Selecione uma rota"
+                  [(ngModel)]="statusSelecionado">
+                </ng-select>
+                <i class="icon arrow text-primary  fa-solid fa-circle-arrow-right separar"
+                (click)="handleMultiplosPedidos('mudar', true)"></i>
+              </div>
+            </div>
+          }
+          <div class="w-100 d-flex justify-content-end mb-3">
+            <button id="downloadExcel" class="btn btn-success" (click)="baixarListaPedidos()">
+              <i class="fas fa-file-excel"></i> Baixar Excel
+            </button>
+          </div>
+        </div>
 
+        <table datatable #pedidos [dtOptions]="dtOptionsPedidos" [dtTrigger]="dtTriggerPedidos"
+          class="row-border table-striped table-bordered w-100">
+          <thead>
+            <tr>
+              <th class="col-check">
+                <input class="check" type="checkbox" [(ngModel)]="allSelected" (change)="selecionarTodos($event)">
+              </th>
+              <th class="col-id">Id</th>
+              <th class="col-nome">Nome</th>
+              <th class="col-data">Data</th>
+              <th class="col-obs">Obs</th>
+              <th class="col-tmp">Tempo</th>
+              <th class="col-status">Status</th>
+              <th class="col-acoes actions text-center">Ações</th>
+              <th style="display:none;"></th>
+              <th style="display:none;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (pedido of listaPedidos; track pedido) {
+              <tr (click)="abrirEdicao(pedido)" class=" hover ">
+                <td class="text-center">
+                  <input class="check" type="checkbox" [(ngModel)]="pedido.selected" (change)="atualizarSelecionados(pedido)"
+                    (click)="stopPropagation($event)">
+                  </td>
+                  <td>{{pedido.idPedido}}</td>
+                  <td>{{pedido.nomeCompleto}}</td>
+                  <td class="text-center">{{ pedido.dataPedido | date: 'dd/MM/yyyy' }}</td>
+                  <td class="tippy-obs">
+                    <span title="{{ pedido.observacao }}">
+                      {{ pedido.observacao | truncate:50:true }}
+                    </span>
+                  </td>
+                  <td class="text-center"> {{ getTempoPedido(pedido) }}</td>
+                  <td class="text-center">{{pedido.status}}</td>
+                  <td class="text-center"
+                    class="icons d-flex flex-wrap justify-content-center"
+                    >
+                    <div class="w-100 d-flex justify-content-center" >
+                      <!-- Apenas para rotas especiais -->
+                      @if (rotaEspecial) {
+                        <i class="icon bg-dark text-white separar"
+                        (click)="stopPropagation($event); liberarPedido(pedido)">Reativar</i>
+                      }
+                      <!-- Apenas para rotas especiais -->
+                      @if (canRetroceder && !rotaEspecial) {
+                        <i class=" icon bg-primary text-white fa-solid fa-angles-left"
+                        (click)="stopPropagation($event); retrocederPedido(pedido)"></i>
+                      }
             <!-- <i class="icon fa-solid fa-pen mini-icon bg-success text-white separar" (click)="stopPropagation($event);
              abrirEdicao(pedido)"
-              *ngIf="podeEditar"></i> -->
+                    *ngIf="podeEditar"></i> -->
+                    <i class="icon bg-danger text-white separar fa-solid fa-trash-arrow-up"
+                    (click)="stopPropagation($event); deletarPedido(pedido)"></i>
+                    <!-- <i class="icon bg-warning text-white separar fa-solid fa-cube"
+                  (click)="stopPropagation($event); salvarPedidoStorage(pedido)"></i> -->
+                  @if (canAvancar && !rotaEspecial) {
+                    <i class="icon bg-primary text-white fa-solid fa-angles-right separar"
+                    (click)="stopPropagation($event); avancarPedido(pedido)"></i>
+                  }
+                </div>
+              </td>
+              <td style="display:none;">{{pedido['createdAt']}}</td>
+              <td style="display:none;">{{pedido['nomeNormalizado']}}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
 
-            <i class="icon bg-danger text-white separar fa-solid fa-trash-arrow-up"
-              (click)="stopPropagation($event); deletarPedido(pedido)"></i>
+      @if (loading) {
+        <div class="loading-container">
+          <div class="loading-circle"></div>
+        </div>
+      }
 
-            <!-- <i class="icon bg-warning text-white separar fa-solid fa-cube"
-              (click)="stopPropagation($event); salvarPedidoStorage(pedido)"></i> -->
-
-            <i *ngIf="canAvancar && !rotaEspecial" class="icon bg-primary text-white fa-solid fa-angles-right separar"
-              (click)="stopPropagation($event); avancarPedido(pedido)"></i>
-          </div>
-        </td>
-        <td style="display:none;">{{pedido['createdAt']}}</td>
-        <td style="display:none;">{{pedido['nomeNormalizado']}}</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <div class="loading-container" *ngIf="loading">
-    <div class="loading-circle"></div>
-  </div>
-
-</div>
+    </div>

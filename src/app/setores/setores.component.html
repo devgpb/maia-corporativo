@@ -15,16 +15,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let setor of list">
-            <td scope="row">{{ setor.idSetor }}</td>
-            <td scope="row">{{ setor.nome }}</td>
-            <td scope="row" >
-              <i
-              class="fa-solid fa-trash-can icon bg-danger text-white"
-              (click)="apagar(setor)"></i>
-            </td>
-
-          </tr>
+          @for (setor of list; track setor) {
+            <tr>
+              <td scope="row">{{ setor.idSetor }}</td>
+              <td scope="row">{{ setor.nome }}</td>
+              <td scope="row" >
+                <i
+                  class="fa-solid fa-trash-can icon bg-danger text-white"
+                (click)="apagar(setor)"></i>
+              </td>
+            </tr>
+          }
         </tbody>
       </table>
     </div>
@@ -41,15 +42,16 @@
           <!-- Mensagem de erro se o campo for obrigatório -->
 
         </div>
-        <div
-          *ngIf="form.controls['setor'].invalid && form.controls['setor'].touched"
-          class="error-message w-100 d-flex justify-content-center mb-3">
+        @if (form.controls['setor'].invalid && form.controls['setor'].touched) {
+          <div
+            class="error-message w-100 d-flex justify-content-center mb-3">
             O nome é obrigatório.
           </div>
+        }
         <div class="w-100 d-flex justify-content-center">
           <button type="submit">Enviar</button>
         </div>
       </form>
     </div>
   </div>
-  </div>
+</div>

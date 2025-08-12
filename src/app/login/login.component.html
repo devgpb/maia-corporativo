@@ -8,34 +8,41 @@
       <div class="form-group">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" formControlName="email" required
-               class="form-control" placeholder="Seu email">
-        <div *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched"
-             class="error">
-          Email é obrigatório.
+          class="form-control" placeholder="Seu email">
+          @if (loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched) {
+            <div
+              class="error">
+              Email é obrigatório.
+            </div>
+          }
+          @if (loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched) {
+            <div
+              class="error">
+              Email inválido.
+            </div>
+          }
         </div>
-        <div *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched"
-             class="error">
-          Email inválido.
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" formControlName="password" required
-               class="form-control" placeholder="Sua senha">
-        <div *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"
-             class="error">
-          Senha é obrigatória.
-        </div>
-      </div>
+        <div class="form-group">
+          <label for="password">Senha:</label>
+          <input type="password" id="password" name="password" formControlName="password" required
+            class="form-control" placeholder="Sua senha">
+            @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
+              <div
+                class="error">
+                Senha é obrigatória.
+              </div>
+            }
+          </div>
 
-      <div *ngIf="invalidCred" class="error">
-        Login ou Senha Inválidos.
-        <!-- <span>{{error}}</span> -->
-
+          @if (invalidCred) {
+            <div class="error">
+              Login ou Senha Inválidos.
+              <!-- <span>{{error}}</span> -->
+            </div>
+          }
+          <div class="w-100 d-flex justify-content-center mt-3">
+            <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary">Entrar</button>
+          </div>
+        </form>
       </div>
-      <div class="w-100 d-flex justify-content-center mt-3">
-        <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary">Entrar</button>
-      </div>
-    </form>
-  </div>
-</div>
+    </div>

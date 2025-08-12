@@ -17,283 +17,318 @@
       <div class="d-flex w-100 justify-content-center flex-wrap  ">
         <div class="line">
           <div class=""  style="width: 100px;">
-          <label for="idCliente" class="form-label">Id Cliente</label>
-          <input type="text" class="form-control" id="idCliente" name="idCliente" [(ngModel)]="contrato.idCliente" placeholder="id do cliente" disabled>
+            <label for="idCliente" class="form-label">Id Cliente</label>
+            <input type="text" class="form-control" id="idCliente" name="idCliente" [(ngModel)]="contrato.idCliente" placeholder="id do cliente" disabled>
           </div>
         </div>
 
         <div class="line">
           <div class="" style="width: 150px;">
-          <label for="numeroContrato" class="form-label">Número do Contrato</label>
-          <input type="text" class="form-control" id="numeroContrato" name="numeroContrato" [(ngModel)]="contrato.numeroContrato" placeholder="Numero" required>
+            <label for="numeroContrato" class="form-label">Número do Contrato</label>
+            <input type="text" class="form-control" id="numeroContrato" name="numeroContrato" [(ngModel)]="contrato.numeroContrato" placeholder="Numero" required>
           </div>
         </div>
 
         <div class="line">
           <div class=""  style="width: 350px;">
-          <label for="nomeContratante" class="form-label">Nome do Contratante</label>
-          <input type="text" class="form-control" id="nomeContratante" name="nomeContratante" [(ngModel)]="contrato.nomeContratante" placeholder="Nome Contratante" required>
+            <label for="nomeContratante" class="form-label">Nome do Contratante</label>
+            <input type="text" class="form-control" id="nomeContratante" name="nomeContratante" [(ngModel)]="contrato.nomeContratante" placeholder="Nome Contratante" required>
           </div>
         </div>
 
         <div class="input d-flex  justify-content-center flex-column  ">
 
-          <div *ngIf="identificacao == 'cpf' " @onEnter>
-            <label for="cpfCliente" class="form-label">CPF do Cliente</label>
-            <input type="text" class="form-control" id="cpfCliente" name="cpfCliente" [(ngModel)]="contrato.cpfContratante" placeholder="000.000.000-00"
-            (input)="applyCpfMask($event)">
-          </div>
+          @if (identificacao == 'cpf' ) {
+            <div @onEnter>
+              <label for="cpfCliente" class="form-label">CPF do Cliente</label>
+              <input type="text" class="form-control" id="cpfCliente" name="cpfCliente" [(ngModel)]="contrato.cpfContratante" placeholder="000.000.000-00"
+                (input)="applyCpfMask($event)">
+              </div>
+            }
 
-          <div *ngIf="identificacao == 'cnpj' " @onEnter>
-            <label for="cnpjCliente" class="form-label">CNPJ do Cliente</label>
-            <input type="text" class="form-control" id="cnpjCliente" name="cnpjCliente" [(ngModel)]="contrato.cnpjContratante" (input)="applyCnpjMask($event)"
-            placeholder="00.000.000/0000-00">
-          </div>
+            @if (identificacao == 'cnpj' ) {
+              <div @onEnter>
+                <label for="cnpjCliente" class="form-label">CNPJ do Cliente</label>
+                <input type="text" class="form-control" id="cnpjCliente" name="cnpjCliente" [(ngModel)]="contrato.cnpjContratante" (input)="applyCnpjMask($event)"
+                  placeholder="00.000.000/0000-00">
+                </div>
+              }
 
-          <button *ngIf="identificacao == 'cpf' " (click)="changeIdentificacao('cnpj')" @onEnter>Usar CNPJ</button>
-          <button *ngIf="identificacao == 'cnpj' " (click)="changeIdentificacao('cpf')" @onEnter>Usar CPF</button>
+              @if (identificacao == 'cpf' ) {
+                <button (click)="changeIdentificacao('cnpj')" @onEnter>Usar CNPJ</button>
+              }
+              @if (identificacao == 'cnpj' ) {
+                <button (click)="changeIdentificacao('cpf')" @onEnter>Usar CPF</button>
+              }
 
-        </div>
-
-
-        <div class="line">
-          <div class="big-input">
-          <label for="enderecoInstalacao" class="form-label">Endereço de Instalação</label>
-          <input class="max-width" type="text" class="form-control" id="enderecoInstalacao" name="enderecoInstalacao" [(ngModel)]="contrato.enderecoInstalacao" placeholder="Endereço de Instalação">
-          </div>
-        </div>
-
-        <div class="line">
-          <div class="" style="width: 250px;">
-          <label for="email" class="form-label">Email</label>
-          <input type="text" class="form-control" id="email" name="email" [(ngModel)]="contrato.email" placeholder="Email" required>
-          </div>
-        </div>
-
-        <div class="line">
-          <div class="" style="width: 250px;">
-          <label for="celular" class="form-label">Celular</label>
-          <input type="text" class="form-control" id="celular" name="celular" [(ngModel)]="contrato.celular" placeholder="(00)-0000-0000" (input)="applyCelularMask($event)" required>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Instalação -->
-    <div class="card">
-      <div class="card-header">
-        <span>Instalação</span>
-      </div>
-      <div class="d-flex w-100 justify-content-center overflow flex-wrap ">
-
-        <div class="line w-100 d-flex justify-content-center">
-          <div class="" style="width: 150px;">
-          <label for="potenciaGerador" class="form-label">Potência do Gerador</label>
-          <input type="text" class="form-control" id="potenciaGerador" name="potenciaGerador" [(ngModel)]="contrato.potenciaGerador" placeholder="Potência" required>
-          </div>
-        </div>
-
-        <div class="line d-flex w-100 justify-content-center">
-          <div class="" style="width: 550px;">
-          <label for="inversores" class="form-label">Inversores</label>
-
-          <ng-select class=" selecter" [(ngModel)]="contrato.inversores" [items]="equipamentos.inversores" bindLabel="nome" bindValue="nome" [placeholder]="contrato.inversores || 'Selecione um Inversor'" name="inversores" (change)="onInversorChange($event)">
-          </ng-select>
-
-          <!-- garantia fabricacao inversores -->
-          <div class="garantia" *ngIf="contrato.inversores">
-            <span  *ngIf="contrato.garantiaFabricacaoInversor">Garantia de Fabricação: <span class="bold">{{contrato.garantiaFabricacaoInversor}} Anos</span></span>
-            <span class="text-danger" *ngIf="!contrato.garantiaFabricacaoInversor">Por favor, Cadastrar Garantia de Fabricação! Sugeito a Erros de Automação! <span class="bold">{{contrato.inversores}}</span></span>
-          </div>
-
-          </div>
-
-          <div style="width: 60px; margin-left: 2px">
-            <label for="quantInversores" class="form-label">Quantidade</label>
-            <input type="text" class="form-control" id="quantInversores" name="quantInversores" [(ngModel)]="contrato.quantInversores" (keydown)="validarNumero($event)" required>
-          </div>
-
-        </div>
-
-        <div class="line d-flex w-100 justify-content-center">
-          <div class="" style="width: 550px;">
-          <label for="modulos" class="form-label">Módulos</label>
-
-          <ng-select class=" selecter" [(ngModel)]="contrato.modulos" [items]="equipamentos.placas" bindLabel="nome" bindValue="nome" [placeholder]="contrato.modulos || 'Selecione um Modulo'" name="modulos" (change)="onModuloChange($event)" >
-          </ng-select>
-
-          <div class="garantia w-100" *ngIf="contrato.modulos">
-            <span  *ngIf="contrato.garantiaFabricacaoPlaca">Garantia de Fabricação: <span class="bold">{{contrato.garantiaFabricacaoPlaca}} Anos</span></span>
-            <span class="text-danger" *ngIf="!contrato.garantiaFabricacaoPlaca">Por favor, Cadastrar Garantia de Fabricação! Sugeito a Erros de Automação!</span>
-          </div>
-          <div class="garantia w-100" *ngIf="contrato.modulos">
-            <span  *ngIf="contrato.garantiaPerformancePlaca">Garantia de Performance: <span class="bold">{{contrato.garantiaPerformancePlaca}} Anos</span></span>
-            <span class="text-danger" *ngIf="!contrato.garantiaPerformancePlaca">Por favor, Cadastrar Garantia de Performance! Sugeito a Erros de Automação!  <span class="bold">{{contrato.modulos}}</span></span>
-
-          </div>
-
-
-          </div>
-          <div style="width: 60px; margin-left: 2px">
-            <label for="quantModulos" class="form-label">Quantidade</label>
-            <input type="text" class="form-control" id="quantModulos" name="quantModulos" [(ngModel)]="contrato.quantModulos" (keydown)="validarNumero($event)" (keyup)="calcularPotenciaTotal()" [value]="contrato.quantModulos" (input)="setQuantModulos($event)">
-          </div>
-        </div>
-
-        <div class="line d-flex w-100 justify-content-center">
-          <div class="" style="width: 550px;">
-          <label for="suporte" class="form-label">Suportes</label>
-          <ng-select class=" selecter" [(ngModel)]="contrato.suporte" [items]="tiposSuportes" bindLabel="nome" bindValue="nome" [placeholder]="contrato.suporte || 'Selecione um Modulo'" name="placas" >
-          </ng-select>
-
-          </div>
-          <div style="width: 60px; margin-left: 2px">
-            <label for="quantSuporte" class="form-label">Quantidade</label>
-            <input type="text" class="form-control" id="quantSuporte" name="quantSuporte" [value]="contrato.quantSuporte" disabled>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Pagamento -->
-    <div class="card">
-      <div class="card-header">
-          <span *ngIf="!tipoContrato">Tipo de Pagamento</span>
-          <span *ngIf="tipoContrato">Detalhes de Pagamento</span>
-      </div>
-      <div class="d-flex w-100 justify-content-center flex-wrap ">
-        <div class="pagamento-area w-100">
-
-          <div class="justify-content-center d-flex flex-wrap lista-contratos animate__animated"
-        [ngClass]="{'animate__fadeInUp': !tipoContrato, 'animate__fadeOutDown': tipoContrato}"
-          >
-
-          <div class="card" (click)="selecionaTipoContrato('umPagamentoAVista')">
-            <div class="w-100 d-flex justify-content-center icons">
-              <i class="fa-solid fa-money-bill text-center h3"></i>
             </div>
-            <span>1 Pagamento à Vista</span>
-          </div>
 
-          <div class="card" (click)="selecionaTipoContrato('doisPagamentosAVista')">
-            <div class="w-100 d-flex justify-content-center icons">
-              <i class="fa-solid fa-money-bill text-center h3"></i>
-              <i class="fa-solid fa-money-bill text-center h3"></i>
-            </div>
-            <span>2 Pagamentos à Vista</span>
-          </div>
 
-          <div class="card" (click)="selecionaTipoContrato('tresPagamentosAVista')">
-            <div class="w-100 d-flex justify-content-center icons">
-              <i class="fa-solid fa-money-bill text-center h3"></i>
-              <i class="fa-solid fa-money-bill text-center h3"></i>
-              <i class="fa-solid fa-money-bill text-center h3"></i>
-            </div>
-            <span>3 Pagamentos à Vista</span>
-          </div>
-
-          <div class="card" (click)="selecionaTipoContrato('financiamento')">
-            <div class="w-100 d-flex justify-content-center icons">
-              <!-- Icone financiamento -->
-              <i class="fas fa-piggy-bank  text-center h3"></i>
-            </div>
-            <span>Financiamento</span>
-          </div>
-        </div>
-
-        <!-- INPUTS DE PAGAMENTO -->
-        <div class="w-100 d-flex justify-content-center align-content-center  flex-column  animate__animated pagamento"
-        [ngClass]="{'animate__fadeInUp': tipoContrato, 'animate__fadeOutDown': !tipoContrato}">
-
-          <div class="close w-100 d-flex justify-content-center ">
-            <button (click)="limparTipoContrato($event)">x</button>
-          </div>
-
-          <div class="inputs w-100 d-flex flex-wrap align-content-center  justify-content-center">
             <div class="line">
-              <div class="">
-              <label for="pagamentoTotal" class="form-label">Pagamento Total</label>
-              <div class="d-flex align-content-center">
-                <input type="text" class="form-control" id="pagamentoTotal" name="pagamentoTotal" [(ngModel)]="contrato.pagamentoTotal" required  (input)="applyNumberMask($event)">
-                <span class="money">,00</span>
-              </div>
-
-
+              <div class="big-input">
+                <label for="enderecoInstalacao" class="form-label">Endereço de Instalação</label>
+                <input class="max-width" type="text" class="form-control" id="enderecoInstalacao" name="enderecoInstalacao" [(ngModel)]="contrato.enderecoInstalacao" placeholder="Endereço de Instalação">
               </div>
             </div>
 
-            <div class="line" *ngIf="nivelPagamentoVista >= 2">
-              <div class="">
-              <label for="pagamentoP1" class="form-label">Pagamento Parcial 1</label>
-              <div class="d-flex align-content-center">
-              <input type="text" class="form-control" id="pagamentoP1" name="pagamentoP1" [(ngModel)]="contrato.pagamentoP1" (input)="applyNumberMask($event)">
-              <span class="money">,00</span>
-              </div>
+            <div class="line">
+              <div class="" style="width: 250px;">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control" id="email" name="email" [(ngModel)]="contrato.email" placeholder="Email" required>
               </div>
             </div>
 
-            <div class="line" *ngIf="nivelPagamentoVista >= 2">
-              <div class="">
-              <label for="pagamentoP2" class="form-label">Pagamento Parcial 2</label>
-              <div class="d-flex align-content-center">
-              <input type="text" class="form-control" id="pagamentoP2" name="pagamentoP2" [(ngModel)]="contrato.pagamentoP2" (input)="applyNumberMask($event)">
-              <span class="money">,00</span>
-              </div>
-              </div>
-            </div>
-
-            <div class="line" *ngIf="nivelPagamentoVista >= 3">
-              <div class="">
-              <label for="pagamentoP3" class="form-label">Pagamento Parcial 3</label>
-              <div class="d-flex align-content-center">
-              <input type="text" class="form-control" id="pagamentoP3" name="pagamentoP3" [(ngModel)]="contrato.pagamentoP3" (input)="applyNumberMask($event)">
-              <span class="money">,00</span>
-              </div>
+            <div class="line">
+              <div class="" style="width: 250px;">
+                <label for="celular" class="form-label">Celular</label>
+                <input type="text" class="form-control" id="celular" name="celular" [(ngModel)]="contrato.celular" placeholder="(00)-0000-0000" (input)="applyCelularMask($event)" required>
               </div>
             </div>
           </div>
-
         </div>
-      </div>
+        <!-- Instalação -->
+        <div class="card">
+          <div class="card-header">
+            <span>Instalação</span>
+          </div>
+          <div class="d-flex w-100 justify-content-center overflow flex-wrap ">
+
+            <div class="line w-100 d-flex justify-content-center">
+              <div class="" style="width: 150px;">
+                <label for="potenciaGerador" class="form-label">Potência do Gerador</label>
+                <input type="text" class="form-control" id="potenciaGerador" name="potenciaGerador" [(ngModel)]="contrato.potenciaGerador" placeholder="Potência" required>
+              </div>
+            </div>
+
+            <div class="line d-flex w-100 justify-content-center">
+              <div class="" style="width: 550px;">
+                <label for="inversores" class="form-label">Inversores</label>
+
+                <ng-select class=" selecter" [(ngModel)]="contrato.inversores" [items]="equipamentos.inversores" bindLabel="nome" bindValue="nome" [placeholder]="contrato.inversores || 'Selecione um Inversor'" name="inversores" (change)="onInversorChange($event)">
+                </ng-select>
+
+                <!-- garantia fabricacao inversores -->
+                @if (contrato.inversores) {
+                  <div class="garantia">
+                    @if (contrato.garantiaFabricacaoInversor) {
+                      <span >Garantia de Fabricação: <span class="bold">{{contrato.garantiaFabricacaoInversor}} Anos</span></span>
+                    }
+                    @if (!contrato.garantiaFabricacaoInversor) {
+                      <span class="text-danger">Por favor, Cadastrar Garantia de Fabricação! Sugeito a Erros de Automação! <span class="bold">{{contrato.inversores}}</span></span>
+                    }
+                  </div>
+                }
+
+              </div>
+
+              <div style="width: 60px; margin-left: 2px">
+                <label for="quantInversores" class="form-label">Quantidade</label>
+                <input type="text" class="form-control" id="quantInversores" name="quantInversores" [(ngModel)]="contrato.quantInversores" (keydown)="validarNumero($event)" required>
+              </div>
+
+            </div>
+
+            <div class="line d-flex w-100 justify-content-center">
+              <div class="" style="width: 550px;">
+                <label for="modulos" class="form-label">Módulos</label>
+
+                <ng-select class=" selecter" [(ngModel)]="contrato.modulos" [items]="equipamentos.placas" bindLabel="nome" bindValue="nome" [placeholder]="contrato.modulos || 'Selecione um Modulo'" name="modulos" (change)="onModuloChange($event)" >
+                </ng-select>
+
+                @if (contrato.modulos) {
+                  <div class="garantia w-100">
+                    @if (contrato.garantiaFabricacaoPlaca) {
+                      <span >Garantia de Fabricação: <span class="bold">{{contrato.garantiaFabricacaoPlaca}} Anos</span></span>
+                    }
+                    @if (!contrato.garantiaFabricacaoPlaca) {
+                      <span class="text-danger">Por favor, Cadastrar Garantia de Fabricação! Sugeito a Erros de Automação!</span>
+                    }
+                  </div>
+                }
+                @if (contrato.modulos) {
+                  <div class="garantia w-100">
+                    @if (contrato.garantiaPerformancePlaca) {
+                      <span >Garantia de Performance: <span class="bold">{{contrato.garantiaPerformancePlaca}} Anos</span></span>
+                    }
+                    @if (!contrato.garantiaPerformancePlaca) {
+                      <span class="text-danger">Por favor, Cadastrar Garantia de Performance! Sugeito a Erros de Automação!  <span class="bold">{{contrato.modulos}}</span></span>
+                    }
+                  </div>
+                }
+
+
+              </div>
+              <div style="width: 60px; margin-left: 2px">
+                <label for="quantModulos" class="form-label">Quantidade</label>
+                <input type="text" class="form-control" id="quantModulos" name="quantModulos" [(ngModel)]="contrato.quantModulos" (keydown)="validarNumero($event)" (keyup)="calcularPotenciaTotal()" [value]="contrato.quantModulos" (input)="setQuantModulos($event)">
+              </div>
+            </div>
+
+            <div class="line d-flex w-100 justify-content-center">
+              <div class="" style="width: 550px;">
+                <label for="suporte" class="form-label">Suportes</label>
+                <ng-select class=" selecter" [(ngModel)]="contrato.suporte" [items]="tiposSuportes" bindLabel="nome" bindValue="nome" [placeholder]="contrato.suporte || 'Selecione um Modulo'" name="placas" >
+                </ng-select>
+
+              </div>
+              <div style="width: 60px; margin-left: 2px">
+                <label for="quantSuporte" class="form-label">Quantidade</label>
+                <input type="text" class="form-control" id="quantSuporte" name="quantSuporte" [value]="contrato.quantSuporte" disabled>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Pagamento -->
+        <div class="card">
+          <div class="card-header">
+            @if (!tipoContrato) {
+              <span>Tipo de Pagamento</span>
+            }
+            @if (tipoContrato) {
+              <span>Detalhes de Pagamento</span>
+            }
+          </div>
+          <div class="d-flex w-100 justify-content-center flex-wrap ">
+            <div class="pagamento-area w-100">
+
+              <div class="justify-content-center d-flex flex-wrap lista-contratos animate__animated"
+                [ngClass]="{'animate__fadeInUp': !tipoContrato, 'animate__fadeOutDown': tipoContrato}"
+                >
+
+                <div class="card" (click)="selecionaTipoContrato('umPagamentoAVista')">
+                  <div class="w-100 d-flex justify-content-center icons">
+                    <i class="fa-solid fa-money-bill text-center h3"></i>
+                  </div>
+                  <span>1 Pagamento à Vista</span>
+                </div>
+
+                <div class="card" (click)="selecionaTipoContrato('doisPagamentosAVista')">
+                  <div class="w-100 d-flex justify-content-center icons">
+                    <i class="fa-solid fa-money-bill text-center h3"></i>
+                    <i class="fa-solid fa-money-bill text-center h3"></i>
+                  </div>
+                  <span>2 Pagamentos à Vista</span>
+                </div>
+
+                <div class="card" (click)="selecionaTipoContrato('tresPagamentosAVista')">
+                  <div class="w-100 d-flex justify-content-center icons">
+                    <i class="fa-solid fa-money-bill text-center h3"></i>
+                    <i class="fa-solid fa-money-bill text-center h3"></i>
+                    <i class="fa-solid fa-money-bill text-center h3"></i>
+                  </div>
+                  <span>3 Pagamentos à Vista</span>
+                </div>
+
+                <div class="card" (click)="selecionaTipoContrato('financiamento')">
+                  <div class="w-100 d-flex justify-content-center icons">
+                    <!-- Icone financiamento -->
+                    <i class="fas fa-piggy-bank  text-center h3"></i>
+                  </div>
+                  <span>Financiamento</span>
+                </div>
+              </div>
+
+              <!-- INPUTS DE PAGAMENTO -->
+              <div class="w-100 d-flex justify-content-center align-content-center  flex-column  animate__animated pagamento"
+                [ngClass]="{'animate__fadeInUp': tipoContrato, 'animate__fadeOutDown': !tipoContrato}">
+
+                <div class="close w-100 d-flex justify-content-center ">
+                  <button (click)="limparTipoContrato($event)">x</button>
+                </div>
+
+                <div class="inputs w-100 d-flex flex-wrap align-content-center  justify-content-center">
+                  <div class="line">
+                    <div class="">
+                      <label for="pagamentoTotal" class="form-label">Pagamento Total</label>
+                      <div class="d-flex align-content-center">
+                        <input type="text" class="form-control" id="pagamentoTotal" name="pagamentoTotal" [(ngModel)]="contrato.pagamentoTotal" required  (input)="applyNumberMask($event)">
+                        <span class="money">,00</span>
+                      </div>
+
+
+                    </div>
+                  </div>
+
+                  @if (nivelPagamentoVista >= 2) {
+                    <div class="line">
+                      <div class="">
+                        <label for="pagamentoP1" class="form-label">Pagamento Parcial 1</label>
+                        <div class="d-flex align-content-center">
+                          <input type="text" class="form-control" id="pagamentoP1" name="pagamentoP1" [(ngModel)]="contrato.pagamentoP1" (input)="applyNumberMask($event)">
+                          <span class="money">,00</span>
+                        </div>
+                      </div>
+                    </div>
+                  }
+
+                  @if (nivelPagamentoVista >= 2) {
+                    <div class="line">
+                      <div class="">
+                        <label for="pagamentoP2" class="form-label">Pagamento Parcial 2</label>
+                        <div class="d-flex align-content-center">
+                          <input type="text" class="form-control" id="pagamentoP2" name="pagamentoP2" [(ngModel)]="contrato.pagamentoP2" (input)="applyNumberMask($event)">
+                          <span class="money">,00</span>
+                        </div>
+                      </div>
+                    </div>
+                  }
+
+                  @if (nivelPagamentoVista >= 3) {
+                    <div class="line">
+                      <div class="">
+                        <label for="pagamentoP3" class="form-label">Pagamento Parcial 3</label>
+                        <div class="d-flex align-content-center">
+                          <input type="text" class="form-control" id="pagamentoP3" name="pagamentoP3" [(ngModel)]="contrato.pagamentoP3" (input)="applyNumberMask($event)">
+                          <span class="money">,00</span>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detalhes -->
+        <div class="card">
+          <div class="card-header">
+            <span>Detalhes</span>
+          </div>
+          <div class="d-flex w-100 justify-content-center flex-wrap ">
+
+            <div class="line">
+              <div class="" style="width: 250px;">
+                <label for="cidade" class="form-label">Cidade</label>
+                <input type="text" class="form-control" id="cidade" name="cidade" [(ngModel)]="contrato.cidade" placeholder="Cidade" required>
+              </div>
+            </div>
+
+            <div class="line">
+              <div class="" style="width: 300px;">
+                <label for="data" class="form-label">Data</label>
+                <input type="text" class="form-control" id="data" name="data" [(ngModel)]="contrato.data" placeholder="Data" required>
+              </div>
+            </div>
+
+            <div class="line">
+              <div class="" style="width: 300px;">
+                <label for="distribuidora" class="form-label">Distribuidora</label>
+                <input type="text" class="form-control" id="distribuidora" name="distribuidora" [(ngModel)]="contrato.distribuidora" placeholder="distribuidora" required>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+
+      <div class="w-100 d-flex justify-content-end">
+        <button type="submit" (click)="saveContrato()" class="btn btn-outline-secondary">Salvar Dados</button>
+        <div class="space"></div>
+        <button type="submit" (click)="submitForm()" class="btn btn-primary">BAIXAR WORD</button>
       </div>
     </div>
-
-    <!-- Detalhes -->
-    <div class="card">
-      <div class="card-header">
-        <span>Detalhes</span>
-      </div>
-      <div class="d-flex w-100 justify-content-center flex-wrap ">
-
-        <div class="line">
-          <div class="" style="width: 250px;">
-          <label for="cidade" class="form-label">Cidade</label>
-          <input type="text" class="form-control" id="cidade" name="cidade" [(ngModel)]="contrato.cidade" placeholder="Cidade" required>
-          </div>
-        </div>
-
-        <div class="line">
-          <div class="" style="width: 300px;">
-          <label for="data" class="form-label">Data</label>
-          <input type="text" class="form-control" id="data" name="data" [(ngModel)]="contrato.data" placeholder="Data" required>
-          </div>
-        </div>
-
-        <div class="line">
-          <div class="" style="width: 300px;">
-          <label for="distribuidora" class="form-label">Distribuidora</label>
-          <input type="text" class="form-control" id="distribuidora" name="distribuidora" [(ngModel)]="contrato.distribuidora" placeholder="distribuidora" required>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </form>
-
-  <div class="w-100 d-flex justify-content-end">
-    <button type="submit" (click)="saveContrato()" class="btn btn-outline-secondary">Salvar Dados</button>
-    <div class="space"></div>
-    <button type="submit" (click)="submitForm()" class="btn btn-primary">BAIXAR WORD</button>
-  </div>
-</div>
 

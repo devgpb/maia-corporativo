@@ -1,54 +1,64 @@
 <form [formGroup]="form" class="row g-3">
-  <div class="col-md-6" *ngFor="let config of configs">
-    <label [for]="config.label">{{ config.label }}</label>
-
-    <!-- Text Input -->
-    <input *ngIf="config.tipo === 'text'"
-           [formControlName]="config.label"
-           [type]="config.tipo"
-           [placeholder]="config.config?.placeholder"
-           [disabled]="config.config?.disabled"
-           [pattern]="config.config?.pattern"
-           class="form-control"/>
-
-    <!-- Number Input -->
-    <input *ngIf="config.tipo === 'number'"
-           [formControlName]="config.label"
-           [type]="config.tipo"
-           [placeholder]="config.config?.placeholder"
-           [min]="config.config?.min"
-           [max]="config.config?.max"
-           [disabled]="config.config?.disabled"
-           class="form-control"/>
-
-    <!-- Date Input -->
-    <input *ngIf="config.tipo === 'date'"
-           [formControlName]="config.label"
-           [type]="config.tipo"
-           [min]="config.config?.min"
-           [max]="config.config?.max"
-           [disabled]="config.config?.disabled"
-           class="form-control"/>
-
-    <!-- Select Input -->
-    <select *ngIf="config.tipo === 'select'"
-            [formControlName]="config.label"
-            [disabled]="config.config?.disabled"
-            class="form-select">
-      <option *ngFor="let option of config.config?.options" [value]="option">{{ option }}</option>
-    </select>
-
-    <!-- Radio Input -->
-    <div *ngIf="config.tipo === 'radio'">
-      <div *ngFor="let option of config.config?.options" class="form-check">
-        <input class="form-check-input"
-               type="radio"
-               [formControlName]="config.label"
-               [value]="option"
-               [disabled]="config.config?.disabled">
-        <label class="form-check-label">{{ option }}</label>
+  @for (config of configs; track config) {
+    <div class="col-md-6">
+      <label [for]="config.label">{{ config.label }}</label>
+      <!-- Text Input -->
+      @if (config.tipo === 'text') {
+        <input
+          [formControlName]="config.label"
+          [type]="config.tipo"
+          [placeholder]="config.config?.placeholder"
+          [disabled]="config.config?.disabled"
+          [pattern]="config.config?.pattern"
+          class="form-control"/>
+      }
+      <!-- Number Input -->
+      @if (config.tipo === 'number') {
+        <input
+          [formControlName]="config.label"
+          [type]="config.tipo"
+          [placeholder]="config.config?.placeholder"
+          [min]="config.config?.min"
+          [max]="config.config?.max"
+          [disabled]="config.config?.disabled"
+          class="form-control"/>
+      }
+      <!-- Date Input -->
+      @if (config.tipo === 'date') {
+        <input
+          [formControlName]="config.label"
+          [type]="config.tipo"
+          [min]="config.config?.min"
+          [max]="config.config?.max"
+          [disabled]="config.config?.disabled"
+          class="form-control"/>
+      }
+      <!-- Select Input -->
+      @if (config.tipo === 'select') {
+        <select
+          [formControlName]="config.label"
+          [disabled]="config.config?.disabled"
+          class="form-select">
+          @for (option of config.config?.options; track option) {
+            <option [value]="option">{{ option }}</option>
+          }
+        </select>
+      }
+      <!-- Radio Input -->
+      @if (config.tipo === 'radio') {
+        <div>
+          @for (option of config.config?.options; track option) {
+            <div class="form-check">
+              <input class="form-check-input"
+                type="radio"
+                [formControlName]="config.label"
+                [value]="option"
+                [disabled]="config.config?.disabled">
+                <label class="form-check-label">{{ option }}</label>
+              </div>
+            }
+          </div>
+        }
       </div>
-    </div>
-
-  </div>
-</form>
+    }
+  </form>

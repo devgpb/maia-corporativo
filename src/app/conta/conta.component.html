@@ -4,10 +4,10 @@
     <div class="form-group ">
       <label for="nomeCompleto">Nome Completo</label>
       <input type="text" class="form-control" id="nomeCompleto" formControlName="nomeCompleto"
-      placeholder="Informe o nome completo">
-    </div>
+        placeholder="Informe o nome completo">
+      </div>
 
-    <!-- <div class="form-group ">
+      <!-- <div class="form-group ">
       <label for="idUsuario">ID do Usuário</label>
       <input type="text" class="form-control" id="idUsuario" formControlName="idUsuario">
     </div> -->
@@ -21,73 +21,85 @@
     <div class="form-group">
       <label for="cpf">CPF</label>
       <input type="text" class="form-control" id="cpf" formControlName="cpf"
-      placeholder="000.000.000-00"
-      (input)="applyCpfMask($event)">
-    </div>
-
-    <div class="form-group">
-      <label for="cnpj">CNPJ</label>
-      <input type="text" class="form-control" id="cnpj" formControlName="cnpj"
-      (input)="applyCnpjMask($event)"
-      placeholder="00.000.000/0000-00">
-    </div>
-
-    <div class="form-group">
-      <label for="idSetor">Setor</label>
-      <select class="form-control" id="setor" formControlName="idSetor">
-        <option value="" disabled selected>Selecione um setor</option>
-        <option *ngFor="let setor of list" [value]="setor.idSetor">{{setor.nome}}</option>
-      </select>
-    </div>
-
-    <div  class="form-group">
-      <label>Senha atual:</label>
-      <input class="form-control" type="password" formControlName="senhaAtual">
-      <div *ngIf="userForm.get('senhaAtual')?.invalid && userForm.get('senhaAtual')?.touched">
-        Senha atual é obrigatória.
+        placeholder="000.000.000-00"
+        (input)="applyCpfMask($event)">
       </div>
-    </div>
 
-    <div  class="form-group">
-      <label>Nova senha:</label>
-      <input class="form-control" type="password" formControlName="novaSenha">
-      <div *ngIf="userForm.get('novaSenha')?.invalid && userForm.get('novaSenha')?.touched">
-        <div *ngIf="userForm.get('novaSenha')?.errors?.['minlength']">
-          A senha deve ter pelo menos 8 caracteres.
+      <div class="form-group">
+        <label for="cnpj">CNPJ</label>
+        <input type="text" class="form-control" id="cnpj" formControlName="cnpj"
+          (input)="applyCnpjMask($event)"
+          placeholder="00.000.000/0000-00">
         </div>
+
+        <div class="form-group">
+          <label for="idSetor">Setor</label>
+          <select class="form-control" id="setor" formControlName="idSetor">
+            <option value="" disabled selected>Selecione um setor</option>
+            @for (setor of list; track setor) {
+              <option [value]="setor.idSetor">{{setor.nome}}</option>
+            }
+          </select>
+        </div>
+
+        <div  class="form-group">
+          <label>Senha atual:</label>
+          <input class="form-control" type="password" formControlName="senhaAtual">
+          @if (userForm.get('senhaAtual')?.invalid && userForm.get('senhaAtual')?.touched) {
+            <div>
+              Senha atual é obrigatória.
+            </div>
+          }
+        </div>
+
+        <div  class="form-group">
+          <label>Nova senha:</label>
+          <input class="form-control" type="password" formControlName="novaSenha">
+          @if (userForm.get('novaSenha')?.invalid && userForm.get('novaSenha')?.touched) {
+            <div>
+              @if (userForm.get('novaSenha')?.errors?.['minlength']) {
+                <div>
+                  A senha deve ter pelo menos 8 caracteres.
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" formControlName="email">
+        </div>
+
+        <div class="form-group ">
+          <label for="celular">Celular</label>
+          <input type="text" formControlName="celular" class="form-control" id="celular" placeholder="(00)-0000-0000" (input)="applyCelularMask($event)">
+        </div>
+
+        <div class="form-group">
+          <label for="cargo">Cargo</label>
+          <select class="form-control" id="cargo" formControlName="cargo">
+            <option value="" disabled selected>Selecione um cargo</option>
+            @for (cargo of listCargos; track cargo) {
+              <option [value]="cargo">{{cargo}}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="cidade">Cidade</label>
+          <select class="form-control" id="cidade" formControlName="cidade">
+            <option value="" disabled selected>Selecione uma cidade</option>
+            @for (cidade of listCidades; track cidade) {
+              <option [value]="cidade">{{cidade}}</option>
+            }
+          </select>
+        </div>
+
+        <div class="w-100 d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Atualizar</button>
+        </div>
+
       </div>
-    </div>
 
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" formControlName="email">
-    </div>
-
-    <div class="form-group ">
-      <label for="celular">Celular</label>
-      <input type="text" formControlName="celular" class="form-control" id="celular" placeholder="(00)-0000-0000" (input)="applyCelularMask($event)">
-    </div>
-
-    <div class="form-group">
-      <label for="cargo">Cargo</label>
-      <select class="form-control" id="cargo" formControlName="cargo">
-        <option value="" disabled selected>Selecione um cargo</option>
-        <option *ngFor="let cargo of listCargos" [value]="cargo">{{cargo}}</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="cidade">Cidade</label>
-      <select class="form-control" id="cidade" formControlName="cidade">
-        <option value="" disabled selected>Selecione uma cidade</option>
-        <option *ngFor="let cidade of listCidades" [value]="cidade">{{cidade}}</option>
-      </select>
-    </div>
-
-    <div class="w-100 d-flex justify-content-end">
-      <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Atualizar</button>
-    </div>
-
-  </div>
-
-</form>
+    </form>

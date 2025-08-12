@@ -14,7 +14,9 @@
       <label for="setor">Setor</label>
       <select class="form-control" id="setor" formControlName="idSetor">
         <option value="" disabled selected>Selecione um setor</option>
-        <option *ngFor="let setor of list" [value]="setor.idSetor">{{setor.nome}}</option>
+        @for (setor of list; track setor) {
+          <option [value]="setor.idSetor">{{setor.nome}}</option>
+        }
       </select>
     </div>
 
@@ -37,7 +39,9 @@
       <label for="cargo">Cargo</label>
       <select class="form-control" id="cargo" formControlName="cargo">
         <option value="" disabled selected>Selecione um cargo</option>
-        <option *ngFor="let cargo of listCargos" [value]="cargo">{{cargo}}</option>
+        @for (cargo of listCargos; track cargo) {
+          <option [value]="cargo">{{cargo}}</option>
+        }
       </select>
     </div>
 
@@ -46,7 +50,9 @@
       <label for="cidade">Cidade</label>
       <select class="form-control" id="cidade" formControlName="cidade">
         <option value="" disabled selected>Selecione uma cidade</option>
-        <option *ngFor="let cidade of listCidades" [value]="cidade">{{cidade}}</option>
+        @for (cidade of listCidades; track cidade) {
+          <option [value]="cidade">{{cidade}}</option>
+        }
       </select>
     </div>
 

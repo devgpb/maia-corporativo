@@ -3,47 +3,48 @@
 
   <!-- Container flex para os cards -->
   <div class="flex flex-wrap justify-center gap-4">
-    <div *ngFor="let contato of contatos; trackBy: trackById" [@cardAnimation] class="w-[400px] bg-white shadow-lg rounded-lg p-6 mb-6 border-l-4 border-green-500 hover:shadow-xl hover:border-l-6 transition-all duration-300 ease-in-out">
-      <div class="w-full flex">
-
-        <div class="bg-green-100 w-auto text-green-800 px-2 py-1 rounded-full text-sm font-semibold">
-          R$ {{ contato.custo | number:'1.2-2' }}
+    @for (contato of contatos; track trackById($index, contato)) {
+      <div [@cardAnimation] class="w-[400px] bg-white shadow-lg rounded-lg p-6 mb-6 border-l-4 border-green-500 hover:shadow-xl hover:border-l-6 transition-all duration-300 ease-in-out">
+        <div class="w-full flex">
+          <div class="bg-green-100 w-auto text-green-800 px-2 py-1 rounded-full text-sm font-semibold">
+            R$ {{ contato.custo | number:'1.2-2' }}
+          </div>
         </div>
-      </div>
-      <div class="flex justify-between items-start mb-4">
-        <h2 class="text-2xl font-bold text-gray-800">{{ contato.nome }}</h2>
-
-      </div>
-
-      <div class="space-y-2 mb-4">
-        <div class="flex items-center text-gray-600">
-          <lucide-icon name="phone" size="18" class="mr-2 text-green-500"></lucide-icon>
-          <span>{{ contato.contato }}</span>
+        <div class="flex justify-between items-start mb-4">
+          <h2 class="text-2xl font-bold text-gray-800">{{ contato.nome }}</h2>
         </div>
-        <div class="flex items-center text-gray-600">
-          <lucide-icon name="calendar" size="18" class="mr-2 text-green-500"></lucide-icon>
-          <span>{{ contato.data }}</span>
-        </div>
-        <div class="flex items-center text-gray-600">
-          <lucide-icon name="clock" size="18" class="mr-2 text-green-500"></lucide-icon>
+        <div class="space-y-2 mb-4">
+          <div class="flex items-center text-gray-600">
+            <lucide-icon name="phone" size="18" class="mr-2 text-green-500"></lucide-icon>
+            <span>{{ contato.contato }}</span>
+          </div>
+          <div class="flex items-center text-gray-600">
+            <lucide-icon name="calendar" size="18" class="mr-2 text-green-500"></lucide-icon>
+            <span>{{ contato.data }}</span>
+          </div>
+          <div class="flex items-center text-gray-600">
+            <lucide-icon name="clock" size="18" class="mr-2 text-green-500"></lucide-icon>
             <span>{{ contato.hora }}</span>
+          </div>
         </div>
-      </div>
-
-      <div class="space-y-2 mb-4">
-        <div *ngIf="contato.observacao" class="bg-green-100 text-green-800 px-4 py-2 rounded-lg">
-          {{ contato.observacao }}
+        <div class="space-y-2 mb-4">
+          @if (contato.observacao) {
+            <div class="bg-green-100 text-green-800 px-4 py-2 rounded-lg">
+              {{ contato.observacao }}
+            </div>
+          }
         </div>
+        <button (click)="removerContato(contato)" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out flex items-center justify-center">
+          <lucide-icon name="check" size="18" class="mr-2"></lucide-icon>
+          Entrei em contato
+        </button>
       </div>
-
-      <button (click)="removerContato(contato)" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out flex items-center justify-center">
-        <lucide-icon name="check" size="18" class="mr-2"></lucide-icon>
-        Entrei em contato
-      </button>
-    </div>
+    }
   </div>
 
-  <p *ngIf="contatos.length === 0" class="text-center text-gray-600 mt-8">
-    Não há mais contatos para exibir.
-  </p>
+  @if (contatos.length === 0) {
+    <p class="text-center text-gray-600 mt-8">
+      Não há mais contatos para exibir.
+    </p>
+  }
 </div>

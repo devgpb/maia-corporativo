@@ -13,76 +13,79 @@
     </thead>
     <tbody>
       <!-- Linhas de listaKitsSolares -->
-      <tr *ngFor="let kit of listaKitsSolares">
-        <ng-container *ngIf="kit.isEditing; else viewMode">
-          <td class="text-start">
-            <input type="number" class="w-100 text-start" [(ngModel)]="kit.quantidadePlacas"
-              (keyup.enter)="salvarEdicao(kit)" (keydown)="validarNumero($event)" />
-          </td>
-          <td class="text-start">
-            <input type="text" class="w-100 text-start" [(ngModel)]="kit.geracao"
-              (keyup.enter)="salvarEdicao(kit)" (input)="applyNumberMask($event)" />
-          </td>
-          <td class="text-start">
-            <input type="text" class="w-100 text-start" [(ngModel)]="kit.nomeKit" (keyup.enter)="salvarEdicao(kit)" />
-          </td>
-          <td class="text-start">
-            <input type="text" class="w-100 text-start" [(ngModel)]="kit.valorKit"
-              (keyup.enter)="salvarEdicao(kit)" (input)="applyNumberMask($event)"  />
-          </td>
-          <td class="d-flex justify-content-center align-content-center">
-            <button class="btn btn-sm btn-success ml-2" (click)="salvarEdicao(kit)" title="Salvar">
-              <i class="fa fa-check"></i>
-            </button>
-            <button class="btn btn-sm btn-secondary ml-2" (click)="cancelarEdicaoExistente(kit)" title="Cancelar">
-              <i class="fa fa-times"></i>
-            </button>
-          </td>
-        </ng-container>
-        <ng-template #viewMode>
-          <td class="text-start">{{ kit.quantidadePlacas }}</td>
-          <td class="text-start">{{ kit.geracao }}</td>
-          <td class="text-start">{{ kit.nomeKit }}</td>
-          <td class="text-start">{{ kit.valorKit | currency:'BRL':'symbol' }}</td>
-          <td class="d-flex justify-content-center align-content-center">
-            <button class="btn btn-sm btn-primary ml-2" (click)="iniciarEdicao(kit)" title="Editar">
-              <i class="fa fa-pencil-alt"></i>
-            </button>
-            <button class="btn btn-sm btn-danger ml-2" (click)="removerKit(kit)" title="Excluir">
-              <i class="fa fa-trash-alt"></i>
-            </button>
-          </td>
-        </ng-template>
-      </tr>
-      <!-- Linhas de inputRows -->
-      <tr *ngFor="let kit of inputRows">
-        <td class="text-start">
-          <input type="number" class="w-100 text-start" [(ngModel)]="kit.quantidadePlacas"
-            (keyup.enter)="salvarKit(kit)" (keydown)="validarNumero($event)" />
-        </td>
-        <td class="text-start">
-          <input type="text" class="w-100 text-start" [(ngModel)]="kit.geracao"
-            (keyup.enter)="salvarKit(kit)" (input)="applyNumberMask($event)" />
-        </td>
-        <td class="text-start">
-          <input type="text" class="w-100 text-start" [(ngModel)]="kit.nomeKit" (keyup.enter)="salvarKit(kit)" />
-        </td>
-        <td class="text-start">
-          <input type="text" class="w-100 text-start" [(ngModel)]="kit.valorKit"
-            (keyup.enter)="salvarKit(kit)" (input)="applyNumberMask($event)" />
-        </td>
-        <td class="d-flex justify-content-center align-content-center">
-          <button class="btn btn-sm btn-success ml-2" (click)="salvarKit(kit)" title="Salvar">
-            <i class="fa fa-check"></i>
-          </button>
-          <button class="btn btn-sm btn-secondary ml-2" (click)="cancelarEdicao(kit)" title="Cancelar">
-            <i class="fa fa-times"></i>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <button class="btn btn-primary w-100" (click)="adicionarKit()">
-    Adicionar Kit
-  </button>
-</div>
+      @for (kit of listaKitsSolares; track kit) {
+        <tr>
+          @if (kit.isEditing) {
+            <td class="text-start">
+              <input type="number" class="w-100 text-start" [(ngModel)]="kit.quantidadePlacas"
+                (keyup.enter)="salvarEdicao(kit)" (keydown)="validarNumero($event)" />
+              </td>
+              <td class="text-start">
+                <input type="text" class="w-100 text-start" [(ngModel)]="kit.geracao"
+                  (keyup.enter)="salvarEdicao(kit)" (input)="applyNumberMask($event)" />
+                </td>
+                <td class="text-start">
+                  <input type="text" class="w-100 text-start" [(ngModel)]="kit.nomeKit" (keyup.enter)="salvarEdicao(kit)" />
+                </td>
+                <td class="text-start">
+                  <input type="text" class="w-100 text-start" [(ngModel)]="kit.valorKit"
+                    (keyup.enter)="salvarEdicao(kit)" (input)="applyNumberMask($event)"  />
+                  </td>
+                  <td class="d-flex justify-content-center align-content-center">
+                    <button class="btn btn-sm btn-success ml-2" (click)="salvarEdicao(kit)" title="Salvar">
+                      <i class="fa fa-check"></i>
+                    </button>
+                    <button class="btn btn-sm btn-secondary ml-2" (click)="cancelarEdicaoExistente(kit)" title="Cancelar">
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </td>
+                } @else {
+                  <td class="text-start">{{ kit.quantidadePlacas }}</td>
+                  <td class="text-start">{{ kit.geracao }}</td>
+                  <td class="text-start">{{ kit.nomeKit }}</td>
+                  <td class="text-start">{{ kit.valorKit | currency:'BRL':'symbol' }}</td>
+                  <td class="d-flex justify-content-center align-content-center">
+                    <button class="btn btn-sm btn-primary ml-2" (click)="iniciarEdicao(kit)" title="Editar">
+                      <i class="fa fa-pencil-alt"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger ml-2" (click)="removerKit(kit)" title="Excluir">
+                      <i class="fa fa-trash-alt"></i>
+                    </button>
+                  </td>
+                }
+              </tr>
+            }
+            <!-- Linhas de inputRows -->
+            @for (kit of inputRows; track kit) {
+              <tr>
+                <td class="text-start">
+                  <input type="number" class="w-100 text-start" [(ngModel)]="kit.quantidadePlacas"
+                    (keyup.enter)="salvarKit(kit)" (keydown)="validarNumero($event)" />
+                  </td>
+                  <td class="text-start">
+                    <input type="text" class="w-100 text-start" [(ngModel)]="kit.geracao"
+                      (keyup.enter)="salvarKit(kit)" (input)="applyNumberMask($event)" />
+                    </td>
+                    <td class="text-start">
+                      <input type="text" class="w-100 text-start" [(ngModel)]="kit.nomeKit" (keyup.enter)="salvarKit(kit)" />
+                    </td>
+                    <td class="text-start">
+                      <input type="text" class="w-100 text-start" [(ngModel)]="kit.valorKit"
+                        (keyup.enter)="salvarKit(kit)" (input)="applyNumberMask($event)" />
+                      </td>
+                      <td class="d-flex justify-content-center align-content-center">
+                        <button class="btn btn-sm btn-success ml-2" (click)="salvarKit(kit)" title="Salvar">
+                          <i class="fa fa-check"></i>
+                        </button>
+                        <button class="btn btn-sm btn-secondary ml-2" (click)="cancelarEdicao(kit)" title="Cancelar">
+                          <i class="fa fa-times"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+              <button class="btn btn-primary w-100" (click)="adicionarKit()">
+                Adicionar Kit
+              </button>
+            </div>

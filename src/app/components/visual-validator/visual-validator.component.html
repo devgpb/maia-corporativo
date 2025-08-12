@@ -1,7 +1,11 @@
 <ng-content></ng-content>
 
-<div *ngIf="formControl.errors && controlIsDirty && config.fields[fieldKey].length > 0" class="invalid-feedback">
-	<ng-container *ngFor="let v of config.fields[fieldKey]">
-		<div *ngIf="formControl.errors[v.key]">{{ v.message || getDefaultMessage(v.key) }}</div>
-	</ng-container>
-</div>
+@if (formControl.errors && controlIsDirty && config.fields[fieldKey].length > 0) {
+  <div class="invalid-feedback">
+    @for (v of config.fields[fieldKey]; track v) {
+      @if (formControl.errors[v.key]) {
+        <div>{{ v.message || getDefaultMessage(v.key) }}</div>
+      }
+    }
+  </div>
+}

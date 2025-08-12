@@ -14,7 +14,7 @@
             'status-fechado': pedido.status?.toLowerCase() === 'fechado',
             'status-outro': pedido.status?.toLowerCase() !== 'fechado'
           }"
-        >
+          >
           {{ pedido.status }}
         </span>
       </div>
@@ -25,10 +25,12 @@
       </div>
 
       <!-- Observação (caso exista) -->
-      <div class="linha-info observacao" *ngIf="pedido.observacao">
-        <lucide-icon name="badge-alert" [attr.class]="'w-5 h-5 mr-2'"></lucide-icon>
-        <p class="texto-observacao">{{ pedido.observacao }}</p>
-      </div>
+      @if (pedido.observacao) {
+        <div class="linha-info observacao">
+          <lucide-icon name="badge-alert" [attr.class]="'w-5 h-5 mr-2'"></lucide-icon>
+          <p class="texto-observacao">{{ pedido.observacao }}</p>
+        </div>
+      }
     </div>
 
     <!-- Seção para ações personalizadas via content projection -->

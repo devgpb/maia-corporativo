@@ -18,90 +18,98 @@
 
       <div class="input d-flex  justify-content-center flex-column  ">
 
-        <div *ngIf="identificacao == 'cpf' " @onEnter>
-          <label for="cpfCliente" class="form-label">CPF do Cliente</label>
-          <input type="text" class="form-control" id="cpfCliente" name="cpfCliente" [(ngModel)]="procuracao.cpfCliente" placeholder="000.000.000-00"
-          (input)="applyCpfMask($event)">
-        </div>
+        @if (identificacao == 'cpf' ) {
+          <div @onEnter>
+            <label for="cpfCliente" class="form-label">CPF do Cliente</label>
+            <input type="text" class="form-control" id="cpfCliente" name="cpfCliente" [(ngModel)]="procuracao.cpfCliente" placeholder="000.000.000-00"
+              (input)="applyCpfMask($event)">
+            </div>
+          }
 
-        <div *ngIf="identificacao == 'rg' " @onEnter>
-          <label for="rgCliente" class="form-label">RG do Cliente</label>
-          <input type="text" class="form-control" id="rgCliente" name="rgCliente" [(ngModel)]="procuracao.rgCliente" (input)="applyRgMask($event)"
-          placeholder="00.000.000-0">
-        </div>
+          @if (identificacao == 'rg' ) {
+            <div @onEnter>
+              <label for="rgCliente" class="form-label">RG do Cliente</label>
+              <input type="text" class="form-control" id="rgCliente" name="rgCliente" [(ngModel)]="procuracao.rgCliente" (input)="applyRgMask($event)"
+                placeholder="00.000.000-0">
+              </div>
+            }
 
-        <button *ngIf="identificacao == 'cpf' " (click)="changeIdentificacao('rg')" @onEnter>Usar RG</button>
-        <button *ngIf="identificacao == 'rg' " (click)="changeIdentificacao('cpf')" @onEnter>Usar CPF</button>
+            @if (identificacao == 'cpf' ) {
+              <button (click)="changeIdentificacao('rg')" @onEnter>Usar RG</button>
+            }
+            @if (identificacao == 'rg' ) {
+              <button (click)="changeIdentificacao('cpf')" @onEnter>Usar CPF</button>
+            }
 
-      </div>
-
-      <div class="input">
-        <label class="form-label">Cliente Casado?</label>
-        <div class="checkers">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="isCasado" id="isCasadoSim" [(ngModel)]="procuracao.isCasado" value="true" required>
-            <label class="form-check-label" for="isCasadoSim">Sim</label>
           </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="isCasado" id="isCasadoNao" [(ngModel)]="procuracao.isCasado" value="false" required>
-            <label class="form-check-label" for="isCasadoNao">Não</label>
+
+          <div class="input">
+            <label class="form-label">Cliente Casado?</label>
+            <div class="checkers">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="isCasado" id="isCasadoSim" [(ngModel)]="procuracao.isCasado" value="true" required>
+                <label class="form-check-label" for="isCasadoSim">Sim</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="isCasado" id="isCasadoNao" [(ngModel)]="procuracao.isCasado" value="false" required>
+                <label class="form-check-label" for="isCasadoNao">Não</label>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span>Localização do Cliente</span>
+        </div>
+        <div class="inputs w-100 d-flex flex-wrap justify-content-center">
+
+          <div class="input">
+            <label for="cepCliente" class="form-label">CEP do Cliente</label>
+            <input type="text" class="form-control" id="cepCliente" name="cepCliente" [(ngModel)]="procuracao.cepCliente" placeholder="00000-000" (input)="applyCepMask($event); onCepChange()">
+          </div>
+
+          <div class="input">
+            <label for="ruaCliente" class="form-label">Rua do Cliente</label>
+            <input type="text" class="form-control" id="ruaCliente" name="ruaCliente" [(ngModel)]="procuracao.ruaCliente" style="width:350px" placeholder="Rua do cliente">
+          </div>
+
+          <div class="input">
+            <label for="estadoCliente" class="form-label">Estado do Cliente</label>
+            <input type="text" class="form-control" id="estadoCliente" name="estadoCliente" [(ngModel)]="procuracao.estadoCliente" placeholder="Estado do cliente">
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span>Detalhes Documento</span>
+        </div>
+
+        <div class="inputs w-100 d-flex flex-wrap justify-content-center">
+          <div class="line">
+            <div class="input">
+              <label for="cidadeDocumento" class="form-label">Cidade do Documento</label>
+              <input type="text" class="form-control" id="cidadeDocumento" name="cidadeDocumento" [(ngModel)]="procuracao.cidadeDocumento" placeholder="Cidade de Criação do documento">
+            </div>
           </div>
         </div>
       </div>
 
 
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-header">
-      <span>Localização do Cliente</span>
-    </div>
-    <div class="inputs w-100 d-flex flex-wrap justify-content-center">
-
-      <div class="input">
-        <label for="cepCliente" class="form-label">CEP do Cliente</label>
-        <input type="text" class="form-control" id="cepCliente" name="cepCliente" [(ngModel)]="procuracao.cepCliente" placeholder="00000-000" (input)="applyCepMask($event); onCepChange()">
-      </div>
-
-      <div class="input">
-        <label for="ruaCliente" class="form-label">Rua do Cliente</label>
-        <input type="text" class="form-control" id="ruaCliente" name="ruaCliente" [(ngModel)]="procuracao.ruaCliente" style="width:350px" placeholder="Rua do cliente">
-      </div>
-
-      <div class="input">
-        <label for="estadoCliente" class="form-label">Estado do Cliente</label>
-        <input type="text" class="form-control" id="estadoCliente" name="estadoCliente" [(ngModel)]="procuracao.estadoCliente" placeholder="Estado do cliente">
-      </div>
-
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-header">
-      <span>Detalhes Documento</span>
-    </div>
-
-    <div class="inputs w-100 d-flex flex-wrap justify-content-center">
-      <div class="line">
-        <div class="input">
-          <label for="cidadeDocumento" class="form-label">Cidade do Documento</label>
-          <input type="text" class="form-control" id="cidadeDocumento" name="cidadeDocumento" [(ngModel)]="procuracao.cidadeDocumento" placeholder="Cidade de Criação do documento">
+      <!-- submit -->
+      <div class="actions w-100 d-flex flex-wrap justify-content-center">
+        <div class=" d-flex justify-content-evenly">
+          <button type="submit" (click)="salvarProcuracao()" class="btn btn-outline-secondary">Salvar Dados</button>
+          <div class="space"></div>
+          <button class="btn btn-primary" (click)="criarProcuracao()">Criar Procuração</button>
         </div>
       </div>
+
+
+
     </div>
-  </div>
-
-
-  <!-- submit -->
-  <div class="actions w-100 d-flex flex-wrap justify-content-center">
-      <div class=" d-flex justify-content-evenly">
-        <button type="submit" (click)="salvarProcuracao()" class="btn btn-outline-secondary">Salvar Dados</button>
-        <div class="space"></div>
-        <button class="btn btn-primary" (click)="criarProcuracao()">Criar Procuração</button>
-      </div>
-  </div>
-
-
-
-</div>

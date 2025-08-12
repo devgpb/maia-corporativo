@@ -9,143 +9,153 @@
         <div class="form-group" style="max-width: 300px;">
           <label for="nome">Nome Completo</label>
           <input
-          type="text"
-          class="form-control"
-          id="nomeCompleto"
-          appMask="nome"
-          placeholder="Informe o nome"
-          formControlName="nomeCompleto">
-        </div>
-
-        <div class="form-group" style="max-width: 300px;">
-          <label for="profissao">Profissão (Se financiamento)</label>
-          <input
-          type="text"
-          class="form-control"
-          id="profissao"
-          placeholder="Profissão"
-          formControlName="profissao">
-        </div>
-        <div class="form-group" style="max-width: 150px;">
-          <label for="celular">Celular</label>
-          <input type="text" formControlName="celular" class="form-control" id="celular" placeholder="(00)-0000-0000" appMask="celular">
-        </div>
-        <div class="form-group"  style="max-width: 200px;">
-          <label for="cpfCliente">CPF</label>
-          <input type="text" class="form-control" id="cpfCliente" formControlName="cpfCliente"
-          placeholder="000.000.000-00"
-          appMask="cpf">
-
-        </div>
-        <div class="form-group" style="max-width: 300px;">
-          <label for="email">Email</label>
-          <input type="text" class="form-control" id="email" placeholder="Informe o email"
-          formControlName="email">
-        </div>
-      </div>
-    </div>
-
-    <div class="card my-3">
-      <div class="card-header">
-        <span>Projeto</span>
-      </div>
-
-      <div class="form-row flex-wrap my-4 d-flex justify-content-left align-items-center">
-
-        <div class="form-group" style="max-width: 350px;">
-          <label for="endereco">Endereço</label>
-          <input type="text" class="form-control" id="endereco" placeholder="Informe o Endereço"
-          formControlName="endereco">
-        </div>
-
-        <div class="form-group " style="max-width: 200px;">
-          <label for="consumo">Consumo Mensal (kWh)</label>
-          <input type="text" class="form-control" id="consumo" placeholder="Informe o consumo"
-          formControlName="consumo" appMask="inteiro">
-        </div>
-
-        <div class="form-group " style="max-width: 200px;">
-          <label for="kit">Kit</label>
-          <input type="text" class="form-control" id="kit" placeholder="Informe o kit"
-          formControlName="kit" appMask="inteiro">
-        </div>
-
-        <div class="form-group " style="max-width: 200px;">
-          <label for="valorProjeto">Valor do Projeto</label>
-          <input type="text" class="form-control" id="valorProjeto" placeholder="Informe o valorProjeto"
-          formControlName="valorProjeto" appMask="decimal">
-        </div>
-      </div>
-    </div>
-
-    <div class="card my-3">
-      <div class="card-header">
-        <span>Documentação</span>
-      </div>
-      <div class="form-row flex-wrap my-4 d-flex flex-wrap justify-content-left align-items-bottom">
-        <div class="form-group upload">
-          <label>Comprovante de Residência:</label>
-          <app-file-upload  formControlName="comprovanteResidencia" [invalid]="form.get('comprovanteResidencia').invalid" ></app-file-upload>
-          <div *ngIf="form.get('comprovanteResidencia').hasError('fileSize')">
-            <span class="text-danger">O arquivo é muito grande. O tamanho máximo permitido é 5MB.</span>
+            type="text"
+            class="form-control"
+            id="nomeCompleto"
+            appMask="nome"
+            placeholder="Informe o nome"
+            formControlName="nomeCompleto">
           </div>
-        </div>
 
-        <div class="form-group upload">
-          <label>RG + CPF ou CNH:</label>
-          <app-file-upload  formControlName="identidade" [invalid]="form.get('identidade').invalid" ></app-file-upload>
-          <div *ngIf="form.get('identidade').hasError('fileSize')">
-            <span class="text-danger">O arquivo é muito grande. O tamanho máximo permitido é 5MB.</span>
-          </div>
-          <span>(Você pode mandar mais de um arquivo)</span>
-        </div>
+          <div class="form-group" style="max-width: 300px;">
+            <label for="profissao">Profissão (Se financiamento)</label>
+            <input
+              type="text"
+              class="form-control"
+              id="profissao"
+              placeholder="Profissão"
+              formControlName="profissao">
+            </div>
+            <div class="form-group" style="max-width: 150px;">
+              <label for="celular">Celular</label>
+              <input type="text" formControlName="celular" class="form-control" id="celular" placeholder="(00)-0000-0000" appMask="celular">
+            </div>
+            <div class="form-group"  style="max-width: 200px;">
+              <label for="cpfCliente">CPF</label>
+              <input type="text" class="form-control" id="cpfCliente" formControlName="cpfCliente"
+                placeholder="000.000.000-00"
+                appMask="cpf">
 
-        <div class="form-group upload">
-          <label>Comprovante(s) de Residência Opcional:</label>
-          <app-file-upload  formControlName="comprovanteResidenciaOpt" [invalid]="form.get('comprovanteResidenciaOpt').invalid"
-          [multiple]="true"
-          ></app-file-upload>
-          <div *ngIf="form.get('comprovanteResidenciaOpt').hasError('fileSize')">
-            <span class="text-danger">O arquivo é muito grande. O tamanho máximo permitido é 5MB.</span>
-          </div>
-        </div>
+              </div>
+              <div class="form-group" style="max-width: 300px;">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" placeholder="Informe o email"
+                  formControlName="email">
+                </div>
+              </div>
+            </div>
 
-        <div class="form-group upload">
-          <label>Beneficiário Opcional:</label>
-          <app-file-upload  formControlName="beneficiario" [invalid]="form.get('beneficiario').invalid"
-          [multiple]="true"
-          ></app-file-upload>
-          <div *ngIf="form.get('beneficiario').hasError('fileSize')">
-            <span class="text-danger">O arquivo é muito grande. O tamanho máximo permitido é 5MB.</span>
-          </div>
-        </div>
-      </div>
+            <div class="card my-3">
+              <div class="card-header">
+                <span>Projeto</span>
+              </div>
 
-    </div>
+              <div class="form-row flex-wrap my-4 d-flex justify-content-left align-items-center">
 
-    <div class="card my-3">
-      <div class="card-header">
-        <span>Detalhes</span>
-      </div>
-      <div class="form-row flex-wrap my-4 d-flex justify-content-left align-items-center">
-        <div class="form-group ">
-            <label for="observacao">Observação</label>
-            <input type="text" class="form-control" id="observacao" placeholder="Observação Não Obrigatória"
-            formControlName="observacao">
-        </div>
-      </div>
-    </div>
+                <div class="form-group" style="max-width: 350px;">
+                  <label for="endereco">Endereço</label>
+                  <input type="text" class="form-control" id="endereco" placeholder="Informe o Endereço"
+                    formControlName="endereco">
+                  </div>
+
+                  <div class="form-group " style="max-width: 200px;">
+                    <label for="consumo">Consumo Mensal (kWh)</label>
+                    <input type="text" class="form-control" id="consumo" placeholder="Informe o consumo"
+                      formControlName="consumo" appMask="inteiro">
+                    </div>
+
+                    <div class="form-group " style="max-width: 200px;">
+                      <label for="kit">Kit</label>
+                      <input type="text" class="form-control" id="kit" placeholder="Informe o kit"
+                        formControlName="kit" appMask="inteiro">
+                      </div>
+
+                      <div class="form-group " style="max-width: 200px;">
+                        <label for="valorProjeto">Valor do Projeto</label>
+                        <input type="text" class="form-control" id="valorProjeto" placeholder="Informe o valorProjeto"
+                          formControlName="valorProjeto" appMask="decimal">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card my-3">
+                      <div class="card-header">
+                        <span>Documentação</span>
+                      </div>
+                      <div class="form-row flex-wrap my-4 d-flex flex-wrap justify-content-left align-items-bottom">
+                        <div class="form-group upload">
+                          <label>Comprovante de Residência:</label>
+                          <app-file-upload  formControlName="comprovanteResidencia" [invalid]="form.get('comprovanteResidencia').invalid" ></app-file-upload>
+                          @if (form.get('comprovanteResidencia').hasError('fileSize')) {
+                            <div>
+                              <span class="text-danger">O arquivo é muito grande. O tamanho máximo permitido é 5MB.</span>
+                            </div>
+                          }
+                        </div>
+
+                        <div class="form-group upload">
+                          <label>RG + CPF ou CNH:</label>
+                          <app-file-upload  formControlName="identidade" [invalid]="form.get('identidade').invalid" ></app-file-upload>
+                          @if (form.get('identidade').hasError('fileSize')) {
+                            <div>
+                              <span class="text-danger">O arquivo é muito grande. O tamanho máximo permitido é 5MB.</span>
+                            </div>
+                          }
+                          <span>(Você pode mandar mais de um arquivo)</span>
+                        </div>
+
+                        <div class="form-group upload">
+                          <label>Comprovante(s) de Residência Opcional:</label>
+                          <app-file-upload  formControlName="comprovanteResidenciaOpt" [invalid]="form.get('comprovanteResidenciaOpt').invalid"
+                            [multiple]="true"
+                          ></app-file-upload>
+                          @if (form.get('comprovanteResidenciaOpt').hasError('fileSize')) {
+                            <div>
+                              <span class="text-danger">O arquivo é muito grande. O tamanho máximo permitido é 5MB.</span>
+                            </div>
+                          }
+                        </div>
+
+                        <div class="form-group upload">
+                          <label>Beneficiário Opcional:</label>
+                          <app-file-upload  formControlName="beneficiario" [invalid]="form.get('beneficiario').invalid"
+                            [multiple]="true"
+                          ></app-file-upload>
+                          @if (form.get('beneficiario').hasError('fileSize')) {
+                            <div>
+                              <span class="text-danger">O arquivo é muito grande. O tamanho máximo permitido é 5MB.</span>
+                            </div>
+                          }
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="card my-3">
+                      <div class="card-header">
+                        <span>Detalhes</span>
+                      </div>
+                      <div class="form-row flex-wrap my-4 d-flex justify-content-left align-items-center">
+                        <div class="form-group ">
+                          <label for="observacao">Observação</label>
+                          <input type="text" class="form-control" id="observacao" placeholder="Observação Não Obrigatória"
+                            formControlName="observacao">
+                          </div>
+                        </div>
+                      </div>
 
 
 
 
 
 
-    <div class="d-flex justify-content-center align-items-center">
-      <button type="submit" class="btn btn-light mt-3 p-3">Enviar</button>
-    </div>
-    <div *ngIf="formInvalid" class="alert alert-warning form-invalid" role="alert">
-      Formulário Invélido, forneça ao menos o nome e o celular
-    </div>
-  </form>
-</div>
+                      <div class="d-flex justify-content-center align-items-center">
+                        <button type="submit" class="btn btn-light mt-3 p-3">Enviar</button>
+                      </div>
+                      @if (formInvalid) {
+                        <div class="alert alert-warning form-invalid" role="alert">
+                          Formulário Invélido, forneça ao menos o nome e o celular
+                        </div>
+                      }
+                    </form>
+                  </div>
