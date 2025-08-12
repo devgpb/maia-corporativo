@@ -10,6 +10,8 @@ import { ModalService } from '../services/modal/modal.service';
 import Swal from 'sweetalert2';
 import { PedidosService } from '../services/pedidos/pedidos.service';
 import { IConfigExcel } from '../interfaces/IConfigExcel';
+import type DataTables from 'datatables.net';
+
 
 
 @Component({
@@ -23,7 +25,7 @@ export class RelatorioComponent implements OnInit {
   @ViewChild("pedidos", { read: DataTableDirective, static: true })
 
 	private dataTablePedidos: DataTableDirective;
-	public dtOptionsPedidos: DataTables.Settings;
+	public dtOptionsPedidos: any;
   public dtTriggerPedidos: Subject<any> = new Subject<any>();
   public filtros: any
   public loading: boolean = false
@@ -104,7 +106,7 @@ export class RelatorioComponent implements OnInit {
 
   rerender(): void {
     if (this.dataTablePedidos?.dtInstance) {
-      this.dataTablePedidos.dtInstance.then((dtInstance: DataTables.Api) => {
+      this.dataTablePedidos.dtInstance.then((dtInstance: any) => {
           dtInstance.destroy();
       });
       this.dtTriggerPedidos.next(null);
@@ -115,7 +117,7 @@ export class RelatorioComponent implements OnInit {
 
 
   carregarTabela(){
-    this.dataTablePedidos.dtInstance.then((dtInstance: DataTables.Api) => {
+    this.dataTablePedidos.dtInstance.then((dtInstance: any) => {
       dtInstance.destroy();
       this.loading = true
       this.relatoriosGerenciaisService.getRelatorioPedidos(this.filtros).subscribe((response) => {
@@ -148,7 +150,7 @@ export class RelatorioComponent implements OnInit {
   }
 
   refazerTabela(){
-    this.dataTablePedidos.dtInstance.then((dtInstance: DataTables.Api) => {
+    this.dataTablePedidos.dtInstance.then((dtInstance: any) => {
       dtInstance.destroy();
       this.getPedidos()
     });

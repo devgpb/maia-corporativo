@@ -16,7 +16,6 @@ import { StorageService } from '../services/storage/storage.service';
 import { WebSocketService } from '../services/WebSocket/web-socket.service';
 import { IConfigExcel } from '../interfaces/IConfigExcel';
 defineLocale('pt-br', ptBrLocale);
-
 @Component({
     selector: 'app-display-pedidos',
     templateUrl: './display-pedidos.component.html',
@@ -32,7 +31,7 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
   @ViewChild("pedidos", { read: DataTableDirective, static: true })
 
 	private dataTablePedidos: DataTableDirective;
-	public dtOptionsPedidos:  DataTables.Settings;
+	public dtOptionsPedidos:  any;
   public dtTriggerPedidos: Subject<any> = new Subject<any>();
   public user: IUser;
   public isAdm: boolean;
@@ -155,14 +154,14 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   rerender(): void {
-    this.dataTablePedidos.dtInstance.then((dtInstance: DataTables.Api) => {
+    this.dataTablePedidos.dtInstance.then((dtInstance: any) => {
       dtInstance.destroy();
       this.dtTriggerPedidos.next(null);
     });
   }
 
   carregarTabela(){
-    this.dataTablePedidos.dtInstance.then((dtInstance: DataTables.Api) => {
+    this.dataTablePedidos.dtInstance.then((dtInstance: any) => {
       dtInstance.destroy();
       this.getPedidos()
     });
@@ -374,7 +373,7 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
 
   refazerTabela(){
     if(this.dataTablePedidos?.dtInstance){
-      this.dataTablePedidos.dtInstance.then((dtInstance: DataTables.Api) => {
+      this.dataTablePedidos.dtInstance.then((dtInstance: any) => {
         dtInstance.destroy();
         this.getPedidos()
       });
@@ -383,7 +382,7 @@ export class DisplayPedidosComponent implements OnInit, OnChanges, AfterViewInit
 
   apagarTabela(){
     if (this.dataTablePedidos?.dtInstance) {
-      this.dataTablePedidos.dtInstance.then((dtInstance: DataTables.Api) => {
+      this.dataTablePedidos.dtInstance.then((dtInstance: any) => {
           dtInstance.destroy();
       });
       this.dtTriggerPedidos.complete();

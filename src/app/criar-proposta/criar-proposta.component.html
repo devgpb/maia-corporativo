@@ -188,7 +188,7 @@
           <!-- Kit Details -->
           <section class="mb-12">
             <h2 class="text-2xl font-semibold text-orange-600 mb-4 flex items-center">
-              <i-lucide name="sun" class="w-8 h-8 mr-2"></i-lucide> Seu Kit Solar
+              <ng-icon [name="sun" class="w-8 h-8 mr-2"></ng-icon> Seu Kit Solar
             </h2>
             <div class="bg-orange-50 rounded-xl p-6 grid grid-cols-1 md:grid-cols-3 gap-4">
               <div class="text-center">
@@ -207,7 +207,7 @@
             @if (proposta.desconto != '0%' && proposta.desconto != '%') {
               <div class="mt-4 text-center">
                 <span class="inline-block bg-yellow-400 text-yellow-800 text-lg font-semibold px-4 py-2 rounded-full">
-                  <i-lucide name="tag" class="w-5 h-5 inline mr-1"></i-lucide> Desconto de {{proposta.desconto}}
+                  <ng-icon [name="tag" class="w-5 h-5 inline mr-1"></ng-icon> Desconto de {{proposta.desconto}}
                 </span>
               </div>
             }
@@ -215,12 +215,12 @@
           <!-- Equipment Details -->
           <section class="mb-12">
             <h2 class="text-2xl font-semibold text-blue-600 mb-4 flex items-center">
-              <i-lucide name="cpu" class="w-8 h-8 mr-2"></i-lucide> Equipamentos
+              <ng-icon [name="cpu" class="w-8 h-8 mr-2"></ng-icon> Equipamentos
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="bg-blue-50 rounded-xl p-6">
                 <h3 class="text-xl font-semibold text-blue-600 mb-3 flex items-center">
-                  <i-lucide name="zap" class="w-6 h-6 mr-2"></i-lucide> Inversor
+                  <ng-icon [name="zap" class="w-6 h-6 mr-2"></ng-icon> Inversor
                 </h3>
                 <ul class="space-y-2">
                   <li><strong>Quantidade:</strong> <span class="text-blue-600">1</span></li>
@@ -230,7 +230,7 @@
               </div>
               <div class="bg-yellow-50 rounded-xl p-6">
                 <h3 class="text-xl font-semibold text-yellow-600 mb-3 flex items-center">
-                  <i-lucide name="sun" class="w-6 h-6 mr-2"></i-lucide> Placas Solares
+                  <ng-icon [name="sun" class="w-6 h-6 mr-2"></ng-icon> Placas Solares
                 </h3>
                 <ul class="space-y-2">
                   <li><strong>Quantidade:</strong> <span class="text-yellow-600">{{ propostaCliente?.quantPlacas }}</span></li>
@@ -244,7 +244,7 @@
           <!-- Payment Details -->
           <section class="mb-12">
             <h2 class="text-2xl font-semibold text-green-600 mb-4 flex items-center">
-              <i-lucide name="credit-card" class="w-8 h-8 mr-2"></i-lucide> Investimento
+              <ng-icon [name="credit-card" class="w-8 h-8 mr-2"></ng-icon> Investimento
             </h2>
             <div class="bg-green-50 rounded-xl p-6">
               <p class="text-2xl mb-4"><strong>Valor Total:</strong> <span class="text-green-600 font-bold">{{ propostaCliente?.valorTotal }}</span></p>
@@ -254,7 +254,7 @@
           <!-- Client Details -->
           <section class="mb-12">
             <h2 class="text-2xl font-semibold text-purple-600 mb-4 flex items-center">
-              <i-lucide name="user" class="w-8 h-8 mr-2"></i-lucide> Seus Dados
+              <ng-icon [name="user" class="w-8 h-8 mr-2"></ng-icon> Seus Dados
             </h2>
             <div class="bg-purple-50 rounded-xl p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
               <p><strong>Nome:</strong> {{ proposta.nomeCliente }}</p>
@@ -275,7 +275,7 @@
           @if (propostaCliente?.mensagemSolo || propostaCliente?.mensagemCidade) {
             <section>
               <h2 class="text-2xl font-semibold text-gray-600 mb-4 flex items-center">
-                <i-lucide name="info" class="w-8 h-8 mr-2"></i-lucide> Informações Adicionais
+                <ng-icon [name="info" class="w-8 h-8 mr-2"></ng-icon> Informações Adicionais
               </h2>
               <div class="bg-gray-100 rounded-xl p-6">
                 @if (propostaCliente?.mensagemSolo) {
@@ -291,10 +291,10 @@
         <!-- Footer -->
         <div class="bg-gray-100 p-6 flex justify-between items-center">
           <button (click)="success = false" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out flex items-center">
-            <i-lucide name="arrow-left" class="w-5 h-5 mr-2"></i-lucide> Voltar
+            <ng-icon [name="arrow-left" class="w-5 h-5 mr-2"></ng-icon> Voltar
           </button>
           <button (click)="downloadPdf()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out flex items-center">
-            <i-lucide name="download" class="w-5 h-5 mr-2"></i-lucide> Baixar PDF
+            <ng-icon [name="download" class="w-5 h-5 mr-2"></ng-icon> Baixar PDF
           </button>
         </div>
       </div>

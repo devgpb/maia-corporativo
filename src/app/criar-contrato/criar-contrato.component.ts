@@ -7,11 +7,11 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
 
 
-import * as moment from 'moment';
+import moment from 'moment';;
 // Importar o locale em português
 import 'moment/locale/pt-br';
-import { toInt } from 'ngx-bootstrap/chronos/utils/type-checks';
 import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
     selector: 'app-criar-contrato',

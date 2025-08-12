@@ -27,7 +27,7 @@
     <!-- Informações com ícones e separador -->
     <div class="d-flex align-items-center gap-1 text-muted small mb-3 flex-wrap">
       @if (cliente.cidade) {
-        <lucide-icon name="map-pin"></lucide-icon>
+        <ng-icon name="lucideMapPin"></ng-icon>
         <span>cidade: </span>
         {{ cliente.cidade }}
       }
@@ -37,7 +37,7 @@
       }
 
       @if (cliente.campanha && cliente.campanha != 'Sem Campanha') {
-        <lucide-icon name="megaphone"></lucide-icon>
+        <ng-icon name="lucideMegaphone"></ng-icon>
         <span>campanha: </span>
         <span class="text-primary">{{ cliente.campanha }}</span>
       }
@@ -46,7 +46,7 @@
     <!-- Ações -->
     <div class="d-flex gap-2 border-top pt-2 mb-2">
       <button type="button" class="btn py-2 px-2 btn-success btn-sm d-flex align-items-center" (click)="abrirWhatsapp($event)">
-        <lucide-icon name="message-circle" class="me-1" size="16"></lucide-icon>
+        <ng-icon name="lucideMessageCircle" class="me-1" size="16"></ng-icon>
         WhatsApp
       </button>
       <!-- você pode adicionar mais botões aqui -->

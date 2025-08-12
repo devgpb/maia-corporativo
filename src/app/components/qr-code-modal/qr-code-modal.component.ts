@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { toCanvas } from 'qrcode';
-import * as html2pdf from 'html2pdf.js';
+import html2pdf from 'html2pdf.js';
 
 @Component({
     selector: 'app-qr-code-modal',

@@ -1,10 +1,12 @@
 import { Injectable } from "@angular/core";
 import { AbstractControl, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
-import * as moment from "moment";
+import moment from 'moment';;
 import { NgBlockUI } from "ng-block-ui";
 import { Subject } from "rxjs";
 import Swal from "sweetalert2";
+import type DataTables from 'datatables.net';
+
 
 import { IDropdownSettings } from "ng-multiselect-dropdown";
 import { UserService } from "../user/user.service";
@@ -36,7 +38,7 @@ export class UtilsService {
 		private router: Router
 	) { }
 
-	public getDataTablesTranslation (emptyLabel: string = "Nenhum registro"): DataTables.LanguageSettings {
+	public getDataTablesTranslation (emptyLabel: string = "Nenhum registro"): any {
 		return {
 			emptyTable: emptyLabel,
 			info: "Mostrando _START_ até _END_ de _TOTAL_ registros",

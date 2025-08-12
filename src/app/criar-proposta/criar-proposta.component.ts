@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AutomacoesService } from '../services/automacoes/automacoes.service';
 import { ModalService } from '../services/modal/modal.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import * as html2pdf from 'html2pdf.js';
+import html2pdf from 'html2pdf.js';
 
 interface Proposta {
   nomeCliente: string;

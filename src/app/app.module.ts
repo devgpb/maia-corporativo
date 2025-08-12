@@ -1,4 +1,4 @@
-import { registerLocaleData } from "@angular/common";
+import { registerLocaleData, } from "@angular/common";
 import localePt from "@angular/common/locales/pt";
 import { defineLocale } from "ngx-bootstrap/chronos";
 import { ptBrLocale } from "ngx-bootstrap/locale";
@@ -18,8 +18,10 @@ import { NumericOnlyDirective } from "./services/utils/numeric-only.directive";
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { DatePipe } from "@angular/common";
 import { CurrencyMaskModule } from 'ng2-currency-mask';
-import { icons } from 'lucide-angular';
-import { LucideAngularModule } from 'lucide-angular';
+import { NgApexchartsModule } from 'ng-apexcharts';
+
+import { NgIconsModule } from '@ng-icons/core';
+import * as lucideIcons from '@ng-icons/lucide';
 
 
 import { CommonModule } from "@angular/common";
@@ -132,7 +134,7 @@ registerLocaleData(localePt);
         DashboardVendas
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
-        LucideAngularModule.pick({ ...icons }),
+        NgIconsModule.withIcons(lucideIcons),
         AppRoutingModule,
         BlockUIModule,
         ReactiveFormsModule,
@@ -144,7 +146,10 @@ registerLocaleData(localePt);
         NgMultiSelectDropDownModule.forRoot(),
         FullCalendarModule,
         CurrencyMaskModule,
-        CommonModule], providers: [
+        CommonModule,
+        NgApexchartsModule,
+
+      ], providers: [
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,

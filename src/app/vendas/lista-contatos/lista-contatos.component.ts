@@ -3,7 +3,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { VendasService } from 'src/app/services/vendas/vendas.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { IUser } from 'src/app/interfaces/IUser';
-import * as moment from 'moment';
+import moment from 'moment';;
 
 interface Contato {
   idSimulacao: string;

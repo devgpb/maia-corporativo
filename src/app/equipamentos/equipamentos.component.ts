@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { EquipamentosService } from '../services/equipamentos/equipamento.service';
 import { DataTableDirective } from 'angular-datatables';
-import { eq } from '@fullcalendar/core/internal-common';
 import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import * as Constantes from "../constants";
 import { AuthService } from '../services/auth/auth.service';
+import type DataTables from 'datatables.net';
 
 
 @Component({
@@ -22,7 +22,7 @@ export class EquipamentosComponent implements OnInit{
 
   @ViewChild("equips", { read: DataTableDirective, static: true })
 	private dataTableEquips: DataTableDirective;
-	public dtOptionsEquips: DataTables.Settings = { };
+	public dtOptionsEquips: any = { };
   public dtTriggerEquips: Subject<any> = new Subject();
   public user: any;
 
@@ -78,7 +78,7 @@ export class EquipamentosComponent implements OnInit{
   carregarTabela(){
      // Destruir a DataTable atual antes de recarregar os novos dados
      if (this.dataTableEquips?.dtInstance) {
-      this.dataTableEquips.dtInstance.then((dtInstance: DataTables.Api) => {
+      this.dataTableEquips.dtInstance.then((dtInstance: any) => {
         dtInstance.destroy();
         this.equipamentoService.getTiposEquipamentos(this.tipo).subscribe(equip => {
           this.listaEquipamentos = equip

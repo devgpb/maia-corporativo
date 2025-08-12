@@ -40,7 +40,7 @@ export class NovoMenuComponent implements OnInit {
       title: 'Vendas',
       items: [
         {
-          icon: 'layout-dashboard',
+          icon: 'lucideLayoutDashboard',
           title: 'Relatório de Vendas',
           description: 'Acompanhe as métricas de vendas',
           href: '/vendas/dashboard',
@@ -48,7 +48,7 @@ export class NovoMenuComponent implements OnInit {
           setores: ['Vendas', 'Marketing'],
         },
         {
-          icon: "user-plus",
+          icon: "lucideUserPlus",
           title: 'Cadastrar Clientes',
           description: 'Cadastre seus clientes',
           href: '/vendas/leads',
@@ -56,7 +56,7 @@ export class NovoMenuComponent implements OnInit {
           setores: ['Vendas', 'Marketing'],
         },
         {
-          icon: 'users',
+          icon: 'lucideUsers',
           title: 'Lista de Clientes',
           description: 'Veja todos os clientes cadastrados',
           href: '/vendas/lista/clientes',
@@ -70,7 +70,7 @@ export class NovoMenuComponent implements OnInit {
       title: 'Sistema',
       items: [
         {
-          icon: 'users', // Lucide: users para Clientes
+          icon: 'lucideUsers', // Lucide: users para Clientes
           title: 'Pedidos',
           description: 'Gerencie sua base de pedidos fechados',
           roles: ['GESTOR', 'COLABORADOR', 'ADMINISTRADOR'],
@@ -78,20 +78,20 @@ export class NovoMenuComponent implements OnInit {
           hasSubmenu: true,
         },
         {
-          icon: 'bot', // Lucide: bot para Automações
+          icon: 'lucideBot', // Lucide: bot para Automações
           title: 'Automações',
           description: 'Configure processos automáticos',
           hasSubmenu: true
         },
         {
-          icon: 'bar-chart-2',
+          icon: 'lucideBarChart2',
           title: 'Relatório',
           description: 'Visualize métricas e relatórios',
           href: '/relatorio',
           roles: ['ADMINISTRADOR']
         },
         {
-          icon: 'server', // Lucide: server para Equipamentos
+          icon: 'lucideServer', // Lucide: server para Equipamentos
           title: 'Equipamentos',
           description: 'Gerencie equipamentos do sistema',
           href: '/equipamentos'
@@ -102,27 +102,27 @@ export class NovoMenuComponent implements OnInit {
       title: 'Administração',
       items: [
         {
-          icon: 'users',
+          icon: 'lucideUsers',
           title: 'Usuários',
           description: 'Gerencie todos os usuários do sistema',
           href: '/ref',
           roles: ['ADMINISTRADOR']
         },
         {
-          icon: 'user-cog',
+          icon: 'lucideUserCog',
           title: 'Minha Conta',
           description: 'Configure suas preferências pessoais',
           href: '/conta'
         },
         {
-          icon: 'building-2',
+          icon: 'lucideBuilding2',
           title: 'Setores',
           description: 'Organize os setores da empresa',
           href: '/setores',
           roles: ['ADMINISTRADOR']
         },
         {
-          icon: 'user-plus',
+          icon: 'lucideUserPlus',
           title: 'Novo Usuário',
           description: 'Adicione novos membros ao sistema',
           href: '/usuarios/novo',
@@ -135,7 +135,7 @@ export class NovoMenuComponent implements OnInit {
   // Itens do submenu para "Clientes"
   public submenuClientesRecentItems = [
     {
-      icon: 'dollar-sign',
+      icon: 'lucideDollarSign',
       title: 'Pagamentos Faltantes',
       nome: 'pagamentosFaltantes',
       count: 0,
@@ -143,7 +143,7 @@ export class NovoMenuComponent implements OnInit {
       color: 'text-red-600 bg-red-100'
     },
     {
-      icon: 'box',
+      icon: 'lucideBox',
       title: 'Equipamentos A Comprar',
       nome: 'equipamentosFaltantes',
       count: 0,
@@ -151,7 +151,7 @@ export class NovoMenuComponent implements OnInit {
       color: 'text-orange-600 bg-orange-100'
     },
     {
-      icon: 'pen',
+      icon: 'lucidePen',
       title: 'ART Faltantes',
       nome: 'ARTFaltantes',
       count: 0,
@@ -159,7 +159,7 @@ export class NovoMenuComponent implements OnInit {
       color: 'text-yellow-600 bg-yellow-100'
     },
     {
-      icon: 'folder-open',
+      icon: 'lucideFolderOpen',
       title: 'Homologações Pendentes',
       nome: 'homologacoesPendentes',
       count: 0,
@@ -167,7 +167,7 @@ export class NovoMenuComponent implements OnInit {
       color: 'text-blue-600 bg-blue-100'
     },
     {
-      icon: 'cog',
+      icon: 'lucideCog',
       title: 'Aguardando Instalação',
       nome: 'aguardandoInstalacao',
       count: 0,
@@ -178,25 +178,25 @@ export class NovoMenuComponent implements OnInit {
 
   public submenuClientesTableItems = [
     {
-      icon: 'file',
+      icon: 'lucideFile',
       title: 'Fechado',
       count: false,
       route: '/pedidos/status/fechado'
     },
     {
-      icon: 'cog',
+      icon: 'lucideCog',
       title: 'Instalacao',
       count: false,
       route: '/pedidos/status/instalacao'
     },
     {
-      icon: 'file',
+      icon: 'lucideFile',
       title: 'Nota',
       count: false,
       route: '/pedidos/status/nota'
     },
     {
-      icon: 'file',
+      icon: 'lucideFile',
       title: 'Finalizado',
       count: false,
       route: '/pedidos/status/finalizado'
@@ -206,12 +206,12 @@ export class NovoMenuComponent implements OnInit {
   // Itens do submenu para "Automações"
   public submenuAutItems = [
     {
-      icon: 'file',
+      icon: 'lucideFile',
       title: 'Gerar Proposta',
       route: '/proposta/gerar'
     },
     {
-      icon: 'file',
+      icon: 'lucideFile',
       title: 'Gerar Procuração',
       route: '/procuracao/gerar',
       roles: ['ADMINISTRADOR']

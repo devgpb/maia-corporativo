@@ -15,15 +15,15 @@
         </div>
         <div class="space-y-2 mb-4">
           <div class="flex items-center text-gray-600">
-            <lucide-icon name="phone" size="18" class="mr-2 text-green-500"></lucide-icon>
+            <ng-icon name="lucidePhone" size="18" class="mr-2 text-green-500"></ng-icon>
             <span>{{ contato.contato }}</span>
           </div>
           <div class="flex items-center text-gray-600">
-            <lucide-icon name="calendar" size="18" class="mr-2 text-green-500"></lucide-icon>
+            <ng-icon name="lucideCalendar" size="18" class="mr-2 text-green-500"></ng-icon>
             <span>{{ contato.data }}</span>
           </div>
           <div class="flex items-center text-gray-600">
-            <lucide-icon name="clock" size="18" class="mr-2 text-green-500"></lucide-icon>
+            <ng-icon name="lucideClock" size="18" class="mr-2 text-green-500"></ng-icon>
             <span>{{ contato.hora }}</span>
           </div>
         </div>
@@ -35,7 +35,7 @@
           }
         </div>
         <button (click)="removerContato(contato)" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out flex items-center justify-center">
-          <lucide-icon name="check" size="18" class="mr-2"></lucide-icon>
+          <ng-icon name="lucideCheck" size="18" class="mr-2"></ng-icon>
           Entrei em contato
         </button>
       </div>

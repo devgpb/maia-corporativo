@@ -28,7 +28,7 @@ export class ListaClientesComponent implements OnInit {
   meusClientes = new FormControl(false);
 
   selectedCliente: Cliente | null = null;
-  isModalOpen = false;
+  public isModalOpen = false;
 
   constructor(
     private clientesService: ClientesService,

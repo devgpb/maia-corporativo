@@ -46,7 +46,7 @@
       <div class="border rounded-xl p-4">
         <div class="flex items-center justify-between pb-2">
           <div class="text-sm font-medium">Clientes Novos</div>
-          <lucide-icon [img]="icons.UserPlus" class="h-4 w-4 text-green-600"></lucide-icon>
+          <ng-icon size="28" name="lucideUserPlus" class="h-4 w-4 text-green-600"></ng-icon>
         </div>
         <div class="text-2xl font-bold text-green-600">{{ d.clientesNovosHoje }}</div>
         <p class="text-xs text-gray-600">{{ selectedPeriod()==='hoje' ? 'hoje' : ('neste ' + selectedPeriod()) }}</p>
@@ -54,7 +54,7 @@
       <div class="border rounded-xl p-4">
         <div class="flex items-center justify-between pb-2">
           <div class="text-sm font-medium">Clientes Atendidos</div>
-          <lucide-icon [img]="icons.Phone" class="h-4 w-4 text-blue-600"></lucide-icon>
+          <ng-icon size="28" name="lucidePhone" class="h-4 w-4 text-blue-600"></ng-icon>
         </div>
         <div class="text-2xl font-bold text-blue-600">{{ d.clientesAtendidosHoje }}</div>
         <p class="text-xs text-gray-600">{{ selectedPeriod()==='hoje' ? 'hoje' : ('neste ' + selectedPeriod()) }}</p>
@@ -62,7 +62,7 @@
       <div class="border rounded-xl p-4">
         <div class="flex items-center justify-between pb-2">
           <div class="text-sm font-medium">Total Cadastrados</div>
-          <lucide-icon [img]="icons.Users" class="h-4 w-4 text-purple-600"></lucide-icon>
+          <ng-icon size="28" name="lucideUsers" class="h-4 w-4 text-purple-600"></ng-icon>
         </div>
         <div class="text-2xl font-bold text-purple-600">{{ d.totalClientesCadastrados }}</div>
         <p class="text-xs text-gray-600">clientes ativos</p>
@@ -70,18 +70,56 @@
       <div class="border rounded-xl p-4">
         <div class="flex items-center justify-between pb-2">
           <div class="text-sm font-medium">Pendentes</div>
-          <lucide-icon [img]="icons.Clock" class="h-4 w-4 text-orange-600"></lucide-icon>
+          <ng-icon size="28" name="lucideClock" class="h-4 w-4 text-orange-600"></ng-icon>
         </div>
         <div class="text-2xl font-bold text-orange-600">{{ d.clientesPendentes }}</div>
         <p class="text-xs text-gray-600">aguardando atendimento</p>
       </div>
     </div>
     <!-- Secondary KPIs -->
+     <!-- Gráfico: Clientes por Status -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <!-- Clientes por Status (barras) -->
+      <div class="border rounded-xl p-4">
+        <div class="flex items-center justify-between pb-2">
+          <div class="text-sm font-medium">Clientes por Status</div>
+        </div>
+        <div *ngIf="statusChart() as s">
+          <apx-chart
+            [series]="s.series"
+            [chart]="s.chart"
+            [xaxis]="s.xaxis"
+            [plotOptions]="s.plotOptions"
+            [dataLabels]="s.dataLabels"
+            [stroke]="s.stroke"
+            [tooltip]="s.tooltip"
+            [fill]="s.fill">
+          </apx-chart>
+        </div>
+      </div>
+
+      <!-- Clientes por Campanha (rosca) -->
+      <div class="border rounded-xl p-4">
+        <div class="flex items-center justify-between pb-2">
+          <div class="text-sm font-medium">Clientes por Campanha</div>
+        </div>
+        <div *ngIf="campanhaChart() as c">
+          <apx-chart
+            [series]="c.series"
+            [chart]="c.chart"
+            [labels]="c.labels"
+            [legend]="c.legend"
+            [tooltip]="c.tooltip"
+            [responsive]="c.responsive">
+          </apx-chart>
+        </div>
+      </div>
+    </div>
     <!-- <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <div class="border rounded-xl p-4">
       <div class="flex items-center justify-between pb-2">
         <div class="text-sm font-medium">Orçamentos Enviados</div>
-        <lucide-icon [img]="icons.CheckCircle" class="h-4 w-4 text-green-600"></lucide-icon>
+        <ng-icon size="28" name="lucide CheckCircle" class="h-4 w-4 text-green-600"></ng-icon>
       </div>
       <div class="text-2xl font-bold text-green-600">{{ d.orcamentosEnviados }}</div>
       <p class="text-xs text-gray-600">orçamentos pendentes</p>
@@ -89,7 +127,7 @@
     <div class="border rounded-xl p-4">
       <div class="flex items-center justify-between pb-2">
         <div class="text-sm font-medium">Clientes Expansão</div>
-        <lucide-icon [img]="icons.TrendingUp" class="h-4 w-4 text-blue-600"></lucide-icon>
+        <ng-icon size="28" name="lucide TrendingUp" class="h-4 w-4 text-blue-600"></ng-icon>
       </div>
       <div class="text-2xl font-bold text-blue-600">{{ d.clientesExpansao }}</div>
       <p class="text-xs text-gray-600">oportunidades de crescimento</p>
@@ -100,8 +138,7 @@
     <div class="inline-flex rounded-lg overflow-hidden border">
       <button class="px-3 py-1.5" [class.bg-gray-900]="activeTab()==='recentes'" [class.text-white]="activeTab()==='recentes'" (click)="setTab('recentes')">Clientes Recentes</button>
       <button class="px-3 py-1.5" [class.bg-gray-900]="activeTab()==='sem-contato'" [class.text-white]="activeTab()==='sem-contato'" (click)="setTab('sem-contato')">Sem Contato</button>
-      <button class="px-3 py-1.5" [class.bg-gray-900]="activeTab()==='status'" [class.text-white]="activeTab()==='status'" (click)="setTab('status')">Por Status</button>
-      <button class="px-3 py-1.5" [class.bg-gray-900]="activeTab()==='campanhas'" [class.text-white]="activeTab()==='campanhas'" (click)="setTab('campanhas')">Por Campanha</button>
+     
     </div>
     <!-- Recentes -->
     @if (activeTab()==='recentes') {
@@ -143,7 +180,7 @@
       <div class="border rounded-xl">
         <div class="p-4 border-b">
           <div class="flex items-center gap-2 text-lg font-semibold">
-            <lucide-icon [img]="icons.AlertCircle" class="h-5 w-5 text-red-500"></lucide-icon>
+            <ng-icon size="28" name="lucide AlertCircle" class="h-5 w-5 text-red-500"></ng-icon>
             Clientes Sem Contato
           </div>
           <div class="text-sm text-gray-600">Clientes que precisam de atenção urgente</div>

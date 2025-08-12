@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { ptBrLocale } from 'ngx-bootstrap/chronos';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { formatDate } from '@angular/common';
-import * as moment from 'moment-timezone';
+import moment from 'moment';
+import 'moment-timezone';
+
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';

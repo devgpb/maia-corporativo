@@ -9,7 +9,7 @@
       [disabled]="isLoading"
       aria-label="Apagar Cliente"
       >
-      <lucide-icon name="Trash2" class="" size="18"></lucide-icon>
+      <ng-icon name="lucideTrash2" class="" size="18"></ng-icon>
     </button>
 
     @if (formData) {
@@ -52,7 +52,7 @@
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h5 class="mb-0">Editar Cliente #{{ formData.idCliente }}</h5>
           <button type="button" class="btn btn-sm btn-outline-secondary" (click)="close()">
-            <lucide-icon name="X" size="18"></lucide-icon>
+            <ng-icon name="lucideX" size="18"></ng-icon>
           </button>
         </div>
         <!-- Formulário -->
@@ -148,11 +148,11 @@
                 <!-- Rodapé -->
                 <div class="modal-footer d-flex flex-column flex-sm-row gap-2 justify-content-end mt-3">
                   <button class="btn btn-primary w-100 w-sm-auto" (click)="save()" [disabled]="isLoading">
-                    <lucide-icon name="Save" class="me-2" size="18"></lucide-icon>
+                    <ng-icon name="lucideSave" class="me-2" size="18"></ng-icon>
                     Salvar
                   </button>
                   <button class="btn btn-outline-secondary w-100 w-sm-auto" (click)="close()" [disabled]="isLoading">
-                    <lucide-icon name="XCircle" class="me-2" size="18"></lucide-icon>
+                    <ng-icon name="lucideXCircle" class="me-2" size="18"></ng-icon>
                     Cancelar
                   </button>
                 </div>
