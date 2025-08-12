@@ -29,8 +29,7 @@ export class ClienteModalComponent implements OnChanges, OnInit {
   ){
 
   }
-  fallbackCidades = ['Arcoverde', 'Buíque', 'Ibimirim', 'Tupanatinga', 'Custódia', 'Pesqueira', 'Venturosa', 'Manari', 'Inajá', 'Pedra'
-  ]
+
   formData!: Cliente;
   errors: Record<string,string> = {};
   isLoading = false;
@@ -46,7 +45,7 @@ export class ClienteModalComponent implements OnChanges, OnInit {
     if (ch['cliente'] && this.cliente) {
       this.formData = { ...this.cliente };
       this.errors = {};
-      this.fetchCidades();
+      this.fetchFiltros();
     }
 
     // Garante que a campanha atual do cliente apareça no select
@@ -157,16 +156,38 @@ export class ClienteModalComponent implements OnChanges, OnInit {
                     return 'Crítico';
   }
 
-  fetchCidades() {
-    this.http.get<any[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados/26/municipios')
+  fetchFiltros() {
+    this.clientesService.getFiltrosClientes()
       .subscribe({
         next: data => {
-          this.cidades = data.map(c => c.nome);
+          this.cidades = data.cidades;
+          this.statuses = data.status;
         },
         error: () => {
-          // Fallback: cidades da região de Arcoverde
-          this.cidades = this.fallbackCidades
+
         }
       });
+  }
+
+  onAddCidade(term: string) {
+    // ng-select passa a string digitada; inclui na lista (se não existir)
+    if (term && !this.cidades.includes(term)) {
+      this.cidades = [term, ...this.cidades];
+    }
+    this.formData.cidade = term;
+  }
+
+  onAddStatus(term: string) {
+    if (term && !this.statuses.includes(term)) {
+      this.statuses = [term, ...this.statuses];
+    }
+    this.formData.status = term;
+  }
+
+  onAddCampanha(term: string) {
+    if (term && !this.listaCampanhas.includes(term)) {
+      this.listaCampanhas = [term, ...this.listaCampanhas];
+    }
+    this.formData.campanha = term;
   }
 }

@@ -111,6 +111,7 @@ export class ListaClientesComponent implements OnInit {
     this.searchTerm = '';
     this.statusFilter = 'todos';
     this.cidadeFilter = 'todas';
+    this.meusClientes.setValue(false);
     this.atualizaFiltros();
   }
 

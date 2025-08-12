@@ -94,36 +94,46 @@
                 </div>
                 <div class="col-md-6 mb-3">
                   <label class="form-label">Cidade</label>
-                  <input
-                    type="text"
-                    class="form-control"
+                  <ng-select
+                    [items]="cidades"
                     [(ngModel)]="formData.cidade"
                     name="cidade"
-                    list="cidadesList"
+                    [searchable]="true"
+                    [clearable]="true"
+                    [hideSelected]="true"
+                    [addTag]="true"
                     placeholder="Digite ou selecione..."
-                    />
-                    <datalist id="cidadesList">
-                      @for (cidade of cidades; track cidade) {
-                        <option [value]="cidade"></option>
-                      }
-                    </datalist>
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">Status</label>
-                    <select class="form-select" [(ngModel)]="formData.status" name="status">
-                      @for (s of statuses; track s) {
-                        <option [value]="s">{{ s }}</option>
-                      }
-                    </select>
-                  </div>
+                    (add)="onAddCidade($event)">
+                  </ng-select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Status</label>
+                  <ng-select
+                    [items]="statuses"
+                    [(ngModel)]="formData.status"
+                    name="status"
+                    [searchable]="true"
+                    [clearable]="true"
+                    [hideSelected]="true"
+                    [addTag]="true"
+                    placeholder="Digite ou selecione..."
+                    (add)="onAddStatus($event)">
+                  </ng-select>
+                </div>
                   <div class="col-md-6 mb-3">
                     <label class="form-label">Campanha</label>
-                    <select class="form-select form-control" [(ngModel)]="formData.campanha" name="campanha">
-                      <option value="">Selecione</option>
-                      @for (s of listaCampanhas; track s) {
-                        <option [value]="s">{{ s }}</option>
-                      }
-                    </select>
+                    <ng-select
+                      [items]="listaCampanhas"
+                      [(ngModel)]="formData.campanha"
+                      name="campanha"
+                      [searchable]="true"
+                      [clearable]="true"
+                      [hideSelected]="true"
+                      [addTag]="true"
+                      placeholder="Digite ou selecione..."
+                      (add)="onAddCampanha($event)">
+                    </ng-select>
                   </div>
                   <div class="col-md-6 mb-3">
                     <label class="form-label">Indicação</label>

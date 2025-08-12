@@ -13,7 +13,7 @@ import { AuthInterceptor } from './services/auth/auth.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataTablesModule } from "angular-datatables";
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { NgSelectModule } from '@ng-select/ng-select';
+import { NgSelectConfig, NgSelectModule } from '@ng-select/ng-select';
 import { NumericOnlyDirective } from "./services/utils/numeric-only.directive";
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { DatePipe } from "@angular/common";
@@ -157,4 +157,10 @@ registerLocaleData(localePt);
         }, DatePipe,
         provideHttpClient(withInterceptorsFromDi())
     ] })
-export class AppModule { }
+export class AppModule {
+  constructor(private config: NgSelectConfig) {
+    this.config.addTagText = 'Adicionar';
+    this.config.notFoundText = 'Nenhum resultado encontrado';
+    this.config.clearAllText = 'Limpar tudo';
+  }
+ }

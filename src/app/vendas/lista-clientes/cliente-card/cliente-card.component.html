@@ -50,6 +50,10 @@
         WhatsApp
       </button>
       <!-- você pode adicionar mais botões aqui -->
+      <button type="button" class="btn py-2 px-2 btn-primary btn-sm d-flex align-items-center" (click)="marcarContato($event)" [disabled]="isUltimoContatoHoje">
+        <ng-icon name="lucideCheck" class="me-1" size="16"></ng-icon>
+        Marcar contato
+      </button>
     </div>
 
     <!-- Footer -->

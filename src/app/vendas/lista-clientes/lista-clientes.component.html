@@ -87,7 +87,7 @@
           </div>
 
           <!-- Limpar -->
-          @if (searchTerm || statusFilter !== 'todos') {
+          @if (searchTerm || statusFilter !== 'todos' || meusClientes.value ) {
             <div class="col-12 text-end">
               <button class="btn btn-outline-secondary" (click)="clearFilters()">
                 Limpar filtros

@@ -15,59 +15,74 @@
         <label class="form-label">Celular *</label>
         <input type="text" class="form-control" formControlName="celular" appMask="celular" placeholder="(00) 00000-0000"
           [ngClass]="{'is-invalid': clienteForm.get('celular')?.invalid && clienteForm.get('celular')?.touched}">
-          <div class="invalid-feedback">Celular é obrigatório.</div>
+          <div class="invalid-feedback" *ngIf="f['celular']?.errors?.['required']">
+            Celular é obrigatório.
+          </div>
+          <div class="invalid-feedback" *ngIf="f['celular']?.errors?.['pattern']">
+            Formato inválido. Use (00) 00000-0000, ex: (87) 99133-8119.
+          </div>
         </div>
 
         <!-- Cidade -->
         <div class="col-md-6">
           <label class="form-label">Cidade</label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="cidade"
-            list="cidadesList"
-            placeholder="Digite ou selecione..."
-            />
-            <datalist id="cidadesList">
-              @for (cidade of cidades; track cidade) {
-                <option [value]="cidade"></option>
-              }
-            </datalist>
+            <ng-select
+              [items]="cidades"
+              formControlName="cidade"
+              name="cidade"
+              [searchable]="true"
+              [clearable]="true"
+              [hideSelected]="true"
+              [addTag]="true"
+              placeholder="Digite ou selecione..."
+              (add)="onAddCidade($event)">
+            </ng-select>
           </div>
 
 
           <!-- Status -->
           <div class="col-md-6">
             <label class="form-label">Status</label>
-            <select class="form-select" formControlName="status">
-              <option value="">Selecione</option>
-              @for (s of statusList; track s) {
-                <option [value]="s">{{ s }}</option>
-              }
-            </select>
+            <ng-select
+              [items]="statusList"
+              formControlName="status"
+              name="status"
+              [searchable]="true"
+              [clearable]="true"
+              [hideSelected]="true"
+              [addTag]="true"
+              placeholder="Digite ou selecione..."
+              (add)="onAddStatus($event)">
+            </ng-select>
+
           </div>
 
           <!-- Indicação -->
           <div class="col-md-6">
             <label class="form-label">Indicação</label>
-            <input type="text" class="form-control" formControlName="indicacao">
+            <input type="text" class="form-control" formControlName="indicacao" placeholder="Quem indicou o cliente?">
           </div>
 
           <!-- Campanha -->
           <div class="col-md-6">
             <label class="form-label">Campanha</label>
-            <select class="form-select" formControlName="campanha">
-              <option value="">Selecione</option>
-              @for (s of listaCampanhas; track s) {
-                <option [value]="s">{{ s }}</option>
-              }
-            </select>
+            <ng-select
+              [items]="listaCampanhas"
+              formControlName="campanha"
+              name="campanha"
+              [searchable]="true"
+              [clearable]="true"
+              [hideSelected]="true"
+              [addTag]="true"
+              placeholder="Digite ou selecione..."
+              (add)="onAddCampanha($event)">
+            </ng-select>
           </div>
 
           <!-- Observação -->
           <div class="col-12">
             <label class="form-label">Observação</label>
-            <textarea class="form-control" rows="3" formControlName="observacao"></textarea>
+            <textarea class="form-control" rows="3" formControlName="observacao" placeholder="Alguma observação?"></textarea>
           </div>
 
           <!-- Botão -->

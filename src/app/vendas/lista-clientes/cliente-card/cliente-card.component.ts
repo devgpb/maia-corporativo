@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Cliente } from 'src/app/interfaces/ICliente';
+import { ClientesService } from 'src/app/services/clientes/clientes.service';
 
 @Component({
     selector: 'app-cliente-card',
@@ -14,6 +15,12 @@ export class ClienteCardComponent implements OnInit, OnChanges {
   corFundo!: string;
   corTexto!: string;
   @Output() edit = new EventEmitter<Cliente>();
+
+  constructor(
+    private clientesService: ClientesService,
+  ){
+
+  }
 
   ngOnInit(): void {
     this.updateDias();
@@ -43,6 +50,34 @@ export class ClienteCardComponent implements OnInit, OnChanges {
     window.open(url, '_blank');
   }
 
+  get isUltimoContatoHoje(): boolean {
+    if (!this.cliente.ultimoContato) return false;
+    const ultimoContatoDate = new Date(this.cliente.ultimoContato);
+    const hoje = new Date();
+    return ultimoContatoDate.getDate() === hoje.getDate() &&
+           ultimoContatoDate.getMonth() === hoje.getMonth() &&
+           ultimoContatoDate.getFullYear() === hoje.getFullYear();
+  }
+
+  marcarContato(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const payload = {
+      idCliente: this.cliente.idCliente,
+      ultimoContato: new Date().toISOString(),
+      updatedAt: new Date()
+    }
+
+    this.clientesService.postCliente(payload).subscribe({
+      next: () => {
+        this.cliente.ultimoContato = new Date().toISOString();
+        this.cliente.updatedAt = new Date();
+        this.updateDias();
+      }
+    });
+  }
+
 
   private updateDias(): void {
     this.dias = this.calcularDias(this.cliente.updatedAt);
@@ -50,11 +85,15 @@ export class ClienteCardComponent implements OnInit, OnChanges {
     this.corTexto = this.getCorTextoDias(this.dias);
   }
 
-  private calcularDias(createdAt: string | Date): number {
+  private calcularDias(referencia: string | Date): number {
     const hoje = new Date();
-    const criacao = new Date(createdAt);
-    const diffTime = Math.abs(hoje.getTime() - criacao.getTime());
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const refDate = new Date(referencia);
+
+    hoje.setHours(0,0,0,0);
+    refDate.setHours(0,0,0,0);
+
+    const diffMs = hoje.getTime() - refDate.getTime();
+    return Math.max(0, Math.floor(diffMs / 86400000));
   }
 
   private getCorDias(dias: number): string {
