@@ -26,6 +26,7 @@ type ChartOptionsDonut = {
   series: ApexNonAxisChartSeries;
   chart: ApexChart;
   labels: string[];
+  dataLabels: ApexDataLabels; 
   legend: ApexLegend;
   tooltip: ApexTooltip;
   responsive: ApexResponsive[];
@@ -89,7 +90,22 @@ export class DashboardVendas implements OnInit {
         series: [{ name: 'Clientes', data: values }],
         chart: { type: 'bar', height: 360, toolbar: { show: false } },
         plotOptions: { bar: { horizontal: true, borderRadius: 6 } },
-        dataLabels: { enabled: true },
+        dataLabels: {
+          enabled: true,
+          style: {
+            fontSize: '16px',      // maior
+            fontWeight: 'bold',
+            colors: ['#fff']       // cor da fonte (sobre a barra)
+          },
+          dropShadow: {
+            enabled: true,
+            top: 1,
+            left: 1,
+            blur: 2,
+            color: '#000',         // cor do contorno
+            opacity: 0.7
+          }
+        },
         stroke: { show: false },
         xaxis: { categories: labels, labels: { rotate: 0 } },
         tooltip: { y: { formatter: (val: number) => `${val} clientes` } },
@@ -133,6 +149,22 @@ export class DashboardVendas implements OnInit {
       chart: { type: 'donut', height: 360, toolbar: { show: false } },
       labels,
       legend: { position: 'bottom' },
+      dataLabels: {
+        enabled: true,
+        style: {
+          fontSize: '16px',
+          fontWeight: 'bold',
+          colors: ['#fff']
+        },
+        dropShadow: {
+          enabled: true,
+          top: 1,
+          left: 1,
+          blur: 2,
+          color: '#000',
+          opacity: 0.7
+        }
+      },
       tooltip: { y: { formatter: (val: number) => `${val} clientes` } },
       responsive: [{ breakpoint: 1024, options: { legend: { position: 'bottom' } } }]
     });
