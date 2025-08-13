@@ -14,6 +14,15 @@
 
     @if (formData) {
       <div>
+        @if (formData?.fechado) {
+          <div class="alert alert-warning d-flex align-items-center gap-2 mb-3 rounded-3 shadow-sm">
+            <ng-icon name="lucideAlertTriangle" size="18"></ng-icon>
+            <div>
+              <strong>Cliente fechado</strong> em
+              <strong>{{ formData.fechado | date:'dd/MM/yyyy HH:mm' }}</strong>.
+            </div>
+          </div>
+        }
         <!-- Nome de quem cadastrou -->
         <div class="bg-light rounded p-3 mb-4 text-center">
           <span class="fw-normal">Cadastrado por:</span>
@@ -118,7 +127,9 @@
                     [hideSelected]="true"
                     [addTag]="true"
                     placeholder="Digite ou selecione..."
-                    (add)="onAddStatus($event)">
+                    (add)="onAddStatus($event)"
+                    [disabled]="isFechado"
+                    >
                   </ng-select>
                 </div>
                   <div class="col-md-6 mb-3">
@@ -155,18 +166,34 @@
                     </div>
                   </div>
                 </form>
-                <!-- Rodapé -->
-                <div class="modal-footer d-flex flex-column flex-sm-row gap-2 justify-content-end mt-3">
+                <!-- P A R   (Salvar + Fechar/Reabrir) -->
+                <div class="d-flex flex-column flex-sm-row gap-2 w-100 w-sm-auto mb-3">
                   <button class="btn btn-primary w-100 w-sm-auto" (click)="save()" [disabled]="isLoading">
                     <ng-icon name="lucideSave" class="me-2" size="18"></ng-icon>
                     Salvar
                   </button>
-                  <button class="btn btn-outline-secondary w-100 w-sm-auto" (click)="close()" [disabled]="isLoading">
-                    <ng-icon name="lucideXCircle" class="me-2" size="18"></ng-icon>
-                    Cancelar
+
+                  <button
+                    class="btn w-100 w-sm-auto"
+                    [ngClass]="isFechado ? 'btn-success' : 'btn-warning'"
+                    (click)="toogleFecharCliente()"
+                    [disabled]="isLoading">
+                    <ng-icon
+                      [name]="isFechado ? 'lucideUnlock' : 'lucideReceipt'"
+                      class="me-2"
+                      size="18">
+                    </ng-icon>
+                    {{ isFechado ? 'Reabrir Cliente' : 'Fechar Cliente' }}
                   </button>
                 </div>
+
+                <!-- Cancelar (fica ao lado no desktop; abaixo no mobile) -->
+                <button class="btn btn-outline-secondary w-100 w-sm-auto" (click)="close()" [disabled]="isLoading">
+                  <ng-icon name="lucideXCircle" class="me-2" size="18"></ng-icon>
+                  Cancelar
+                </button>
               </div>
+
             }
           </div>
         </app-modal>

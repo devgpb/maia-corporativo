@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {
   Component, Input, Output, EventEmitter,
   OnChanges, SimpleChanges,
@@ -22,6 +22,7 @@ export class ClienteModalComponent implements OnChanges, OnInit {
   @Output() onUpdate = new EventEmitter<void>();
   cidades: string[] = [];
   listaCampanhas = [];
+  statuses: string[] = [];
 
   constructor(
     private clientesService: ClientesService,
@@ -34,12 +35,7 @@ export class ClienteModalComponent implements OnChanges, OnInit {
   errors: Record<string,string> = {};
   isLoading = false;
 
-  /** Opções fixas de status (pode parametrizar/se passar dinâmico) */
-  statuses = [
-    'Aguardando','Curioso','Financiamento Reprovado','Desistência',
-    'Sem Retorno','Adiado','Fechou Com Outra Empresa',
-    'Fechado','Analisando Orçamento', 'Visita Marcada'
-  ];
+
 
   ngOnChanges(ch: SimpleChanges): void {
     if (ch['cliente'] && this.cliente) {
@@ -189,5 +185,31 @@ export class ClienteModalComponent implements OnChanges, OnInit {
       this.listaCampanhas = [term, ...this.listaCampanhas];
     }
     this.formData.campanha = term;
+  }
+
+  get isFechado(): boolean {
+    return !!this.formData?.fechado;
+  }
+
+  toogleFecharCliente() {
+    if (this.cliente) {
+      this.cliente.fechado = this.cliente.fechado ? null : new Date();
+      
+      if( this.cliente.fechado) {
+        this.cliente.status = null
+      }
+
+      this.clientesService.postCliente(this.cliente).subscribe({
+        next: () => {
+          Swal.fire('Sucesso!', 'Cliente fechado com sucesso.', 'success');
+          this.onUpdate.emit();
+          this.close();
+        },
+        error: (err: HttpErrorResponse) => {
+          const mensagem = err.error?.error || 'Ocorreu um erro ao fechar o cliente.';
+          Swal.fire('Erro!', mensagem, 'error');
+        }
+      });
+    }
   }
 }

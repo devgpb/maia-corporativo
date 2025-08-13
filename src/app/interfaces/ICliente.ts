@@ -8,6 +8,7 @@ export interface Cliente {
   indicacao?: string;
   campanha?: string;
   observacao?: string;
+  fechado?: Date | string;
   idPedido?: number;
   responsavel? : {
     nomeCompleto?: string,
