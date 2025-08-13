@@ -61,7 +61,7 @@ export class VendasService {
 
   getEventosMarcadosList(periodo: PeriodoPayload, page: number, perPage: number) {
     return this.http.post<PaginatedResponse<EventoItem>>(
-      `${this.base}/eventos-marcado`, { periodo, page, perPage }
+      `${this.base}/eventos-marcados`, { periodo, page, perPage }
     );
   }
 
