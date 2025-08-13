@@ -43,25 +43,25 @@ export class VendasService {
   // Listas paginadas (mantém { success, meta, data } porque o componente usa res.data e res.meta)
   getClientesNovosList(periodo: PeriodoPayload, page: number, perPage: number) {
     return this.http.post<PaginatedResponse<ClienteItem>>(
-      `${this.base}/novos`, { periodo, page, perPage }
+      `${this.base}/clientes-novos`, { periodo, page, perPage }
     );
   }
 
   getClientesAtendidosList(periodo: PeriodoPayload, page: number, perPage: number) {
     return this.http.post<PaginatedResponse<ClienteItem>>(
-      `${this.base}/atendidos`, { periodo, page, perPage }
+      `${this.base}/clientes-atendidos`, { periodo, page, perPage }
     );
   }
 
   getClientesFechadosList(periodo: PeriodoPayload, page: number, perPage: number) {
     return this.http.post<PaginatedResponse<ClienteItem>>(
-      `${this.base}/fechados`, { periodo, page, perPage }
+      `${this.base}/clientes-fechados`, { periodo, page, perPage }
     );
   }
 
   getEventosMarcadosList(periodo: PeriodoPayload, page: number, perPage: number) {
     return this.http.post<PaginatedResponse<EventoItem>>(
-      `${this.base}/eventos`, { periodo, page, perPage }
+      `${this.base}/eventos-marcado`, { periodo, page, perPage }
     );
   }
 
