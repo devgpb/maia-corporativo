@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ClientesService } from 'src/app/services/clientes/clientes.service';
 import Swal from 'sweetalert2';
@@ -19,7 +19,7 @@ export class ClienteFormComponent implements OnInit {
   cidades: string[] = [];
   user: IUser;
   statusList: string[] = [];
-  public readonly PHONE_REGEX = /^\(\d{2}\) \d{5}-\d{4}$/;
+
 
   listaCampanhas = []
 
@@ -36,7 +36,7 @@ export class ClienteFormComponent implements OnInit {
   ngOnInit() {
     this.clienteForm = this.fb.group({
       nome: [null, Validators.required],
-      celular: [null, [Validators.required, Validators.pattern(this.PHONE_REGEX)]],
+      celular: [null, [Validators.required, this.celularBRValidator]],
       cidade: [null],
       status: [null],
       indicacao: [null],
@@ -112,5 +112,13 @@ export class ClienteFormComponent implements OnInit {
       this.listaCampanhas = [term, ...this.listaCampanhas];
     }
     this.clienteForm.get('campanha').setValue(term);
+  }
+
+  celularBRValidator(control: AbstractControl): ValidationErrors | null {
+    const digits = (control.value ?? '').toString().replace(/\D/g, '');
+    if (!digits) return null; // deixa o required cuidar do vazio
+    if (digits.length < 11) return { celularIncompleto: true }; // incompleto
+
+    return null;
   }
 }

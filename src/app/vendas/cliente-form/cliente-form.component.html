@@ -18,9 +18,10 @@
           <div class="invalid-feedback" *ngIf="f['celular']?.errors?.['required']">
             Celular é obrigatório.
           </div>
-          <div class="invalid-feedback" *ngIf="f['celular']?.errors?.['pattern']">
-            Formato inválido. Use (00) 00000-0000, ex: (87) 99133-8119.
+          <div class="invalid-feedback" *ngIf="f['celular']?.errors?.['celularIncompleto']">
+            Número incompleto. Digite todos os dígitos. Use (00) 00000-0000.
           </div>
+
         </div>
 
         <!-- Cidade -->
