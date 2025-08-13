@@ -2,6 +2,7 @@ import { registerLocaleData, } from "@angular/common";
 import localePt from "@angular/common/locales/pt";
 import { defineLocale } from "ngx-bootstrap/chronos";
 import { ptBrLocale } from "ngx-bootstrap/locale";
+import { BsLocaleService } from "ngx-bootstrap/datepicker";
 
 import { NgModule,LOCALE_ID, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -158,9 +159,13 @@ registerLocaleData(localePt);
         provideHttpClient(withInterceptorsFromDi())
     ] })
 export class AppModule {
-  constructor(private config: NgSelectConfig) {
+  constructor(
+    private config: NgSelectConfig,
+    private bsLocale: BsLocaleService
+  ) {
     this.config.addTagText = 'Adicionar';
     this.config.notFoundText = 'Nenhum resultado encontrado';
     this.config.clearAllText = 'Limpar tudo';
+    this.bsLocale.use('pt-br');
   }
  }

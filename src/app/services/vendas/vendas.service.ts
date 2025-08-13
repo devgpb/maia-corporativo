@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, map } from 'rxjs';
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { Observable, map } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { IDashboardVendas } from 'src/app/interfaces/IDashboardVendas';
 
@@ -8,8 +8,9 @@ export interface PaginationMeta {
   total: number; page: number; perPage: number; totalPages: number;
 }
 type ApiResponse<T> = { success: boolean; data: T };
-
 export type PaginatedResponse<T> = { success: boolean; meta: PaginationMeta; data: T[] };
+
+export type PeriodoPayload = 'hoje' | 'semana' | 'mes' | [string, string];
 
 export type ClienteItem = {
   nome: string;
@@ -26,44 +27,50 @@ export type EventoItem = {
   cliente: { nome: string | null } | null;
 };
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class VendasService {
+  private base = `${environment.apiURL}/clientes/dashboard`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  public getContatos(): Observable<any[]>{
-
-		return this.http.get<any[]>(`${environment.apiURL}/vendas`)
-	}
-
-  public marcarContato(dados: any):Observable<any[]>{
-
-		return this.http.post<any[]>(`${environment.apiURL}/automacao/marcarContato`, dados)
-	}
-
-  getAtendimento(periodo: 'hoje'|'semana'|'mes'): Observable<IDashboardVendas> {
+  // mantém o componente recebendo IDashboardVendas direto
+  getAtendimento(periodo: PeriodoPayload): Observable<IDashboardVendas> {
     return this.http
-      .get<ApiResponse<IDashboardVendas>>(`${environment.apiURL}/clientes/dashboard?periodo=${periodo}`)
-      .pipe(map(res => res.data));
+      .post<ApiResponse<IDashboardVendas>>(`${this.base}`, { periodo })
+      .pipe(map(r => r.data));
   }
 
-   // NOVOS métodos paginados
-  getClientesNovosList(periodo: any, page=1, perPage=20): Observable<PaginatedResponse<ClienteItem>> {
-    const params = new HttpParams().set('periodo', periodo).set('page', page).set('perPage', perPage);
-    return this.http.get<PaginatedResponse<ClienteItem>>(`${environment.apiURL}/clientes/dashboard/clientes-novos`, { params });
+  // Listas paginadas (mantém { success, meta, data } porque o componente usa res.data e res.meta)
+  getClientesNovosList(periodo: PeriodoPayload, page: number, perPage: number) {
+    return this.http.post<PaginatedResponse<ClienteItem>>(
+      `${this.base}/novos`, { periodo, page, perPage }
+    );
   }
-  getClientesAtendidosList(periodo: any, page=1, perPage=20): Observable<PaginatedResponse<ClienteItem>> {
-    const params = new HttpParams().set('periodo', periodo).set('page', page).set('perPage', perPage);
-    return this.http.get<PaginatedResponse<ClienteItem>>(`${environment.apiURL}/clientes/dashboard/clientes-atendidos`, { params });
+
+  getClientesAtendidosList(periodo: PeriodoPayload, page: number, perPage: number) {
+    return this.http.post<PaginatedResponse<ClienteItem>>(
+      `${this.base}/atendidos`, { periodo, page, perPage }
+    );
   }
-  getClientesFechadosList(periodo: any, page=1, perPage=20): Observable<PaginatedResponse<ClienteItem>> {
-    const params = new HttpParams().set('periodo', periodo).set('page', page).set('perPage', perPage);
-    return this.http.get<PaginatedResponse<ClienteItem>>(`${environment.apiURL}/clientes/dashboard/clientes-fechados`, { params });
+
+  getClientesFechadosList(periodo: PeriodoPayload, page: number, perPage: number) {
+    return this.http.post<PaginatedResponse<ClienteItem>>(
+      `${this.base}/fechados`, { periodo, page, perPage }
+    );
   }
-  getEventosMarcadosList(periodo: any, page=1, perPage=20): Observable<PaginatedResponse<EventoItem>> {
-    const params = new HttpParams().set('periodo', periodo).set('page', page).set('perPage', perPage);
-    return this.http.get<PaginatedResponse<EventoItem>>(`${environment.apiURL}/clientes/dashboard/eventos-marcados`, { params });
+
+  getEventosMarcadosList(periodo: PeriodoPayload, page: number, perPage: number) {
+    return this.http.post<PaginatedResponse<EventoItem>>(
+      `${this.base}/eventos`, { periodo, page, perPage }
+    );
+  }
+
+  // (os métodos que você já tinha)
+  public getContatos(): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.apiURL}/vendas`);
+  }
+
+  public marcarContato(dados: any): Observable<any[]> {
+    return this.http.post<any[]>(`${environment.apiURL}/automacao/marcarContato`, dados);
   }
 }
