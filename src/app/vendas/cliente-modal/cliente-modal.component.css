@@ -1,0 +1,13 @@
+/* cliente-modal.component.css */
+.card.animate__animated { --animate-duration: .25s; }
+
+/* cliente-modal.component.css */
+:host ::ng-deep .bs-datepicker .bs-datepicker-body table.days span.is-today,
+:host ::ng-deep .bs-datepicker .bs-datepicker-body table.days span.today {
+  outline: 2px solid var(--bs-primary) !important;
+  outline-offset: 2px;
+  font-weight: 700;
+  border-radius: 50%;
+}
+
+

@@ -7,6 +7,15 @@ import { INovoPedido } from 'src/app/interfaces/INovoPedido';
 import { IConfigExcel } from 'src/app/interfaces/IConfigExcel';
 import { Cliente } from 'src/app/interfaces/ICliente';
 
+export type EventoClienteDTO = {
+  idEvento: number;
+  idCliente: number;
+  data: string;                // UTC ISO vindo da API
+  evento?: string | null;
+  confirmado?: boolean | null;
+  dataISO?: string;            // opcional (se API devolver)
+  dataLocal?: string;          // opcional (se API devolver)
+};
 
 @Injectable({
   providedIn: 'root'
@@ -42,5 +51,30 @@ export class ClientesService {
 
   public deleteClientes(id: number): Observable<any> {
     return this.http.delete(`${environment.apiURL}/clientes/${id}`);
+  }
+
+  /** GET /eventos/:id[?inicio=YYYY-MM-DD&fim=YYYY-MM-DD&tz=America/Maceio]  (id = idCliente) */
+  getEventosDoCliente(
+    idCliente: number,
+    opts: { inicio?: string; fim?: string; tz?: string } = {}
+  ): Observable<EventoClienteDTO[]> {
+    let params = new HttpParams();
+    params = params.append('idCliente', idCliente)
+    if (opts.inicio) params = params.set('inicio', opts.inicio);
+    if (opts.fim)    params = params.set('fim', opts.fim);
+    if (opts.tz)     params = params.set('tz', opts.tz);
+
+    return this.http.get<EventoClienteDTO[]>(`${environment.apiURL}/clientes/eventos/lista/cliente/`, { params });
+  }
+
+  /** POST /eventos  (criar) */
+  criarEvento(payload: {
+    idCliente: number;
+    data: string;
+    evento?: string | null;
+    tz?: string;
+    idUsuario?: number;
+  }): Observable<EventoClienteDTO> {
+    return this.http.post<EventoClienteDTO>(`${environment.apiURL}/clientes/eventos`, payload);
   }
 }

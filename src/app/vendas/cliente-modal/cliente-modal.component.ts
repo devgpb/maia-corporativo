@@ -7,6 +7,22 @@ import {
 import { Cliente } from 'src/app/interfaces/ICliente';
 import { ClientesService } from 'src/app/services/clientes/clientes.service';
 import Swal from 'sweetalert2';
+// cliente-modal.component.ts (adicionar imports)
+import moment from 'moment-timezone';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { VendasService } from 'src/app/services/vendas/vendas.service';
+
+
+type EventoCard = {
+  idEvento: number;
+  idCliente: number;
+  dataUTC: string;       // ISO UTC bruto
+  dataLocal: string;     // formatado dd/MM/yyyy HH:mm
+  evento?: string | null;
+  confirmado?: boolean | null;
+  _anim?: string;        // classe de animação (animate.css)
+};
+
 
 @Component({
     selector: 'app-cliente-modal',
@@ -22,11 +38,28 @@ export class ClienteModalComponent implements OnChanges, OnInit {
   @Output() onUpdate = new EventEmitter<void>();
   cidades: string[] = [];
   listaCampanhas = [];
+
+  // --- Eventos (estado UI) ---
+  eventos: EventoCard[] = [];
+  evTitulo = '';
+  evData = null;       // YYYY-MM-DD (input date)
+  evHora = '';          // HH:mm (input time, opcional)
+  tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/Maceio';
+  isSavingEvento = false;
+  isLoadingEventos = false;
   statuses: string[] = [];
+
+  today = new Date();
+  dpConfig: Partial<BsDatepickerConfig> = {
+    dateInputFormat: 'DD/MM/YYYY',
+    adaptivePosition: true,
+    showWeekNumbers: false,
+  };
 
   constructor(
     private clientesService: ClientesService,
     private http: HttpClient,
+    private vendasService: VendasService,
   ){
 
   }
@@ -41,6 +74,7 @@ export class ClienteModalComponent implements OnChanges, OnInit {
     if (ch['cliente'] && this.cliente) {
       this.formData = { ...this.cliente };
       this.errors = {};
+      this.carregarEventosCliente();
       this.fetchFiltros();
     }
 
@@ -56,7 +90,16 @@ export class ClienteModalComponent implements OnChanges, OnInit {
   }
 
   ngOnInit(){
-    this.listaCampanhas = this.clientesService.listaDeCampanhas
+    this.listaCampanhas = this.clientesService.listaDeCampanhas;
+    this.today.setHours(0, 0, 0, 0);
+  }
+
+  // (opcional) se o usuário digitar manualmente, clamp pra hoje
+  onDateChange(d: Date | null) {
+    if (!d) return;
+    const picked = new Date(d);
+    picked.setHours(0,0,0,0);
+    if (picked < this.today) this.evData = this.today;
   }
 
   close(): void {
@@ -194,7 +237,7 @@ export class ClienteModalComponent implements OnChanges, OnInit {
   toogleFecharCliente() {
     if (this.cliente) {
       this.cliente.fechado = this.cliente.fechado ? null : new Date();
-      
+
       if( this.cliente.fechado) {
         this.cliente.status = null
       }
@@ -211,5 +254,152 @@ export class ClienteModalComponent implements OnChanges, OnInit {
         }
       });
     }
+  }
+
+  private carregarEventosCliente() {
+    this.isLoadingEventos = true;
+    this.clientesService
+      .getEventosDoCliente(this.cliente.idCliente, { tz: this.tz })
+      .subscribe({
+        next: (lista) => {
+          this.eventos = (lista || []).map(e => ({
+            idEvento: e.idEvento,
+            idCliente: e.idCliente,
+            dataUTC: e.data, // assumindo que a API devolve em UTC ISO em `data`
+            dataLocal: e.dataLocal
+              ? e.dataLocal
+              : moment.utc(e.data).tz(this.tz).format('DD/MM/YYYY HH:mm'),
+            evento: e.evento ?? null,
+            confirmado: e.confirmado,
+          }));
+          this.isLoadingEventos = false;
+        },
+        error: () => { this.isLoadingEventos = false; }
+      });
+  }
+
+
+  // monta ISO local -> UTC para enviar
+  private montarISOParaAPI(): string | null {
+    if (!this.evData) return null; // datepicker não selecionado
+    const dia = moment(this.evData).format('YYYY-MM-DD');           // <- converte o Date do datepicker
+    const hhmm = /^\d{2}:\d{2}$/.test(this.evHora || '') ? this.evHora! : '00:00';
+    const local = moment.tz(`${dia}T${hhmm}`, this.tz);             // interpreta no fuso do usuário
+    return local.isValid() ? local.utc().toISOString() : null;      // envia UTC para a API
+  }
+
+  marcarEvento() {
+    const isoUTC = this.montarISOParaAPI();
+    if (!isoUTC) {
+      // @ts-ignore
+      Swal.fire('Atenção', 'Selecione uma data válida.', 'warning');
+      return;
+    }
+    this.isSavingEvento = true;
+
+    this.clientesService.criarEvento({
+      idCliente: this.cliente.idCliente,
+      idUsuario: this.cliente.idUsuario,
+      data: isoUTC,
+      evento: this.evTitulo || null,
+      tz: this.tz
+    }).subscribe({
+      next: (novo) => {
+        const card: EventoCard = {
+          idEvento: novo.idEvento,
+          idCliente: this.cliente.idCliente,
+          dataUTC: novo.data,
+          dataLocal: novo.dataLocal
+            ? novo.dataLocal
+            : moment.utc(novo.data).tz(this.tz).format('DD/MM/YYYY HH:mm'),
+          evento: novo.evento ?? null,
+          confirmado: !!novo.confirmado,
+          _anim: 'animate__animated animate__fadeIn'
+        };
+        // adiciona no topo
+        this.carregarEventosCliente()
+
+        // limpa inputs
+        this.evTitulo = '';
+        this.evData   = null;
+        this.evHora = '';
+        this.isSavingEvento = false;
+      },
+      error: (error) => {
+        this.isSavingEvento = false;
+        console.log(error.error.message)
+        // @ts-ignore
+        Swal.fire('Erro', error.error.message || 'Não foi possível marcar o evento.', 'error');
+      }
+    });
+  }
+
+  confirmarEventoLocal(ev: EventoCard) {
+    ev.confirmado = true;
+    // feedback visual rápido
+    this.vendasService.confirmarEvento(ev.idEvento).subscribe({
+      next: (novo) => {
+        ev._anim = 'animate__animated animate__pulse';
+        setTimeout(() => ev._anim = '', 500);
+      },
+      error: (error) => {
+        this.isSavingEvento = false;
+        Swal.fire('Erro', error.error.message || 'Não foi possível marcar o evento.', 'error');
+      }
+    });
+
+  }
+
+  cancelarEventoLocal(ev: EventoCard) {
+    // @ts-ignore
+    Swal.fire({
+      title: 'Cancelar evento?',
+      text: 'Esta ação removerá o evento.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, remover',
+      cancelButtonText: 'Não'
+    }).then((r) => {
+      if (!r.isConfirmed) return;
+      this.vendasService.cancelarEvento(ev.idEvento).subscribe({
+      next: (novo) => {
+        ev._anim = 'animate__animated animate__zoomOut';
+        setTimeout(() => {
+          this.eventos = this.eventos.filter(e => e.idEvento !== ev.idEvento);
+          // Se depois criar rota de DELETE, chame-a aqui antes de remover do array.
+        }, 250);
+      },
+      error: (error) => {
+        this.isSavingEvento = false;
+        Swal.fire('Erro', error.error.message || 'Não foi possível marcar o evento.', 'error');
+      }
+    });
+    });
+  }
+
+  adjustHour(delta: number) {
+    // se não houver hora, parte de 00:00
+    const base = this.evHora && /^\d{2}:\d{2}$/.test(this.evHora) ? this.evHora : '00:00';
+    const m = moment(base, 'HH:mm');
+    if (!m.isValid()) return;
+    m.add(delta, 'hour');
+    // clamp 0–23 (moment já faz rollover; normalizamos)
+    const h = (m.hours() + 24) % 24;
+    const mm = m.minutes();
+    this.evHora = `${String(h).padStart(2,'0')}:${String(mm).padStart(2,'0')}`;
+  }
+
+  mesmaData(ev1: EventoCard, ev2: EventoCard) {
+    if (!ev1 || !ev2) return false;
+    const d1 = ev1.dataLocal.split(' ')[0];
+    const d2 = ev2.dataLocal.split(' ')[0];
+    return d1 === d2;
+  }
+
+  private ordenarEventos() {
+    // usa o UTC ISO para evitar ambiguidade de fuso/hora
+    this.eventos.sort((a, b) =>
+      moment.utc(b.dataUTC).valueOf() - moment.utc(a.dataUTC).valueOf()
+    );
   }
 }

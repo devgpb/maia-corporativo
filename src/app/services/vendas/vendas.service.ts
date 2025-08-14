@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { IDashboardVendas } from 'src/app/interfaces/IDashboardVendas';
+
 
 export interface PaginationMeta {
   total: number; page: number; perPage: number; totalPages: number;
@@ -31,7 +32,7 @@ export type EventoItem = {
 export class VendasService {
   private base = `${environment.apiURL}/clientes/dashboard`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // mantém o componente recebendo IDashboardVendas direto
   getAtendimento(periodo: PeriodoPayload): Observable<IDashboardVendas> {
@@ -73,4 +74,45 @@ export class VendasService {
   public marcarContato(dados: any): Observable<any[]> {
     return this.http.post<any[]>(`${environment.apiURL}/automacao/marcarContato`, dados);
   }
+
+  // === Eventos ===
+  confirmarEvento(idEvento: any){
+    return this.http.post<any[]>(`${environment.apiURL}/clientes/eventos/${idEvento}/confirmar`,{});
+  }
+
+  cancelarEvento(idEvento: any){
+    return this.http.post<any[]>(`${environment.apiURL}/clientes/eventos/${idEvento}/cancelar`,{});
+  }
+
+  /** GET /eventos?idUsuario=123[&hoje=true][&tz=America/Maceio][&confirmados=true|false] */
+  getEventosUsuario(
+    idUsuario: number,
+    opts: { hoje?: boolean; tz?: string; confirmados?: boolean } = {}
+  ): Observable<(EventoItem & { dataISO?: string; dataLocal?: string })[]> {
+    const params: any = {
+      idUsuario,
+      ...(opts.hoje !== undefined ? { hoje: String(!!opts.hoje) } : {}),
+      ...(opts.tz ? { tz: opts.tz } : {}),
+      ...(opts.confirmados !== undefined ? { confirmados: String(!!opts.confirmados) } : {}),
+    };
+    return this.http.get<(EventoItem & { dataISO?: string; dataLocal?: string })[]>(
+      `${environment.apiURL}/eventos`,
+      { params }
+    );
+  }
+
+  /** GET /eventos/intervalo?inicio=YYYY-MM-DD[THH:mm]&fim=YYYY-MM-DD[THH:mm][&tz=America/Maceio] */
+  getEventosIntervalo(
+    inicio: string,
+    fim: string,
+    tz = 'America/Maceio'
+  ): Observable<(EventoItem & { dataISO?: string; dataLocal?: string })[]> {
+    return this.http.get<(EventoItem & { dataISO?: string; dataLocal?: string })[]>(
+      `${environment.apiURL}/eventos/intervalo`,
+      { params: { inicio, fim, tz } }
+    );
+  }
+
+
+
 }

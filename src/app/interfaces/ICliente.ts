@@ -2,6 +2,7 @@
 export interface Cliente {
   idCliente: number;
   nome: string;
+  idUsuario?: number;
   celular: string;
   cidade?: string;
   status?: string;
