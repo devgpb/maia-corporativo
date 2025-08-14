@@ -31,6 +31,8 @@ import { ClienteFormComponent } from './vendas/cliente-form/cliente-form.compone
 import { ListaClientesComponent } from './vendas/lista-clientes/lista-clientes.component';
 import { DashboardVendas } from './vendas/dashboard-vendas/dashboard-vendas.component';
 
+import { EventAgendaComponent } from './vendas/event-agenda/event-agenda.component';
+
 const routes: Routes = [
   { path: "login", component: LoginComponent },
 
@@ -51,6 +53,8 @@ const routes: Routes = [
   { path: "vendas/leads", component: ClienteFormComponent, canActivate: [AuthGuard] },
   { path: "vendas/lista/clientes", component: ListaClientesComponent, canActivate: [AuthGuard] },
   { path: "vendas/dashboard", component: DashboardVendas, canActivate: [AuthGuard] },
+  { path: "vendas/meus/eventos", component: EventAgendaComponent, canActivate: [AuthGuard] },
+
 
 
 

@@ -62,6 +62,14 @@ export class NovoMenuComponent implements OnInit {
           href: '/vendas/lista/clientes',
           roles: ['GESTOR', 'COLABORADOR', 'ADMINISTRADOR'],
           setores: ['Vendas', 'Marketing'],
+        },
+        {
+          icon: 'lucideCalendar',
+          title: 'Meus Eventos',
+          description: 'Veja seu calendário de eventos',
+          href: '/vendas/meus/eventos',
+          roles: ['GESTOR', 'COLABORADOR', 'ADMINISTRADOR'],
+          setores: ['Vendas', 'Marketing'],
         }
 
       ]

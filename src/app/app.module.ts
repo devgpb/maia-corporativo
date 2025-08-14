@@ -17,6 +17,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgSelectConfig, NgSelectModule } from '@ng-select/ng-select';
 import { NumericOnlyDirective } from "./services/utils/numeric-only.directive";
 import { FullCalendarModule } from '@fullcalendar/angular';
+
+
 import { DatePipe } from "@angular/common";
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -78,6 +80,7 @@ import { ListaClientesComponent } from "./vendas/lista-clientes/lista-clientes.c
 import { ClienteCardComponent } from "./vendas/lista-clientes/cliente-card/cliente-card.component";
 import { ClienteModalComponent } from "./vendas/cliente-modal/cliente-modal.component";
 import { DashboardVendas } from "./vendas/dashboard-vendas/dashboard-vendas.component";
+import { EventAgendaComponent } from "./vendas/event-agenda/event-agenda.component";
 
 defineLocale("pt-br", ptBrLocale);
 registerLocaleData(localePt);
@@ -132,7 +135,8 @@ registerLocaleData(localePt);
         ListaClientesComponent,
         ClienteCardComponent,
         ClienteModalComponent,
-        DashboardVendas
+        DashboardVendas,
+        EventAgendaComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         NgIconsModule.withIcons(lucideIcons),

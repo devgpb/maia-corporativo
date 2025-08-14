@@ -27,6 +27,7 @@
     "@fullcalendar/angular": "^6.1.9",
     "@fullcalendar/core": "^6.1.9",
     "@fullcalendar/daygrid": "^6.1.9",
+    "@fullcalendar/interaction": "^6.1.9",
     "@fullcalendar/timegrid": "^6.1.9",
     "@ng-icons/core": "32.1.0",
     "@ng-icons/lucide": "32.1.0",

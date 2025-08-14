@@ -5,6 +5,7 @@ import { environment } from "src/environments/environment";
 import { IDashboardVendas } from 'src/app/interfaces/IDashboardVendas';
 
 
+
 export interface PaginationMeta {
   total: number; page: number; perPage: number; totalPages: number;
 }
@@ -26,6 +27,17 @@ export type EventoItem = {
   confirmado: boolean;
   usuario?: { nomeCompleto: string | null } | null;
   cliente: { nome: string | null } | null;
+};
+
+export type EventoUsuarioDTO = {
+  idEvento: number;
+  idUsuario?: number;
+  idCliente?: number;
+  data: string;               // UTC ISO
+  dataLocal?: string;
+  evento?: string | null;
+  confirmado?: boolean | null;
+  cliente?: { nome?: string | null } | null;
 };
 
 @Injectable({ providedIn: 'root' })
@@ -88,15 +100,15 @@ export class VendasService {
   getEventosUsuario(
     idUsuario: number,
     opts: { hoje?: boolean; tz?: string; confirmados?: boolean } = {}
-  ): Observable<(EventoItem & { dataISO?: string; dataLocal?: string })[]> {
+  ): Observable<(EventoUsuarioDTO)[]> {
     const params: any = {
       idUsuario,
       ...(opts.hoje !== undefined ? { hoje: String(!!opts.hoje) } : {}),
       ...(opts.tz ? { tz: opts.tz } : {}),
       ...(opts.confirmados !== undefined ? { confirmados: String(!!opts.confirmados) } : {}),
     };
-    return this.http.get<(EventoItem & { dataISO?: string; dataLocal?: string })[]>(
-      `${environment.apiURL}/eventos`,
+    return this.http.get<(EventoUsuarioDTO)[]>(
+      `${environment.apiURL}/clientes/eventos`,
       { params }
     );
   }

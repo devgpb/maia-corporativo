@@ -1,0 +1,20 @@
+/* legend */
+.legend {
+  display: inline-block;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+}
+.ev-pendente-dot { background: #f6c344; border: 1px solid #e0b12f; }
+.ev-confirmado-dot { background: #28a745; }
+
+/* cores dos eventos */
+.fc .ev-pendente {
+  background-color: #fff6db !important;
+  border-color: #f6c344 !important;
+  color: #7a5a00 !important;
+}
+.fc .ev-confirmado {
+  background-color: #e6f6ea !important;
+  border-color: #28a745 !important;
+  color: #1f6d38 !important;
+}
