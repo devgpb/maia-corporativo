@@ -72,7 +72,7 @@ export class NovoMenuComponent implements OnInit {
           setores: ['Vendas', 'Marketing'],
         },
         {
-          icon: 'lucideCalendar',
+          icon: 'lucideMessageCircleMore',
           title: 'Mensagens Padrão',
           description: 'Veja as mensagens padrão dos vendedores',
           href: '/vendas/mensagens-padrao',
