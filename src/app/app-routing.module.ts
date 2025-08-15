@@ -30,6 +30,7 @@ import { ListaContatosComponent } from './vendas/lista-contatos/lista-contatos.c
 import { ClienteFormComponent } from './vendas/cliente-form/cliente-form.component';
 import { ListaClientesComponent } from './vendas/lista-clientes/lista-clientes.component';
 import { DashboardVendas } from './vendas/dashboard-vendas/dashboard-vendas.component';
+import { MensagensPadraoComponent } from './vendas/mensagens-padrao/mensagens-padrao.component';
 
 import { EventAgendaComponent } from './vendas/event-agenda/event-agenda.component';
 
@@ -49,11 +50,14 @@ const routes: Routes = [
   { path: "pedido/visualizar/externo", component: FormPedidoComponent },
   { path: "pedido/vistoria/externo", component: FormPedidoComponent },
 
+
   { path: "vendas/contatos", component: ListaContatosComponent, canActivate: [AuthGuard] },
   { path: "vendas/leads", component: ClienteFormComponent, canActivate: [AuthGuard] },
   { path: "vendas/lista/clientes", component: ListaClientesComponent, canActivate: [AuthGuard] },
   { path: "vendas/dashboard", component: DashboardVendas, canActivate: [AuthGuard] },
   { path: "vendas/meus/eventos", component: EventAgendaComponent, canActivate: [AuthGuard] },
+  { path: "vendas/mensagens-padrao", component: MensagensPadraoComponent, canActivate: [AuthGuard] },
+
 
 
 

@@ -70,8 +70,15 @@ export class NovoMenuComponent implements OnInit {
           href: '/vendas/meus/eventos',
           roles: ['GESTOR', 'COLABORADOR', 'ADMINISTRADOR'],
           setores: ['Vendas', 'Marketing'],
+        },
+        {
+          icon: 'lucideCalendar',
+          title: 'Mensagens Padrão',
+          description: 'Veja as mensagens padrão dos vendedores',
+          href: '/vendas/mensagens-padrao',
+          roles: ['GESTOR', 'COLABORADOR', 'ADMINISTRADOR'],
+          setores: ['Vendas', 'Marketing'],
         }
-
       ]
     },
     {
