@@ -60,6 +60,7 @@
     <div class="mt-auto pt-2 border-top">
       <small class="text-muted">
         Criado em: {{ cliente.createdAt | date:'dd/MM/yyyy' }}
+        {{ cliente.responsavel ? 'por ' + getPrimeiroNome(cliente.responsavel.nomeCompleto) : '' }}
       </small>
     </div>
   </div>

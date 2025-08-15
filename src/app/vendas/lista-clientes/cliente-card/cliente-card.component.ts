@@ -103,6 +103,10 @@ export class ClienteCardComponent implements OnInit, OnChanges {
                     return 'bg-danger';
   }
 
+  getPrimeiroNome(nome: string){
+    return nome.trim().split(' ')[0];
+  }
+
   private getCorTextoDias(dias: number): string {
     if (dias <= 7)  return 'text-success';
     if (dias <= 15) return 'text-warning';
