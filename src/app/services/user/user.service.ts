@@ -38,4 +38,13 @@ export class UserService {
   public getCargos (): Observable<any[]>{
 		return this.http.get<any[]>(`${environment.apiURL}/usuarios/cargos`)
 	}
+
+  public getUsuariosBySetor(nomeSetor: string): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${environment.apiURL}/usuarios/por-setor`,
+      { params: { nome: nomeSetor } }
+    );
+  }
+
+
 }

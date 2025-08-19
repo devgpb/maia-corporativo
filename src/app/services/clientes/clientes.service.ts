@@ -17,6 +17,20 @@ export type EventoClienteDTO = {
   dataLocal?: string;          // opcional (se API devolver)
 };
 
+interface ApiMeta {
+  page: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+}
+
+interface ApiPage {
+  data: Cliente[];
+  meta: ApiMeta;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -42,7 +56,7 @@ export class ClientesService {
         .filter(([_, v]) => String(v) && String(v) !== 'todos' && String(v) !== 'todas')
         .map(([k, v]) => `${k}=${encodeURIComponent(String(v))}`).join('&');
     }
-    return this.http.get<Cliente[]>(`${environment.apiURL}/clientes${params}`);
+    return this.http.get<ApiPage>(`${environment.apiURL}/clientes${params}`);
   }
 
   getFiltrosClientes() {

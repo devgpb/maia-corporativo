@@ -1,5 +1,5 @@
 // lista-clientes.component.ts
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Cliente } from 'src/app/interfaces/ICliente';
 import { IUser } from 'src/app/interfaces/IUser';
@@ -8,25 +8,31 @@ import { ClientesService } from 'src/app/services/clientes/clientes.service';
 import { ModalService } from 'src/app/services/modal/modal.service';
 
 @Component({
-    selector: 'app-lista-clientes',
-    templateUrl: './lista-clientes.component.html',
-    styleUrls: ['./lista-clientes.component.css'],
-    standalone: false
+  selector: 'app-lista-clientes',
+  templateUrl: './lista-clientes.component.html',
+  styleUrls: ['./lista-clientes.component.css'],
+  standalone: false
 })
 export class ListaClientesComponent implements OnInit {
-  clientes: Cliente[] = [];
-  clientesFiltrados: Cliente[] = [];
+  clientes: Cliente[] = [];              // dados da página atual
+  total = 0;                             // total geral
+  totalPages = 1;                        // páginas totais
+  page = 1;                              // página atual
+  pageSize = 50;                         // itens por página
+
   user: IUser;
   carregandoBusca = false;
+
+  // filtros
   searchTerm = '';
   statusFilter = 'todos';
   cidadeFilter = 'todas';
   sortBy = 'recente';
   statusUnicos: string[] = [];
   cidadesUnicas: string[] = [];
-
   meusClientes = new FormControl(false);
 
+  // modal
   selectedCliente: Cliente | null = null;
   public isModalOpen = false;
 
@@ -35,76 +41,95 @@ export class ListaClientesComponent implements OnInit {
     private modalService: ModalService,
     private authService: AuthService
   ) {
-    this.user = this.authService.getUser()
+    this.user = this.authService.getUser();
   }
-
-
 
   ngOnInit(): void {
-    this.carregarClientesRecentes()
     this.carregarFiltros();
+    this.fetch(); // primeira carga
   }
 
+  private buildParams(extra: any = {}) {
+    const base: any = {
+      page: this.page,
+      pageSize: this.pageSize,
+      sortBy: this.sortBy,
+    };
+
+    if (this.meusClientes.value) base.idUsuario = this.user.idUsuario;
+
+    // se veio de busca avançada, acrescenta filtros
+    if (extra.fromSearch) {
+      base.search = this.searchTerm;
+      base.status = this.statusFilter;
+      base.cidade = this.cidadeFilter;
+    }
+
+    return { ...base, ...extra };
+  }
 
   carregarFiltros() {
     this.clientesService.getFiltrosClientes().subscribe(data => {
-      console.log(data)
       this.statusUnicos = data.status || [];
       this.cidadesUnicas = data.cidades || [];
     });
   }
 
-  carregarClientesRecentes() {
-    let params: any = {}
-
-    if(this.meusClientes.value)
-      params.idUsuario = this.user.idUsuario
-
-    this.clientesService.getClientes(params).subscribe(clientes => {
-      this.clientes = clientes;
-      this.atualizaFiltros();
+  /** Busca padrão (recentes) usando a paginação atual */
+  fetch() {
+    this.carregandoBusca = true;
+    this.clientesService.getClientes(this.buildParams()).subscribe({
+      next: (resp) => {
+        this.clientes = resp.data;
+        this.total = resp.meta.total;
+        this.totalPages = resp.meta.totalPages;
+        this.carregandoBusca = false;
+      },
+      error: () => (this.carregandoBusca = false),
     });
   }
 
-  atualizaFiltros(): void {
-    let lista = this.clientes.filter(cliente => {
-      const termo = this.searchTerm.toLowerCase();
-      const matchesSearch =
-        cliente.nome.toLowerCase().includes(termo) ||
-        cliente.idCliente.toString().includes(termo) ||
-        cliente.celular.includes(this.searchTerm) ||
-        (cliente.cidade && cliente.cidade.toLowerCase().includes(termo)) ||
-        (cliente.campanha && cliente.campanha.toLowerCase().includes(termo)) ||
-        (cliente.status && cliente.status.toLowerCase().includes(termo));
+  /** Busca com filtros (botão "Buscar na base") */
+  pesquisaAvancada() {
+    this.page = 1; // sempre recomeça da primeira página
+    this.carregandoBusca = true;
 
-      const matchesStatus =
-        this.statusFilter === 'todos' ||
-        (cliente.status && cliente.status.toLowerCase() === this.statusFilter.toLowerCase());
-
-      const matchesCidade =
-        this.cidadeFilter === 'todas' ||
-        (cliente.cidade && cliente.cidade.toLowerCase() === this.cidadeFilter.toLowerCase());
-
-      return matchesSearch && matchesStatus && matchesCidade;
+    this.clientesService.getClientes(this.buildParams({ fromSearch: true })).subscribe({
+      next: (resp) => {
+        this.clientes = resp.data;
+        this.total = resp.meta.total;
+        this.totalPages = resp.meta.totalPages;
+        this.carregandoBusca = false;
+      },
+      error: () => (this.carregandoBusca = false),
     });
+  }
 
-    // ordena
-    lista = lista.slice().sort((a, b) => {
-      switch (this.sortBy) {
-        case 'recente':
-          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-        case 'antigo':
-          return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-        case 'nome':
-          return a.nome.localeCompare(b.nome);
-        case 'id':
-          return a.idCliente - b.idCliente;
-        default:
-          return 0;
-      }
-    });
+  /** Muda page e recarrega (mantém filtros se estiver filtrando) */
+  goToPage(p: number) {
+    if (p < 1 || p > this.totalPages) return;
+    this.page = p;
 
-    this.clientesFiltrados = lista;
+    // se há filtros ativos (exceto "todos/todas" e busca vazia), refaz busca avançada
+    const filtrando =
+      !!this.searchTerm ||
+      this.statusFilter !== 'todos' ||
+      this.cidadeFilter !== 'todas' ||
+      !!this.meusClientes.value;
+
+    filtrando ? this.pesquisaAvancada() : this.fetch();
+  }
+
+  changePageSize(size: number) {
+    this.pageSize = size;
+    this.page = 1;
+    const filtrando =
+      !!this.searchTerm ||
+      this.statusFilter !== 'todos' ||
+      this.cidadeFilter !== 'todas' ||
+      !!this.meusClientes.value;
+
+    filtrando ? this.pesquisaAvancada() : this.fetch();
   }
 
   clearFilters(): void {
@@ -112,51 +137,46 @@ export class ListaClientesComponent implements OnInit {
     this.statusFilter = 'todos';
     this.cidadeFilter = 'todas';
     this.meusClientes.setValue(false);
-    this.atualizaFiltros();
+    this.page = 1;
+    this.fetch();
   }
 
-
-  /** abre o modal e carrega o cliente */
+  // modal
   openModal(cliente: Cliente) {
     this.selectedCliente = { ...cliente };
     this.modalService.show();
   }
-
-  /** fecha o modal e limpa o cliente */
   closeModal() {
     this.modalService.hide();
     this.selectedCliente = null;
   }
-
-  /** salva localmente as alterações */
   saveChanges() {
     if (!this.selectedCliente) return;
     const updated = this.selectedCliente;
     const idx = this.clientes.findIndex(c => c.idCliente === updated.idCliente);
-    if (idx > -1) {
-      this.clientes[idx] = { ...updated };
-      this.atualizaFiltros();
-    }
+    if (idx > -1) this.clientes[idx] = { ...updated };
     this.closeModal();
-  }
-
-
-  pesquisaAvancada() {
-    this.carregandoBusca = true;
-    this.clientesService.getClientes({
-      search: this.searchTerm,
-      status: this.statusFilter,
-      cidade: this.cidadeFilter,
-      sortBy: this.sortBy,
-      idUsuario: this.meusClientes.value ? this.user.idUsuario : null
-    }).subscribe(clientes => {
-      this.clientesFiltrados = clientes;
-      this.carregandoBusca = false;
-    }, () => this.carregandoBusca = false);
   }
 
   atualizar() {
     this.closeModal();
-    this.carregarClientesRecentes();
+    // mantém contexto atual (página/filtros)
+    const filtrando =
+      !!this.searchTerm ||
+      this.statusFilter !== 'todos' ||
+      this.cidadeFilter !== 'todas' ||
+      !!this.meusClientes.value;
+
+    filtrando ? this.pesquisaAvancada() : this.fetch();
   }
+
+  get startIndex(): number {
+    return this.total === 0 ? 0 : (this.page - 1) * this.pageSize + 1;
+  }
+
+  get endIndex(): number {
+    if (this.total === 0) return 0;
+    return Math.min(this.page * this.pageSize, this.total);
+  }
+
 }
