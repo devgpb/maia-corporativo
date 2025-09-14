@@ -40,6 +40,16 @@ export type EventoUsuarioDTO = {
   cliente?: { nome?: string | null } | null;
 };
 
+export type LigacaoItem = {
+  idLigacao: number;
+  data: string;        // DATEONLY (YYYY-MM-DD)
+  createdAt: string;   // ISO
+  atendido: boolean;
+  observacao?: string | null;
+  autor?: { idUsuario: number; nomeCompleto: string } | null;
+  cliente?: { idCliente: number; nome: string; celular: string } | null;
+};
+
 @Injectable({ providedIn: 'root' })
 export class VendasService {
   private base = `${environment.apiURL}/clientes/dashboard`;
@@ -75,6 +85,12 @@ export class VendasService {
   getEventosMarcadosList(periodo: PeriodoPayload, page: number, perPage: number) {
     return this.http.post<PaginatedResponse<EventoItem>>(
       `${this.base}/eventos-marcados`, { periodo, page, perPage }
+    );
+  }
+
+  getLigacoesList(periodo: PeriodoPayload, page: number, perPage: number) {
+    return this.http.post<PaginatedResponse<LigacaoItem>>(
+      `${this.base}/ligacoes`, { periodo, page, perPage }
     );
   }
 

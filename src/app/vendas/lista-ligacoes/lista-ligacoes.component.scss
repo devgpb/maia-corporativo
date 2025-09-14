@@ -1,0 +1,12 @@
+.fade-out {
+  opacity: 0.0;
+  transition: opacity 0.35s ease;
+}
+
+.skip-btn {
+  position: absolute;
+  top: .5rem;
+  right: .5rem;
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}

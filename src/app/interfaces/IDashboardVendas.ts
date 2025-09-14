@@ -18,4 +18,7 @@ export interface IDashboardVendas {
 
   /** NOVO: contatos (ultimoContato) por dia no intervalo */
   contatosPorDia: IContatoPorDia[];
+
+  /** NOVO: total de ligações efetuadas no período */
+  ligacoesEfetuadas: number;
 }

@@ -82,6 +82,7 @@ import { ClienteModalComponent } from "./vendas/cliente-modal/cliente-modal.comp
 import { DashboardVendas } from "./vendas/dashboard-vendas/dashboard-vendas.component";
 import { EventAgendaComponent } from "./vendas/event-agenda/event-agenda.component";
 import { MensagensPadraoComponent } from "./vendas/mensagens-padrao/mensagens-padrao.component";
+import { ListaLigacoesComponent } from './vendas/lista-ligacoes/lista-ligacoes.component';
 
 defineLocale("pt-br", ptBrLocale);
 registerLocaleData(localePt);
@@ -138,7 +139,8 @@ registerLocaleData(localePt);
         ClienteModalComponent,
         DashboardVendas,
         EventAgendaComponent,
-        MensagensPadraoComponent
+        MensagensPadraoComponent,
+        ListaLigacoesComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         NgIconsModule.withIcons(lucideIcons),

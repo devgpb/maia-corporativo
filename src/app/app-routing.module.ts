@@ -33,6 +33,7 @@ import { DashboardVendas } from './vendas/dashboard-vendas/dashboard-vendas.comp
 import { MensagensPadraoComponent } from './vendas/mensagens-padrao/mensagens-padrao.component';
 
 import { EventAgendaComponent } from './vendas/event-agenda/event-agenda.component';
+import { ListaLigacoesComponent } from './vendas/lista-ligacoes/lista-ligacoes.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -54,6 +55,7 @@ const routes: Routes = [
   { path: "vendas/contatos", component: ListaContatosComponent, canActivate: [AuthGuard] },
   { path: "vendas/leads", component: ClienteFormComponent, canActivate: [AuthGuard] },
   { path: "vendas/lista/clientes", component: ListaClientesComponent, canActivate: [AuthGuard] },
+  { path: "vendas/ligacoes", component: ListaLigacoesComponent, canActivate: [AuthGuard] },
   { path: "vendas/dashboard", component: DashboardVendas, canActivate: [AuthGuard] },
   { path: "vendas/meus/eventos", component: EventAgendaComponent, canActivate: [AuthGuard] },
   { path: "vendas/mensagens-padrao", component: MensagensPadraoComponent, canActivate: [AuthGuard] },

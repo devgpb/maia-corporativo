@@ -64,6 +64,14 @@ export class NovoMenuComponent implements OnInit {
           setores: ['Vendas', 'Marketing'],
         },
         {
+          icon: 'lucidePhone',
+          title: 'Ligações',
+          description: 'Marcar atendimentos por ligação',
+          href: '/vendas/ligacoes',
+          roles: ['GESTOR', 'COLABORADOR', 'ADMINISTRADOR'],
+          setores: ['Vendas', 'Marketing'],
+        },
+        {
           icon: 'lucideCalendar',
           title: 'Meus Eventos',
           description: 'Veja seu calendário de eventos',

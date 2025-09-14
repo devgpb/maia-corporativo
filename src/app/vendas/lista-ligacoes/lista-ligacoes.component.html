@@ -1,0 +1,146 @@
+<div class="container-sm py-4">
+  <div class="mb-4 d-flex align-items-center justify-content-between">
+    <div>
+      <div class="d-flex align-items-center mb-2">
+        <i class="bi bi-telephone text-primary me-2" style="font-size:1.5rem;"></i>
+        <h1 class="h3 mb-0">Ligações</h1>
+      </div>
+      <small class="text-muted">
+        @if (total > 0) {
+          Mostrando {{ startIndex }} – {{ endIndex }} de {{ total }} clientes
+        } @else { 0 de 0 clientes }
+      </small>
+    </div>
+
+    <div class="d-flex align-items-center gap-2">
+      <label class="form-label m-0 me-2">Dia</label>
+      <input type="date" class="form-control" style="width: auto" [(ngModel)]="dia" />
+    </div>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="row g-3 align-items-end">
+        <div class="col-12 col-md-6 position-relative">
+          <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ps-3 text-secondary"></i>
+          <input type="text" class="form-control ps-3" placeholder="Pesquisar por nome, ID, celular, cidade..." [(ngModel)]="searchTerm" />
+        </div>
+        <div class="col-6 col-md-3">
+          <label class="form-label">Status</label>
+          <select class="form-select" [(ngModel)]="statusFilter">
+            <option value="todos">Todos os status</option>
+            @for (s of statusUnicos; track s) { <option [value]="s.toLowerCase()">{{ s }}</option> }
+          </select>
+        </div>
+        <div class="col-6 col-md-3">
+          <label class="form-label">Cidade</label>
+          <select class="form-select" [(ngModel)]="cidadeFilter">
+            <option value="todas">Todas as cidades</option>
+            @for (c of cidadesUnicas; track c) { <option [value]="c.toLowerCase()">{{ c }}</option> }
+          </select>
+        </div>
+        <div class="col-6 col-md-3">
+          <label class="form-label">Ordenar por</label>
+          <select class="form-select" [(ngModel)]="sortBy">
+            <option value="recente">Mais recente</option>
+            <option value="antigo">Mais antigo</option>
+            <option value="nome">Nome A-Z</option>
+            <option value="id">ID crescente</option>
+          </select>
+        </div>
+        <div class="form-check form-switch col-6 col-md-3">
+          <input class="form-check-input switch-grande ml-2" type="checkbox" [formControl]="meusClientes" id="meusClientes" />
+          <label class="form-check-label" for="meusClientes">Meus Clientes</label>
+        </div>
+        <div class="form-check form-switch col-6 col-md-3">
+          <input class="form-check-input switch-grande ml-2" type="checkbox" [(ngModel)]="excluirLigadosHoje" id="excluirLigadosHoje" />
+          <label class="form-check-label" for="excluirLigadosHoje">Ocultar já ligados hoje</label>
+        </div>
+        <div class="col-12 d-flex justify-content-between align-items-center mt-2">
+          <div class="d-flex align-items-center gap-2">
+            <label class="form-label m-0">Por página</label>
+            <select class="form-select" style="width: auto" [ngModel]="pageSize" (ngModelChange)="changePageSize($event)">
+              <option [value]="10">10</option>
+              <option [value]="20">20</option>
+              <option [value]="50">50</option>
+              <option [value]="100">100</option>
+            </select>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <label class="form-label m-0">Quantidade</label>
+            <input type="number" class="form-control" style="width: 120px" min="1" [ngModel]="quantidade" (ngModelChange)="changeQuantidade($event)" placeholder="Ex: 10" />
+          </div>
+          <button class="btn btn-primary" (click)="pesquisaAvancada()" [disabled]="carregando">
+            @if (carregando) { <span class="spinner-border spinner-border-sm me-2"></span> } Buscar na base
+          </button>
+        </div>
+        @if (searchTerm || statusFilter !== 'todos' || cidadeFilter !== 'todas' || meusClientes.value || excluirLigadosHoje === false) {
+          <div class="col-12 text-end">
+            <button class="btn btn-outline-secondary" (click)="clearFilters()">Limpar filtros</button>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  @if (clientes.length === 0) {
+    <div class="text-center py-5">
+      <i class="bi bi-telephone text-secondary" style="font-size:3rem;"></i>
+      <h5 class="mt-3">Nenhum cliente para ligação</h5>
+      <p class="text-muted">Tente ajustar os filtros ou o dia.</p>
+    </div>
+  }
+
+  @if (clientes.length > 0) {
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">
+      @for (cliente of clientes; track cliente.idCliente) {
+        <div class="col">
+          <div class="card shadow-sm position-relative" [class.fade-out]="removing.has(cliente.idCliente)">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <button type="button" class="btn btn-success btn-sm py-1 px-2 d-flex align-items-center" (click)="abrirWhatsapp(cliente, $event)" title="Abrir WhatsApp">
+                  <ng-icon name="lucideMessageCircle" size="16"></ng-icon>
+                </button>
+                <button type="button" class="btn btn-light btn-sm py-1 px-2 d-flex align-items-center skip-btn" (click)="pularCliente(cliente)" title="Pular cliente">
+                  <ng-icon name="lucideSkipForward" size="16"></ng-icon>
+                </button>
+              </div>
+              <div>
+                <h5 class="card-title mb-1">{{ cliente.nome }}</h5>
+                <div class="text-muted small">
+                  <div>@if (cliente.celular) { <span><i class="bi bi-phone me-1"></i>{{ cliente.celular }}</span> }</div>
+                  <div>@if (cliente.cidade) { <span><i class="bi bi-geo-alt me-1"></i>{{ cliente.cidade }}</span> }</div>
+                  <div>@if (cliente.status) { <span class="badge bg-secondary">{{ cliente.status }}</span> }</div>
+                </div>
+              </div>
+
+              <div class="mt-2">
+                <input type="text" class="form-control form-control-sm" placeholder="Observação desta ligação (opcional)"
+                  [(ngModel)]="observacoes[cliente.idCliente]" />
+              </div>
+
+              <div class="d-flex gap-2 mt-3">
+                <button class="btn btn-success" (click)="marcarLigacao(cliente, true)">
+                  <i class="bi bi-check2 me-1"></i> Atendeu
+                </button>
+                <button class="btn btn-outline-danger" (click)="marcarLigacao(cliente, false)">
+                  <i class="bi bi-x-lg me-1"></i> Não atendeu
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  <div class="d-flex justify-content-between align-items-center mt-4">
+    <div class="text-muted">Página {{ page }} de {{ totalPages }}</div>
+    <div class="btn-group">
+      <button class="btn btn-outline-secondary" (click)="goToPage(1)" [disabled]="page === 1">« Primeiro</button>
+      <button class="btn btn-outline-secondary" (click)="goToPage(page - 1)" [disabled]="page === 1">‹ Anterior</button>
+      <button class="btn btn-outline-secondary" (click)="goToPage(page + 1)" [disabled]="page === totalPages || totalPages === 0">Próximo ›</button>
+      <button class="btn btn-outline-secondary" (click)="goToPage(totalPages)" [disabled]="page === totalPages || totalPages === 0">Último »</button>
+    </div>
+  </div>
+</div>

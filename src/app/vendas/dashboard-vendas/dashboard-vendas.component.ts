@@ -43,7 +43,7 @@ type ChartOptionsDonut = {
   responsive: ApexResponsive[];
 };
 
-type ModalKind = 'novos' | 'atendidos' | 'fechados' | 'eventos' | null;
+type ModalKind = 'novos' | 'atendidos' | 'fechados' | 'eventos' | 'ligacoes' | null;
 
 @Component({
   selector: 'app-dashboard-vendas',
@@ -140,6 +140,8 @@ export class DashboardVendas implements OnInit {
         req$ = this.api.getClientesFechadosList(periodo, page, perPage); break;
       case 'eventos':
         req$ = this.api.getEventosMarcadosList(periodo, page, perPage); break;
+      case 'ligacoes':
+        req$ = this.api.getLigacoesList(periodo, page, perPage); break;
     }
 
     req$.subscribe({
@@ -304,9 +306,17 @@ export class DashboardVendas implements OnInit {
       : k === 'atendidos' ? 'Clientes atendidos'
         : k === 'fechados' ? 'Clientes fechados'
           : k === 'eventos' ? 'Eventos marcados'
+            : k === 'ligacoes' ? 'Ligações efetuadas'
             : '';
   }
   isClientList() { return this.modalKind() === 'novos' || this.modalKind() === 'atendidos' || this.modalKind() === 'fechados'; }
+  isLigacoesList() { return this.modalKind() === 'ligacoes'; }
+
+  formatDateTime(d?: string | null) {
+    if (!d) return '';
+    const dt = new Date(d);
+    return dt.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  }
 
   statusPillClass(status?: string | null) {
     const s = (status ?? '').toLowerCase();

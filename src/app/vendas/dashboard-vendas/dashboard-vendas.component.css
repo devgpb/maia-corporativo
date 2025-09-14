@@ -2,3 +2,58 @@
   transform: scale(1.3);
 }
 
+/* ===== Modal de Ligações: Destaques e Layout ===== */
+.lig-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: #fff;
+}
+
+.lig-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.lig-names { max-width: 100%; }
+.lig-client { font-size: 14px; color: #111827; }
+.lig-client-name { font-weight: 600; }
+.lig-phone { margin-left: 8px; color: #6b7280; font-size: 12px; }
+.lig-agent { margin-top: 2px; color: #6b7280; font-size: 12px; }
+
+.lig-meta { text-align: right; min-width: 190px; }
+.status {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+.status.attended {
+  background: #ecfdf5; /* verde bem claro */
+  color: #047857;      /* verde escuro */
+  border-color: #a7f3d0;
+}
+.status.missed {
+  background: #f3f4f6; /* cinza claro */
+  color: #374151;      /* cinza escuro */
+  border-color: #e5e7eb;
+}
+.lig-when { margin-top: 6px; color: #6b7280; font-size: 12px; }
+
+.lig-obs {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed #e5e7eb;
+  color: #374151;
+  font-size: 12px;
+}
+
+/* Responsivo: empilhar no mobile e soltar o espaço excessivo no meio */
+@media (max-width: 576px) {
+  .lig-head { flex-direction: column; align-items: flex-start; }
+  .lig-meta { text-align: left; min-width: 0; }
+}

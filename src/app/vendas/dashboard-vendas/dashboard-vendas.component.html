@@ -108,6 +108,15 @@
         <p class="text-xs text-gray-600">{{ selectedPeriod()==='hoje' ? 'hoje' : ('neste ' + selectedPeriod()) }}</p>
       </div>
 
+      <div class="border rounded-xl p-4 hover:shadow-sm cursor-pointer" (click)="openModal('ligacoes')">
+        <div class="flex items-center justify-between pb-2">
+          <div class="text-sm font-medium">Ligações efetuadas</div>
+          <ng-icon size="28" name="lucidePhoneCall" class="h-4 w-4 text-indigo-600"></ng-icon>
+        </div>
+        <div class="text-2xl font-bold text-indigo-600">{{ d.ligacoesEfetuadas }}</div>
+        <p class="text-xs text-gray-600">{{ selectedPeriod()==='hoje' ? 'hoje' : ('neste ' + selectedPeriod()) }}</p>
+      </div>
+
       <div class="border rounded-xl p-4">
         <div class="flex items-center justify-between pb-2">
           <div class="text-sm font-medium">Total Cadastrados</div>
@@ -203,93 +212,119 @@
       </div>
     </div>
 
-    <!-- MODAL -->
-    <app-modal #modal class="cliente-edit-modal position-relative"
-     >
-
-      <div class="p-4 space-y-4">
-        <div class="flex items-center justify-between">
-          <h2 class="text-xl font-bold">{{ modalTitle() }}</h2>
-          <button class="px-3 py-1.5 border rounded" (click)="closeModal()">Fechar</button>
-        </div>
-
-        @if (modalLoading()) {
-          <div class="space-y-2">
-            @for (_ of [1,2,3,4,5,6]; track _) {
-              <div class="h-16 bg-gray-100 animate-pulse rounded"></div>
-            }
-          </div>
-        } @else if (modalError()) {
-          <div class="text-red-600">{{ modalError() }}</div>
-        } @else if (modalItems().length === 0) {
-          <div class="text-gray-500">Nenhum registro no período.</div>
-        } @else {
-
-          <!-- LISTA DE CLIENTES -->
-          @if (isClientList()) {
-            <div class="grid grid-cols-1 gap-3">
-                @for (c of modalItems(); track c['nome'] + c['updatedAt']) {
-                <div class="border rounded-xl p-3">
-                  <div class="flex items-center justify-between">
-                  <div class="font-semibold text-gray-900">{{ c['nome'] }}</div>
-                  <span class="text-xs px-2 py-1 rounded-full" [class]="statusPillClass(c['status'])">
-                    {{ c['status'] || 'Sem status' }}
-                  </span>
-                  </div>
-                  <div class="text-xs text-gray-500 mt-1">
-                  Atualizado em {{ formatDate(c['updatedAt']) }}
-                  @if (c['fechado']) {
-                    <span class="ml-2 text-green-700 font-semibold">fechado {{ formatDate(c['fechado']) }}</span>
-                  }
-                  @if (c['ultimoContato']) {
-                    <span class="ml-2 text-green-700 font-semibold">Contato Mais Recente {{ formatDate(c['ultimoContato']) }}</span>
-                  }
-                  </div>
-                  <div class="text-sm text-gray-700 mt-2">{{ short(c['observacao']) }}</div>
-                </div>
-                }
-            </div>
-          } @else {
-          <!-- LISTA DE EVENTOS -->
-            <div class="grid grid-cols-1 gap-3">
-              @for (e of modalItems(); track e['data'] + (e['usuario']?.nome || '')) {
-                <div class="border rounded-xl p-3">
-                  <div class="flex items-center justify-between">
-                    <div class="text-sm">
-                      <div class="font-semibold">Cliente: {{e['cliente']?.nome || '-'}} | Data: {{ formatDate(e['data']) }}</div>
-                      <div class="text-gray-700">Evento: {{ e['evento'] || '-' }}</div>
-                    </div>
-                    <span class="text-xs px-2 py-1 rounded-full"
-                          [ngClass]="e['confirmado'] ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'">
-                      {{ e['confirmado'] ? 'Confirmado' : 'Pendente' }}
-                    </span>
-                  </div>
-                  <div class="text-xs text-gray-500 mt-1">Usuário: {{ e['usuario']?.nomeCompleto || '-' }}</div>
-                </div>
-              }
-            </div>
-          }
-
-          <!-- PAGINAÇÃO -->
-          @if (modalMeta(); as m) {
-            <div class="flex items-center justify-between pt-3">
-              <div class="text-sm text-gray-600">
-                Página {{ m.page }} de {{ m.totalPages }} — {{ m.total }} registros
-              </div>
-              <div class="flex gap-2">
-                <button class="px-3 py-1.5 border rounded"
-                        [disabled]="modalLoading() || m.page <= 1"
-                        (click)="prevPage()">Anterior</button>
-                <button class="px-3 py-1.5 border rounded"
-                        [disabled]="modalLoading() || m.page >= m.totalPages"
-                        (click)="nextPage()">Próxima</button>
-              </div>
-            </div>
-          }
-        }
-      </div>
-    </app-modal>
-
+    <!-- MODAL (moved outside main @if for safety) -->
+  
 }
 
 </div>
+
+<!-- Modal: kept outside to avoid nesting issues -->
+<app-modal #modal class="cliente-edit-modal position-relative">
+  <div class="p-4 space-y-4">
+    <div class="flex items-center justify-between">
+      <h2 class="text-xl font-bold">{{ modalTitle() }}</h2>
+      <button class="px-3 py-1.5 border rounded" (click)="closeModal()">Fechar</button>
+    </div>
+
+    @if (modalLoading()) {
+      <div class="space-y-2">
+        @for (_ of [1,2,3,4,5,6]; track _) {
+          <div class="h-16 bg-gray-100 animate-pulse rounded"></div>
+        }
+      </div>
+    } @else if (modalError()) {
+      <div class="text-red-600">{{ modalError() }}</div>
+    } @else if (modalItems().length === 0) {
+      <div class="text-gray-500">Nenhum registro no período.</div>
+    } @else {
+      <!-- LISTA DE CLIENTES -->
+      @if (isClientList()) {
+        <div class="grid grid-cols-1 gap-3">
+          @for (c of modalItems(); track c['nome'] + c['updatedAt']) {
+            <div class="border rounded-xl p-3">
+              <div class="flex items-center justify-between">
+                <div class="font-semibold text-gray-900">{{ c['nome'] }}</div>
+                <span class="text-xs px-2 py-1 rounded-full" [class]="statusPillClass(c['status'])">
+                  {{ c['status'] || 'Sem status' }}
+                </span>
+              </div>
+              <div class="text-xs text-gray-500 mt-1">
+                Atualizado em {{ formatDate(c['updatedAt']) }}
+                @if (c['fechado']) {
+                  <span class="ml-2 text-green-700 font-semibold">fechado {{ formatDate(c['fechado']) }}</span>
+                }
+                @if (c['ultimoContato']) {
+                  <span class="ml-2 text-green-700 font-semibold">Contato Mais Recente {{ formatDate(c['ultimoContato']) }}</span>
+                }
+              </div>
+              <div class="text-sm text-gray-700 mt-2">{{ short(c['observacao']) }}</div>
+            </div>
+          }
+        </div>
+      } @else {
+        <!-- LISTA DE EVENTOS / LIGAÇÕES -->
+        @if (isLigacoesList()) {
+          <div class="grid grid-cols-1 gap-3">
+            @for (l of modalItems(); track l['idLigacao']) {
+              <div class="lig-item">
+                <div class="lig-head">
+                  <div class="lig-names">
+                    <div class="lig-client">
+                      <span class="lig-client-name">{{ l['cliente']?.nome || '-' }}</span>
+                      <span class="lig-phone" *ngIf="l['cliente']?.celular">{{ l['cliente']?.celular }}</span>
+                    </div>
+                    <div class="lig-agent">Agente: {{ l['autor']?.nomeCompleto || '-' }}</div>
+                  </div>
+                  <div class="lig-meta">
+                    <span class="status" [class.attended]="l['atendido']" [class.missed]="!l['atendido']">
+                      {{ l['atendido'] ? 'Atendida' : 'Não atendeu' }}
+                    </span>
+                    <div class="lig-when">{{ formatDate(l['data']) }} · {{ formatDateTime(l['createdAt']) }}</div>
+                  </div>
+                </div>
+                @if (l['observacao']) {
+                  <div class="lig-obs">{{ l['observacao'] }}</div>
+                }
+              </div>
+            }
+          </div>
+        } @else {
+          <!-- LISTA DE EVENTOS -->
+          <div class="grid grid-cols-1 gap-3">
+            @for (e of modalItems(); track e['data'] + (e['usuario']?.nome || '')) {
+              <div class="border rounded-xl p-3">
+                <div class="flex items-center justify-between">
+                  <div class="text-sm">
+                    <div class="font-semibold">Cliente: {{e['cliente']?.nome || '-'}} | Data: {{ formatDate(e['data']) }}</div>
+                    <div class="text-gray-700">Evento: {{ e['evento'] || '-' }}</div>
+                  </div>
+                  <span class="text-xs px-2 py-1 rounded-full"
+                        [ngClass]="e['confirmado'] ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'">
+                    {{ e['confirmado'] ? 'Confirmado' : 'Pendente' }}
+                  </span>
+                </div>
+                <div class="text-xs text-gray-500 mt-1">Usuário: {{ e['usuario']?.nomeCompleto || '-' }}</div>
+              </div>
+            }
+          </div>
+        }
+      }
+      <!-- PAGINAÇÃO -->
+      @if (modalMeta(); as m) {
+        <div class="flex items-center justify-between pt-3">
+          <div class="text-sm text-gray-600">
+            Página {{ m.page }} de {{ m.totalPages }} — {{ m.total }} registros
+          </div>
+          <div class="flex gap-2">
+            <button class="px-3 py-1.5 border rounded"
+                    [disabled]="modalLoading() || m.page <= 1"
+                    (click)="prevPage()">Anterior</button>
+            <button class="px-3 py-1.5 border rounded"
+                    [disabled]="modalLoading() || m.page >= m.totalPages"
+                    (click)="nextPage()">Próxima</button>
+          </div>
+        </div>
+      }
+    }
+  </div>
+</app-modal>
