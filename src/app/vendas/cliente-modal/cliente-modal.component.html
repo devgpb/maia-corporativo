@@ -1,6 +1,25 @@
 <app-modal class="cliente-edit-modal position-relative">
   <div class="p-3 position-relative">
 
+    <!-- Ações no topo direito (fixas) -->
+    <div class="modal-top-actions position-absolute top-0 end-0 p-2 d-flex gap-2">
+      @if (!mostrarHistoricoLigacoes) {
+        <button type="button" class="btn btn-sm btn-outline-primary" (click)="abrirHistoricoLigacoes()">
+          <ng-icon name="lucidePhoneCall" class="me-1" size="16"></ng-icon>
+          Histórico de Ligações
+        </button>
+      }
+      @if (mostrarHistoricoLigacoes) {
+        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="voltarParaEdicao()">
+          <ng-icon name="lucideArrowLeft" class="me-1" size="16"></ng-icon>
+          Voltar
+        </button>
+      }
+      <button type="button" class="btn btn-sm btn-outline-secondary" (click)="close()" aria-label="Fechar">
+        <ng-icon name="lucideX" size="18"></ng-icon>
+      </button>
+    </div>
+
     <!-- Botão Delete isolado, sempre no canto superior esquerdo -->
     <button
       class="btn btn-danger mb-2"
@@ -59,11 +78,11 @@
         </div>
         <!-- Cabeçalho -->
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="mb-0">Editar Cliente #{{ formData.idCliente }}</h5>
-          <button type="button" class="btn btn-sm btn-outline-secondary" (click)="close()">
-            <ng-icon name="lucideX" size="18"></ng-icon>
-          </button>
+          <h5 class="mb-0">
+            {{ mostrarHistoricoLigacoes ? 'Histórico de Ligações' : 'Editar Cliente #' + formData.idCliente }}
+          </h5>
         </div>
+        @if (!mostrarHistoricoLigacoes) {
         <!-- Formulário -->
         <form>
           <div class="row">
@@ -319,6 +338,74 @@
             <ng-icon name="lucideXCircle" class="me-2" size="18"></ng-icon> Cancelar
           </button>
         </div>
+        }
+
+        @if (mostrarHistoricoLigacoes) {
+          <!-- ================= HISTÓRICO DE LIGAÇÕES ================= -->
+          <div class="bg-white rounded p-3 shadow-sm">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="text-muted small">Total: {{ ligacoes.length }}</span>
+            </div>
+
+            @if (isLoadingLigacoes) {
+              <div class="text-center text-muted py-3">Carregando histórico…</div>
+            }
+
+            @if (!isLoadingLigacoes && ligacoes.length === 0) {
+              <div class="text-center text-muted py-3">Nenhuma ligação registrada.</div>
+            }
+
+            @if (!isLoadingLigacoes && ligacoes.length > 0) {
+              <!-- Mobile: Cards -->
+              <div class="d-md-none">
+                <div class="d-flex flex-column gap-2">
+                  @for (l of ligacoes; track l.idLigacao) {
+                    <div class="border rounded-3 p-3 shadow-sm lig-card">
+                      <div class="d-flex justify-content-between align-items-center mb-1">
+                        <div class="fw-semibold">{{ l.data | date:'dd/MM/yyyy' }}</div>
+                        <span class="badge" [ngClass]="l.atendido ? 'bg-success' : 'bg-secondary'">
+                          {{ l.atendido ? 'Sim' : 'Não' }}
+                        </span>
+                      </div>
+                      <div class="text-muted small mb-2">Registrado em {{ l.createdAt | date:'dd/MM/yyyy HH:mm' }}</div>
+                      <div class="text-break">{{ l.observacao || '-' }}</div>
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <!-- Desktop: Tabela -->
+              <div class="table-responsive d-none d-md-block">
+                <table class="table table-sm align-middle">
+                  <thead>
+                    <tr>
+                      <th>Data</th>
+                      <th>Registrado em</th>
+                      <th>Atendido</th>
+                      <th>Observação</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (l of ligacoes; track l.idLigacao) {
+                      <tr>
+                        <td>{{ l.data | date:'dd/MM/yyyy' }}</td>
+                        <td>{{ l.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+                        <td>
+                          <span class="badge" [ngClass]="l.atendido ? 'bg-success' : 'bg-secondary'">
+                            {{ l.atendido ? 'Sim' : 'Não' }}
+                          </span>
+                        </td>
+                        <td class="text-break">{{ l.observacao || '-' }}</td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            }
+          </div>
+          <!-- =============== FIM HISTÓRICO DE LIGAÇÕES =============== -->
+        }
+
       </div>
     }
   </div>

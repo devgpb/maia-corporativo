@@ -60,6 +60,7 @@ export class DashboardVendas implements OnInit {
   statusChart = signal<ChartOptionsBar | null>(null);
   campanhaChart = signal<ChartOptionsDonut | null>(null);
   contatosChart = signal<ChartOptionsLine | null>(null);
+  ligacoesChart = signal<ChartOptionsLine | null>(null);
   range = { start: null as Date | null, end: null as Date | null };
   rangeError: string | null = null;
   get rangeValid() { return !!this.range.start && !!this.range.end && !this.rangeError; }
@@ -175,6 +176,7 @@ export class DashboardVendas implements OnInit {
         this.buildStatusChart(res);
         this.buildCampanhaChart(res);
         this.buildContatosChart(res);
+        this.buildLigacoesChart(res);
         this.loading.set(false);
       },
       error: () => { this.error.set('Erro ao carregar dados do dashboard'); this.loading.set(false); }
@@ -308,6 +310,29 @@ export class DashboardVendas implements OnInit {
           : k === 'eventos' ? 'Eventos marcados'
             : k === 'ligacoes' ? 'Ligações efetuadas'
             : '';
+  }
+
+  private buildLigacoesChart(d: IDashboardVendas) {
+    const items = (d.ligacoesPorDia ?? []).slice().sort((a, b) =>
+      a.date.localeCompare(b.date)
+    );
+
+    const labels = items.map(i =>
+      new Date(i.date + 'T00:00:00').toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })
+    );
+    const values = items.map(i => Number(i.count || 0));
+
+    this.ligacoesChart.set({
+      series: [{ name: 'Ligações/dia', data: values }],
+      chart: { type: 'area', height: 360, toolbar: { show: false } },
+      xaxis: { categories: labels, labels: { rotate: 0 } },
+      dataLabels: { enabled: false },
+      stroke: { curve: 'smooth', width: 3 },
+      tooltip: {
+        y: { formatter: (val: number) => `${val} ligação${val === 1 ? '' : 'es'}` }
+      },
+      fill: { type: 'gradient', gradient: { shadeIntensity: 0.2, opacityFrom: 0.5, opacityTo: 0.1, stops: [0, 90, 100] } }
+    });
   }
   isClientList() { return this.modalKind() === 'novos' || this.modalKind() === 'atendidos' || this.modalKind() === 'fechados'; }
   isLigacoesList() { return this.modalKind() === 'ligacoes'; }

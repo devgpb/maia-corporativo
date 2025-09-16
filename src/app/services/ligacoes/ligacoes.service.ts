@@ -39,4 +39,12 @@ export class LigacoesService {
   marcarLigacao(payload: { idCliente: number; dia?: string; data?: string; atendido: boolean; observacao?: string; }) {
     return this.http.post(`${this.base}`, payload);
   }
+
+  // Histórico de ligações por cliente
+  getLigacoesPorCliente(idCliente: number, params?: { inicio?: string; fim?: string; }) {
+    const query: any = {};
+    if (params?.inicio) query.inicio = params.inicio;
+    if (params?.fim) query.fim = params.fim;
+    return this.http.get<any[]>(`${this.base}/cliente/${idCliente}`, { params: query });
+  }
 }

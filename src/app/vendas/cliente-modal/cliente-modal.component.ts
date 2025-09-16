@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import moment from 'moment-timezone';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { VendasService } from 'src/app/services/vendas/vendas.service';
+import { LigacoesService } from 'src/app/services/ligacoes/ligacoes.service';
 
 
 type EventoCard = {
@@ -60,6 +61,7 @@ export class ClienteModalComponent implements OnChanges, OnInit {
     private clientesService: ClientesService,
     private http: HttpClient,
     private vendasService: VendasService,
+    private ligacoesService: LigacoesService,
   ){
 
   }
@@ -67,6 +69,17 @@ export class ClienteModalComponent implements OnChanges, OnInit {
   formData!: Cliente;
   errors: Record<string,string> = {};
   isLoading = false;
+
+  // Histórico de ligações
+  mostrarHistoricoLigacoes = false;
+  ligacoes: Array<{
+    idLigacao: number;
+    data: string;       // YYYY-MM-DD
+    createdAt: string;  // ISO
+    atendido: boolean;
+    observacao?: string | null;
+  }> = [];
+  isLoadingLigacoes = false;
 
 
 
@@ -206,6 +219,37 @@ export class ClienteModalComponent implements OnChanges, OnInit {
 
         }
       });
+  }
+
+  abrirHistoricoLigacoes() {
+    this.mostrarHistoricoLigacoes = true;
+    if (this.ligacoes.length === 0) {
+      this.carregarLigacoesCliente();
+    }
+  }
+
+  voltarParaEdicao() {
+    this.mostrarHistoricoLigacoes = false;
+  }
+
+  private carregarLigacoesCliente() {
+    if (!this.cliente?.idCliente) return;
+    this.isLoadingLigacoes = true;
+    this.ligacoesService.getLigacoesPorCliente(this.cliente.idCliente).subscribe({
+      next: (lista: any[]) => {
+        this.ligacoes = (lista || []).map((l: any) => ({
+          idLigacao: l.idLigacao,
+          data: l.data,
+          createdAt: l.createdAt,
+          atendido: !!l.atendido,
+          observacao: l.observacao ?? null,
+        }));
+        this.isLoadingLigacoes = false;
+      },
+      error: () => {
+        this.isLoadingLigacoes = false;
+      }
+    });
   }
 
   onAddCidade(term: string) {

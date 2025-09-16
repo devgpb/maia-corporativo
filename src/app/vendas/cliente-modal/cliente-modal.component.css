@@ -10,4 +10,17 @@
   border-radius: 50%;
 }
 
+/* ===== Histórico de Ligações (Mobile Cards) ===== */
+.lig-card {
+  background: #fff;
+}
+.lig-card .badge {
+  font-size: 0.75rem;
+}
+
+/* Botões fixos no topo direito do modal */
+.modal-top-actions {
+  z-index: 10;
+}
+
 

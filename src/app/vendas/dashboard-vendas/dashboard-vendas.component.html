@@ -210,6 +210,23 @@
           </apx-chart>
       </div>
       </div>
+
+      <div class="border rounded-xl p-4 lg:col-span-2">
+        <div class="flex items-center justify-between pb-2">
+          <div class="text-sm font-medium">Ligações por dia</div>
+        </div>
+        <div *ngIf="ligacoesChart() as lgc">
+          <apx-chart
+            [series]="lgc.series"
+            [chart]="lgc.chart"
+            [xaxis]="lgc.xaxis"
+            [dataLabels]="lgc.dataLabels"
+            [stroke]="lgc.stroke"
+            [tooltip]="lgc.tooltip"
+            [fill]="lgc.fill">
+          </apx-chart>
+        </div>
+      </div>
     </div>
 
     <!-- MODAL (moved outside main @if for safety) -->
