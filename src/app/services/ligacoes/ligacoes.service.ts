@@ -47,4 +47,9 @@ export class LigacoesService {
     if (params?.fim) query.fim = params.fim;
     return this.http.get<any[]>(`${this.base}/cliente/${idCliente}`, { params: query });
   }
+
+  // Excluir ligação por id
+  deleteLigacao(idLigacao: number): Observable<any> {
+    return this.http.delete(`${this.base}/${idLigacao}`);
+  }
 }

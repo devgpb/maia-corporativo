@@ -347,6 +347,28 @@
               <span class="text-muted small">Total: {{ ligacoes.length }}</span>
             </div>
 
+            <!-- Registrar nova ligação (mesma mecânica da lista) -->
+            <div class="border rounded-3 p-3 mb-3">
+              <div class="row g-2 align-items-end">
+                <div class="col-12 col-sm-4 col-md-3">
+                  <label class="form-label">Dia</label>
+                  <input type="date" class="form-control" [(ngModel)]="novaLigacaoDia" name="novaLigacaoDia" />
+                </div>
+                <div class="col-12 col-sm-8 col-md-6">
+                  <label class="form-label">Observação (opcional)</label>
+                  <input type="text" class="form-control" [(ngModel)]="novaLigacaoObs" name="novaLigacaoObs" placeholder="Ex.: cliente ocupado, pediu retorno..." />
+                </div>
+                <div class="col-12 col-md-3 d-flex gap-2">
+                  <button type="button" class="btn btn-success flex-fill" (click)="registrarLigacao(true)">
+                    <ng-icon name="lucideCheck" class="me-1" size="16"></ng-icon> Atendeu
+                  </button>
+                  <button type="button" class="btn btn-outline-danger flex-fill" (click)="registrarLigacao(false)">
+                    <ng-icon name="lucideX" class="me-1" size="16"></ng-icon> Não atendeu
+                  </button>
+                </div>
+              </div>
+            </div>
+
             @if (isLoadingLigacoes) {
               <div class="text-center text-muted py-3">Carregando histórico…</div>
             }
@@ -363,9 +385,14 @@
                     <div class="border rounded-3 p-3 shadow-sm lig-card">
                       <div class="d-flex justify-content-between align-items-center mb-1">
                         <div class="fw-semibold">{{ l.data | date:'dd/MM/yyyy' }}</div>
-                        <span class="badge" [ngClass]="l.atendido ? 'bg-success' : 'bg-secondary'">
-                          {{ l.atendido ? 'Sim' : 'Não' }}
-                        </span>
+                        <div class="d-flex align-items-center gap-2">
+                          <span class="badge" [ngClass]="l.atendido ? 'bg-success' : 'bg-secondary'">
+                            {{ l.atendido ? 'Sim' : 'Não' }}
+                          </span>
+                          <button type="button" class="btn btn-sm btn-outline-danger" (click)="excluirLigacao(l)" title="Excluir ligação">
+                            <ng-icon name="lucideTrash2" size="16"></ng-icon>
+                          </button>
+                        </div>
                       </div>
                       <div class="text-muted small mb-2">Registrado em {{ l.createdAt | date:'dd/MM/yyyy HH:mm' }}</div>
                       <div class="text-break">{{ l.observacao || '-' }}</div>
@@ -383,6 +410,7 @@
                       <th>Registrado em</th>
                       <th>Atendido</th>
                       <th>Observação</th>
+                      <th class="text-end">Ações</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -396,6 +424,11 @@
                           </span>
                         </td>
                         <td class="text-break">{{ l.observacao || '-' }}</td>
+                        <td class="text-end" style="width:1%">
+                          <button type="button" class="btn btn-sm btn-outline-danger" (click)="excluirLigacao(l)" title="Excluir ligação">
+                            <ng-icon name="lucideTrash2" size="16"></ng-icon>
+                          </button>
+                        </td>
                       </tr>
                     }
                   </tbody>

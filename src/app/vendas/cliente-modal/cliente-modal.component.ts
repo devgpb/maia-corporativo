@@ -81,6 +81,10 @@ export class ClienteModalComponent implements OnChanges, OnInit {
   }> = [];
   isLoadingLigacoes = false;
 
+  // Novo registro de ligação
+  novaLigacaoObs: string = '';
+  novaLigacaoDia: string = new Date().toISOString().slice(0,10); // YYYY-MM-DD
+
 
 
   ngOnChanges(ch: SimpleChanges): void {
@@ -249,6 +253,59 @@ export class ClienteModalComponent implements OnChanges, OnInit {
       error: () => {
         this.isLoadingLigacoes = false;
       }
+    });
+  }
+
+  registrarLigacao(atendido: boolean) {
+    if (!this.cliente?.idCliente) return;
+    const dia = this.novaLigacaoDia || new Date().toISOString().slice(0,10);
+    const observacao = this.novaLigacaoObs?.trim() || undefined;
+    this.ligacoesService.marcarLigacao({ idCliente: this.cliente.idCliente, dia, atendido, observacao }).subscribe({
+      next: (novo: any) => {
+        const item = {
+          idLigacao: novo.idLigacao,
+          data: novo.data,
+          createdAt: novo.createdAt,
+          atendido: !!novo.atendido,
+          observacao: novo.observacao ?? null,
+        };
+        this.ligacoes = [item, ...this.ligacoes];
+        this.novaLigacaoObs = '';
+        this.novaLigacaoDia = new Date().toISOString().slice(0,10);
+        // @ts-ignore
+        Swal.fire('Sucesso', 'Ligação registrada.', 'success');
+      },
+      error: (err) => {
+        const msg = err?.error?.error || 'Não foi possível registrar a ligação.';
+        // @ts-ignore
+        Swal.fire('Erro', msg, 'error');
+      }
+    });
+  }
+
+  excluirLigacao(l: { idLigacao: number }) {
+    if (!l?.idLigacao) return;
+    // @ts-ignore
+    Swal.fire({
+      title: 'Excluir ligação?',
+      text: 'Esta ação não poderá ser desfeita.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, excluir',
+      cancelButtonText: 'Cancelar'
+    }).then((r: any) => {
+      if (!r.isConfirmed) return;
+      this.ligacoesService.deleteLigacao(l.idLigacao).subscribe({
+        next: () => {
+          this.ligacoes = this.ligacoes.filter(x => x.idLigacao !== l.idLigacao);
+          // @ts-ignore
+          Swal.fire('Excluída', 'Ligação removida com sucesso.', 'success');
+        },
+        error: () => {
+          // @ts-ignore
+          Swal.fire('Erro', 'Falha ao excluir a ligação.', 'error');
+        }
+      });
     });
   }
 
